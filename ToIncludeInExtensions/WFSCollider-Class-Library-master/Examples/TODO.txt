@@ -1,0 +1,55 @@
+WFS TODO / ideas (no particular order)
+
+- re-invent preview system; 
+	- generic panners with settings for different spatialization methods
+	- new interface for point sources and plane waves
+ 	- move trajectory etc to Unit Lib
+
+- subwoofers
+- directional point sources
+- Folder events / sub-scores:
+	- implement cutting sub-scores
+	- inner score looping.
+- MultiUdef: being able to select defs by index instead of defName
+	- HiddenUdef is then obsolete; it can simply use Udefs with addToAll:false
+- WFSServers: better gui
+	- button for loading al udefs
+	- working buttons for server management (now that the ssh problem is fixed)
+	- panic button (stop all - not kill)
+	- loaded buffers / synths indicator
+- WFSPath
+	- implement free spline wfspaths
+	- create preset system for WFSPaths ("path banks")
+	- rename to WFSPath; subclass of Trajectory
+	- more generators:
+		- import SVG
+		- import MIDI
+		- more basic shapes
+	- export SVG
+	- export MIDI?
+	- WFSMultiPath: timeline display and better support
+	- save/read from WFSPathGUI
+	- unified save/read system (Buffer:write vs. SoundFile)
+	- add trigger option to wfsPathPlayer Udef
+- gui for RichBufferSpec
+- UMixer for session
+- MassEdit:
+	- more options for wfspath massedit
+- core:
+	- allow change of units in chain during playback
+	- clear all option (in case buffers or synths are kept by mistake)
+	- handle buffer-not-found correctly (i.e. give user option to cancel playback)
+		- may require a do-on-failed action/method
+	- fix release problem for non-releaseself events
+- more documentation
+	
+- future ideas
+	- implement score position jumping during playback, without stopping the score (similar to pause)
+	- pattern-like generator interface for events
+	- midi import
+	- option for midi import of timeline/meter settings
+	- option to show waveforms in path editor 
+		- possibly as width of the trajectory line
+	- clipboard (copy/paste) for WFSPathGUI
+	- Right-click menu
+	

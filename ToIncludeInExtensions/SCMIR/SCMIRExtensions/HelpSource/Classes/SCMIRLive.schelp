@@ -1,0 +1,140 @@
+title:: SCMIRLive
+summary:: Represents a live feature extractor for the SCMIR analysis system
+categories:: SCMIR
+related:: Classes/SCMIRAudioFile, Classes/SCMIRSimilarityMatrix, Classes/SCMIR
+
+description::
+
+Run feature extraction and normalization live. 
+
+
+examples::
+
+code::
+
+//extract features for a given file
+e = SCMIRAudioFile(Platform.resourceDir +/+ "sounds/a11wlk01.wav", [[MFCC, 13], [Chromagram, 12]]);
+
+e.extractFeatures(normalize:false); //must not already normalize unless you will manually pass over the normalization data; SCMIRLive will deal with that in next step
+
+//now convert to live feature extractor
+l = SCMIRLive(e)
+
+l.dump
+l.featureinfo
+l.normalizationinfo
+
+//create SynthDef for this feature set with normalization
+l.createSynthDef.add
+//save to disk SynthDef with own specified name, no normalization
+//l.createSynthDef(\SCMIRLiveownname,false).writeDefFile
+
+l.createResponder({arg input; input.postln }); //create a language side responder for this feature extractor
+
+//run Synth with the SynthDef already added, input bus is 8, which is first audio input on machine
+a = l.run(8)
+
+l.synth
+
+l.removeResponder
+
+
+//store for future use (assumes saved SynthDef as well, or at least will createSynthDef on reload before live use
+l.save("/tmp/scmirlive1.scmirZ"); 
+
+l.load("/tmp/scmirlive1.scmirZ"); 
+
+l.createSynthDef.add //make a new SynthDef: required for safety after load to 
+avoid repeated names over multiple sessions
+
+a = l.run(8)
+
+//short cut creation 
+l = SCMIRLive.newFromFile("/tmp/scmirlive1.scmirZ"); 
+
+
+
+
+//using with global norms
+
+//calculate global norms
+(
+~files = [Platform.resourceDir +/+ "sounds/a11wlk01.wav", "/data/audio/mirdata/pixiesivebeentired.wav","/data/audio/mirdata/Yellow Submarine.wav"]; 
+~featureinfo= [[MFCC,13],[Chromagram,12]]; 
+
+{SCMIR.findGlobalFeatureNorms(~files,~featureinfo); }.fork
+	
+)
+
+SCMIR.globalfeaturenorms //in this case, will be minimums in first array, maximums in second
+
+
+//no need to extract fresh features in this case
+e = SCMIRAudioFile(Platform.resourceDir +/+ "sounds/a11wlk01.wav", [[MFCC, 13], [Chromagram, 12]]);
+
+//create SCMIRLive via this
+l = SCMIRLive(e, SCMIR.globalfeaturenorms)
+
+l.normalizationinfo
+
+l.createSynthDef.add
+
+l.createResponder({arg input; input.postln }); //create a language side responder for this feature extractor
+
+//run Synth with the SynthDef already added, input bus is 8, which is first audio input on machine
+a = l.run(8)
+
+
+
+
+//example with live feature view GUI
+
+
+//extract features for a given file
+e = SCMIRAudioFile(Platform.resourceDir +/+ "sounds/a11wlk01.wav", [[MFCC, 13], [Chromagram, 12]]);
+
+e.extractFeatures(normalize:false);
+
+//now convert to live feature extractor
+l = SCMIRLive(e)
+
+//create SynthDef for this feature set with normalization; server must be booted already
+l.createSynthDef.add
+
+//create GUI
+(
+w=Window.new("25 features", Rect(200,400,300,300));
+
+~ms= MultiSliderView.new(w, Rect(10,10,260,280));
+
+~ms.value_(Array.fill(25,0.0));
+~ms.valueThumbSize_(300/25);
+~ms.indexThumbSize_(300/25);
+~ms.gap_(0);
+
+w.front;
+)
+
+
+(
+l.createResponder({arg input; 
+
+//input.postln;
+{~ms.value_(input[3..(27)]); }.defer 
+}); //create a language side responder for this feature extractor which updates the GUI
+)
+
+//run Synth with the SynthDef already added, input bus is 8, which is first audio input on machine
+a = l.run(8);
+
+l.removeResponder;
+
+w.close; 
+
+
+
+
+
+
+
+::

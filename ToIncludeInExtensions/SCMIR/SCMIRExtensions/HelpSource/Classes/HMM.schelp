@@ -1,0 +1,92 @@
+title:: HMM
+summary:: Hidden Markov Model	
+categories:: SCMIR, Machine Learning
+related:: Classes/NeuralNet, Classes/NaiveBayes, Classes/GMM
+
+description::
+
+Hidden Markov Model wrapper class, relying on an auxilliary external for the hard work. You can set the number of hidden states, and the number of discrete observation classes. Note that observations are just nonnegative integers, from 0 to numsymbols-1. If you have continuous feature vectors, these must be turned into single labels, via vector quantisation with k-means clustering or similar discretisation processes.  
+
+
+code::
+
+
+h = HMM(5,3) //create a HMM object with 5 hidden states, and 3 observation classes (0,1,2 below)
+
+
+//In general, the training data of observation sequences must be an array of observation sequences (each themselves an array of integers)
+(
+~data = [
+[0,1,2,2,1,0,1,2,0,1,2,2,1,2,1,0,1,1,2,2,1,0,1,2,0,1,2,2,1,2,1,0,1,2,2,0,1,2,1,2,2,1,0,1,2,0,1,2,2,1,2,1,0,1,2,2,0,1,2,2,2,0,1,2,2,1,1]
+];
+)
+
+(
+{
+	h.train(~data,10) //10 is the number of iterations for the expectation maximisation training of a HMM via Baum-Welch
+}.fork;
+)
+
+//use the HMM to generate novel output sequences from the hidden states and their transition and emission probabilities
+(
+{
+	h.generate(100).postln; //create an output sequence of 100 symbols
+}.fork;
+)
+
+
+//Viterbi solution to find the optimal sequence of hidden states, given some observation sequence
+(
+{
+	h.mostprobablestatesequence([2,1,0,2,1,2,1,2,1,2,1,1,2,2,2,2,0,1,1,0]).postln;
+}.fork;
+)
+
+
+
+//more complicated example 
+h = HMM(13,10)
+
+~data = [{10.rand}!1000, {5.rand+2}!650];
+
+(
+{
+	h.train(~data,10)
+}.fork;
+)
+
+
+(
+{
+	h.mostprobablestatesequence({10.rand}!10).postln;
+}.fork;
+)
+
+
+(
+{
+	h.generate(100).postln;
+}.fork;
+)
+
+
+
+(
+{
+	h.probability({10.rand}!10).postln;
+}.fork;
+)
+
+(
+{
+	h.probability(1!10).postln;
+}.fork;
+)
+
+
+::
+
+
+
+examples::
+

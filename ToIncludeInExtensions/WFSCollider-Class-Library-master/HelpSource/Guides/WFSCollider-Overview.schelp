@@ -1,0 +1,34 @@
+title:: WFSCollider V2.0 Overview
+summary:: An introduction to the Game of Life WFSCollider software 2.0
+categories:: WFSCollider
+related::Guides/WFSCollider-Visual-Guide, Guides/WFSCollider-Code,Guides/WFSCollider-Panners,Tutorials/WFSCollider-tutorial
+
+GameOfLife WFSCollider is an adapted version of SuperCollider, the audio synthesis engine and programming language, for Wave Field Synthesis spatialization.
+
+It's currently being used in the 192 speakers system of the Game Of Life Foundation (http://gameoflife.nl/en), installed in den Haag, the Netherlands.
+
+WFSCollider consists of an audio spatialization engine that places individual sound sources in space according to the principles of link::Reference/WFS-theory::.
+
+WFSCollider V2.0 is a completly rewritten version of the software with many new features and capabilities. This system now operates using a new synchronization system which allows to spawn many synths at a time with sample-accuracy. It allows to program synths in the SuperCollider language which can then be played in the system.
+
+Most of the functionality of the software is implemented in the Unit Library, a set of SuperCollider classes that are the core of the system. For more information on this library you should read it's link::Reference/Unit-Lib##reference guide::
+
+The WFSCollider software was implemented on top of the Unit Library:
+
+the WFS panners were created as FreeUDefs. Creating a WFS source is as easy as doing
+code::
+UChain(\sine,\wfsDynamicPoint).prepareAndStart
+::.
+  For trajectories the link::Classses/WFSPath:: was implemented as a "smart" argument of the wfsPathPlayer unit.  The crossfading algorithms were revised and the cpu count of each source optimized by dividing the speaker arrays into separate synths, and pausing the synths when the source is in a position that does not require the corresponding arrays to play. The system also allows for different geometries of the speaker arrays besides squares and rectangles. Real-time control of the system is enabled by using a new scheduling system, created by blackrain, that allows for precise synchronization of different computers by sending a single pulse from a central source (the client) to the servers. From them on it's possible to schedule bundles with sample accuracy in different servers operating in different computers, something  needed for Wave Field Synthesis to work. Although still not fully tested, we expect the system to be able to use supernova, a multi-core aware version of scsynth, to exploit the all the cpu available in our multi-core rendering servers.
+
+To use the system there are two possible starting points: creating a UScore or creating a USession:
+
+list::
+## A UScore is time-line which can hold timed events. The events can be UChains or UScores. To create a new score to go 'Scores->File->New'.
+## A USession can hold link::Classes/UScore::s, link::Classes/UChain::s, link::Classes/UChainGroup::s or link::Classes/UScoreList::s. A session is useful to keep several scores ready to play at any moment, and to start and stop groups of events or scores at will. To create a new session to go 'Session->New'.
+::
+
+For further help see the related help files.
+
+
+

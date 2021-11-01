@@ -1,0 +1,63 @@
+title:: GMM
+summary:: Gaussian Mixture Model	
+categories:: SCMIR, Machine Learning
+related:: Classes/NeuralNet, Classes/NaiveBayes
+
+description::
+
+Experimental machine learning class, useful for density estimation or clustering. Certain functions require the use of MathLib from the Quarks. Also relies on an auxilliary external for the hard work. 
+
+FUTURE: Can remove dependency on MathLib if roll own matrix multiplications 
+	
+code::
+
+g = GMM(4); 
+
+g.numstates; 
+
+
+//if don't have distinguished states, can get situation where fails to train! 
+//d = Array.fill(100,{|i| [i]++({0.2.rand2}!10)});
+d = Array.fill(1000,{|i| ({rrand(i%4,2*(i%4)+1.0)}!10)});
+
+g.train(d)	//can take a while if thousands of data points
+
+
+g.loadModel;  //get GMM model parameters into SC
+
+
+g.generate; //create random new points from the mixture model
+
+
+//test specific data points for predicted class
+(
+a = {rrand(0.0,1.0)}!10;
+g.test(a); 
+)
+
+//some sprinkling of classes 2 and 3
+100.do{ g.test({rrand(2.0,7.0)}!10).postln }
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////
+//TESTING 
+//http://en.wikipedia.org/wiki/Eigendecomposition_(matrix)
+
+//check that covarA is the 'square root' of covarmatrices
+a = g.covarA[0]
+a*(a.flop)
+b = g.covarmatrices[0]
+
+
+::
+
+
+
+examples::
+

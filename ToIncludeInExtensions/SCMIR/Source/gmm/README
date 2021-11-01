@@ -1,0 +1,14 @@
+To compile the gmm executable you will need gsl (http://www.gnu.org/software/gsl/) and specifically to link to :
+libgsl
+libgslcblas
+libgsleigen
+libgslmatrix
+
+I used the universal 1.14 version of gsl for Mac.
+
+I also used the gmm-gmr project code: 
+http://sourceforge.net/projects/gmm-gmr/
+
+All under GNU GPL
+
+ 

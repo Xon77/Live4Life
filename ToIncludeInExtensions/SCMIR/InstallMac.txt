@@ -1,0 +1,20 @@
+Installation on Mac: 
+
+Put the folder SCMIRExtensions in your extensions directory. If you need hints on how to do that, see the [Using-Extensions] help file in SuperCollider (also linked in Main Help)
+
+You also need the SCMIRUGens from sc3-plugins (https://github.com/supercollider/sc3-plugins); these also go in your extensions directory. Pre-built versions are supplied for SC 3.6. (if you are on 3.4/3.5, because of differences between the plugin architecture in the SuperCollider versions, you need the right pre-built plugins and will have to build from source). 
+
+One Warning: if you already have the sc3-plugins, and you put all of them into your extensions already, you may get a duplicate SCMIRUGens if you're not careful. 
+
+
+
+Compilation: Whilst pre-compiled executables for Mac are provided, you can compile the executables yourself using CMake. 
+
+If you don't have Cmake installed, you can get it from MacPorts, for example. 
+
+cd /path/to/SCMIR/Source
+mkdir build
+cd build
+cmake -DCMAKE_OSX_ARCHITECTURES='i386;x86_64' .. 
+make
+make install

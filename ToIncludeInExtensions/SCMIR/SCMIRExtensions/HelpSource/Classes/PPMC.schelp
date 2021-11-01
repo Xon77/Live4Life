@@ -1,0 +1,148 @@
+title:: PPMC
+summary:: Prediction by Partial Match - 'C' variant, Variable order Markov Model
+categories:: SCMIR, Machine Learning
+related:: Classes/NeuralNet, Classes/GMM
+
+description::
+
+Machine learning class for discrete state sequences. See: 
+
+Ron Begleiter, Ran El-Yaniv and Golan Yona (2004) 'On Prediction Using Variable Order Markov Models.' Journal of Artificial Intelligence Research 22: 385-421
+
+and
+
+Marcus Pearce and Geraint Wiggins (2004) 'Improved Methods for Statistical Modelling of Monophonic Music.' Journal of New Music Research 33(4)
+
+This implementation uses +1 in the numerator and demoninator in the probability calculations, (what Pearce and Wiggins denote the PPM-AX variant of C) and no exclusion mechanism, just escape. 
+
+	
+code::
+
+m = PPMC(2); 	//order =2 (last 2 states predict next)
+
+//sequence for training; can be array of integers, or a String (as Array of characters)
+a =Array.fill(100,{ 6.rand })
+
+m.train(a)
+
+m.trie.postcs
+
+a
+
+m.probability([19])
+
+
+m.averagelogloss(a)
+
+m.averagelogloss(a.reverse)
+
+m.averagelogloss(a.rotate(16))
+
+m.averagelogloss(Array.fill(100,{ 6.rand }))
+
+m.averagelogloss(Array.fill(100,{ 4.rand }))
+
+//empty context
+m.generate
+
+m.generate(a[0..1]);
+
+
+(
+var lastvals = List[]; 
+
+b = Array.fill(100,{
+	
+	var nextval = m.generate(lastvals.reverse); 
+	
+	if(lastvals.size<3) {lastvals.addFirst(nextval);} {
+		
+		lastvals.addFirst(nextval); 
+		lastvals.pop; 
+		
+		};
+	
+	nextval;
+});
+
+)
+
+
+b.plot
+a.plot
+
+m.averagelogloss(b)
+
+m.averagelogloss(a)
+
+//b can be more likely than a according to the model; b was generated from model's stats, which approximate a but are not the same as a 
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////TESTS
+
+//test of save load on large object
+
+p = PPMC(5)
+
+a =Array.fill(100000,{ 6.rand })
+
+p.train(a)
+
+p.trie.postcs
+
+p.save("/Users/nickcollins/Desktop/testme.scmirz")
+
+p = PPMC(5); 
+p.load("/Users/nickcollins/Desktop/testme.scmirz")
+
+
+
+//test of recursive save load on trie
+
+m = PPMC(5); 	//order =2 (last 2 states predict next)
+
+//sequence for training; can be array of integers, or a String (as Array of characters)
+a = Array.fill(10000,{ 6.rand })
+
+m.train(a)
+
+m.trie.postcs
+
+(
+w = SCMIRZArchive.write("/Users/nickcollins/Desktop/testppmc.scmirZ");      
+		 
+m.saveDictionary(w,m.trie,0);
+
+w.writeClose; 
+)
+
+
+(
+r = SCMIRZArchive.read("/Users/nickcollins/Desktop/testppmc.scmirZ");      
+      		 
+d= m.loadDictionary(r,0);
+
+r.close; 
+)
+
+d == m.trie
+
+d.postcs
+
+
+::
+
+
+
+examples::
+

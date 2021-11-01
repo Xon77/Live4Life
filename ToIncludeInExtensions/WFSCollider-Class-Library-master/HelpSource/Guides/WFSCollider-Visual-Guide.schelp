@@ -1,0 +1,30 @@
+title:: WFSCollider Visual Guide
+summary:: An introduction to graphical user interface of WFSCollider
+categories:: WFSCollider
+
+
+SECTION::UChain
+
+list::
+## To add Units drag from the Udefs window.
+## The mute button silences the output of the UChain. The UChain will still consume cpu cycles.
+::
+
+image::UChain-GUI.png::
+
+SECTION::UScore
+
+The UScore editor consists of a time-line view where events appear as rectangles.
+
+list::
+## The start position of the score can be changed by double-clicking on an empty area of the score.
+## The events can be dragged to change the start position.
+## Dragging the start and end tips of the event will resize the event.
+## Multiple events can be selected by shift clicking or dragging the mouse in an area without events
+## Events can be duplicated by selecting them and then alt-dragging.
+## Events can be grouped into a sub-score by selecting and hitting the folder icon.
+## Events can be disabled by clicking the speaker icon. Muted events will not be started, so this is a good way to decrease cpu usage.
+## Events can be trimmed or split by first changing the start position of the score and then using the trim/split icons.
+::
+
+image::UScoreGUI.png::

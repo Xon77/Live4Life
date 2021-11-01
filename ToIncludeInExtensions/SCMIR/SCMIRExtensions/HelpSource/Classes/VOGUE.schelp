@@ -1,0 +1,90 @@
+title:: VOGUE
+summary:: VOGUE 	
+categories:: SCMIR, Machine Learning
+related:: Classes/PPMC, Classes/MarkovModel, Classes/HMM, Classes/MarkovPool
+
+description::
+A Variable Order Hidden Markov Model with Duration based on Frequent Sequence Mining
+Mohammed J. Zaki et al. ACM Transactions on Knowledge Discovery from Data 4(1)
+
+For 2-sequences only (doesn't model 1-sequences either).
+
+Uses the auxilliary VariableGapSequenceMining class.
+
+code::
+~vgs = VariableGapSequenceMining();
+~vgs.train([0,1,3,2,4,3,2,10,1,3,0,1,2,10,4,3]);
+
+~vgs.freqaj(2)
+
+~vgs.freqqs1(~vgs.statedata[0].size)
+
+
+a = ~vgs.subsequences
+
+a.keys
+
+~vgs.statedata.flatten.size
+
+
+b = Dictionary();
+b[0] = 1
+b[2] = [1,[3,4]]
+
+b.keysDo{|key,i| i.postln}
+
+
+
+~vgs = VariableGapSequenceMining();
+
+~source = "ACBDAHCBADFGAIEB".ascii - 65; //as per paper
+
+~vgs.train(~source);
+
+a = ~vgs.subsequences
+
+a.keys
+
+v = VOGUE(~vgs)
+v.alphabetsize
+v.numqs1
+v.numqg
+v.numqs2
+v.numqu
+v.qindices
+v.train
+
+
+(
+~vgs = VariableGapSequenceMining();
+~source = "ACBDAHCBADFGAIEB".ascii - 65; //as per paper
+~vgs.train(~source);
+v = VOGUE(~vgs);
+v.train;
+)
+
+v.emissionprobabilitymatrix.postcs
+v.statetransitionmatrix.postcs
+v.statedurationprobabilities.postcs
+v.initialstateprobabilities
+
+v.generate(100);
+
+
+(
+~vgs = VariableGapSequenceMining();
+~source = [60,62,64,60,60,62,64,60,64,65,67,64,65,67,67,69,67,65,64,60,67,69,67,65,64,60,60,55,60,60,55,60]; //frere jacques
+~vgs.train(~source);
+v = VOGUE(~vgs);
+v.train;
+v.generate(100);
+)
+
+Pbind(\midinote,Pseq(v.generate(1000),1),\dur,0.125).play
+
+::
+
+
+
+examples::
+

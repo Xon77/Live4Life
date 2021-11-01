@@ -1,0 +1,31 @@
+title:: WFSCollider Code interface
+summary:: Interfacing with WFSCollider via code.
+categories:: WFSCollider
+related::Guides/WFSCollider-Overview
+
+The system can be used just by manipulating the GUIs, but it's also possible to generate scores or chains from code.
+
+To see examples of how to create WFSCollider objects using SuperCollider code see the reference for link::Classes/UScore:: ,  link::Classes/UChain:: and link::Classes/U::.
+
+Below is an example of a reverb using 4 link::Classes/FreeVerb::s patched to 4 plane wave panners. The mix between dry and wet outputs is determined by the distance of the source to the center.
+
+code::
+  (
+  ~points = all {: Point(6*x,6*y),  x <- [-1,1], y <- [-1,1]};
+  UChain(*([\diskSoundFile, \wfsPoint
+
+  ]++4.collect{|i|[
+  	U(\simpleReverb)
+  		.setAudioOut(0,i+1)
+  		.set(\amp,0.8),
+  	U(\wfsStaticPlane)
+  		.setAudioIn(0,i+1)
+  		.point_(~points[i])
+  ]
+  }.flat++[\wfsDynamicPoint])).gui
+  )
+::
+
+
+
+
