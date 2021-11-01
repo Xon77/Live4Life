@@ -1,4 +1,6 @@
-// Mise à jour vers OSCFunc
+// Adapted method .readAndQuery from ddw quarks from James Harkins
+// https://sc-users.bham.ac.narkive.com/yBE3WGch/buffer-readandquery
+// Update towards OSCFunc
 
 BufferFQueryQueueChannel {
 	// called by Buffer-readAndQuery to do the work
