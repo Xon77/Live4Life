@@ -19,3 +19,7 @@ See the [License](/LICENCE.md) for more details.
 ## Installation
 
 ## Overview
+
+## References
+
+## Licence
