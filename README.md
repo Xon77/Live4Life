@@ -15,6 +15,8 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 * a lot of Quarks
 
+  * Twister 
+
 ## Installation
 
 ### Plarform support
