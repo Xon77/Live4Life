@@ -6,6 +6,8 @@ To come soon!
 
 The spatial performance tool *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...).
 
+! [Sequence View](https://www.researchgate.net/profile/Christophe-Lengele/publication/327058300/figure/fig2/AS:660294770638850@1534437949719/Sequence-view-representing-several-parameter-modules-summarized-in-Figure-4-generating_W640.jpg)
+
 I have been developing in SuperCollider since 2011, to play the place and the music at the same time.
 
 ## Warning
@@ -25,8 +27,9 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ### Plarform support
 
-*Live 4 Life* was only tested with macOS 10.14.6 Mojave. 
+*Live 4 Life* was only tested with macOS 10.14.6 Mojave on a MacBook Pro 15". 
 It will soon be optimized for MacOS M1 16".
+
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
 It might work for Linux and Windows platforms after solving some issues. 
