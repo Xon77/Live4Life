@@ -1,8 +1,12 @@
 # *Live 4 Life*
 
+To come soon!
+
 ## Overview
 
-The spatial performance tool *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo and octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...).
+The spatial performance tool *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...).
+
+I have been developing in SuperCollider since 2011, to play the place and the music at the same time.
 
 ## Warning
 
@@ -31,6 +35,13 @@ I cannot help on Linux and Windows platforms since I currently do not have a sim
 
 ## References
 
+*Live 4 Life* was presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), ICMC 2021), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X).
+
+All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele), as well as my doctoral thesis, soon to be published.
+
+Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
+
+
 ## Licence
 
 © 2011-2021 Christophe Lengelé
@@ -41,7 +52,7 @@ You may **not** use it for commercial purposes.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. 
 
-I wish it would be used in the minds of *Free Party*. *Free* unfortunately does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I therefore do not want this tool to be used, by any means, for profit or personal profit.
+I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I therefore do not want this tool to be used, by any means, for personal profit.
 
 Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) without my consent, since this organization never helped me in diffusing my spatial creation and research despite my proposals. If these wishes are not respected, my soul will damn you for eternity.
 
