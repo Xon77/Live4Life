@@ -23,11 +23,14 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 <b>The performance tool in context with all its controllers</b>
 <!--<a href="#> <b>The performance tool in context with all its controllers</b> </a> <br> -->
 <img src="images/Controllers2021bis.jpg" />
+</p>
 
+<p align="center">
 <b>One of the views of the GUI to choose among dozens of sequences and global parameters</b>
 <img src="images/ViewGlobal.jpg" />
+</p>
 
-
+<p align="center">
 <b>Another view of the GUI to compose the details of sequences of spatialised sound events</b>
 <img src="images/ViewSeq.jpg" />
 </p>
