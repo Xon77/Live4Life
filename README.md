@@ -3,7 +3,7 @@
 To come soon!
 
 
-| [**Overview**](#overview) | [**Warning**](#warning) | [**Images**](#images) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Licence**](#licence) |
+| [**Overview**](#overview) | [**Warning**](#warning) | [**Images**](#images) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Licence**](#licence) |
 
 
 ## Overview
@@ -16,6 +16,7 @@ I have been developing in SuperCollider since 2011, to play the place and the mu
 
 Although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
 It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
+
 
 ## Images
 
@@ -35,7 +36,6 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 <img src="images/ViewSeq.jpg" />
 </p>
 
-
 <!--
 <p align="center">
   <b>Some Links:</b><br>
@@ -47,18 +47,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 </p>
 -->
 
-
-## Requirements
-
-* [SuperCollider 3.12.1](https://supercollider.github.io/download)
-
-* a lot of Quarks:
-
-  - Twister 
-
-## Installation
-
-### Plarform support
+## Usage
 
 *Live 4 Life* was only tested with macOS 10.14.6 Mojave on a MacBook Pro 15". 
 It will soon be optimized for MacOS M1 16".
@@ -68,6 +57,19 @@ The reason why I do not switch from Mac to Linux is that I often used [Dante](ht
 It might work for Linux and Windows platforms after solving some issues. 
 I know that you would have to change on Linux.
 I cannot help on Linux and Windows platforms since I currently do not have a simple access to both of them.
+
+## Requirements
+
+* [SuperCollider 3.12.1](https://supercollider.github.io/download)
+
+* a lot of Quarks:
+
+  - Twister 
+
+
+## Installation
+
+## Contribute
 
 ## References
 
