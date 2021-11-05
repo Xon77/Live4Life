@@ -3,7 +3,7 @@
 To come soon!
 
 
-| [**Overview**](#overview) | [**Warning**](#warning) | [**Images**](#images) | [**Platform support**](#Platform support) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Licence**](#licence) |
+| [**Overview**](#overview) | [**Warning**](#warning) | [**Images**](#images) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Licence**](#licence) |
 
 
 ## Overview
@@ -47,7 +47,9 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 </p>
 -->
 
-## Platform support
+## Usage
+
+### Platform support
 
 *Live 4 Life* was only tested with macOS 10.14.6 Mojave on a MacBook Pro 15". 
 It will soon be optimized for MacOS M1 16".
