@@ -17,8 +17,8 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ## Images
 
-![Controllers](/images/Controllers2021bis.jpg)
-![Global](/images/ViewGlobal.jpg)![Seq](/images/ViewSeq.jpg)
+![Controllers](/_images/Controllers2021bis.jpg)
+![Global](/_images/ViewGlobal.jpg)![Seq](/_images/ViewSeq.jpg)
 
 <img src="https://www.researchgate.net/profile/Christophe-Lengele/publication/327058300/figure/fig2/AS:660294770638850@1534437949719/Sequence-view-representing-several-parameter-modules-summarized-in-Figure-4-generating_W640.jpg" width="370" height="263"><img src="https://static.cambridge.org/binary/version/id/urn:cambridge.org:id:binary-alt:20211007140515-77593-mediumThumb-S135577182100008X_fig2.jpg?pub-status=live" width="440" height="263">
 
