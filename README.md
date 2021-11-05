@@ -8,9 +8,9 @@ To come soon!
 
 ## Overview
 
-The spatial performance tool *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
+The **spatial performance tool** *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
 
-I have been developing in SuperCollider since 2011, to play the place and the music at the same time.
+I have been developing in **SuperCollider** since 2011, to play the place and the music at the same time.
 
 
 <p align="center">
@@ -43,6 +43,7 @@ I have been developing in SuperCollider since 2011, to play the place and the mu
 ## Usage
 
 Although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
+
 It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ### Platform support
