@@ -43,11 +43,13 @@ I have been developing in **SuperCollider** since 2011, to play the place and th
 
 ## Usage
 
-Although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
+:warning: Please note that:
 
-It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
+* although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
 
-:warning: Please note that
+* it is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
+
+* ...
 
 
 ### Platform support
