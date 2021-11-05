@@ -48,7 +48,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ### Platform support
 
-*Live 4 Life* was only tested with macOS 10.14.6 Mojave on a MacBook Pro 15". 
+*Live 4 Life* has only been tested with macOS 10.14.6 Mojave on a MacBook Pro 15". 
 It will soon be optimized for MacOS M1 16".
 
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
