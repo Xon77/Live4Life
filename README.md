@@ -40,11 +40,15 @@ I have been developing in **SuperCollider** since 2011, to play the place and th
 </p>
 -->
 
+
 ## Usage
 
 Although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
 
 It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
+
+:warning: Please note that
+
 
 ### Platform support
 
@@ -58,18 +62,21 @@ Several years ago, I succeeded to make it work on Linux: I remember I had to cha
 For Windows, I do not know, since currently I do not have a simple access to both of them.
 Let me know. I might maybe help.
 
+
 ## Requirements
 
 * [SuperCollider 3.12.1](https://supercollider.github.io/download)
 
-* a lot of Quarks:
+* many Quarks:
 
   - Twister 
 
 
 ## Installation
 
+
 ## Contribute
+
 
 ## References
 
