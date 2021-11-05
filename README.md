@@ -84,7 +84,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 © 2011-2021 Christophe Lengelé
 
-*Live 4 Life* is an open source software: You can redistribute it and/or modify it under the terms of **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license** (CC BY-NC-SA 4.0). 
+*Live 4 Life* is an open source software: you can redistribute it and/or modify it under the terms of **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license** (CC BY-NC-SA 4.0). 
 
 You may **not** use it for commercial purposes.
 
