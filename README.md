@@ -25,10 +25,16 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ![Controllers](/images/Controllers2021bis.jpg)
 
-One of the views of the GUI to choose among dozens of sequences and global parameters
+<p align="center">
+<b>One of the views of the GUI to choose among dozens of sequences and global parameters</b>
+</p>
+
 ![Global](/images/ViewGlobal.jpg)
 
-One of the views of the GUI to compose the details of sequences of spatialised sound events
+<p align="center">
+<b>One of the views of the GUI to compose the details of sequences of spatialised sound events</b>
+</p>
+
 ![Seq](/images/ViewSeq.jpg)
 
 
