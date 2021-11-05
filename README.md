@@ -55,7 +55,7 @@ The reason why I do not switch from Mac to Linux is that I often used [Dante](ht
 
 It might work for Linux and Windows platforms after solving some issues. 
 Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit `numWireBufs` to some values, like 800, in the file `1_Init Buffer Synths`. Since then, there may probably be other errors on Linux.
-For Windows, I cannot also help, since currently I do not have a simple access to both of them.
+For Windows, I do not know, since currently I do not have a simple access to both of them.
 Let me know. I might maybe help.
 
 ## Requirements
