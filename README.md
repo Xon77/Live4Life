@@ -21,30 +21,17 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 <p align="center">
 <b>The performance tool in context with all its controllers</b>
-</p>
-
-![Controllers](/images/Controllers2021bis.jpg)
-
-
-
-<p align="center">
-<b>Pourquoi cela ne marche pas ???</b>
 <!--<a href="#> <b>The performance tool in context with all its controllers</b> </a> <br> -->
 <img src="images/Controllers2021bis.jpg" />
-</p>
 
-
-<p align="center">
 <b>One of the views of the GUI to choose among dozens of sequences and global parameters</b>
-</p>
+<img src="images/ViewGlobal.jpg" />
 
-![Global](/images/ViewGlobal.jpg)
 
-<p align="center">
 <b>Another view of the GUI to compose the details of sequences of spatialised sound events</b>
+<img src="images/ViewSeq.jpg" />
 </p>
 
-![Seq](/images/ViewSeq.jpg)
 
 <!--
 <p align="center">
@@ -56,6 +43,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
   <img src="http://s.4cdn.org/image/title/105.gif">
 </p>
 -->
+
 
 ## Requirements
 
