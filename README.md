@@ -3,7 +3,7 @@
 To come soon!
 
 
-**| [Overview](#overview) | [Warning](#warning) | [Images](#images) | [Requirements](#requirements) | [Installation](#installation) | [References](#references) | [Licence](#licence) |
+**| [Overview](#overview) | [Warning](#warning) | [Images](#images) | [Requirements](#requirements) | [Installation](#installation) | [References](#references) | [Licence](#licence) |**
 
 
 ## Overview
