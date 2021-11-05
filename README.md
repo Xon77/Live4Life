@@ -3,7 +3,7 @@
 To come soon!
 
 
-| [**Overview**](#overview) [**Images**](#images) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) |
+| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) |
 
 
 ## Overview
@@ -12,8 +12,6 @@ The spatial performance tool *Live 4 Life*, which is in constant development und
 
 I have been developing in SuperCollider since 2011, to play the place and the music at the same time.
 
-
-## Images
 
 <p align="center">
 <b>The performance tool in context with all its controllers</b>
