@@ -1,4 +1,4 @@
-# *Live 4 Life* &nbsp;&nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
+# *Live 4 Life* &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
 To come soon!
