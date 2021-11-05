@@ -91,6 +91,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I therefore do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) without my consent, since this organization never helped me in diffusing my spatial creation and research despite my proposals. If these wishes are not respected, my soul will damn you for eternity.
+Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) without my consent, since this organization never helped me in diffusing my spatial creation and research despite my proposals. If these wishes are not respected, your souls will be damned for eternity.
 
 See the [License](/LICENCE.md) for more details.
