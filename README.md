@@ -25,13 +25,12 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ![Controllers](/images/Controllers2021bis.jpg)
 
-<!--
-Pourquoi ne marche pas ?
+
 <p align="center">
 <a href="#> <b>The performance tool in context with all its controllers</b> </a> <br>
-<img src="/images/Controllers2021bis.jpg">
+<img src="images/Controllers2021bis.jpg">
 </p>
--->
+
 
 <p align="center">
 <b>One of the views of the GUI to choose among dozens of sequences and global parameters</b>
