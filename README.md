@@ -2,9 +2,9 @@
 
 To come soon!
 
-<b>
+
 [Overview](#overview) | [Warning](#warning) | [Images](#images) | [Requirements](#requirements) | [Installation](#installation) | [References](#references) |
-</b>
+
 
 ## Overview
 
@@ -20,7 +20,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 ## Images
 
 <p align="center">
-<b The performance tool in context with all its controllers</b>
+The performance tool in context with all its controllers
 </p>
 
 ![Controllers](/images/Controllers2021bis.jpg)
