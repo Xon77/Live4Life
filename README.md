@@ -22,6 +22,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 <p align="center">
 <b>The performance tool in context with all its controllers</b>
 </p>
+
 ![Controllers](/images/Controllers2021bis.jpg)
 
 One of the views of the GUI to choose among dozens of sequences and global parameters
