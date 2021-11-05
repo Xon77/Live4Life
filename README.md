@@ -26,6 +26,11 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 ![Controllers](/images/Controllers2021bis.jpg)
 
 <p align="center">
+<a href="/images/Controllers2021bis.jpg</a>
+<b>The performance tool in context with all its controllers</b>
+</p>
+
+<p align="center">
 <b>One of the views of the GUI to choose among dozens of sequences and global parameters</b>
 </p>
 
@@ -37,7 +42,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 ![Seq](/images/ViewSeq.jpg)
 
-
+<!--
 <p align="center">
   <b>Some Links:</b><br>
   <a href="#">Link 1</a> |
@@ -46,6 +51,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
   <br><br>
   <img src="http://s.4cdn.org/image/title/105.gif">
 </p>
+-->
 
 ## Requirements
 
