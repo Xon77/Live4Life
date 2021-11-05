@@ -1,10 +1,10 @@
-# *Live 4 Life*   ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
+# *Live 4 Life*
 
 
 To come soon!
 
 
-| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) |
+| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) | ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
 ## Overview
