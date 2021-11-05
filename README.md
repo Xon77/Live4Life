@@ -90,6 +90,9 @@ All the papers are also published on [Researchgate](https://www.researchgate.net
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
 
 
+## Acknowledgements
+
+
 ## Licence
 
 © 2011-2021 Christophe Lengelé
