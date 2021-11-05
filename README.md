@@ -26,8 +26,8 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 ![Controllers](/images/Controllers2021bis.jpg)
 
 <p align="center">
-<a href="/images/Controllers2021bis.jpg</a>
-<b>The performance tool in context with all its controllers</b>
+<a href="#> <b>The performance tool in context with all its controllers</b> </a>
+<img src="/images/Controllers2021bis.jpg">
 </p>
 
 <p align="center">
