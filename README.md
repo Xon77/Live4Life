@@ -1,5 +1,7 @@
 # *Live 4 Life*
 
+|status| |license|
+
 .. |status| image:: https://shields.io/pypi/status/python-rtmidi
     :alt: Project status
 
