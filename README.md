@@ -1,13 +1,6 @@
 # *Live 4 Life*
 
-|status| |license|
-
-.. |status| image:: https://shields.io/pypi/status/python-rtmidi
-    :alt: Project status
-
-.. |license| image:: https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png
-    :target: license.md
-    :alt: CC BY-NC-SA 4.0 License
+![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 To come soon!
 
