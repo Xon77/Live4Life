@@ -4,9 +4,7 @@
 To come soon!
 
 
-| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) | [![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)](http://choosealicense.com/licenses/mit/)
-
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://choosealicense.com/licenses/mit/)
+| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) | ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
 ## Overview
