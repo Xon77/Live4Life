@@ -4,7 +4,7 @@
 To come soon!
 
 
-| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Licence**](#licence) | ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
+| [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [** Acknowledgements**](#acknowledgements) | [**Licence**](#licence) | ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
 ## Overview
