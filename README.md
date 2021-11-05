@@ -2,7 +2,9 @@
 
 To come soon!
 
+<b>
 [Overview](#overview) | [Warning](#warning) | [Images](#images) | [Requirements](#requirements) | [Installation](#installation) | [References](#references) |
+</b>
 
 ## Overview
 
