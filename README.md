@@ -54,8 +54,8 @@ It will soon be optimized for MacOS M1 16".
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
 It might work for Linux and Windows platforms after solving some issues. 
-I know that you would have to change on Linux.
-I cannot help on Linux and Windows platforms since I currently do not have a simple access to both of them.
+Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit 'numWireBufs' to some value like 800 in the file '1_Init Buffer Synths'. Since then, there may probably other errors on Linux.
+For Windows, I cannot also help, since currently I do not have a simple access to both of them.
 
 ## Requirements
 
@@ -89,7 +89,7 @@ You may **not** use it for commercial purposes.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. 
 
-I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I therefore do not want this tool to be used, by any means, for personal profit.
+I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
 Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) without my consent, since this organization never helped me in diffusing my spatial creation and research despite my proposals. If these wishes are not respected, your souls will be damned for eternity.
 
