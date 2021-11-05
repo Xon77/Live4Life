@@ -28,7 +28,7 @@ It is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 <p align="center">
 <a href="#> <b>The performance tool in context with all its controllers</b> </a> <br>
-<img src="images/Controllers2021bis.jpg" title="Title of image" alt="alt text here"/>
+<img src="images/Controllers2021bis.jpg"/>
 </p>
 
 
