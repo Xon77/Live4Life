@@ -8,11 +8,11 @@
 
 The **spatial performance tool** *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
 
-I have been developing in **SuperCollider** since 2011, to play the place and the music at the same time.
+I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time".
 
 
 <p align="center">
-<b>The performance tool in context with all its controllers</b>
+<b>The performance tool in context with all its controllers in 2021</b>
 <!--<a href="#> <b>The performance tool in context with all its controllers</b> </a> <br> -->
 <img src="images/Controllers2021bis.jpg" />
 </p>
@@ -23,7 +23,7 @@ I have been developing in **SuperCollider** since 2011, to play the place and th
 </p>
 
 <p align="center">
-<b>Another view of the GUI to compose the details of sequences of spatialised sound events</b>
+<b>Another view of the GUI to compose sequences of parameters of spatialised sound events</b>
 <img src="images/ViewSeq.jpg" />
 </p>
 
@@ -82,7 +82,7 @@ Let me know. I might maybe help.
 
 *Live 4 Life* has been presented many times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X).
 
-All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele), as well as my doctoral thesis, soon to be published about realtime creation of spatialised polyrhythms via this tool.
+All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele), as well as my doctoral thesis, soon to be published (in french, sorry) about realtime creation of spatialised polyrhythms via this tool.
 
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
 
