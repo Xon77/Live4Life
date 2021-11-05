@@ -90,7 +90,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 ## Acknowledgements
 
 
-## Licence &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
+## Licence
 
 © 2011-2021 Christophe Lengelé
 
