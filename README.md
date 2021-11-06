@@ -79,12 +79,12 @@ Let me know. I might maybe help.
   - [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) (for some MIDI controllers)
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI)
   - ([redSampler](https://github.com/redFrik/redSampler), not necessary, I only use it to play specific sound files)
-  - [ServerTools](https://github.com/supercollider-quarks/ServerTools)(for server status)
+  - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status)
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI)
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI)
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI)
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers)
-  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`.
+  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. It is just a small add-on to avoid an error. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths)
   - [wslib](https://github.com/supercollider-quarks/wslib) (for GUI)
   - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets)
