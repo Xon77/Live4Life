@@ -1,4 +1,4 @@
-# Welcome to *Live 4 Life*! To come soon! &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
+# Welcome to *Live 4 Life* ! To come soon ! &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
 | [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Acknowledgements**](#acknowledgements) | [**Licence**](#licence) |
@@ -67,10 +67,17 @@ Let me know. I might maybe help.
 
 * [SuperCollider 3.12.1](https://supercollider.github.io/download)
 
-* many Quarks:
-
+* many [Quarks](https://github.com/supercollider-quarks):
+  - [adclib](https://github.com/supercollider-quarks/adclib)
+  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3)
+  - [Bjorklund](https://github.com/redFrik/Bjorklund)
+  - [Connection](https://github.com/scztt/Connection.quark)
+  - [Ctk](https://github.com/supercollider-quarks/Ctk)
+  - ..
+  - [ZArchive](https://github.com/crucialfelix/ZArchive)
   - Twister 
 
+Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmini)
 
 ## Installation
 
