@@ -1,3 +1,5 @@
+<script src="image-switcher.js"></script>
+
 # Welcome to *Live 4 Life*! To come soon! &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
@@ -105,3 +107,8 @@ I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* doe
 Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) without my consent, since this organization never helped me in diffusing my spatial creation and research despite my proposals. If these wishes are not respected, your souls will be damned for eternity.
 
 See the [License](/LICENCE.md) for more details.
+
+<a href="#" class="image-switch-animation" id="image-switcher-action">
+    Switch image
+</a>
+<img class="image-switcher" src="images/GlobalView.jpg" data-switch-src="images/SeqView.jpg" data-animation="bounce">
