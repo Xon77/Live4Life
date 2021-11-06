@@ -78,7 +78,7 @@ Let me know. I might maybe help.
   - [FPLib](https://github.com/miguel-negrao/FPLib) (functional programming to get back to previous presets)
   - [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) (for some MIDI controllers)
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI)
-  - ([redSampler](https://github.com/redFrik/redSampler), not necessary, I only use it to play specific sound files)
+  - ([redSampler](https://github.com/redFrik/redSampler), not necessary; I only use it to play specific sound files)
   - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status)
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI)
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI)
@@ -96,7 +96,7 @@ Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmi
 1. Install SuperCollider. 
 2. Put sc3-plugins in your SuperCollider Extensions folder.
 3. Install all the Quarks mentionned above.
-4. After installing all this, put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder.
+4. After recompiling, put the folder `4Live4Life_Extensions` in your SuperCollider Extensions foldern and recompile again.
 
 
 ## Contribute
