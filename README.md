@@ -84,7 +84,7 @@ Let me know. I might maybe help.
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI)
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI)
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers)
-  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. It is just a small add-on to avoid an error. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.
+  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. It is just a small add-on to avoid an error. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.)
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths)
   - [wslib](https://github.com/supercollider-quarks/wslib) (for GUI)
   - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets)
@@ -96,6 +96,7 @@ Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmi
 1. Install SuperCollider. 
 2. Put sc3-plugins in your SuperCollider Extensions folder.
 3. Install all the Quarks mentionned above.
+4. After installing all this, put the folder '4Live4Life_Extensions` in your SuperCollider Extensions folder.
 
 
 ## Contribute
