@@ -96,7 +96,7 @@ Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmi
 1. Install SuperCollider. 
 2. Put sc3-plugins in your SuperCollider Extensions folder.
 3. Install all the Quarks mentionned above.
-4. After installing all this, put the folder '4Live4Life_Extensions` in your SuperCollider Extensions folder.
+4. After installing all this, put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder.
 
 
 ## Contribute
