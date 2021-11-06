@@ -65,20 +65,22 @@ Let me know. I might maybe help.
 
 ## Requirements
 
-* [SuperCollider 3.12.1](https://supercollider.github.io/download)
+* [SuperCollider 3.12.1](https://supercollider.github.io/download) or above
+
+* [sc3-plugins](https://github.com/supercollider/sc3-plugins)
 
 * many [Quarks](https://github.com/supercollider-quarks):
   - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb)
-  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3)
+  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation)
   - [Bjorklund](https://github.com/redFrik/Bjorklund) (for euclidean algorhythm)
   - [Connection](https://github.com/scztt/Connection.quark) (for MVC and NumericControlValue)
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes)
-  - [FPLib](https://github.com/miguel-negrao/FPLib)(functional programming to get back to previous presets)
+  - [FPLib](https://github.com/miguel-negrao/FPLib) (functional programming to get back to previous presets)
   - [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) (for some MIDI controllers)
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI)
   - [redSampler](https://github.com/redFrik/redSampler)
   - [ServerTools](https://github.com/supercollider-quarks/ServerTools)(for server status)
-  - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner)
+  - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI)
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI)
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI)
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers)
@@ -90,6 +92,9 @@ Let me know. I might maybe help.
 Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmini)
 
 ## Installation
+
+Install first SuperCollider, then put SuperCollider Extensions in
+4Live4Life_Extensions
 
 
 ## Contribute
