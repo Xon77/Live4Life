@@ -1,5 +1,3 @@
-<script src="image-switcher.js"></script>
-
 # Welcome to *Live 4 Life*! To come soon! &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
@@ -112,3 +110,5 @@ See the [License](/LICENCE.md) for more details.
     Switch image
 </a>
 <img class="image-switcher" src="images/ViewGlobal.jpg" data-switch-src="images/ViewSeq.jpg" data-animation="bounce">
+
+<script src="image-switcher.js"></script>
