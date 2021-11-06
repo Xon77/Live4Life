@@ -111,4 +111,4 @@ See the [License](/LICENCE.md) for more details.
 <a href="#" class="image-switch-animation" id="image-switcher-action">
     Switch image
 </a>
-<img class="image-switcher" src="images/GlobalView.jpg" data-switch-src="images/SeqView.jpg" data-animation="bounce">
+<img class="image-switcher" src="images/ViewGlobal.jpg" data-switch-src="images/ViewSeq.jpg" data-animation="bounce">
