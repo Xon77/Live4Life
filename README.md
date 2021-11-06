@@ -73,9 +73,20 @@ Let me know. I might maybe help.
   - [Bjorklund](https://github.com/redFrik/Bjorklund)
   - [Connection](https://github.com/scztt/Connection.quark)
   - [Ctk](https://github.com/supercollider-quarks/Ctk)
-  - ..
+
+  - [FPLib](https://github.com/miguel-negrao/FPLib)
+  - [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit)
+  - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu)
+  - [redSampler](https://github.com/redFrik/redSampler)
+  - [ServerTools](https://github.com/supercollider-quarks/ServerTools)
+  - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner)
+  - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2)
+  - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT)
+  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib)
+  - [WarpExt](https://github.com/supercollider-quarks/WarpExt)
+  - [wslib](https://github.com/supercollider-quarks/wslib)
   - [ZArchive](https://github.com/crucialfelix/ZArchive)
-  - Twister 
+  - [Twister](https://github.com/scztt/Twister.quark)
 
 Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmini)
 
