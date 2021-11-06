@@ -71,7 +71,7 @@ Let me know. I might maybe help.
 
 * many [Quarks](https://github.com/supercollider-quarks):
   - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb)
-  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation - currently only FOA, HOA will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), e.g. Kernels and Matrices)
+  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation - currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), e.g. Kernels and Matrices)
   - [Bjorklund](https://github.com/redFrik/Bjorklund) (for euclidean algorhythm)
   - [Connection](https://github.com/scztt/Connection.quark) (for MVC and NumericControlValue)
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes)
