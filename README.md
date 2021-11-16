@@ -8,7 +8,7 @@
 
 The **spatial performance tool** *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
 
-I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time".
+I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create and I hope to develop it during the rest of my life.
 
 
 <p align="center">
@@ -72,18 +72,18 @@ Let me know. I might maybe help.
 * many [Quarks](https://github.com/supercollider-quarks):
   - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb)
   - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).)
-  - [Automation](https://github.com/neeels/Automation)
+  - [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs)
   - [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm)
-  - [Connection](https://github.com/scztt/Connection.quark) (for MVC and NumericControlValue)
+  - [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue)
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes)
   - [FPLib](https://github.com/miguel-negrao/FPLib) (for functional programming to get back to previous presets. This Quark will also install automatically [JITLibExtensions](https://github.com/supercollider-quarks/JITLibExtensions) and [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) for some MIDI controllers.)
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI)
-  - ([redSampler](https://github.com/redFrik/redSampler), not necessary; I only use it to play specific sound files.)
+  - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.)
   - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status)
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI)
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI)
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI)
-  - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, You can install via `Quarks.install("https://github.com/scztt/Twister.quark")`.)
+  - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install via `Quarks.install("https://github.com/scztt/Twister.quark")`.)
   - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. It is just a small add-on[^Traj] to avoid an error. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.)
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths)
   - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets)
@@ -95,6 +95,7 @@ Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmin
 1. [Install SuperCollider](https://supercollider.github.io/download). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile.
+3b. Put the file `gestionnaire-iac.desc.scd` in the folder `MKtlDescriptions` within the Quark Modality, only if you use the Mac TouchBar on previous MacBook Pros.
 4. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
