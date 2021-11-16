@@ -14,17 +14,17 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 <p align="center">
 <b>The performance tool in context with all its controllers in 2021</b>
 <!--<a href="#> <b>The performance tool in context with all its controllers</b> </a> <br> -->
-<img src="images/Controllers2021bis.jpg" />
+<img src="Images/Controllers2021bis.jpg" />
 </p>
 
 <p align="center">
 <b>One of the views of the GUI to choose among dozens of sequences and global parameters</b>
-<img src="images/ViewGlobal.jpg" />
+<img src="Images/ViewGlobal.jpg" />
 </p>
 
 <p align="center">
 <b>Another view of the GUI to compose sequences of parameters of spatialised sound events</b>
-<img src="images/ViewSeq.jpg" />
+<img src="Images/ViewSeq.jpg" />
 </p>
 
 <!--
@@ -94,7 +94,7 @@ Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmin
 
 1. [Install SuperCollider](https://supercollider.github.io/download). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
-3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `gestionnaire-iac.desc.scd`, which is in the folder `TouchBar` in the folder `MKtlDescriptions` within the Quark Modality.
+3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `Controllers/TouchBar/gestionnaire-iac.desc.scd` within the folder `MKtlDescriptions` within the Quark Modality.
 4. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
