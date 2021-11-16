@@ -71,8 +71,9 @@ Let me know. I might maybe help.
 
 * many [Quarks](https://github.com/supercollider-quarks):
   - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb)
-  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation - currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), e.g. Kernels and Matrices)
-  - [Bjorklund](https://github.com/redFrik/Bjorklund) (for euclidean algorhythm)
+  - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation - currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), e.g. Kernels and Matrices. This Quark will install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or XML)
+  - [Automation](https://github.com/neeels/Automation)
+  - [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm)
   - [Connection](https://github.com/scztt/Connection.quark) (for MVC and NumericControlValue)
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes)
   - [FPLib](https://github.com/miguel-negrao/FPLib) (functional programming to get back to previous presets)
@@ -86,10 +87,9 @@ Let me know. I might maybe help.
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers)
   - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. It is just a small add-on[^Traj] to avoid an error. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.)
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths)
-  - [wslib](https://github.com/supercollider-quarks/wslib) (for GUI)
   - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets)
 
-Concerning some extensions,  [APCmini](https://github.com/andresperezlopez/APCmini)
+Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmini)
 
 ## Installation
 
