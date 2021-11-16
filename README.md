@@ -8,7 +8,7 @@
 
 The **spatial performance tool** *Live 4 Life*, which is in constant development under the Mac platform, aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
 
-I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create and I hope to develop it during the rest of my life.
+I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with sounds and I hope to develop it during the rest of my life.
 
 
 <p align="center">
@@ -111,6 +111,18 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 
 ## Acknowledgements
+
+*Live 4 Life* grew little by little, by gluing and restructuring a lot of code from others and integrating several systems and quarks. I would have been unable to build this tool without the help of the SuperCollider online community, who always answered my questions and even provided me with some examples of codes and classes.
+
+So, Big Thanks to name a few (including previous and current developers) :
+
+James Harkins, Daniel Mayer, Fredrik Olofsson, Julian Rohrhuber, Josh Parmenter, Wouter Snoei, Nick Collins, Jakob Leben, Chris Sattinger, Dan Stowell, Scott Wilson, Miguel Negrão, Scott Carver, Alberto de Campo, Marije Baalman, Brian Heim, Marcin Pączkowski ...
+
+
+The list might be long. Sorry for those I forgot to mention. I cannot quote all of them.
+
+By giving soon this tool, it is my way to contribute to SuperCollider.
+And I encourage anyone (DSP developers or any user) to support this beautiful environment.
 
 
 ## Licence
