@@ -114,9 +114,9 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 *Live 4 Life* grew little by little, by gluing and restructuring a lot of code from others and integrating several systems and quarks. I would have been unable to build this tool without the help of the SuperCollider online community, who always answered my questions and even provided me with some examples of codes and classes.
 
-So, Big Thanks to name a few (including previous and current developers) :
+So, Big Thanks to (including previous and current developers):
 
-James Harkins, Daniel Mayer, Fredrik Olofsson, Julian Rohrhuber, Josh Parmenter, Wouter Snoei, Nick Collins, Jakob Leben, Chris Sattinger, Dan Stowell, Scott Wilson, Miguel Negrão, Scott Carver, Alberto de Campo, Marije Baalman, Brian Heim, Marcin Pączkowski ...
+[James Harkins](https://github.com/jamshark70), [Daniel Mayer](https://github.com/dkmayer), [Fredrik Olofsson](https://github.com/redFrik), [Julian Rohrhuber](https://github.com/telephon), [Josh Parmenter](https://github.com/joshpar), [Wouter Snoei](https://github.com/woutersnoei), [Nick Collins](https://github.com/sicklincoln), [Jakob Leben](https://github.com/jleben), [Chris Sattinger](https://github.com/crucialfelix), [Dan Stowell](https://github.com/danstowell), [Scott Wilson](https://github.com/muellmusik), [Joseph Anderson](https://github.com/joslloand), [Miguel Negrão](https://github.com/miguel-negrao), [Scott Carver](https://github.com/scztt), [Alberto de Campo](https://github.com/adcxyz), [Marije Baalman](https://github.com/sensestage), [Brian Heim](https://github.com/mossheim), [Marcin Pączkowski](https://github.com/dyfer) ...
 
 
 The list might be long. Sorry for those I forgot to mention. I cannot quote all of them.
