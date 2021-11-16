@@ -14,7 +14,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 <p align="center">
 <b>The performance tool in context with all its controllers in 2021</b>
 <!--<a href="#> <b>The performance tool in context with all its controllers</b> </a> <br> -->
-<img src="Images/Controllers2021bis.jpg" />
+<img src="Images/Controllers2021b.jpg" />
 </p>
 
 <p align="center">
