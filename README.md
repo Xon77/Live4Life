@@ -43,9 +43,9 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 :warning: Please note that:
 
-* although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
-
 * it is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
+
+* although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
 
 * due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed my own coding strategies, which might be bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
@@ -103,6 +103,15 @@ Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmin
 
 ### Setup
 
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three files to execute for:
+
+* initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms,
+
+* initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders and subfolders,
+
+* opening a GUI with a Sequence view for the composition and the Global view for the performance,
+
+* initializing a pattern function, that triggers sound events with different parameters for each track, and a routine updating the GUI.
 
 
 ## Contribute
