@@ -94,7 +94,7 @@ Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmin
 
 1. [Install SuperCollider](https://supercollider.github.io/download). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
-3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `Controllers/TouchBar/gestionnaire-iac.desc.scd` within the folder `MKtlDescriptions` within the Quark Modality.
+3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `Controllers/TouchBar/gestionnaire-iac.desc.scd` in the folder `MKtlDescriptions` within the Quark Modality.
 4. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
