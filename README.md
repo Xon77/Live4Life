@@ -47,7 +47,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 * it is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
-* ...
+* due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed my own coding strategies, which might be bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
 
 ### Platform support
@@ -90,6 +90,7 @@ Let me know. I might maybe help.
 
 Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmini)
 
+
 ## Installation
 
 1. [Install SuperCollider](https://supercollider.github.io/download). 
@@ -98,7 +99,13 @@ Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmin
 4. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
+### Setup
+
+
+
 ## Contribute
+
+...
 
 
 ## References
