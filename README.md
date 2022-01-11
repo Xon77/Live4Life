@@ -133,7 +133,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 ## Contribute
 
-I have a lot of features I would like to improve or develop, such as the collection of synthDefs ([ICMC 2018](https://github.com/v7b1/mi-UGens/tree/v0.0.1)
+I have a lot of features I would like to improve or develop, such as the collection of synthDefs ([Some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins))
 
 If you would like to contribute, please get in touch with me in order to organise further development.
 
