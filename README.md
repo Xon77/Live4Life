@@ -111,13 +111,13 @@ In order to launch the tool, follow the instructions of the file `0 Live Q` in t
 
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three files within the [folder](/4Live4Life_Project) `4Live4Life_Project` to execute for:
 
-* initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
+1. initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
-* initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IN Bass`, `IN Gong`, `IN Piano`, `EL Fire`, `El Earth`, `EL water` ...),
+1. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IN Bass`, `IN Gong`, `IN Piano`, `EL Fire`, `El Earth`, `EL water` ...),
 
-* opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
+2. opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
-* initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
+3. initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
 
 ## Contribute
