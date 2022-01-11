@@ -45,7 +45,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 * it is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
-* although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
+* although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
 * due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
@@ -111,11 +111,11 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 * initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms,
 
-* initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare a collection organized with subfolders and labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IN Bass`, `IN Gong`, `IN Piano`, `EL Fire`, `El Earth`, `EL water` ...)
+* initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IN Bass`, `IN Gong`, `IN Piano`, `EL Fire`, `El Earth`, `EL water` ...),
 
-* opening a GUI with a Sequence view for the composition and the Global view for the performance,
+* opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
-* initializing a pattern function, that triggers sound events with different parameters for each track, and a routine updating the GUI.
+* initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
 In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) `4Live4Life_Project`.
 
