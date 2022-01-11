@@ -1,4 +1,4 @@
-# Welcome to *Live 4 Life* ! To come soon ! &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
+# Welcome to *Live 4 Life* ! To come soon in January 2022 ! &nbsp;&nbsp; ![Licence](https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png)
 
 
 | [**Overview**](#overview) | [**Usage**](#usage) | [**Requirements**](#requirements) | [**Installation**](#installation) | [**References**](#references) | [**Contribute**](#contribute) | [**Acknowledgements**](#acknowledgements) | [**Licence**](#licence) |
@@ -54,8 +54,8 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 ### Platform support
 
-*Live 4 Life* has only been tested with macOS 10.14.6 Mojave on a MacBook Pro 15". 
-It will soon be optimized for MacOS M1 16".
+*Live 4 Life* has been tested with macOS 10.14.6 Mojave on a MacBook Pro 15".
+Although it works for Apple Silicon with macOS 12.1 Monterey, it will soon be optimized for M1 16".
 
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
