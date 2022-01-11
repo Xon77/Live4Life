@@ -55,7 +55,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 ### Platform support
 
 *Live 4 Life* has been tested with macOS 10.14.6 Mojave on a MacBook Pro 15".
-Although it works for Apple Silicon with macOS 12.1 Monterey, it will soon be optimized for M1 16".
+Although it works well for Apple Silicon with macOS 12.1 Monterey, it will soon be optimized for M1 16".
 
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
@@ -116,7 +116,11 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 ## Contribute
 
-......
+I have a lot of features I would like to improve or develop, such as ...
+
+If you would like to contribute, please get in touch with me in order to organise further development.
+
+If you report an issue, please try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
 
 ## References
