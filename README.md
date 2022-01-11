@@ -67,7 +67,7 @@ Let me know. I might maybe help.
 
 ## Requirements
 
-* [SuperCollider 3.12.1](https://supercollider.github.io/download) or above,
+* [SuperCollider 3.12.2](https://supercollider.github.io/download) or above,
 
 * [sc3-plugins](https://supercollider.github.io/sc3-plugins/),
 

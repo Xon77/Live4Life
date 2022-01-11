@@ -1,0 +1,6 @@
+UScore(
+	UChain(0, 0, 10.0, [ 'sine', [ 'freq', [ 'envelope', [ 'env', EnvM([ 440.0, 880.0, 440.0 ], [ 5.0, 5.0 ]) ] ] ] ], [ 'wfsSource', [ 'point', Point(-3.5545229911804, 8.11956346035), 'maxAmpRadius', 2.0 ] ]), 
+	UMarker(0.0, 2.0, "automation", { |marker, score| 
+}, "This example score demonstrates how simple automation can be performed.
+
+The sine unit in the event in the score uses an UMap for it's frequency. The UMap is of type 'envelope', and holds an envelope that makes the frequency change from 440 to 880 Hz, and back to 440 again in 10 seconds. The envelope can be edited by clicking the 'edit' button in UChain editor.")).name_("simple automation")
