@@ -88,7 +88,8 @@ Let me know. I might maybe help.
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
-  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
+  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for GUI),
+  - [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
   - [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
   - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
