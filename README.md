@@ -100,8 +100,8 @@ Let me know. I might maybe help.
 1. [Install SuperCollider](https://supercollider.github.io/download). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `Controllers/TouchBar/gestionnaire-iac.desc.scd` in the folder `MKtlDescriptions` within the Quark Modality.
-4. Replace two Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. (Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor.
-5. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
+4. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. (Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor.
+5. Put the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
 ### Setup
