@@ -117,7 +117,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 * initializing a pattern function, that triggers sound events with different parameters for each track, and a routine updating the GUI.
 
-In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project).
+In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) `4Live4Life_Project`.
 
 
 ## Contribute
