@@ -111,13 +111,13 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 * initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms,
 
-* initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare a collection organized with subfolders and labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IT Bass`, `IT Gong`, `IT Piano`, `EL Fire`, `El Earth`, `EL water` ...)
+* initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare a collection organized with subfolders and labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IN Bass`, `IN Gong`, `IN Piano`, `EL Fire`, `El Earth`, `EL water` ...)
 
 * opening a GUI with a Sequence view for the composition and the Global view for the performance,
 
 * initializing a pattern function, that triggers sound events with different parameters for each track, and a routine updating the GUI.
 
-In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) and gather your sound files
+In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project).
 
 
 ## Contribute
