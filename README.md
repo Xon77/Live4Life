@@ -54,8 +54,8 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 ### Platform support
 
-*Live 4 Life* has been tested with macOS 10.14.6 Mojave on a MacBook Pro 15".
-Although it works well for Apple Silicon with macOS 12.1 Monterey, it will soon be optimized for M1 16".
+*Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15".
+Although it works well for Apple Silicon with macOS 12.1 Monterey, the GUI will soon be optimized for M1 16".
 
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
@@ -101,23 +101,23 @@ Let me know. I might maybe help.
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
 4. If you use some controllers, such as the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the [folder](/Modality_desc_to_add) `Modality_desc_to_add` in the folder `MKtlDescriptions` within the Quark Modality.
-5. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. (Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor.)
+5. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor.
 6. Put the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
 ### Setup
 
+In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) `4Live4Life_Project`. A wiki and code examples to automate some utility functions will be added over time.
+
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three files within the [folder](/4Live4Life_Project) `4Live4Life_Project` to execute for:
 
-* initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms,
+* initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded),
 
 * initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like this : `DR Kick`, `DR Snare`, `DR Hat`, `IN Bass`, `IN Gong`, `IN Piano`, `EL Fire`, `El Earth`, `EL water` ...),
 
 * opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
 * initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
-
-In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) `4Live4Life_Project`. A wiki and code examples to automate some utility functions will be added over time.
 
 
 ## Contribute
