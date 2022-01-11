@@ -122,15 +122,6 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 A wiki and code examples to automate some utility functions will be added over time.
 
 
-## Contribute
-
-I have a lot of features I would like to improve or develop, such as ...
-
-If you would like to contribute, please get in touch with me in order to organise further development.
-
-If you report an issue, please try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
-
-
 ## References
 
 *Live 4 Life* has been presented many times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
@@ -138,6 +129,15 @@ If you report an issue, please try to send a pull request, since depending on my
 All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele), as well as my doctoral thesis, soon to be published (in french, sorry) about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
 
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
+
+
+## Contribute
+
+I have a lot of features I would like to improve or develop, such as ...
+
+If you would like to contribute, please get in touch with me in order to organise further development.
+
+If you report an issue, please try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
 
 ## Acknowledgements
