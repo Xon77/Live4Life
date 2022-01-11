@@ -1,0 +1,59 @@
+title:: A WFSCollider tutorial
+summary::Getting started with WFSCollider
+categories:: WFSCollider
+related::Guides/WFSCollider-Overview
+
+At it's most simple usage, WFSCollider allows you to assign trajectories to sound files and play them in a time-line. At it's most complex usage it allows arbitrary SuperCollider synths to be spatialized and to be controlled using other synths, osc messages, midi controllers, etc.
+
+We will start by showing how to play a sound file through a WFS panner.
+
+To create a new score use menu bar and go to Score->File->new
+
+To add an event click on the '+' button. By default you get a UChain with two units, sine and output. The output unit is not for WFS playback, so you should change it to one of the WFS Udefs:
+
+list::
+## wfsDynamicPoint - a point source which can be moved. This is the most common type of source to use.
+## wfsDynamicPlane - a plane wave source which can be moved.
+## wfsDynamicIndex - a source which plays on just one speaker, and the speaker can be changed.
+## wfsStaticPoint - a point source which does not move.
+## wfsStaticPlane - a plane wave source which does not move
+## wfsStaticIndex - a source which plays on just one speaker, the speaker cannot be changed.
+::
+
+For more info see the link::Guides/WFSCollider-Panners##reference::
+
+Double-click the event to open it.
+Click on "defs" to open the defs window.
+Drag the wfsDynamicPoint unit over to the output unit.
+
+To play the sound file you will need to use one of the sound file players:
+list::
+## diskSndFile - play a sound file by streaming it from disk during playback. Allows to play longer files, does not use RAM memory, but if there are too many of these, the disk might not be fast enough to stream all the data.
+## bufSndFile - play a sound file by loading it to memory.
+::
+
+Drag the diskSndFile unit over to the sine unit.
+
+To move the sound around there are several possibilities:
+list::
+## Move the source using the UChain gui by clicking and dragging the arrow after the "point" argument.
+## Assign a trajectory to the sound using a WFSPathPlayer
+## Use the wfsCirclePath or wfsRandomPath defs for real-time control of the trajectory.
+## Write your own trajectory def. (Look at how wfsCirclePath is written).
+::
+
+We will use the wfsPathPlayer unit to assign a trajectory to the sound:
+Click the '+' button in the diskSndFile unit to add another unit and drag the wfsPathPlayer unit over to that unit.
+In the wfsDynamicPoint click on "pointFromBus".
+
+The UChain GUI should look like:
+
+image::WFS-Tutorial-1.png::
+
+To edit the trajectory you can click on "edit" in the wfsPathPlayer section of the UChain gui, this will open a WFSPath editor window.
+
+image::WFS-Tutorial-2.png::
+
+You can play the UChain either by clicking the "power" button on the UChain gui or by playing the score using the score editor transport controls.
+
+
