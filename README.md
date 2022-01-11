@@ -49,7 +49,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 * due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed my own coding strategies, which might be bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
-* Monitor the volume when you drastically change effect parameters since they can produce very loud sounds.
+* changing drastically effect parameters can produce very loud sounds. So, monitor the volume.
 
 
 ### Platform support
@@ -116,7 +116,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 ## Contribute
 
-...
+......
 
 
 ## References
