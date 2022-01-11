@@ -73,10 +73,12 @@ Let me know. I might maybe help.
 
 * many [Quarks](https://github.com/supercollider-quarks):
   - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
+  - [APCmini](https://github.com/andresperezlopez/APCmini) (for MIDI Akai controller),
   - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
   - [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
   - [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
   - [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue),
+  - [crucialviews](https://github.com/crucialfelix/crucialviews) (for GUI BoxMatrix),
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes),
   - [FPLib](https://github.com/miguel-negrao/FPLib) (for functional programming to get back to previous presets. This Quark will also install automatically [JITLibExtensions](https://github.com/supercollider-quarks/JITLibExtensions) and [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) for some MIDI controllers.),
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
@@ -86,11 +88,10 @@ Let me know. I might maybe help.
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
-  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor of the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. It is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.),
+  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
+  - [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
   - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
-
-Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmini)
 
 
 ## Installation
@@ -98,7 +99,8 @@ Concerning some extensions, [APCmini](https://github.com/andresperezlopez/APCmin
 1. [Install SuperCollider](https://supercollider.github.io/download). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `Controllers/TouchBar/gestionnaire-iac.desc.scd` in the folder `MKtlDescriptions` within the Quark Modality.
-4. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
+4. Replace two Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.
+5. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
 ### Setup
