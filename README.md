@@ -107,7 +107,7 @@ Let me know. I might maybe help.
 
 ### Setup
 
-In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) `4Live4Life_Project`. A wiki and code examples to automate some utility functions will be added over time.
+In order to launch the tool, follow the instructions of the file `0 Live Q` in the [folder](/4Live4Life_Project) `4Live4Life_Project`.
 
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the [folder](/4Live4Life_Project) `4Live4Life_Project` to execute for:
 
@@ -118,6 +118,8 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 3. opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
 4. initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
+
+A wiki and code examples to automate some utility functions will be added over time.
 
 
 ## Contribute
