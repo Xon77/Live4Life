@@ -8,7 +8,7 @@
 
 The **spatial performance tool** *Live 4 Life* aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
 
-I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with space and sounds. Although I hope to develop it during the rest of my life, development is paused because of several reasons (mainly due to the pandemic and the difficulty to perform spatial improvisations in large concert halls without appropriate retribution – not even a beer).
+I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with space and sounds. Although I hope to develop it during the rest of my life, development is paused because of several reasons (mainly due to the pandemic and the difficulty to perform spatial improvisations in concert halls or festivals without appropriate retribution – not even a beer).
 
 
 <p align="center">
@@ -47,7 +47,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams.
 
-* due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed my own coding strategies, which might be bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
+* due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume.
 
@@ -88,7 +88,7 @@ Let me know. I might maybe help.
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
-  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for GUI),
+  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor),
   - [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
   - [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
@@ -100,7 +100,7 @@ Let me know. I might maybe help.
 1. [Install SuperCollider](https://supercollider.github.io/download). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. If you use the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros, put the file `Controllers/TouchBar/gestionnaire-iac.desc.scd` in the folder `MKtlDescriptions` within the Quark Modality.
-4. Replace two Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions`. Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor. If you already have [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), replace it with this one.
+4. Replace two Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. (Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor.
 5. Put the folder `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
