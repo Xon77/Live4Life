@@ -137,7 +137,7 @@ I have a lot of features I would like to improve or develop, such as the collect
 
 If you would like to contribute, please get in touch with me in order to organise further development.
 
-If you want to report an issue, please send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
+Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
 
 ## Acknowledgements
