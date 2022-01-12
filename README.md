@@ -135,7 +135,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as the rhythmic pattern generator from [Eurorack module Grids by Mutable Instruments](https://github.com/capital-G/sc-grids)...
 
-If you would like to contribute, please get in touch with me in order to organise further development.
+If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but I prefer for now focus on rhythmic music features and performance.
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
