@@ -47,7 +47,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
-* due to the fact I almost began learning SuperCollider with this project and that I am not a professional developer, I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
+* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume.
 
@@ -113,7 +113,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 1. initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
-2. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DR 1Kick`, `DR 2Snare`, `DR 3Hat`, `El Earth`, `EL Fire`, `EL water`, `IN Bass`, `IN Gong`, `IN Piano` ..., containing dozens of sound files sort in alphabetical order.),
+2. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DR 1Kick`, `DR 2Snare`, `DR 3Hat`, `El Earth`, `EL Fire`, `EL Water`, `IN Bass`, `IN Gong`, `IN Piano` ..., containing dozens of sound files sort in alphabetical order.),
 
 3. opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
