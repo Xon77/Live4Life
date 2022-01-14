@@ -119,7 +119,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 4. initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
-A wiki and code examples to automate some utility functions will be added over time, and hopefully spatial workshops...
+A wiki and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
 
 
 ## References
