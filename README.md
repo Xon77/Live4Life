@@ -101,7 +101,7 @@ Let me know. I might maybe help.
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
 4. If you use some controllers, such as the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the [folder](/Modality_desc_to_add) `Modality_desc_to_add` in the folder `MKtlDescriptions` within the Quark Modality.
-5. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. Concerning the modified [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small add-on[^Traj] to avoid an error in the post window by closing the trajectory editor.
+5. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. Concerning the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small change, commenting the lines 220 and 223 of the [file](/Quarks_to_replace/WFSCollider-Class-Library/WFS/GUI/WFSPath) `/Quarks_to_replace/WFSCollider-Class-Library/WFS/GUI/WFSPath`, to avoid an error in the post window by closing the trajectory editor. 
 6. Put the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
 
 
@@ -113,7 +113,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 1. initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
-2. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DR Kick`, `DR Snare`, `DR Hat`, `EL Fire`, `El Earth`, `EL water`, `IN Bass`, `IN Gong`, `IN Piano` ..., containing dozens of sound files sort in alphabetical order.),
+2. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: to play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DR 1Kick`, `DR 2Snare`, `DR 3Hat`, `El Earth`, `EL Fire`, `EL water`, `IN Bass`, `IN Gong`, `IN Piano` ..., containing dozens of sound files sort in alphabetical order.),
 
 3. opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
