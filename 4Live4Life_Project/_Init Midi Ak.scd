@@ -1,6 +1,7 @@
 /*
 
-~a = /*0*/ 1;
-~b = /*0*/ 2;
+if ( thisProcess.platform.name == \linux /*thisProcess.platform.isKindOf(LinuxPlatform)*/ );
+
+if ( thisProcess.platform.name == \linux /*thisProcess.platform.isKindOf(LinuxPlatform)*/ );
 
 */
