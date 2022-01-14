@@ -1314,7 +1314,8 @@ defaultColorsOfStates = Dictionary.newFrom([0,black, 1,green, 2,red, 3,orange]);
 // MIDI Out
 MIDIOut.new(portNumber);
 b = MIDIOut.new(1); b.latency_(0.001);
-// MIDIOut.connect(1,1 /* portNumber */ ); // Linux only. OS X does not need to connect. On Linux it is an optional feature
+// MIDIOut.connect(1,1);
+// MIDIOut.connect(1, portNumber); // Linux only. OS X does not need to connect. On Linux it is an optional feature
 b.noteOn(0,56,1);
 
 // Changement de l'état de valeurs des Pads
