@@ -32,7 +32,7 @@
 
 
 
-	/*/*
+	/*
 
 	Changement effectué dans la classe APCmini
 
@@ -104,7 +104,7 @@
 
 	"5.do{ |j|" au lieu de "10.do{ |j|" dans PlayAnimation
 
-	*/*/
+	*/
 
 
 
