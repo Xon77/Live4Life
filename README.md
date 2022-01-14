@@ -6,7 +6,7 @@
 
 ## Overview
 
-The **spatial performance tool** *Live 4 Life* aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...). 
+The **spatial performance tool** *Live 4 Life* aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...) with many controllers (currently GUI, keyboard, Akai APC Mini, 2 tablets with Lemur App, 2 MIDI Fighter Twister and a Sensual Morph). 
 
 I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with space and sounds. Although I hope to develop it during the rest of my life, spatial development is paused because of several reasons (mainly due to the pandemic and the difficulty to perform spatial improvisations in concert halls or festivals and without an appropriate allowance).
 
@@ -135,7 +135,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as the rhythmic pattern generator from [Eurorack module Grids by Mutable Instruments](https://github.com/capital-G/sc-grids)...
 
-If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but I prefer for now focus on rhythmic music features and performance.
+If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance.
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
