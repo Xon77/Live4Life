@@ -1,0 +1,166 @@
+TITLE:: APCmini
+summary:: wrapper for the APCmini midi controller
+categories:: Undocumented classes
+
+DESCRIPTION::
+This is a wrapper class for the Akai APCmini controller. It provides internal state customization, pad hold/switch functionality, visual slider mode and a nice starting animation, making the controller properly usable for any purpose.
+For the moment only tested for GNU/Linux.
+
+(C) 2015 Andrés Pérez López // www.andresperezlopez.com // contact@andresperezlopez.com 
+
+
+
+
+
+CLASSMETHODS::
+
+METHOD:: new
+
+
+
+INSTANCEMETHODS::
+
+private:: orange, blinkOrange, black, green, blinkGreen, red, blinkRed, init, verFunction, redrawInternalState, padFunction, padMode, horMode, padHoldColor, out, incrementState, internalIndex, defaultPadHoldColor, horFunction, sliderFunction, noteType, verMode, apcIndex, redrawSliderState
+
+
+
+
+subsection:: Internal State
+
+Get the state of the pads (padInternalState) and Buttons (horizontal: horInternalState, vertical: verInternalState)
+
+METHOD:: padInternalState
+METHOD:: horInternalState
+METHOD:: verInternalState
+
+
+subsection:: Working Mode
+
+Pads and buttons can work in two different modes: code::\hold:: or code::\switch::
+
+METHOD:: setPadMode
+METHOD:: setPadModeAll
+METHOD:: setButtonMode
+ARGUMENT:: type
+code::\hor:: or code::\ver::
+METHOD:: setButtonModeAll
+ARGUMENT:: mode
+
+subsection:: Hold mode
+
+In hold mode, the state will be ON only during the time pressing the pad/button. Pads can customize the ON color of the hold mode (but the state will be always the same: 1).
+Color can be one of the following symbols: code::\black:: (no light), code::\red::, code::\blinkRed::, code::\green::, code::\blinkGreen::, code::\orange:: or code::\blinkOrange::.
+
+
+METHOD:: setPadHoldColor
+METHOD:: setPadHoldColorAll
+
+
+
+subsection:: Switch Mode
+
+In switch mode, the state will be maintained until a new press is performed. Furthermore, pads allow for up to 4 different states, represented by different colours.
+
+
+METHOD:: setNumStates
+Set the number of states for a given pad
+
+METHOD:: setNumStatesAll
+
+
+METHOD:: setColorsOfStates
+ARGUMENT:: array
+An Array in the form [0, colorString0, 1, colorString1...]
+
+METHOD:: setColorsOfStatesAll
+ARGUMENT:: array
+An Array in the form [0, colorString0, 1, colorString1...]
+
+METHOD:: padSwitchNumStates
+Get the number of states for each pad
+
+METHOD:: padColorsOfStates
+Get a Dictionary with the state->color association for each pad
+
+
+
+
+subsection:: Functions
+
+For each pad/button state, a Function can be passed and evaluated. 
+
+METHOD:: setPadFunction
+
+METHOD:: setButtonFunction
+ARGUMENT:: type
+code::\hor:: or code::\ver::
+ARGUMENT:: num
+Button index
+
+
+
+METHOD:: setSliderFunction
+In the case of the sliders, the function will be passed the slider index and the value.
+ARGUMENT:: num
+Slider index
+
+
+subsection:: Slider Mode
+
+The code provides the option of using the pads for display the sliders value. That's called "slider mode".
+Slider mode can be toggled by the Shift pad, or by the following methods.
+During slider mode, any action in the pads or buttons won't have any effect.
+
+METHOD:: sliderMode
+
+
+subsection:: Other
+
+METHOD:: playAnimation
+Play the startup animation
+
+METHOD:: verbose
+
+
+EXAMPLES::
+
+code::
+// create a new instance...
+a=APCmini.new;
+
+// pad counting starts from left top
+a.setPadMode(0,0,\hold);
+a.setButtonMode(\hor,0,\hold)
+
+// we can check that the internal state is 1 while pressing
+a.padInternalState
+// and change the hold color (ckech that ON state is still 1)
+a.setPadHoldColor(0,0,\red)
+
+// in switch mode, by default there are 4 states: black, green, red and orange
+// we can change them individually
+a.setNumStates(0,1,3);
+// or all together
+a.setNumStatesAll(2)
+
+// also change the state->color association
+a.setColorsOfStates(0,1,[0,\black,1,\orange])
+a.setColorsOfStatesAll([0,\black,1,\blinkRed])
+
+// and retrieve that information
+a.padSwitchNumStates
+a.padColorsOfStates
+
+// of course, we can assign functions to states, which will be evaluated when current state changes
+a.setPadFunction(0,0,0,{"bye".postln});
+a.setPadFunction(0,0,1,{"hi".postln});
+// they work the same in the two modes...
+
+// the slider function will have access to the slider index and value info
+a.setSliderFunction(0, { |i,v| [\slider,i,\value,v].postln } );
+
+// slider mode: press Shift pad or execute following, and enjoy!
+a.sliderMode_(true) // pad actions won't have effect
+:: 
+
+
