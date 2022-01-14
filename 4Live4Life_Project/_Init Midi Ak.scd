@@ -32,9 +32,7 @@
 
 
 
-	/*
-
-	Changement effectué dans la classe APCmini
+	/*Changement effectué dans la classe APCmini
 
 	ligne 83 initiale -> MIDIClient.init;
 	Changement -> if (MIDIClient.initialized.not, {MIDIClient.init; });
