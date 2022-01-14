@@ -32,7 +32,7 @@
 
 
 
-	/**
+	/*
 
 	Changement effectué dans la classe APCmini
 
@@ -40,28 +40,40 @@
 	Changement -> if (MIDIClient.initialized.not, {MIDIClient.init; });
 
 	ligne 90 initiale -> if (dest.device=="APC MINI-APC MINI MIDI 1") {
-	Changement -> if (dest.device=="APC MINI"/*"APC MINI-APC MINI MIDI 1"*/) {
+	Changement -> if (dest.device=="APC MINI"
+	// "APC MINI-APC MINI MIDI 1"
+	) {
 
 	ligne 94 initiale -> if ( thisProcess.platform.isKindOf(LinuxPlatform) ) {
-	Changement -> if ( thisProcess.platform.name == \linux /*thisProcess.platform.isKindOf(LinuxPlatform)*/ ) {
+	Changement -> if ( thisProcess.platform.name == \linux
+	thisProcess.platform.isKindOf(LinuxPlatform)
+	) {
 
 	ligne 98 initiale -> sources.do{|d| if (d.device.split($-)[0]=="SuperCollider") { n = n+1 } };
-	Changement -> sources.do{|d| if (d.device.split($-)[0]=="APC MINI"/*"SuperCollider"*/) { n = n+1 } };
+	Changement -> sources.do{|d| if (d.device.split($-)[0]=="APC MINI"
+	//"SuperCollider"
+	) { n = n+1 } };
 
 	lignes 109 à 111 initiales ->
 	if (sources.select{|d|d.device=="APC MINI-APC MINI MIDI 1"}.size!=0) {
 	sources.do{|d|if (d.device=="APC MINI-APC MINI MIDI 1") {uid=d.uid}};
 	if ( thisProcess.platform.isKindOf(LinuxPlatform) ) {
 	Changement ->
-	if (sources.select{|d|d.device=="APC MINI"/*"APC MINI-APC MINI MIDI 1"*/}.size!=0) {
-	sources.do{|d|if (d.device=="APC MINI"/*"APC MINI-APC MINI MIDI 1"*/) {uid=d.uid}};
-	if ( thisProcess.platform.name == \linux /*thisProcess.platform.isKindOf(LinuxPlatform)*/ ) {
+	if (sources.select{|d|d.device=="APC MINI"
+	//"APC MINI-APC MINI MIDI 1"
+	}.size!=0) {
+	sources.do{|d|if (d.device=="APC MINI"
+	//"APC MINI-APC MINI MIDI 1"
+	) {uid=d.uid}};
+	if ( thisProcess.platform.name == \linux
+	//thisProcess.platform.isKindOf(LinuxPlatform)
+	) {
 
 	ligne 279 / 347 / 387 initiale -> });
-	Changement -> }, srcID: uid /*1990386095*/);
+	Changement -> }, srcID: uid);
 
 	ligne 428 initiale -> horMode.put(num,mode);
-	Changement -> /*hor*/verMode.put(num,mode); // Erreur à l'origine
+	Changement -> verMode.put(num,mode); // Erreur à l'origine
 
 	lignes 463 à 464 initiales ->
 	array = array.collect{|e|if(e.isSymbol){colors.at(e)}{e}};
@@ -104,7 +116,7 @@
 
 	"5.do{ |j|" au lieu de "10.do{ |j|" dans PlayAnimation
 
-	**/
+	*/
 
 
 
