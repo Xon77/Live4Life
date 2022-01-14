@@ -32,16 +32,18 @@
 
 
 
-	/*Changement effectué dans la classe APCmini
+	/*
+
+	Changement effectué dans la classe APCmini
 
 	ligne 83 initiale -> MIDIClient.init;
 	Changement -> if (MIDIClient.initialized.not, {MIDIClient.init; });
 
 	ligne 90 initiale -> if (dest.device=="APC MINI-APC MINI MIDI 1") {
-	Changement -> if (dest.device=="APC MINI" /* "APC MINI-APC MINI MIDI 1" */ ) {
+	Changement -> if (dest.device=="APC MINI"/*"APC MINI-APC MINI MIDI 1"*/) {
 
 	ligne 94 initiale -> if ( thisProcess.platform.isKindOf(LinuxPlatform) ) {
-	Changement -> if ( thisProcess.platform.name == \linux /* thisProcess.platform.isKindOf(LinuxPlatform) */ ) {
+	Changement -> if ( thisProcess.platform.name == \linux /*thisProcess.platform.isKindOf(LinuxPlatform)*/ ) {
 
 	ligne 98 initiale -> sources.do{|d| if (d.device.split($-)[0]=="SuperCollider") { n = n+1 } };
 	Changement -> sources.do{|d| if (d.device.split($-)[0]=="APC MINI"/*"SuperCollider"*/) { n = n+1 } };
@@ -1312,8 +1314,7 @@ defaultColorsOfStates = Dictionary.newFrom([0,black, 1,green, 2,red, 3,orange]);
 // MIDI Out
 MIDIOut.new(portNumber);
 b = MIDIOut.new(1); b.latency_(0.001);
-// MIDIOut.connect(1,1);
-// MIDIOut.connect(1, portNumber); // Linux only. OS X does not need to connect. On Linux it is an optional feature
+// MIDIOut.connect(1,1/*portNumber*/); // Linux only. OS X does not need to connect. On Linux it is an optional feature
 b.noteOn(0,56,1);
 
 // Changement de l'état de valeurs des Pads
