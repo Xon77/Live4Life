@@ -6,5 +6,6 @@
 	sc_add_stylesheet();
 	
 	// Run function to add highlighting
-	sc_highlight_file("4Live4Life_Project/Nested_Comments_Formatting.scd");
+	sc_highlighter("4Live4Life_Project/Nested_Comments_Formatting.scd");
+	sc_highlighter("4Live4Life_Project/_Init Midi Ak.scd");
 ?>
