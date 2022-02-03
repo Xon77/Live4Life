@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1038.36">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ce0c0d}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ff791f}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; min-height: 14.0px}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #737373}
+    span.s1 {color: #ff791f}
+    span.s2 {color: #000000}
+    span.s3 {color: #ce0c0d}
+    span.s4 {color: #008416}
+    span.s5 {color: #018417}
+    span.s6 {color: #4b4ac7}
+    span.s7 {color: #2221c7}
+    span.s8 {color: #2d2cfa}
+    span.s9 {color: #737373}
+  </style>
+</head>
+<body>
+<p class="p1">// Trigger`Voices</p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.flush(1); </span>// Stop all in 1s</p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.flush(6); </span>// Stop all in 6s progressivement</p>
+<p class="p2">~ampVoices<span class="s2"> = 1.5; </span>~voices<span class="s2">.amp_(</span>~ampVoices<span class="s2">); </span><span class="s3">// Amplitude</span></p>
+<p class="p3"><br></p>
+<p class="p1">// play (key, attack: 0, sustain, release: 0, amp: 0.7, out: 0, group, loop: 0)</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\snd1</span>, 0.1, 0, 0.05);</p>
+<p class="p3"><br></p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s5">\ButorMachine</span>, 0.1, <span class="s6">nil</span>, 0.1, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p3"><br></p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\WallStreet</span>, 2, 36, 2, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\onkolo1</span>, 0.1, <span class="s6">nil</span>, 2, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\onkolo2</span>, 1, <span class="s6">nil</span>, 3, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\deleuzeGuerrierLaboureur</span>, 2, <span class="s6">nil</span>, 3, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\deleuzePourquoi</span>, 1, <span class="s6">nil</span>, 1, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\deleuzeJoieCompensation</span>, 1, <span class="s6">nil</span>, 3, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\SelbyYouhavetoDie</span>, 1, <span class="s6">nil</span>, 3, amp: 0.5, out: 0);</p>
+<p class="p3"><br></p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\FreeZone1</span>, 1, <span class="s6">nil</span>, 5, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\FreeZone2</span>, 1, <span class="s6">nil</span>, 5, amp: <span class="s1">~ampVoices</span>, out: 0); <span class="s3">// 0ut 6</span></p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\FreeZone3</span>, 1, <span class="s6">nil</span>, 5, amp: <span class="s1">~ampVoices</span>, out: 0); <span class="s3">// Out 2</span></p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\FreeZone4</span>, 1, <span class="s6">nil</span>, 3, amp: <span class="s1">~ampVoices</span>, out: 0);</p>
+<p class="p3"><br></p>
+<p class="p1">// stop (key, release: 0.4) // Stops one voice currently playing at this key</p>
+<p class="p4"><span class="s1">~voices</span>.stop(<span class="s4">\onkolo1</span>, 4);</p>
+<p class="p4"><span class="s1">~voices</span>.stop(<span class="s4">\onkolo2</span>, 4);</p>
+<p class="p3"><br></p>
+<p class="p1">// Start many at once</p>
+<p class="p4"><span class="s1">~voices</span>.play(<span class="s4">\onkolo1</span>, 0.1, <span class="s6">nil</span>, 2, amp: <span class="s1">~ampVoices</span>); <span class="s1">~voices</span>.play(<span class="s4">\onkolo2</span>, 1, <span class="s6">nil</span>, 3, amp: <span class="s1">~ampVoices</span>);</p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.flush(1); </span>// Flush (release: 0.4) // Stop all currently playing voices for all keys</p>
+<p class="p3"><br></p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.length(</span><span class="s4">\snd1</span><span class="s2">); </span>// How long is the soundfile in seconds</p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.channels(</span><span class="s4">\snd1</span><span class="s2">); </span>// How many channels</p>
+<p class="p3"><br></p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.playingKeys; </span>// Report which keys that currently have one or more voices playing</p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.voicesLeft(</span><span class="s4">\onkolo1</span><span class="s2">); </span>// Return number of free voices for this key i.e. the number of non-playing voices</p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.isPlaying;(</span><span class="s4">\onkolo1</span><span class="s2">); </span>// Return boolean if more than one voice is playing</p>
+<p class="p3"><br></p>
+<p class="p1"><span class="s1">~voices</span><span class="s2">.free; </span>// Clear all keys, close files, free synths and buffers</p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+<p class="p1">// Check differences with RedSFPlayerDisk</p>
+<p class="p1">// -&gt; Possibilite de controler la vitesse de lecture, mais pas d'enveloppe</p>
+<p class="p1">// -&gt; Pratique pour faire des loops avec la possibilite de crossfade seulement pour RedSFPlayer</p>
+<p class="p3"><br></p>
+<p class="p1">// RedDiskInSamplerGiga - fast trigger version</p>
+<p class="p3"><br></p>
+<p class="p1">// check examples in RedSampler</p>
+<p class="p3"><br></p>
+<p class="p1">// error in Helpfile RedDiskInPlayer</p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+<p class="p1">// Ndef broken commenting in SynthDescLib *initClass : this.send(server, false) for not sending again the synthDefs when the server is overloaded</p>
+<p class="p4"><span class="s7">Ndef</span>(<span class="s4">\voice</span>,{<span class="s8">var</span> env = <span class="s7">EnvGen</span>.ar(<span class="s7">Env</span>.linen(0.1, 51, 1, 1), doneAction:2); <span class="s7">PlayBuf</span>.ar(2, <span class="s1">~bufOnkolo1</span>, 1, 1, 0, 0) * env}).play(0, vol: 2);</p>
+<p class="p4"><span class="s7">Ndef</span>(<span class="s4">\voice2</span>,{<span class="s8">var</span> env = <span class="s7">EnvGen</span>.ar(<span class="s7">Env</span>.linen(1, 42, 1, 1), doneAction:2); <span class="s7">PlayBuf</span>.ar(2, <span class="s1">~bufOnkolo2</span>, 1, 1, 0, 0) * env}).play(0, vol: 2);</p>
+<p class="p1"><span class="s7">Ndef</span><span class="s2">(</span><span class="s4">\voice</span><span class="s2">).stop; </span>// si stop ne revient pas a 0 quand on le relance et en relance un nouveau à O en plus</p>
+<p class="p4"><span class="s7">Ndef</span>(<span class="s4">\voice2</span>).stop;</p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+<p class="p1">// cue and play right away</p>
+<p class="p4">(</p>
+<p class="p4"><span class="s7">SynthDef</span>(<span class="s9">"PlayLongBuffer1"</span>, { <span class="s7">arg</span> bufnum = 0;</p>
+<p class="p4"><span class="Apple-converted-space">    </span><span class="s7">Out</span>.ar(0, <span class="s7">DiskIn</span>.ar(1, bufnum));</p>
+<p class="p4">}).add(s);</p>
+<p class="p3"><br></p>
+<p class="p4"><span class="s7">SynthDef</span>(<span class="s9">"PlayLongBuffer2"</span>, { <span class="s7">arg</span> bufnum = 0;</p>
+<p class="p4"><span class="Apple-converted-space">    </span><span class="s7">Out</span>.ar(0, <span class="s7">DiskIn</span>.ar(2, bufnum));</p>
+<p class="p4">}).add(s);</p>
+<p class="p4">)</p>
+<p class="p3"><br></p>
+<p class="p4">(</p>
+<p class="p5"><span class="s2">x = </span><span class="s7">Synth</span><span class="s2">.basicNew(</span>"PlayLongBuffer1"<span class="s2">);</span></p>
+<p class="p4">m = { <span class="s7">arg</span> buf; x.addToHeadMsg(<span class="s7">nil</span>, [<span class="s4">\bufnum</span>,buf.bufnum])};</p>
+<p class="p4">b = <span class="s7">Buffer</span>.cueSoundFile(s,<span class="s7">Platform</span>.resourceDir +/+ <span class="s9">"sounds/a11wlk01-44_1.aiff"</span>,0,1, completionMessage: m);</p>
+<p class="p4">)</p>
+<p class="p3"><br></p>
+<p class="p5"><span class="s2">y = </span><span class="s7">Synth</span><span class="s2">.basicNew(</span>"PlayLongBuffer2"<span class="s2">);</span></p>
+<p class="p4">n = { <span class="s7">arg</span> buf; y.addToHeadMsg(<span class="s7">nil</span>, [<span class="s4">\bufnum</span>,buf.bufnum])};</p>
+<p class="p5"><span class="s2">b = </span><span class="s7">Buffer</span><span class="s2">.cueSoundFile(s,</span>"/Users/Xon77/Documents/IRCAM/AS/Sounds/Cleveland contre Wall Street 1.aiff"<span class="s2">,0,2, completionMessage: n);</span></p>
+<p class="p5"><span class="s2">b = </span><span class="s7">Buffer</span><span class="s2">.cueSoundFile(s,</span>"/Users/Xon77/Documents/Projets/ConsProject2_Logorrhee2010/Z_Suite_Declaration_de_guerre/AS_Onkolo/Sounds/Onkolo-IntoEternity1.wav"<span class="s2">,0,2, completionMessage: n);</span></p>
+<p class="p5"><span class="s2">b = </span><span class="s7">Buffer</span><span class="s2">.cueSoundFile(s,</span>"/Users/Xon77/Documents/Projets/ConsProject2_Logorrhee2010/Z_Suite_Declaration_de_guerre/AS_Onkolo/Sounds/Onkolo-IntoEternity2.wav"<span class="s2">,0,2, completionMessage: n);</span></p>
+<p class="p5"><span class="s2">b = </span><span class="s7">Buffer</span><span class="s2">.cueSoundFile(s,</span>"/Users/Xon77/Documents/IRCAM/AS/Sounds/FreeZone1.aiff"<span class="s2">,0,2, completionMessage: n);</span></p>
+<p class="p5"><span class="s2">b = </span><span class="s7">Buffer</span><span class="s2">.cueSoundFile(s,</span>"/Users/Xon77/Documents/IRCAM/AS/Sounds/Deleuze - Dieu Labour Guerrier.aiff"<span class="s2">,0,2, completionMessage: n);</span></p>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1038.36">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ce0c0d}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ff791f}
+    span.s1 {color: #ce0c0d}
+    span.s2 {color: #ff791f}
+    span.s3 {color: #000000}
+    span.s4 {color: #2221c7}
+    span.s5 {color: #4b4ac7}
+    span.s6 {color: #008416}
+    span.s7 {color: #2d2cfa}
+    span.Apple-tab-span {white-space:pre}
+  </style>
+</head>
+<body>
+<p class="p1">// Load MasterEQ</p>
+<p class="p2"><span class="s1">/*~settings ? */</span><span class="s2">~settings</span> = [[100, 0, 1], [250, 0, 1], [1000, 0, 1], [3500, 0, 1], [6000, 0, 1]];</p>
+<p class="p1">/*~smooth ? */<span class="s2">~smooth</span><span class="s3"> = 0.1; </span>// smoothing factor</p>
+<p class="p1">/*~eqVisualUpdate ? */<span class="s2">~eqVisualUpdate</span><span class="s3"> = 1;</span></p>
+<p class="p2"><span class="s1">/*~timeEqArray ? */</span><span class="s2">~timeEqArray</span> = [0.1, 0.2, 0.5, 1, 2, 4];</p>
+<p class="p1">/*~curTrack ? */<span class="s2">~curTrack</span><span class="s3"> = 0;</span></p>
+<p class="p3"><span class="s4">MasterEQ</span><span class="s3">(</span>~numChannels</p>
+<p class="p2">).start;</p>
+<p class="p2"><span class="s4">MasterEQ</span>.window.bounds_(<span class="s4">Rect</span>(0, 505, 298, 220)).alwaysOnTop_(<span class="s5">true</span>).toFrontAction_({<span class="s4">MasterEQ</span>.eq[<span class="s6">\uvw</span>].refresh});</p>
+<p class="p1">// Si modif du bounds_ et relance du code -&gt; crash du language ???</p>
+<p class="p1">// Si bounds hors de l'ecran avec bounds négatifs, besoin de relancer le code 2x pour etre pris en compte</p>
+<p class="p1">// 20% CPU si update visuel</p>
+<p class="p3">~masterEQUpdate<span class="s3"> = </span><span class="s4">Task</span><span class="s3">({</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s7">var</span> currentSettings= <span class="s2">~settings</span>.copy;</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s5">inf</span>.do{</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>currentSettings = currentSettings-(currentSettings-<span class="s2">~settings</span>*<span class="s2">~smooth</span>);</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s4">MasterEQ</span>.eq[<span class="s6">\frdb</span>] = currentSettings;</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s4">MasterEQ</span>.eq[<span class="s6">\send_current</span>].value;</p>
+<p class="p1"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// MasterEQ.eq[\uvw].refresh;</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>if (<span class="s2">~eqVisualUpdate</span> == 0, {}, {<span class="s4">MasterEQ</span>.eq[<span class="s6">\uvw</span>].refresh});</p>
+<p class="p1"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>0.1.wait; </span>//update rate</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>};</p>
+<p class="p2">});</p>
+<p class="p1">// ~masterEQUpdate.play(AppClock);</p>
+<p class="p1">//////</p>
+<p class="p2"><span class="s2">~settingsEqTypeChangeF</span> = { <span class="s7">|selTypeEq|</span> <span class="s7">var</span> freqs = {rrand(50,10000)}; <span class="s7">var</span> db = {10.rand2}; <span class="s7">var</span> q = {exprand(0.2, 6)};</p>
+<p class="p2"><span class="Apple-tab-span">	</span>switch (selTypeEq,</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s6">\flat</span>, {<span class="s2">~settingsEqTypeChange</span> = {<span class="s2">~settings</span> = [[100, 0, 1], [250, 0, 1], [1000, 0, 1], [3500, 0, 1], [6000, 0, 1]]}},</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s6">\db</span>, {<span class="s2">~settingsEqTypeChange</span> = {<span class="s2">~settings</span> = [[100, db.value, 1], [250, db.value, 1], [1000, db.value, 1], [3500, db.value, 1], [6000, db.value, 1]]}},</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s6">\freqdb</span>, {<span class="s2">~settingsEqTypeChange</span> = {<span class="s2">~settings</span> = [[freqs.value, db.value, 1], [freqs.value, db.value, 1], [freqs.value, db.value, 1], [freqs.value, db.value, 1], [freqs.value, db.value, 1]]}},</p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s6">\all</span>, {<span class="s2">~settingsEqTypeChange</span> = {<span class="s2">~settings</span> = [[freqs.value, db.value, q.value], [freqs.value, db.value, q.value], [freqs.value, db.value, q.value], [freqs.value, db.value, q.value], [freqs.value, db.value, q.value]]}});</p>
+<p class="p2">};</p>
+<p class="p3">~settingsEqTimeChangeF<span class="s3"> = { </span><span class="s7">|selTimeEq|</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span>switch (selTimeEq,</p>
+<p class="p3"><span class="s3"><span class="Apple-tab-span">	</span></span><span class="s6">\timeEqArrayChoose</span><span class="s3">, {</span>~settingsEqTimeChange<span class="s3"> = {</span>~timeEqArray<span class="s3">.choose}},</span></p>
+<p class="p3"><span class="s3"><span class="Apple-tab-span">	</span></span><span class="s6">\timeEqTrack</span><span class="s3">, {</span>~settingsEqTimeChange<span class="s3"> = {</span>~lastEvent<span class="s3">[</span>~curTrack<span class="s3">][</span><span class="s6">\dur</span><span class="s3">]}});</span></p>
+<p class="p2">};</p>
+<p class="p3">~settingsEqTypeChangeF<span class="s3">.value(</span><span class="s6">\db</span><span class="s3">);</span></p>
+<p class="p1">//////</p>
+<p class="p3">~masterEQChangeSettings<span class="s3"> = </span><span class="s4">Task</span><span class="s3">({</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="s5">inf</span>.do{</p>
+<p class="p3"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~settingsEqTypeChange<span class="s3">.value;</span></p>
+<p class="p3"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~settingsEqTimeChange<span class="s3">.value.wait;</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span>};</p>
+<p class="p2">});</p>
+<p class="p3">~settingsEqTimeChangeF<span class="s3">.value(</span><span class="s6">\timeEqArrayChoose</span><span class="s3">);</span></p>
+<p class="p1">//////</p>
+<p class="p1">// OLD</p>
+<p class="p1">/*~settingsChange = {var db = {10.rand2}; ~settings = [[100, db.value, 1], [250, db.value, 1], [1000, db.value, 1], [3500, db.value, 1], [6000, db.value, 1]]};</p>
+<p class="p1">~settingsChange = {var freqs = {rrand(50,10000)}; var db = {10.rand2}; ~settings = [[freqs.value, db.value, 1], [freqs.value, db.value, 1], [freqs.value, db.value, 1], [freqs.value, db.value, 1], [freqs.value, db.value, 1]]};</p>
+<p class="p1">~settingsChange = {var freqs = {rrand(50,10000)}; var db = {10.rand2}; var q = {exprand(0.2, 6)}; ~settings = [[freqs, db, q], [freqs, db, q], [freqs, db, q], [freqs, db, q], [freqs, db, q]]};*/</p>
+</body>
+</html>

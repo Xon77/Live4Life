@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1348.17">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ce0c0d; -webkit-text-stroke: #ce0c0d}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #2221c7; -webkit-text-stroke: #2221c7}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ff791f; -webkit-text-stroke: #ff791f}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #000000; -webkit-text-stroke: #000000}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #737373; -webkit-text-stroke: #737373}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+    span.s2 {font-kerning: none; color: #ff791f; -webkit-text-stroke: 0px #ff791f}
+    span.s3 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s4 {font-kerning: none; color: #018417; -webkit-text-stroke: 0px #018417}
+    span.s5 {font-kerning: none; color: #ce0c0d; -webkit-text-stroke: 0px #ce0c0d}
+    span.s6 {font-kerning: none; color: #008416; -webkit-text-stroke: 0px #008416}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">// Load`Voices</span></p>
+<p class="p1"><span class="s1">// "launchctl limit maxfiles 16384 unlimited".unixCmd; // pour RedDiskInSamplerGiga ou RedDiskInSampler</span></p>
+<p class="p1"><span class="s1">// "launchctl limit".unixCmd</span></p>
+<p class="p1"><span class="s1">// ~voices = RedDiskInSamplerGiga(~server2);</span></p>
+<p class="p2"><span class="s2">~voices</span><span class="s3"> = </span><span class="s1">RedDiskInSampler</span><span class="s3">(</span><span class="s4">~server2</span><span class="s3">);</span></p>
+<p class="p3"><span class="s1">~ampVoices</span><span class="s3"> = 1.5; </span><span class="s1">~voices</span><span class="s3">.amp_(</span><span class="s1">~ampVoices</span><span class="s3">); </span><span class="s5">// Amplitude</span></p>
+<p class="p1"><span class="s1">// How many voices allowed to play simultaneously (2 by default)</span></p>
+<p class="p4"><span class="s2">~voices</span><span class="s1">.overlaps_(20);</span></p>
+<p class="p1"><span class="s1">// Setting up which samples to use and prepare them</span></p>
+<p class="p5"><span class="s2">~voices</span><span class="s3">.prepareForPlay(</span><span class="s6">\onkolo1</span><span class="s3">,</span><span class="s1">"/Users/Shared/Projets/Recordings/Phrases/Onkolo-IntoEternity1.wav"</span><span class="s3">); </span><span class="s5">// sons de 53''</span></p>
+<p class="p5"><span class="s2">~voices</span><span class="s3">.prepareForPlay(</span><span class="s6">\onkolo2</span><span class="s3">, </span><span class="s1">"/Users/Shared/Projets/Recordings/Phrases/Onkolo-IntoEternity2.wav"</span><span class="s3">); </span><span class="s5">// sons de 44''</span></p>
+<p class="p5"><span class="s2">~voices</span><span class="s3">.prepareForPlay(</span><span class="s6">\deleuzeGuerrierLaboureur</span><span class="s3">,</span><span class="s1">"/Users/Shared/Projets/Recordings/Phrases/Deleuze - Dieu Labour Guerrier.aiff"</span><span class="s3"> ); </span><span class="s5">// sons de 45''</span></p>
+<p class="p5"><span class="s2">~voices</span><span class="s3">.prepareForPlay(</span><span class="s6">\deleuzePourquoi</span><span class="s3">, </span><span class="s1">"/Users/Shared/Projets/Recordings/Phrases/Deleuze - Pourquoi.aiff"</span><span class="s3">); </span><span class="s5">// sons de 7''</span></p>
+<p class="p5"><span class="s2">~voices</span><span class="s3">.prepareForPlay(</span><span class="s6">\deleuzeJoieCompensation</span><span class="s3">, </span><span class="s1">"/Users/Shared/Projets/Recordings/Phrases/Deleuze - Joie de Compensation.aiff"</span><span class="s3">); </span><span class="s5">// sons de 22''</span></p>
+<p class="p5"><span class="s2">~voices</span><span class="s3">.prepareForPlay(</span><span class="s6">\SelbyYouhavetoDie</span><span class="s3">, </span><span class="s1">"/Users/Shared/Projets/Recordings/Phrases/Selby You have to die.aiff"</span><span class="s3">); </span><span class="s5">// sons de 64''</span></p>
+<p class="p4"><span class="s2">~voices</span><span class="s1">.prepareForPlay(</span><span class="s4">\FreeZone1</span><span class="s1">,"/Users/Shared/Projets/Recordings/Phrases/FreeZone.aiff"); </span><span class="s5">// sons de 37''</span></p>
+<p class="p4"><span class="s2">~voices</span><span class="s1">.prepareForPlay(</span><span class="s4">\ButorMachine</span><span class="s1">,"/Users/Shared/Projets/Recordings/Phrases/ButorMachineR.aif"); </span><span class="s5">// sons de 62''</span></p>
+<p class="p6"><span class="s1"></span><br></p>
+</body>
+</html>
