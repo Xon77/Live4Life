@@ -43,6 +43,8 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 :warning: Please note that:
 
+* currently, the code is correctly not highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
+
 * it is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
@@ -81,6 +83,7 @@ Let me know. I might maybe help.
   - [crucialviews](https://github.com/crucialfelix/crucialviews) (for GUI BoxMatrix),
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes),
   - [FPLib](https://github.com/miguel-negrao/FPLib) (for functional programming to get back to previous presets. This Quark will also install automatically [JITLibExtensions](https://github.com/supercollider-quarks/JITLibExtensions) and [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) for some MIDI controllers.),
+  - ([KMeans](https://github.com/supercollider-quarks/KMeans))
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
   - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
   - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status),
