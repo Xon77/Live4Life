@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title></title>
+<meta name="Generator" content="Cocoa HTML Writer">
+<meta name="CocoaVersion" content="1038.36">
+<style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ce0c0d}
+p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco}
+p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; min-height: 14.0px}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ff791f}
+span.s1 {color: #2221c7}
+span.s2 {color: #008416}
+span.s3 {color: #000000}
+span.s4 {color: #ff791f}
+span.s5 {color: #2d2cfa}
+span.s6 {color: #4b4ac7}
+span.Apple-tab-span {white-space:pre}
+</style>
+</head>
+<body>
+<p class="p1">// Pdefn</p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>).quant = 4;</p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>).quant = 0;</p>
+<p class="p1"><span class="s1">Pdefn</span><span class="s3">(</span><span class="s2">\onepreprate</span><span class="s3">).fadeTime = 10; </span>// facile a integrer ????</p>
+<p class="p3"><br></p>
+<p class="p1">// Multislider normal</p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>, <span class="s4">~ratSpec</span>.map(<span class="s1">Prout</span>({<span class="s5">var</span> x = <span class="s4">~rat</span>[0][<span class="s4">~seq1</span>]; <span class="s6">inf</span>.do{<span class="s5">|i|</span> <span class="s4">~posRatInf</span>[0][<span class="s4">~seq1</span>] = i; <span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>] = ((<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger - (<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger + 1); <span class="s4">~posRat</span>[0][<span class="s4">~seq1</span>] = ((<span class="s4">~posRatInf</span>[0][<span class="s4">~seq1</span>] % <span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>]) + <span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]); x.copyRange((<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger, (<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger).wrapAt(i).yield}})));</p>
+<p class="p3"><br></p>
+<p class="p1"><span class="s1">Pdefn</span><span class="s3">(</span><span class="s2">\onepreprate</span><span class="s3">, </span><span class="s1">Pfunc</span><span class="s3">{100.rand}); </span><span class="s1">Pdefn</span><span class="s3">(</span><span class="s2">\preprate</span><span class="s3">, </span><span class="s4">~posRat</span><span class="s3">[0][</span><span class="s4">~seq1</span><span class="s3">] = 0); </span>// comment arreter le multislider facilement ???</p>
+<p class="p3"><br></p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>, <span class="s1">PSinOsc</span>(16, 0, 10, 60));</p>
+<p class="p3"><br></p>
+<p class="p1"><span class="s3">( </span>// Multislider normal + seq</p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>, <span class="s1">Pseq</span>([ <span class="s4">~ratSpec</span>.map(<span class="s1">Prout</span>({<span class="s5">var</span> x = <span class="s4">~rat</span>[0][<span class="s4">~seq1</span>];</p>
+<p class="p4"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~seqDurRat<span class="s3">[0][</span>~seq1<span class="s3">].do{</span><span class="s5">|i|</span></p>
+<p class="p4"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~posRatInf<span class="s3">[0][</span>~seq1<span class="s3">] = i;</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>] = ((<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger - (<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger + 1);</p>
+<p class="p4"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~posRat<span class="s3">[0][</span>~seq1<span class="s3">] = ((</span>~posRatInf<span class="s3">[0][</span>~seq1<span class="s3">] % </span>~seqDurRat<span class="s3">[0][</span>~seq1<span class="s3">]) + </span>~ratSeqStart<span class="s3">[0][</span>~seq1<span class="s3">]);</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>x.copyRange((<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger, (<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger).wrapAt(i).yield}})), 20, 20, 30, 40, 50, 60], <span class="s6">inf</span>))</p>
+<p class="p2">);</p>
+<p class="p3"><br></p>
+<p class="p1"><span class="s3">( </span>// Multislider normal + rand seq infinie</p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>, <span class="s1">Pseq</span>([ <span class="s4">~ratSpec</span>.map(<span class="s1">Prout</span>({<span class="s5">var</span> x = <span class="s4">~rat</span>[0][<span class="s4">~seq1</span>];</p>
+<p class="p4"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~seqDurRat<span class="s3">[0][</span>~seq1<span class="s3">].do{</span><span class="s5">|i|</span></p>
+<p class="p4"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~posRatInf<span class="s3">[0][</span>~seq1<span class="s3">] = i;</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>] = ((<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger - (<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger + 1);</p>
+<p class="p4"><span class="s3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~posRat<span class="s3">[0][</span>~seq1<span class="s3">] = ((</span>~posRatInf<span class="s3">[0][</span>~seq1<span class="s3">] % </span>~seqDurRat<span class="s3">[0][</span>~seq1<span class="s3">]) + </span>~ratSeqStart<span class="s3">[0][</span>~seq1<span class="s3">]);</span></p>
+<p class="p2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>x.copyRange((<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger, (<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger).wrapAt(i).yield}})), <span class="s1">Pfunc</span>{100.rand}], <span class="s6">inf</span>))</p>
+<p class="p2">);</p>
+<p class="p3"><br></p>
+<p class="p1">// ajout de sequences</p>
+<p class="p2"><span class="s4">~te</span> = <span class="s1">Pseq</span>([20, 20, 30, 40, 50, 60], 1);</p>
+<p class="p2"><span class="s4">~te</span> = <span class="s1">PSinOsc</span>(16, 0, 10, 60);</p>
+<p class="p2"><span class="s4">~te</span> = <span class="s1">Pfunc</span>{100.rand};</p>
+<p class="p2"><span class="s1">Pdefn</span>(<span class="s2">\onepreprate</span>, <span class="s1">Pseq</span>([ <span class="s4">~ratSpec</span>.map(<span class="s1">Prout</span>({<span class="s5">var</span> x = <span class="s4">~rat</span>[0][<span class="s4">~seq1</span>]; <span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>].do{<span class="s5">|i|</span> <span class="s4">~posRatInf</span>[0][<span class="s4">~seq1</span>] = i; <span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>] = ((<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger - (<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger + 1); <span class="s4">~posRat</span>[0][<span class="s4">~seq1</span>] = ((<span class="s4">~posRatInf</span>[0][<span class="s4">~seq1</span>] % <span class="s4">~seqDurRat</span>[0][<span class="s4">~seq1</span>]) + <span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]); x.copyRange((<span class="s4">~ratSeqStart</span>[0][<span class="s4">~seq1</span>]).asInteger, (<span class="s4">~ratSeqStop</span>[0][<span class="s4">~seq1</span>]).asInteger).wrapAt(i).yield}})), <span class="s4">~te</span>], <span class="s6">inf</span>));</p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+</body>
+</html>
