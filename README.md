@@ -83,7 +83,7 @@ Let me know. I might maybe help.
   - [crucialviews](https://github.com/crucialfelix/crucialviews) (for GUI BoxMatrix),
   - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes),
   - [FPLib](https://github.com/miguel-negrao/FPLib) (for functional programming to get back to previous presets. This Quark will also install automatically [JITLibExtensions](https://github.com/supercollider-quarks/JITLibExtensions) and [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) for some MIDI controllers.),
-  - ([KMeans](https://github.com/supercollider-quarks/KMeans))
+  - ([KMeans](https://github.com/supercollider-quarks/KMeans)),
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
   - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
   - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status),
