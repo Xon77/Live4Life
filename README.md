@@ -110,7 +110,7 @@ Let me know. I might maybe help.
 
 ### Setup
 
-In order to launch the tool, follow the steps and coming instructions of the [file _0 Live Q](/_0 Live Q.scd) in the [folder](/4Live4Life_Project) `4Live4Life_Project`.
+In order to launch the tool, follow the steps and coming instructions of the [file _0 Init Live4Life.scd](/_0 Init Live4Life.scdd) in the [folder](/4Live4Life_Project) `4Live4Life_Project`.
 
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the [folder](/4Live4Life_Project) `4Live4Life_Project` to execute for:
 

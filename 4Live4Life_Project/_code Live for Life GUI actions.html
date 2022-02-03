@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title></title>
+<meta name="Generator" content="Cocoa HTML Writer">
+<meta name="CocoaVersion" content="1038.36">
+<style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ce0c0d}
+p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #000000; min-height: 14.0px}
+p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #000000}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Monaco; color: #ff791f}
+span.s1 {color: #ff791f}
+span.s2 {color: #000000}
+span.s3 {color: #2221c7}
+span.s4 {color: #2d2cfa}
+span.s5 {color: #4b4ac7}
+span.Apple-tab-span {white-space:pre}
+</style>
+</head>
+<body>
+<p class="p1">// Task sur GUI (Range-Sliders)</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s1">~ratRange</span> = 0 ! <span class="s1">~seqs</span>.size ! <span class="s1">~tracks</span>.size;</p>
+<p class="p4">~trackCur1<span class="s2"> = 0;</span></p>
+<p class="p4">~seqCur1<span class="s2"> = 0;</span></p>
+<p class="p3">(</p>
+<p class="p4">~taskGUI1<span class="s2"> = </span><span class="s3">Task</span><span class="s2">({</span></p>
+<p class="p3"><span class="Apple-tab-span">	</span><span class="s4">var</span> pt;</p>
+<p class="p3"><span class="Apple-tab-span">	</span>pt = <span class="s3">PintC</span>( <span class="s3">Pseq</span>( [[<span class="s1">~ratMin</span>[<span class="s1">~trackCur1</span>][<span class="s1">~seqCur1</span>],<span class="s1">~ratMax</span>[<span class="s1">~trackCur1</span>][<span class="s1">~seqCur1</span>]] , <span class="s3">Pwhite</span>(0.0.dup,1.0.dup,<span class="s5">inf</span>)], 1 ), 1/<span class="s3">Pseries</span>(2, 0.25,<span class="s5">inf</span>) ).asStream;</p>
+<p class="p3"><span class="Apple-tab-span">	</span><span class="s5">inf</span>.do({ <span class="s4">|i|</span></p>
+<p class="p4"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~ratRange<span class="s2">[</span>~trackCur1<span class="s2">][</span>~seqCur1<span class="s2">] = pt.next;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// Pour repercusion des donnees XXX</p>
+<p class="p4"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>if ((</span>~trackCur1<span class="s2"> == </span>~tracksView<span class="s2">.value &amp;&amp; </span>~seqCur1<span class="s2"> == </span>~seqsView<span class="s2">.value), {</span></p>
+<p class="p4"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~ratRangeView<span class="s2">.valueAction_(</span>~ratRange<span class="s2">[</span>~trackCur1<span class="s2">][</span>~seqCur1<span class="s2">]) });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// ~ratRangeView.background = Color.red.alpha_(0.5).blend( Color.black.alpha_(0.25), i/99 );</p>
+<p class="p3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>0.1.wait });</p>
+<p class="p1"><span class="s2"><span class="Apple-tab-span">	</span></span>// thisThread.seconds should differ exactly 5s from the first post</p>
+<p class="p3"><span class="Apple-tab-span">	</span>}).play(<span class="s3">AppClock</span>);</p>
+<p class="p3">)</p>
+<p class="p4">~taskGUI1<span class="s2">.stop;</span></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p4">~trackCur2<span class="s2"> = 0;</span></p>
+<p class="p4">~seqCur2<span class="s2"> = 0;</span></p>
+<p class="p3"><span class="s1">~speed</span> = 50;</p>
+<p class="p3"><span class="s1">~pat2</span> = <span class="s3">PSinOsc</span>(<span class="s1">~speed</span>, 0, 0.5, 0.5).asStream;</p>
+<p class="p3">(</p>
+<p class="p4">~taskGUI2<span class="s2"> = </span><span class="s3">Task</span><span class="s2">({</span></p>
+<p class="p3"><span class="Apple-tab-span">	</span><span class="s5">inf</span>.do({ <span class="s4">|i|</span></p>
+<p class="p4"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~ratMul<span class="s2">[</span>~trackCur2<span class="s2">][</span>~seqCur2<span class="s2">] = </span>~pat2<span class="s2">.next;</span></p>
+<p class="p4"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>if ((</span>~trackCur2<span class="s2"> == </span>~tracksView<span class="s2">.value &amp;&amp; </span>~seqCur2<span class="s2"> == </span>~seqsView<span class="s2">.value), {</span></p>
+<p class="p4"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>~ratMulView<span class="s2">.valueAction_(</span>~ratMul<span class="s2">[</span>~trackCur2<span class="s2">][</span>~seqCur2<span class="s2">])<span class="Apple-converted-space">  </span>});</span></p>
+<p class="p1"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>// ~ratMulView.background = Color.red.alpha_(0.5).blend( Color.black.alpha_(0.25), i/99 );</p>
+<p class="p3"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>0.1.wait });</p>
+<p class="p3"><span class="Apple-tab-span">	</span>}).play(<span class="s3">AppClock</span>);</p>
+<p class="p3">)</p>
+<p class="p4">~taskGUI2<span class="s2">.stop;</span></p>
+</body>
+</html>
