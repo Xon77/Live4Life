@@ -62,7 +62,7 @@ Although it works well for Apple Silicon with macOS 12.1 Monterey, the GUI will 
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
 It might work for Linux and Windows platforms after solving some issues. 
-Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit `numWireBufs_` to some values, like 800, in the file [1_Init_BufferSynths](/4Live4Life_Project/1_Init_BufferSynths.scd)`1_Init Buffer Synths`, since MacOS seem to accept very high values without generating errors. Since then, there may probably be other errors on Linux.
+Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit `numWireBufs_` to some values, like 800, in the file [1_Init_BufferSynths](/4Live4Life_Project/_1_Init_BuffersSynths_127.scd#L75)`1_Init Buffer Synths`, since MacOS seem to accept very high values without generating errors. Since then, there may probably be other errors on Linux.
 For Windows, I do not know, since currently I do not have a simple access to both of them.
 Let me know. I might maybe help.
 
