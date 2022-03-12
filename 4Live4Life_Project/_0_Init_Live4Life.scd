@@ -112,7 +112,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-( // Initialisation MIDI avec la librairie Modality & Quark APC Mini XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation MIDI avec la librairie Modality & Quark APC Mini & Twister XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 { // MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache;
 	~midiTouchBar = MKtl('iac', "gestionnaire-iac"); "_Init Midi T.scd".loadRelative; // Canal 7
 	~akFXVol8 = 1; "_Init Midi Ak.scd".loadRelative; // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI"); // Canal 1
