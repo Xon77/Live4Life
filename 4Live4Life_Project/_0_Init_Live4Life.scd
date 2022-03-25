@@ -112,7 +112,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-( // Initialisation MIDI avec la librairie Modality & Quark APC Mini XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation MIDI avec la librairie Modality & Quark APC Mini & Twister XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 { // MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache;
 	~midiTouchBar = MKtl('iac', "gestionnaire-iac"); "_Init Midi T.scd".loadRelative; // Canal 7
 	~akFXVol8 = 1; "_Init Midi Ak.scd".loadRelative; // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI"); // Canal 1
@@ -132,7 +132,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-"_1_Init_BuffersSynths_127.scd".loadRelative; ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0;
+"_1_Init_BuffersSynths_128.scd".loadRelative; ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0;
 
 ~loadServer.(\server1, \Local1, 0, 57110); // Nom du server -> ~server1 // limité à 96 canaux, mais séquences d'effets multicanaux s'exprimant moins bien au delà de 16 canaux
 // ~loadServer.(\server1, \Local1, 0, 57110, \serverFX1, \LocalFX1, 57111); // Noms des servers -> [~server1, ~serverFX1] // limité à 32 canaux via Jack ?
@@ -145,9 +145,12 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 ~initBuffersSynths.(\server2, 1);
 
 
+// Changement BUF -> introduction de ~windowHeight & ~windowWidth
+// Changement GUI -> ~presetVarsWindow & WindowHandleView
+
 
 // INIT GUI (Server 1 jusqu'à la piste 2 et Server 2 au delà) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_220.scd".loadRelative;
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_221.scd".loadRelative;
 
 // Lemur Connection
 ~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "192.168.0.109", 8000);
