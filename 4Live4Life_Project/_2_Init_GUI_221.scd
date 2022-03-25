@@ -336,7 +336,7 @@ if (f == 'ins', {
 		~spatioScopeWindow = Window("Spatioscope").setTopLeftBounds( Rect(0, 960, 10+(250*sizeMul), 20+(250*sizeMul))).alwaysOnTop_(true).front;
 		~controlWindowTopLeft = 260;
 	}, {
-		~controlWindowTopLeft = /*280*/ 290;
+		~controlWindowTopLeft = /*280*/ 297 + ~windowHeight - 1200 + ~windowUpperMargin;
 	});
 
 	// à créer le 7 sorties et rien pour le 2 sorties
@@ -3079,7 +3079,7 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 // w.view.decorator = FlowLayout(w.view.bounds); // Pourquoi obligé de le retirer sinon le 2ème CompositeView se met forcément en dessous du 1er ???
 // w.view.background_(Color.gray.alpha_(0.4)); // ne peut être mis dans le EZKnob car sinon pris en compte de SCCompoisteView et problème avec les valueAction ???????
 // w.view.decorator.gap=2@2; // ???
-~globalWindow = Window("Live for Life -- (A)Rhythmics in Space -- Space Loop Atomizer"/*, border: false*/, scroll: ~mainWindowScroll).setTopLeftBounds( Rect(328, 0, 1605, 1130)).background_(Color(0.5, 0.5, 0.5)).front;
+~globalWindow = Window("Live for Life -- (A)Rhythmics in Space -- Space Loop Atomizer"/*, border: false*/, scroll: ~mainWindowScroll).setTopLeftBounds( Rect( /*328*/ 328+~windowWidth-1920, 0, 1605, 1130)).background_(Color(0.5, 0.5, 0.5)).front;
 
 // Fermeture de toutes les fenêtres et arrêt des patterns & de la routine d'update graphique si fermeture de la fenêtre principale
 // ~globalWindow.onClose = {Pdef.all.size.do {|i| Pdef.all[~patterns[i]].stop }; ~fxSynth.size.do{|i| ~fxSynth[i].free; ~fxSynth2[i].free }; ~visuel.stop; m.close; v.close; ~controlWindow.close};
@@ -3508,8 +3508,6 @@ Ndef(\sound).play
 	~controlWindow = Window("Control Panel").setTopLeftBounds(Rect(0, ~controlWindowTopLeft, 315, 630))/*.alpha_(0.8)*/.alwaysOnTop_(true).front;
 
 	~controlWindow.onClose = {
-
-		// ~presetVarsWindow.close;
 
 		if (~play.notNil, { Pdef.all.size.do {|i| Pdef.all[~patterns[i]].stop }; });
 
@@ -23328,7 +23326,8 @@ u.drawFunc = { d.draw }
 	.font_(Font("Verdana",10))
 	.action_({|i| ~updateSoundFile = i.value;
 		if (~updateSoundFile == 1, {
-			~soundFileViewWindow = Window.new("SoundfileView", Rect(1600, 700, 400, 180)).alwaysOnTop_(true);
+			// ~soundFileViewWindow = Window.new("SoundfileView", Rect(1517+~windowWidth-1920, 683+~windowHeight-1200, 400, 180)).alwaysOnTop_(true);
+			~soundFileViewWindow = Window.new("SoundfileView").setTopLeftBounds(Rect(1517+~windowWidth-1920, 292+(~windowUpperMargin.neg*4), 400, 180)).alwaysOnTop_(true);
 			~soundFileView = SoundFileView.new(~soundFileViewWindow, Rect(0, 0, 400, 180));
 			~soundFileViewWindow.front;
 			// ~updateSoundFile = i.value;
@@ -23749,7 +23748,7 @@ u.drawFunc = { d.draw }
 	.font_(Font("Verdana",10))
 	.action_({|i| ~trajectoryWindowStatus = i.value;
 		if (~trajectoryWindowStatus == 1, {
-			~trajectoryWindow = Window.new("TrajectoryView", Rect(380, 200, 1480, 740)).alwaysOnTop_(true);
+			~trajectoryWindow = Window.new("TrajectoryView", Rect(380+~windowWidth-1920, 128+~windowHeight-1200+(~windowUpperMargin*4), 1480, 740)).alwaysOnTop_(true);
 			~trajectoryCompositeView = CompositeView(~trajectoryWindow, Rect(5, 5, 800, 700));
 			~trajectoryView = WFSPathGUI.new(~trajectoryCompositeView);
 			~trajectoryView.openGeneratorView(~trajectoryWindow, Rect(850, 25, 200, 200) );
@@ -24055,6 +24054,14 @@ u.drawFunc = { d.draw }
 	~globalRandAssPresets[id] = { [ ~presetSeqRandList[~sequenceAssociationTrackFormat[id][0]/*~tracksValue*/].choose, ~presetSeqRandList[~sequenceAssociationTrackFormat[id][1]/*~tracksValue*/].choose ] } ! 60;
 	};*/
 
+	~presetVarsLastSelection = 0 ! ~nbOfpresetVarsPages;
+
+	if (~presetAssociationNames.isNil, {
+		~presetAssociationNames = 0 ! ~nbOfpresetVarsPages;
+		if (  ~presetTracksVariations.notNil, { ~presetAssociationNames[0] = ~presetTracksVariations.keys.asArray.sort; } );
+	});
+
+
 	(
 		~presetVarsWindow = Window("Preset Associations", border:false).setTopLeftBounds(Rect(1516, 587, 400, 540))/*.alpha_(0.8)*/.alwaysOnTop_(true);
 
@@ -24062,12 +24069,7 @@ u.drawFunc = { d.draw }
 		// Qu'elle soit toujours présente et juste la cachée ???
 		~presetVarsWindow.view./*global*/keyDownAction_(~keyActions);
 
-		~presetVarsLastSelection = 0 ! ~nbOfpresetVarsPages;
-
-		if (~presetAssociationNames.isNil, {
-			~presetAssociationNames = 0 ! ~nbOfpresetVarsPages;
-			if (  ~presetTracksVariations.notNil, { ~presetAssociationNames[0] = ~presetTracksVariations.keys.asArray.sort; } );
-		});
+		WindowHandleView(~presetVarsWindow, Rect(1, 0, 398, 4))/*.minHeight_(4)*/;
 
 		/*~presetVarsSliderView = EZSlider.new2(~presetVarsWindow, Rect(0,50,400,20) /*400@20*/, nil, ControlSpec(1, 60, \lin, 1, 1),
 		{ |ez| ~presetVarsSlider = (ez.value-1)/*.postln*/;
@@ -24078,7 +24080,7 @@ u.drawFunc = { d.draw }
 		.font_(Font("Helvetica",11));*/
 
 		~presetVarsSliderSpec = ControlSpec(1,60, \lin, 1,1);
-		~presetVarsSliderView = RoundSlider(~presetVarsWindow, Rect(1, 2, 398, 28))
+		~presetVarsSliderView = RoundSlider(~presetVarsWindow, Rect(1, 6, 398, 24))
 		.action_({ |view|
 			~presetVarsSlider = ~presetVarsSliderSpec.map(view.value) -1;
 			~presetVarsSliderViewFunction.(~presetVarsSlider);
@@ -24747,11 +24749,11 @@ u.drawFunc = { d.draw }
 	~presetVarsChangeView = RoundSlider(~controlWindowTrig, Rect(260, 80, 50, 18))
 	.action_({ |view|
 		case
-		{view.value == 1} { ~presetVarsWindow.setTopLeftBounds(Rect(1516, 586, 400, 540) /*(1515, 511, 402, 594+14+4)*/); }
-		{view.value == (3/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(1516, 44, 400, 540)); }
-		{view.value == (2/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(1116, 44, 400, 540)); }
-		{view.value == (1/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(717, 44, 400, 540)); }
-		{view.value == 0} { ~presetVarsWindow.setTopLeftBounds(Rect(317, 586, 400, 540)); }
+		{view.value == 1} { ~presetVarsWindow.setTopLeftBounds(Rect(1516+~windowWidth-1920, 586+~windowTopMargin, 400, 540) /*(1515, 511, 402, 594+14+4)*/); }
+		{view.value == (3/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(1516+~windowWidth-1920, 44+~windowTopMargin, 400, 540)); }
+		{view.value == (2/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(1116+~windowWidth-1920, 44+~windowTopMargin, 400, 540)); }
+		{view.value == (1/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(717+~windowWidth-1920, 44+~windowTopMargin, 400, 540)); }
+		{view.value == 0} { ~presetVarsWindow.setTopLeftBounds(Rect(317+~windowWidth-1920, 586+~windowTopMargin, 400, 540)); } // 1920 - 317
 	})
 	.font_(Font("Verdana", 10,true))
 	.background_(Color.blue/*~sliderBackgroundColor*/)
@@ -30505,7 +30507,7 @@ u.drawFunc = { d.draw }
 
 			if (~automation.notNil, {~automationWindow.close});
 
-			~automationWindow = Window(border:false).setTopLeftBounds(Rect(720, 1125, 604, 30)).background_(Color.black).alwaysOnTop_(true).front;
+			~automationWindow = Window(border:false).setTopLeftBounds(Rect(720 + ~windowWidth - 1920, 1125 + ~windowHeight - 1200, 604, 30)).background_(Color.black).alwaysOnTop_(true).front;
 			WindowHandleView(~automationWindow, Rect(0, 0, 602, 5));
 			~automation = Automation(/*30*/).front(~automationWindow, bounds: Rect(2, 5, 600, 22));
 			~automation.onPlay = 0;

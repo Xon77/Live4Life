@@ -277,6 +277,14 @@
 
 
 
+	~windowHeight = Window.screenBounds.height/*.asInteger*/; // ~windowHeight = Window.availableBounds.height/*.asInteger*/;
+	~windowWidth = Window.screenBounds.width/*.asInteger*/;
+	if (~windowHeight == 1200, {~windowTopMargin = 0; ~windowUpperMargin = 6}, {~windowTopMargin = 26; ~windowUpperMargin = 0});
+
+
+
+
+
 
 
 
@@ -313,7 +321,8 @@
 				~server2Window.window.alpha_(0.6).bounds_(Rect.new(33,925,283,94)).alwaysOnTop_(true);
 			},{
 				// ~server2Window.window.bounds_(Rect.new(0,124,305,100)).alwaysOnTop_(true);
-				~server2Window.window.alpha_(0.7).bounds_(Rect.new(41,1080,274,94)).alwaysOnTop_(true);
+				// ~server2Window = currentEnvironment[\server2].makeWindow;
+				~server2Window.window.alpha_(0.7).bounds_(Rect.new(41, /*1080*/ (~windowHeight-120) ,274,94)).alwaysOnTop_(true);
 			});
 		});
 
