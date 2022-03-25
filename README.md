@@ -45,19 +45,18 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 * currently, the code is not correctly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
 
-* it is designed for a specific screen size (1920×1200) and an AZERTY keyboard.
+* it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard.
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
-* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
+* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw and I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume.
 
 
 ### Platform support
 
-*Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15".
-Although it works well for Apple Silicon with macOS 12.1 Monterey, the GUI will soon be optimized for M1 16".
+*Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.1 Monterey on a MacBook Pro M1 16".
 
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
