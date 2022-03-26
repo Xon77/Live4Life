@@ -16,6 +16,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~synthDefsBuild = 0; // 1 pour reconstuire les synthés - si aucun dossier reconstruction automatique
 ~synthDefsManagementChoose = 1; // 0 -> add / 1 -> load --- utile seulement si ~synthDefsBuild = 1
 
+~initSeqOrPerfMode = 0; // Initialisation Compostion Séquence = 0 / Preformance = 1
 ~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> demande un peu plus de CPU - mais plus précis sur les niveaux // ~visualizeSpatioScope.value;
 // Mais depuis l'arrivée du 2ème serveur, plus très intéressant car spatioscope n'est que sur un seul serveur
 ~visualizeProcessing = 0; // enclenche le transfert vers Processing

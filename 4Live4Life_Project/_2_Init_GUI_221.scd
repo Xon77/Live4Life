@@ -24784,7 +24784,7 @@ u.drawFunc = { d.draw }
 
 	});
 
-	~presetVarsOpenView.valueAction_(1);
+	~presetVarsOpenView.value_(/*1*/ if (~initSeqOrPerfMode == 0, {0}, {1}) ).doAction;
 
 
 	~listPresetAssociationNewSort = { |i| 6.do { |h| 10.do { |v| var b, nb; b = ~presetVarsMatrices[i].at(h@v); b.pattern.postln; } } };
@@ -30915,7 +30915,7 @@ PopUpMenu.defaultKeyDownAction
 
 
 
-	~tabbedView.focus(1);
+	~tabbedView.focus(/*1*/ if (~initSeqOrPerfMode == 0, {0}, {1}) );
 
 	~rtmDefault.(0,0); // Pour initialiser la protection sur le multiplicateur du rythme afin d'éviter qu'il soit trop bas; Voire une meilleure façon de l'initialiser...
 
