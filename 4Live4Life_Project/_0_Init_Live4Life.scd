@@ -146,9 +146,6 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 ~initBuffersSynths.(\server2, 1);
 
 
-// Changement BUF -> introduction de ~windowHeight & ~windowWidth
-// Changement GUI -> ~presetVarsWindow & WindowHandleView
-
 
 // INIT GUI (Server 1 jusqu'à la piste 2 et Server 2 au delà) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_221.scd".loadRelative;
