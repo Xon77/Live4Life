@@ -30915,7 +30915,10 @@ PopUpMenu.defaultKeyDownAction
 
 
 
-	~tabbedView.focus(/*1*/ if (~initSeqOrPerfMode == 0, {0}, {1}) );
+	// ~tabbedView.focus(/*1*/ if (~initSeqOrPerfMode == 0, {0}, {1}) );
+	if (~initSeqOrPerfMode == 0, {~tabbedView.focus(0); ~currentTab = 0}, {~tabbedView.focus(1); ~currentTab = 3});
+
+
 
 	~rtmDefault.(0,0); // Pour initialiser la protection sur le multiplicateur du rythme afin d'éviter qu'il soit trop bas; Voire une meilleure façon de l'initialiser...
 
