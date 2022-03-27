@@ -68,7 +68,7 @@ Let me know. I might maybe help.
 
 ## Requirements
 
-* [SuperCollider 3.12.2](https://supercollider.github.io/download) or above,
+* [SuperCollider 3.12.2](https://supercollider.github.io/downloads) or above,
 
 * [sc3-plugins](https://supercollider.github.io/sc3-plugins/),
 
@@ -89,7 +89,7 @@ Let me know. I might maybe help.
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
-  - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
+  - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
   - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor),
   - [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
@@ -99,7 +99,7 @@ Let me know. I might maybe help.
 
 ## Installation
 
-1. [Install SuperCollider](https://supercollider.github.io/download). 
+1. [Install SuperCollider](https://supercollider.github.io/downloads). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
 4. If you use some controllers, such as the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the [folder](/Modality_desc_to_add) `Modality_desc_to_add` in the folder `MKtlDescriptions` within the Quark Modality.
@@ -109,7 +109,7 @@ Let me know. I might maybe help.
 
 ### Setup
 
-In order to launch the tool, follow the steps and coming instructions of the file [_0_Init_Live4Life.scd](/4Live4Life_Project/_0_Init_Live4Life.scd) in the [folder](/4Live4Life_Project) `4Live4Life_Project`.
+In order to launch the tool, follow the steps and coming instructions of the file [_0_Init_Live4Life.scd](/4Live4Life_Project/_0_Init_Live4Life.scd) in the [folder](/4Live4Life_Project) [`4Live4Life_Project`](/4Live4Life_Project) `[4Live4Life_Project](/4Live4Life_Project)`.
 
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the [folder](/4Live4Life_Project) `4Live4Life_Project` to execute for:
 
