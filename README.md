@@ -51,7 +51,7 @@ I have been developing in [**SuperCollider**](https://supercollider.github.io) s
 
 * due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw with lots of old comments and I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
-* changing drastically effect parameters can produce very loud sounds. So, monitor the volume.
+* changing drastically effect parameters can produce very loud sounds. So, monitor the volume and change sliders and parameters slowly if you do not know the effect or what (kind of parameter) you are changing.
 
 
 ### Platform support
