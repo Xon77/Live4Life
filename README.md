@@ -102,14 +102,14 @@ Let me know. I might maybe help.
 1. [Install SuperCollider](https://supercollider.github.io/downloads). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
-4. If you use some controllers, such as the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the [folder](/Modality_desc_to_add) `Modality_desc_to_add` in the folder `MKtlDescriptions` within the Quark Modality.
-5. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. Concerning the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small change, commenting the lines 220 and 223 of the [file](/Quarks_to_replace/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220) `/Quarks_to_replace/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc`, to avoid an error in the post window by closing the trajectory editor. 
-6. Put the [folder](/4Live4Life_Extensions) `4Live4Life_Extensions` in your SuperCollider Extensions folder and recompile again.
+4. If you use some controllers, such as the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark Modality.
+5. Replace two other Quarks, i.e. [APCmini](https://github.com/andresperezlopez/APCmini) and [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the [folder](/Quarks_to_replace) `Quarks_to_replace`. Concerning the modified version of [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library), it is just a small change, commenting the lines 220 and 223 of the file [`/Quarks_to_replace/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc`](/Quarks_to_replace/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220), to avoid an error in the post window by closing the trajectory editor. 
+6. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
 
 ### Setup
 
-In order to launch the tool, follow the steps and coming instructions of the file [_0_Init_Live4Life.scd](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project).
+In order to launch the tool, follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project).
 
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the folder [`4Live4Life_Project`](/4Live4Life_Project) to execute for:
 
