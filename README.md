@@ -6,7 +6,7 @@
 
 ## Overview
 
-The **spatial performance tool** *Live 4 Life* aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...) with many controllers (currently, you can control it with the GUI and the keyboard, and you can also add an Akai APC Mini, 2 tablets with Lemur App, 2 MIDI Fighter Twister and a Sensual Morph). 
+The **spatial performance tool** *Live 4 Life* aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...) with many controllers (currently, you can control it with the GUI and the keyboard, and you can also add an [Akai APC Mini](https://www.akaipro.com/apc-mini), 2 tablets with [Lemur App](https://liine.net/en/products/lemur/), 2 [MIDI Fighter Twister](https://www.midifighter.com/#Twister) and a [Sensual Morph](https://morph.sensel.com)). 
 
 I have been developing in **SuperCollider** since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with space and sounds. Although I hope to develop it during the rest of my life, spatial development is paused because of several reasons (mainly due to the pandemic and the difficulty to perform spatial improvisations in concert halls or festivals and without an appropriate allowance).
 
@@ -43,7 +43,7 @@ I have been developing in **SuperCollider** since 2011, "to play the place and t
 
 :warning: Please note that:
 
-* currently, the code is not correctly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
+* currently, the code can be incorrectly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
 
 * it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.
 
