@@ -6,7 +6,7 @@
 
 ## Overview
 
-The **spatial performance tool** ***Live 4 Life*** aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...) with many controllers (currently, you can control it with the GUI and the keyboard, and you can also add an [Akai APC Mini](https://www.akaipro.com/apc-mini), 2 tablets with [Lemur App](https://liine.net/en/products/lemur/), 2 [MIDI Fighter Twister](https://www.midifighter.com/#Twister) and a [Sense(/ua;)l Morph](https://morph.sensel.com)). 
+The **spatial performance tool** ***Live 4 Life*** aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...) with many controllers (currently, you can control it with the GUI and the keyboard, and you can also add an [Akai APC Mini](https://www.akaipro.com/apc-mini), 2 tablets with [Lemur App](https://liine.net/en/products/lemur/), 2 [MIDI Fighter Twister](https://www.midifighter.com/#Twister) and a [Sensel Morph](https://morph.sensel.com)). 
 
 I have been developing in [**SuperCollider**](https://supercollider.github.io) since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with space and sounds. Although I hope to develop it during the rest of my life, spatial development is paused because of several reasons (mainly due to the pandemic and the difficulty to perform spatial improvisations in concert halls or festivals and without an appropriate allowance).
 
@@ -126,7 +126,7 @@ A wiki and code examples to automate some utility functions will be added over t
 
 ## References
 
-***Live 4 Life*** has been presented many times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
+***Live 4 Life*** has been presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
 
 All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele), as well as my doctoral thesis, soon to be published (in french, sorry) about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
 
