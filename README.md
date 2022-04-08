@@ -141,15 +141,11 @@ If you would like to contribute, please get in touch with me in order to organis
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
-<mark> You can also support thanks to donations via [**Ko-fi**](https://ko-fi.com/live4life) :grin: or get specific support and courses via [Patreon](https://www.patreon.com/bePatron?u=71994619)</mark> :grin:.
+<mark> You can also support thanks to donations via [**Ko-fi**](https://ko-fi.com/live4life) :grin: or get specific support and courses via [**Patreon**](https://www.patreon.com/bePatron?u=71994619)</mark> :grin:.
 
-<iframe src="https://giphy.com/embed/ToMjGpjm9vQhsB4cqVa" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa">via GIPHY</a></p>
 
-![](http://i.imgur.com/Ssfp7.gif)
-
+<!-- Introduire un gif...
 ![](https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa)
-
-<!--
 <img src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" width="40" height="40" />
 -->
 
