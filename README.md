@@ -143,11 +143,9 @@ Feel free to post an issue, and you can also send me a mail first since it might
 
 You can also support this spatial work and get specific support and courses by contributing on [Patreon](https://www.patreon.com/bePatron?u=71994619).
 
-![](http://i.imgur.com/OUkLi.gif)
+<iframe src="https://giphy.com/embed/ToMjGpjm9vQhsB4cqVa" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa">via GIPHY</a></p>
 
 ![](http://i.imgur.com/Ssfp7.gif)
-
-![](http://i.imgur.com/60bts.gif)
 
 
 ## Acknowledgements
