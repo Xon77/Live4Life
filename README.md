@@ -145,15 +145,6 @@ Feel free to post an issue, and you can also send me a mail first since it might
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z1C1NDP)
 
-<iframe
-  src="https://carlo.github.io/patreon-buttons/patreon-btn.html?creator=neuesausderzukunft&amp;size=large&amp;unit=video"
-  allowtransparency="true"
-  frameborder="0"
-  scrolling="0"
-  width="170"
-  height="30">
-</iframe>
-
 
 <!-- Introduire un gif...
 ![](https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa)
