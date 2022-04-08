@@ -141,7 +141,7 @@ If you would like to contribute, please get in touch with me in order to organis
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
-You can also support this spatial work or get specific support and courses by contributing on [Patreon](<a href="https://www.patreon.com/bePatron?u=71994619" data-patreon-widget-type="become-patron-button">Become a Patron!</a>).
+You can also support this spatial work or get specific support and courses by contributing on [Patreon](https://www.patreon.com/bePatron?u=71994619).
 
 
 ## Acknowledgements
