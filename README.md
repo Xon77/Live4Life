@@ -147,6 +147,8 @@ You can also support this spatial work and get specific support and courses by c
 
 ![](http://i.imgur.com/Ssfp7.gif)
 
+![](https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa)
+
 
 ## Acknowledgements
 
