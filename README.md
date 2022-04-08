@@ -145,6 +145,8 @@ Feel free to post an issue, and you can also send me a mail first since it might
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z1C1NDP)
 
+<a href="https://patreon.com/endel"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dendel%26type%3Dpatrons&style=for-the-badge" /> </a>
+
 
 <!-- Introduire un gif...
 ![](https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa)
