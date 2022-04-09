@@ -11,8 +11,9 @@ The **spatial performance tool** ***Live 4 Life*** aims to simplify the creation
 I have been developing in [**SuperCollider**](https://supercollider.github.io) since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with sounds and space. Although I hope to develop the tool with other spatial control and algorithms during the rest of my life, rhythm and synthesis are now prioritized over spatial development, which is a bit paused because of several reasons (mainly due to the pandemic and the difficulty to find residencies or perform spatial improvisations in concert halls or festivals without an appropriate allowance).
 
 What makes the difference with other spatial stuff ?
-1. 
-2.
+
+1. It is not only a spatialisation tool, but a whole sound creation system to play with sequences parameters (rhythm, sound and space).
+2. Contrary to most tools with input/track-based spatialisation, it is an event-based spatialisation
 
 
 <p align="center">
