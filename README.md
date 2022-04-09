@@ -12,8 +12,9 @@ I have been developing in [**SuperCollider**](https://supercollider.github.io) s
 
 What makes the difference with other spatial stuff ?
 
-1. It is not only a spatialisation tool, but a whole sound creation system to play with sequences parameters (rhythm, sound and space).
-2. Contrary to most tools with input/track-based spatialisation, it is a layer- and event-based spatialisation, where spatialised sound particles or choruses (copies of the same event with delays or spectral or spatial variations) meet a multichannel effect system.
+1. It is not only a spatialisation tool, but a whole sound creation system to play with sequences of parameters (rhythm, sound and space).
+2. Contrary to most tools with input/track-based spatialisation, it is a layer- and event-based spatialisation, where spatialised sound particles or choruses (copies of the same event with micro-delays or spectral or spatial variations) meet a multichannel effect system.
+3. It includes a library of different abstract and concrete spatialisation techniques and rendering algorithms, mixing channel- and object-based paradigms (to take advantage of the strengths of each approach) to be used on every sound event.
 
 
 <p align="center">
