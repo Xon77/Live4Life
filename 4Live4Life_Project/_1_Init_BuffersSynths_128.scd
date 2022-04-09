@@ -14465,10 +14465,10 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 						// { sf.duration > (60*20) } {60.0.wait};
 						// if (sf.duration > (60*3), {3.0.wait} ); // OK si attente de l'affichage de l'index time*/
 
-						if (ind % 10 == 9, {  //adjust - here every 10th file
+						if (ind % 10 == 9, {  // adjust - here every 10th file
 							// "breathing".postln;
 							0.01.wait; currentEnvironment[server].sync;
-							//can even add tiny .wait here but only if desperately needed
+							// can even add tiny .wait here but only if desperately needed
 						});
 
 						if (sf.numChannels == 2, {
@@ -14497,10 +14497,10 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 							var pathn = path.fullPath;
 							sf = SoundFile.new; sf.openRead(pathn);
 
-							if (ind % 10 == 9, {  //adjust - here every 10th file
+							if (ind % 10 == 9, {  // adjust - here every 10th file
 								// "breathing".postln;
 								currentEnvironment[server].sync;
-								//can even add tiny .wait here but only if desperately needed
+								// can even add tiny .wait here but only if desperately needed
 							});
 							// if (sf.duration > (60*3), {3.0.wait} ); // OK si attente de l'affichage de l'index time
 
