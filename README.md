@@ -145,13 +145,13 @@ Feel free to post an issue, and you can also send me a mail first since it might
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z1C1NDP) &nbsp;&nbsp;
 
+[![Patreon](https://carlo.github.io/patreon-buttons/patreon-btn.html?creator=neuesausderzukunft&amp;size=large&amp;unit=video)](https://ko-fi.com/Z8Z1C1NDP)
+
 
 <!-- Introduire un un bouton Patreon -> ne marche pas
 https://shieldsio-patreon.vercel.app
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DLive4Life%26type%3Dpatrons&style=for-the-badge)](https://patreon.com/Live4Life)
 -->
-
-<a href="https://patreon.com/codingcoach_io"><img src="https://img.shields.io/endpoint.svg?url=https://moshef9.wixsite.com/patreon-badge/_functions/badge/?username=Live4Life" alt="Patreon donate button" /> </a>
 
 <!-- Introduire un gif...
 ![](https://giphy.com/gifs/devonstern-water-c4d-ripple-ToMjGpjm9vQhsB4cqVa)
