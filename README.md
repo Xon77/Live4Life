@@ -143,11 +143,14 @@ Feel free to post an issue, and you can also send me a mail first since it might
 
 <mark> You can also support thanks to donations via [**Ko-fi**](https://ko-fi.com/live4life) or get specific support and courses via [**Patreon**](https://www.patreon.com/live4life)</mark>. :grin:
 
+<p align="center">
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z1C1NDP) &nbsp;&nbsp; [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DLive4Life%26type%3Dpatrons&style=for-the-badge)](https://patreon.com/Live4Life)
+</p>
 
-<!-- Introduire un un bouton Patreon -> ne marche pas
+
+<!-- Introduire un un bouton Patreon
 https://shieldsio-patreon.vercel.app
-[![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DLive4Life%26type%3Dpatrons&style=for-the-badge)](https://patreon.com/Live4Life)
+https://github.com/endel/shieldsio-patreon/blob/master/README.md
 -->
 
 <!-- Introduire un gif...
