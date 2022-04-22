@@ -56,7 +56,7 @@ What makes the difference with other spatialisation tools ?
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
-* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw with lots of old comments and I have developed over time my own coding strategies, which might be old, bad or unoptimized. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
+* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw with lots of old comments and I have developed over time my own coding strategies, which might be old, bad or unoptimised. Even though there are some bugs, the tool works well for me with my workflow. But I cannot guarantee it will work for you the way you want.
 
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume and change sliders and parameters slowly if you do not know the effect or what (kind of parameter) you are changing.
 
@@ -118,15 +118,17 @@ Let me know. I might maybe help.
 
 In order to launch the tool, follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project).
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the folder [`4Live4Life_Project`](/4Live4Life_Project) to execute for:
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the folder [`4Live4Life_Project`](/4Live4Life_Project) to execute to:
 
-1. initializing a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
+1. [load one or two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L136-L146):
 
-2. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [folder](https://github.com/Xon77/L4LSoundsDataBase/tree/main/DrumMachines) a collection of drum machine sounds (to begin) specifically sorted for this tool.),
+* initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
-3. opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
+* initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [folder](https://github.com/Xon77/L4LSoundsDataBase/tree/main/DrumMachines) a collection of drum machine sounds (to begin) specifically sorted for this tool.),
 
-4. initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
+3. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L151) with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
+
+4. [initialise a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L161), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
 A wiki, tutorials and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
 
@@ -198,6 +200,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organization never helped me in diffusing my spatial creation and research in their dome despite my proposals. If these wishes are not respected, your souls will be damned for eternity.
+Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creation and research in their dome despite my proposals. If these wishes are not respected, your souls will be damned for eternity.
 
 See the [License](/LICENCE.md) for more details.
