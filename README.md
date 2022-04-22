@@ -124,7 +124,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 2. initializing a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organized by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [folder](https://github.com/Xon77/L4LSoundsDataBase/tree/main/DrumMachines) a collection of drum machine sounds (to begin) specifically sorted for this tool.),
 
-3. opening a GUI with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
+3. [opening a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L151) with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
 4. initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
