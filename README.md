@@ -126,7 +126,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 3. [opening a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L151) with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
-4. initializing a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
+4. [initializing a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L161), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
 A wiki, tutorials and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
 
