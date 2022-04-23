@@ -118,19 +118,19 @@ Let me know. I might maybe help.
 
 The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread mainly in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_128.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd) [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
 
-In order to launch the tool, follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project).
+In order to launch the tool and to execute these files, simply follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) to:
 
-to execute to:
+2. [choose and execute default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L5-L112):
 
-1. [load one or two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L136-L146):
+2. [load one or two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L136-L146):
 
 * initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
 * initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like : `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [folder](https://github.com/Xon77/L4LSoundsDataBase/tree/main/DrumMachines) a collection of drum machine sounds (to begin) specifically sorted for this tool.),
 
-2. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L151) with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
+3. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L151) with different tabs like a Sequence view for the composition and the Global view for the performance (see below figures), as well as views for global multichannel and ambisonic effects,
 
-3. [initialise a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L161), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
+4. [initialise a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L161), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
 A wiki, tutorials and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
 
