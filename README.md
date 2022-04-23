@@ -120,9 +120,9 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 In order to launch the tool and to execute these files, simply follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) to:
 
-2. [choose and execute default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L5-L112):
+0. [choose and execute default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L5-L112):
 
-2. [load one or two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L136-L146):
+1. [load one or two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L136-L146):
 
 * initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
