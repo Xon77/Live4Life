@@ -116,9 +116,11 @@ Let me know. I might maybe help.
 
 ### Setup
 
-In order to launch the tool, follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project).
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread mainly in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_128.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd) [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions spread roughly in three main files within the folder [`4Live4Life_Project`](/4Live4Life_Project) to execute to:
+In order to launch the tool, simply follow the steps and coming instructions of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) to:
+
+0. [define default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L5-L112). You mainly have to choose the [path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L72) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L43-L70) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` if not available.
 
 1. [load one or two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L136-L146):
 
@@ -137,7 +139,7 @@ A wiki, tutorials and code examples to automate some utility functions will be a
 
 ***Live 4 Life*** has been presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
 
-All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my doctoral thesis, soon to be published (in french, sorry) about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
+All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my [doctoral thesis](https://www.researchgate.net/publication/360018268_L'improvisation_spatiale_generee_a_partir_de_motifs_polyrythmiques_et_de_sequences_de_parametres_en_boucle_via_l'outil_de_performance_Live_4_Life) (in french, sorry), about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
 
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
 
