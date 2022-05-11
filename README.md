@@ -202,6 +202,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I would **not** like that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creation and research in their dome despite my proposals. If these wishes are not respected, your souls will be damned for eternity.
+Moreover, I do **not** want that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creation and research in their dome despite my proposals.
 
 See the [License](/LICENCE.md) for more details.
