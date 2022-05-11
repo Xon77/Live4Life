@@ -230,8 +230,8 @@
 
 	// SynthDef Management
 
-	~synthDefsFolderS1 = Platform.userAppSupportDir ++ "/synthdefsLiveForLife-" ++ ~numChannelsConfig ++"-S1";
-	~synthDefsFolderS2 = Platform.userAppSupportDir ++ "/synthdefsLiveForLife-" ++ ~numChannelsConfig ++"-S2";
+	~synthDefsFolderS1 = Platform.userAppSupportDir ++ "/synthdefsLive4Life-" ++ ~numChannelsConfig ++"-S1";
+	~synthDefsFolderS2 = Platform.userAppSupportDir ++ "/synthdefsLive4Life-" ++ ~numChannelsConfig ++"-S2";
 
 	// Création d'un dossier de synthé pour chaque type de config multi-canale
 	// Nécessité de rajouter les synthés dans synthdefsInit, par exemple pour jitlib ou autres - utiliser SynthDescLib.send(s); ?????????
@@ -14467,7 +14467,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 						if (ind % 10 == 9, {  // adjust - here every 10th file
 							// "breathing".postln;
-							0.01.wait; currentEnvironment[server].sync;
+							0.001.wait; currentEnvironment[server].sync;
 							// can even add tiny .wait here but only if desperately needed
 						});
 
