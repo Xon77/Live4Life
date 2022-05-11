@@ -22,9 +22,9 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~mainWindowScroll = false; // For smaller screen sizes in height
 
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
-~hpModulation = 1; // Active les Effets avec modulation des paramètres en fonction des HP
-~mixAllFxDefault = 0; // Valeur par défaut du mix des FX
-~lagTimeAllFxDefault = 7 /*4*/; // Valeur par défaut du lag des paramètres des FX
+~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
+~mixAllFxDefault = 0; // Default value for mix of effects
+~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Valeur par défaut du temps de Xfade des FX
 ~fxMulVolume = 1.0; // Pour la gestion des volumes lors du Xfade des FX entre Série et Parallèle - à tweeker...
 ~fxMul2Volume = 1.0; // idem
