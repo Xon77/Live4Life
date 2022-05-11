@@ -21,7 +21,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals
 ~mainWindowScroll = false; // For smaller screen sizes in height
 
-~trackXFadeDefault = 20; // Default value for Xfade of tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
+~trackXFadeDefault = 20; // Default value for Xfade of tracks (in beats, divide by 2 in seconds -> if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7 /*4*/; // Valeur par défaut du lag des paramètres des FX
