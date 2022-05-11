@@ -25,6 +25,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7 /*4*/; // Valeur par défaut du lag des paramètres des FX
+~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Valeur par défaut du temps de Xfade des FX
 ~fxMulVolume = 1.0; // Pour la gestion des volumes lors du Xfade des FX entre Série et Parallèle - à tweeker...
 ~fxMul2Volume = 1.0; // idem
