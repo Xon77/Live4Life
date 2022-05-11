@@ -168,5 +168,3 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 ~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut; // Listing de la taille des dossiers sons
 ("open" + ~soundsFolder).unixCmdGetStdOut; // Ouverture du dossier son dans le Finder
 ("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut; // Ouverture du dossier des fichiers texte et de presets
-
-
