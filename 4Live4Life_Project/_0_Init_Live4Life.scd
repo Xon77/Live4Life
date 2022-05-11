@@ -1,7 +1,7 @@
 Server.scsynth;
 Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample clock - true = system clock */
 
-( // Initialisation des Données Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation Configuration Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ~viaJACK = 0; // 0 without Jack - 1 with Jack
 
@@ -15,71 +15,65 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~synthDefsBuild = 0; // 1 to rebuild synthDefs - automatic rebuild if no synthDefs in Application Supprt
 ~synthDefsManagementChoose = 1; // 0 -> add - 1 -> load --- useful only if ~synthDefsBuild = 1
 
-~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> demande un peu plus de CPU - mais plus précis sur les niveaux // ~visualizeSpatioScope.value;
-// Mais depuis l'arrivée du 2ème serveur, plus très intéressant car spatioscope n'est que sur un seul serveur
-~visualizeProcessing = 0; // enclenche le transfert vers Processing
-~mainWindowScroll = false;
+~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 - Performance = 1
+~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
+// But with a second server running, SpatioScope is less interesting because only on 1 server
+~visualizeProcessing = 0; // Transfers data to Processing for visuals
+~mainWindowScroll = false; // For smaller screen sizes in height
 
-~trackXFadeDefault = 20; // Valeur par défaut du Xfade pour les pistes en beats (/ par 2 en secondes si 120 de BPM, donc 20 = 10 sec.)
-~hpModulation = 1; // Active les Effets avec modulation des paramètres en fonction des HP
-~mixAllFxDefault = 0; // Valeur par défaut du mix des FX
-~lagTimeAllFxDefault = 7 /*4*/; // Valeur par défaut du lag des paramètres des FX
-~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Valeur par défaut du temps de Xfade des FX
-~fxMulVolume = 1.0; // Pour la gestion des volumes lors du Xfade des FX entre Série et Parallèle - à tweeker...
-~fxMul2Volume = 1.0; // idem
-~maxMulVolControllers = 0.7945/*7*/ /*0.57*/ /*957*/; // Pour le volume général ~trackAllVolView -> à 1 = + 6dB // 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> Active l'arrêt des FX / Check de "preset[\fxSynth]==1" sur toutes les pistes sélectionnées à chaque changement de preset et après le temps Xfade des FX (mais pas après celui du FX INOUT...)
-~maxSynthTime = 30 /*60*/; // Durée en sec. max pour chaque synthèse - tester avec 60 sec. ou à moduler selon les séquences ?
-~keyBoardPerfProtect = 0; // 1 -> Empêche le déclenchement de certains shortcuts trop dangereux ou incontrolables en performance (concernant le random ou la sélection dans la liste de presets)
-~keyBoardPerfProtectFX = 1; // 1 -> Empêche le déclenchement du shortcut (shift + ?) de changement aléatoire des FX (résultat incontrôlable... rester à 1 pour préserver ses oreilles et le système de son)
-~rtmMulMinProtect = 4; // Multiplicateur de niveau minimum du multicateur du module de rythme (qui s'adapte en fonction du nombre d'évènements) pour atteindre un onset minimal de 0.004 sec. à x1 (2 pour 0.008...)
-~rhythmTracks = [4,5,3] /*[3,4,5]*/ /*[4,5,6,7,3]*/; // Manipulation des pistes rythmiques en commençant par 0
+~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
+~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
+~mixAllFxDefault = 0; // Default value for mix of effects
+~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
+~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
+~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
+~fxMul2Volume = 1.0; // Idem
+~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
+~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==)" when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
+~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
+~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
+~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
 
-// Chemin du Dossier de Sons XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~soundsFolder = "/Users/xon/Desktop/_Sounds2021C/";
+~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
+~rhythmTracks = [4,5,6,7,3]; /*[4,5,3]*/ // Identifies rhyhthm tracks (begins with 0)
 
-// Config spatiale (Nb de sorties et organisation spatiale) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-// ~numChannelsConfig = "2-MultiChannelSequencer"; // Pour récupérer les 8 pistes stéréo séparées dans un séquenceur et donc effets multi-canaux 16 pistes mono
-// ~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
+// Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
+
+// Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
+~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
 ~numChannelsConfig = "4";
-// ~numChannelsConfig = "5-Clock"; // Clockwise à partir du Centre = 0
-// ~numChannelsConfig = "5-Centre"; // Clockwise à partir de la gauche sauf Centre = 3 - XXXXXXXXX
-// ~numChannelsConfig = "7"; // Clockwise à partir du Centre
-// ~numChannelsConfig = "8-Centre"; // Clockwise à partir du Centre
-~numChannelsConfig = "8-PairClock"; // Clockwise à partir de la gauche - XXXXXXXXX
-// ~numChannelsConfig = "8-PairPair"; // par paire de gauche à droite - utile pour spatialisation avec le SpatGris - XXXXXXXXX
-// ~numChannelsConfig = "16-PairClock"; // Clockwise à partir de la gauche
-// ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // par paire de gauche à droite XXXXXXXXX
-~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (Hexa + 2 Subs) XXXXXXXXX
-~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM avec 4 Subs
-// Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (spécifique à la Salle CC pour Subs) XXXXXXXXX
-// 1-1 / 2-2 / 3-4 / 4-6 / 5-8 / 6-7 / 7-5 / 8-3 /
-// 9-13(17) / 10-10(14) / 11-12(16) / 12-14(18) / 13-11(15) / 14-9(13) / 15-15(19) / 16-16(20) -- (+ 4 car phones et SPDIF de 9 à 13)
-// Pour CC Test Juillet 2018 car avant / arrière haut en 1er et non à la fin comme l'Hexa - 9-9 / 10-12 / 11-14 / 12-10 / 13-13 / 14-11 / 15-15 / 16-16
-// Subs -> 17-27 / 18-28 / 19-29 / 20-30
-// ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Salle CC
-~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise à partir de la gauche (+ 2 Subs) XXXXXXXXX
-// ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise à partir de la droite - spirale avec quelques variations Config Motu
-// ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise à partir du Centre
-// ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise à partir du Centre
-// ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise à partir du Centre
-// ~numChannelsConfig = "24-UsineC-3Octo";
-// Ajustement volume, controle et attribution des subs dans Salle CC ou Motu...
-~numChannelsConfig = "16-Dome-8-6-2-Clock";
+~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
+~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
+~numChannelsConfig = "7"; // Clockwise from Centre
+~numChannelsConfig = "8-Centre"; // Clockwise from Centre
+~numChannelsConfig = "8-PairClock"; // Clockwise from Links - XXXXXXXXX
+~numChannelsConfig = "8-PairPair"; // Pairwise Links / Right - XXXXXXXXX
+~numChannelsConfig = "16-PairClock"; // Clockwise from Links
+~numChannelsConfig = "16-Dome-8-6-2-Pair"; // Pairwise Links / Right - XXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
+~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
+~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
+~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
+// ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
+// ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
+// ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
+// ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 
-// Nom du Fichier de Presets XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock"; // This last line chooses spatial configuration form
+~numChannelsConfig = "2-Performance";
+
+// Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~presetsFileName = "MyPresetFile.txt";
-~presetsFileName2 = "MyPresetFile2.txt";
+// ~presetsFileName2 = "MyPresetFile2.txt"; if you have 2 presets files
 
-// Particlarité Spatialisation Ambisonique
-~ambATKConfig = "multiChannel"; // "binaural" / "stereo" / "multiChannel"
+// Ambisonic Spatialisation
+// Keep ~ambATKConfig at "binaural" if you have a headphone, or "stereo" if you have 2 speakers, otherwise ~ambATKConfig is "multiChannel" if more than 2 channels
+if (~numChannelsConfig[0].digit == 2, { ~ambATKConfig = "stereo" /*"stereo" */}, { ~ambATKConfig = "multiChannel"});
 ~binauralDecoderName = "FoaDecoderKernel.newSpherical"; // newSpherical ou newCIPIC (44100.0 is not available for cipic kernel decoder)
 ~ambATKkFactor = 'velocity'; // 'dual' / 'velocity' - uniquement pour multicanal
-
-// Protection car ~ambATKConfig = ne peut pas être multiChannel, si config avec 2 HP
-// if (~numChannelsConfig[0].digit == 2 and: { ~ambATKConfig == "multiChannel"} , { ~ambATKConfig = "binaural" /*"stereo" */}); // ne marche pas avec les 24hp de l'UsineC
-// if (ServerOptions.devices.size == 5, { ~ambATKConfig = "binaural" }); // Si aucune carte son n'est repéré -> == 5 -> decoder binaural enclenché
-// ServerOptions.devices; ServerOptions.outDevices; ServerOptions.inDevices; // only on OSX
 
 /*
 The default k ( 'single' ), for decoders accepting k as an argument, returns an 'energy' optimised (aka "max rE") decoder (see FoaDecoderMatrix).
@@ -93,15 +87,15 @@ May be specified as a float: 0.5 to 1.0. Or more conviently by name :
 'controlled'   1/2
 For large-scale concert presentation, the authors advise auditioning values of k between 1/2 and 1/sqrt(2).
 */
-// ~renderEncode.() & ~renderDecode.() // à réévaluer également les synthés lorsque changement du décodeur tout particulièrement binaural et ne pas oublier FoaDecoderKernel.free; si binaural ou stereo
+// ~renderEncode.() & ~renderDecode.() // to execute again when changing decoder settings (e.g. binaural) and do not forget: FoaDecoderKernel.free; if binaural or stereo
 
-~presetsTrajectoryFileName = "L4LPresetTrajectoryZArchive-1.txt"; // Nom du fichier de preset de trajectoires avec création du fichier si non existant
+~presetsTrajectoryFileName = "L4LPresetTrajectoryZArchive-1.txt"; // Name of the preset file for trajectories (the file is created if not present)
 
-~automationInitRecTime = 0; // ~automationLoad.(); // Relance une nouvelle Automation pour l'interface graphique - Quark Automation GUI
+~automationInitRecTime = 0; // Allows to automate the GUI if 1 // ~automationLoad.(); // Quark Automation GUI
 
-~setSampleRate = false /*true*/ /*false*/;
+~setSampleRate = false /*true*/ /*false*/; // False chooses the default sample rate.
 ~sampleRate = 48000 /*44100*/; // Concat complains: sample rate not 44100, you have 48000
-~hardwareBufferSize = 128 /*512*/ /*256*/; // 512 par défaut sur la carte son ->  to get less audio input latency - 64 avec RME permet d'éviter trop de clics quand arrêt du serveur car surchargé
+~hardwareBufferSize = 128 /*512*/ /*256*/; // 512 by default -> 128 to get less audio input latency and to avoid long clicks when the server is overloaded
 
 // 3.do { Server.killAll }; // Attendre RESULT = 1 avant d'exécuter la suite
 fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wait; Server.killAll };
