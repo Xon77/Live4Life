@@ -22,7 +22,7 @@
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
-~lagTimeAllFxDefault = 7 /* 4 */; // Default value for parameter lag of effects
+~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
