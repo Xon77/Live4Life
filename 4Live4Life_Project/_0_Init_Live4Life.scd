@@ -1,5 +1,3 @@
-Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample clock - true = system clock */ // Supernova does not work for now
-Server.scsynth; // For now you can boot up to 2 scsynth servers
 
 ( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
