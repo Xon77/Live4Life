@@ -15,10 +15,11 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~synthDefsBuild = 0; // 1 to rebuild synthDefs - automatic rebuild if no synthDefs in Application Supprt
 ~synthDefsManagementChoose = 1; // 0 -> add - 1 -> load --- useful only if ~synthDefsBuild = 1
 
-~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> demande un peu plus de CPU - mais plus précis sur les niveaux // ~visualizeSpatioScope.value;
-// Mais depuis l'arrivée du 2ème serveur, plus très intéressant car spatioscope n'est que sur un seul serveur
-~visualizeProcessing = 0; // enclenche le transfert vers Processing
-~mainWindowScroll = false;
+~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 - Performance = 1
+~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
+// But with a second server running, SpatioScope is less interesting because only on 1 server
+~visualizeProcessing = 0; // Transfers data to Processing for visuals
+~mainWindowScroll = false; // For smaller screen sizes in height
 
 ~trackXFadeDefault = 20; // Valeur par défaut du Xfade pour les pistes en beats (/ par 2 en secondes si 120 de BPM, donc 20 = 10 sec.)
 ~hpModulation = 1; // Active les Effets avec modulation des paramètres en fonction des HP
