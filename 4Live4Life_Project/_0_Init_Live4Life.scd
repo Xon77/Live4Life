@@ -3,17 +3,17 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 
 ( // Initialisation des Données Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-~viaJACK = 0; // 0 Sans Jack / 1 Avec Jack
+~viaJACK = 0; // 0 without Jack - 1 with Jack
 
-~soundIn = 0; // Allocation de l'entrée audio - 0 pour l'interne & 6 pour le 1er micro la RME
-~nbOfSeqs = 240 /*200*/ /*99*/ ; // Nb de séquences différentes dans une piste
-~foldersStructure = 1; // 1, si les d“ossiers des fichiers sons sont déjà structurés (du format IP Gong), sinon 0
-~defaultFolder = 28 /*38*/ /*4*/; // fichier sélectionné par défaut - plus vraiment utilisé sauf à l'initialisation
-// ~foldersStructure = 0; ~defaultFolder = 0; // adapté pour dossier son non structuré
-~recordMontage = 0; // Pour enregistrer les évènements, mettre à 1
+~soundIn = 0; // Sound Card Input Channel
+~nbOfSeqs = 240 /*99*/ ; // Nb of sequences in a track
+~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
+~defaultFolder = 0; // Buffer folder by default at initialisation
 
-~synthDefsBuild = 0; // 1 pour reconstuire les synthés - si aucun dossier reconstruction automatique
-~synthDefsManagementChoose = 1; // 0 -> add / 1 -> load --- utile seulement si ~synthDefsBuild = 1
+~recordMontage = 0; // 1 if you want to record GUI action
+
+~synthDefsBuild = 0; // 1 to rebuild synthDefs - automatic rebuild if no synthDefs in Application Supprt
+~synthDefsManagementChoose = 1; // 0 -> add - 1 -> load --- useful only if ~synthDefsBuild = 1
 
 ~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> demande un peu plus de CPU - mais plus précis sur les niveaux // ~visualizeSpatioScope.value;
 // Mais depuis l'arrivée du 2ème serveur, plus très intéressant car spatioscope n'est que sur un seul serveur
