@@ -25,6 +25,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
+
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
@@ -35,6 +36,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhyhthm tracks (begins with 0)
+
 
 // Chemin du Dossier de Sons XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~soundsFolder = "/Users/xon/Desktop/_Sounds2021C/";
