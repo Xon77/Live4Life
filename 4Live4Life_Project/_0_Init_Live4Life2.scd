@@ -31,7 +31,6 @@
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
 ~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
 ~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
-
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3]; /*[4,5,3]*/ // Identifies rhyhthm tracks (begins with 0)
 
