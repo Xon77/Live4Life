@@ -1,10 +1,12 @@
 
+
 ( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ~viaJACK = 0; // 0 without Jack - 1 with Jack
 
 ~soundIn = 0; // Sound Card Input Channel
-~nbOfSeqs = 240 /*99*/ ; // Nb of sequences in a track
+
+~nbOfSeqs = 240; /*99*/ // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
 ~defaultFolder = 0; // Buffer folder by default at initialisation
 
@@ -168,5 +170,3 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 ~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut; // Listing de la taille des dossiers sons
 ("open" + ~soundsFolder).unixCmdGetStdOut; // Ouverture du dossier son dans le Finder
 ("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut; // Ouverture du dossier des fichiers texte et de presets
-
-
