@@ -40,9 +40,9 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 
 // Spatial configuration (Nb of outputs and spatial distribution)
-~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
+~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono
 ~numChannelsConfig = "2-Performance"; // Stereo mix and effects
-~numChannelsConfig = "4"; //
+~numChannelsConfig = "4"; // Quad
 ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
 ~numChannelsConfig = "7"; // Clockwise from Centre
