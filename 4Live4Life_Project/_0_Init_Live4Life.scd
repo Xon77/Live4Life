@@ -47,7 +47,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) XXXXXXXXX
 ~numChannelsConfig = "7"; // Clockwise from Centre
 ~numChannelsConfig = "8-Centre"; // Clockwise from Centre
-~numChannelsConfig = "8-PairClock"; // Clockwise à partir from Gauche XXXXXXXXX
+~numChannelsConfig = "8-PairClock"; // Clockwise à partir de la gauche - XXXXXXXXX
 ~numChannelsConfig = "8-PairPair"; // par paire de gauche à droite - utile pour spatialisation avec le SpatGris - XXXXXXXXX
 ~numChannelsConfig = "16-PairClock"; // Clockwise à partir de la gauche
 ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // par paire de gauche à droite XXXXXXXXX
