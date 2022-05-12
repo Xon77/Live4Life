@@ -40,22 +40,22 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~numChannelsConfig = "2-MultiChannelSequencer"; To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
-~numChannelsConfig = "2-Performance"; Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
+~numChannelsConfig = "2-MultiChannelSequencer"; /*To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?*/
+~numChannelsConfig = "2-Performance"; /*Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"*/
 ~numChannelsConfig = "4";
-~numChannelsConfig = "5-Clock"; Clockwise from Centre = 0
-~numChannelsConfig = "5-Centre"; Clockwise from Links (except Centre = 3) - XXXXXXXXX
-~numChannelsConfig = "7"; Clockwise from Centre
-~numChannelsConfig = "8-Centre"; Clockwise from Centre
-~numChannelsConfig = "8-PairClock"; Clockwise from Links - XXXXXXXXX
-~numChannelsConfig = "8-PairPair"; Pairwise Links / Right - XXXXXXXXX
-~numChannelsConfig = "16-PairClock"; Clockwise from Links
-~numChannelsConfig = "16-Dome-8-6-2-Pair"; Pairwise Links / Right - XXXXXXXXX
-~numChannelsConfig = "16-Dome-8-6-2-Clock"; Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
-~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; IDEM (+ 4 Subs)
-~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
-~numChannelsConfig = "24-UsineC-3Octo"; 3 circles of 8 speakers + Subs
-~numChannelsConfig = "32-Dome-12-10-8-2"; Clockwise from Links (+ 2 Subs) XXXXXXXXX
+~numChannelsConfig = "5-Clock"; /*Clockwise from Centre = 0*/
+~numChannelsConfig = "5-Centre"; /*Clockwise from Links (except Centre = 3) - XXXXXXXXX*/
+~numChannelsConfig = "7"; /*Clockwise from Centre*/
+~numChannelsConfig = "8-Centre"; /*Clockwise from Centre*/
+~numChannelsConfig = "8-PairClock"; /*Clockwise from Links - XXXXXXXXX*/
+~numChannelsConfig = "8-PairPair"; /*Pairwise Links / Right - XXXXXXXXX*/
+~numChannelsConfig = "16-PairClock"; /*Clockwise from Links*/
+~numChannelsConfig = "16-Dome-8-6-2-Pair"; /*Pairwise Links / Right - XXXXXXXXX*/
+~numChannelsConfig = "16-Dome-8-6-2-Clock"; /*Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX*/
+~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; /*IDEM (+ 4 Subs)*/
+~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; /*Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall*/
+~numChannelsConfig = "24-UsineC-3Octo"; /*3 circles of 8 speakers + Subs*/
+~numChannelsConfig = "32-Dome-12-10-8-2"; /*Clockwise from Links (+ 2 Subs) XXXXXXXXX*/
 // ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
