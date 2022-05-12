@@ -24,9 +24,9 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~trackXFadeDefault = 20; // Default value for Xfade of tracks (in beats, divide by 2 in seconds -> if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
-~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
+~lagTimeAllFxDefault = 7 /* 4 */; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /* 5 or 3 */; // Default value for Xfade time of effects
-~fxMulVolume = 1.0; // For volumes when Xfading effects in series or parallel -> to tweak
+~fxMulVolume = 1.0; // For volumes when Xfading effects in series or parallel (to tweak)
 ~fxMul2Volume = 1.0; // idem
 ~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // Pour le volume général ~trackAllVolView -> à 1 = + 6dB // 0.5957 = -3dB
 ~fxCPUCheck = 1; // 1 -> Active l'arrêt des FX // Check de "preset[\fxSynth]==1" sur toutes les pistes sélectionnées à chaque changement de preset et après le temps Xfade des FX (mais pas après celui du FX INOUT...)
