@@ -138,8 +138,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 // 1st Server XXX
 // Server name -> ~server1 // tested in real context with 32 loudspeakers, but multichnnal FX or synths may lack CPU above 16 channels
 ~loadServer.(\server1, \Local1, 0, 57110);
-// Initialisation chack when the server is loaded with synths and buffers
-~initBuffersSynths.(\server1, 0);
+~initBuffersSynths.(\server1, 0); // Initialisation chack when the server is loaded with synths and buffers
 
 // 2ème Serveur
 ~loadServer.(\server2, \Local2, 1, 57112); // Nom du server -> ~server2
