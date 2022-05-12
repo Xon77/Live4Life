@@ -58,7 +58,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // par paire de gauche à droite XXXXXXXXX
 ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (Hexa + 2 Subs) XXXXXXXXX
 ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM avec 4 Subs
-// Clockwise from Links - RME Sound card Outputs to reassign XXXXXXXXX
+// Clockwise from Links - Sound card Outputs to reassign :
 // 1-1 / 2-2 / 3-4 / 4-6 / 5-8 / 6-7 / 7-5 / 8-3 /
 // 9-13 / 10-10 / 11-12 / 12-14 / 13-11 / 14-9 / 15-15 / 16-16
 
