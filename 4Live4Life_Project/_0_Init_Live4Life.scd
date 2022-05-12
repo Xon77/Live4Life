@@ -66,7 +66,8 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise à partir du Centre
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise à partir du Centre
 
-~numChannelsConfig = "16-Dome-8-6-2-Clock";
+~numChannelsConfig = "2-Performance"; // This last line chooses spatial configuration form
+
 
 // Nom du Fichier de Presets XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~presetsFileName = "MyPresetFile.txt";
