@@ -19,15 +19,15 @@
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals
 ~mainWindowScroll = false; // For smaller screen sizes in height
 
-~trackXFadeDefault = 20; // Default value for Xfade of tracks (in beats, divide by 2 in seconds - if 120 BPM, then 20 = 10 sec.)
+~trackXFadeDefault = 20; // Default value for Xfade of tracks (in beats, divide by 2 in seconds -> if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7; // (4) Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6; // (5 or 3) Default value for Xfade time of effects
-~fxMulVolume = 1.0; // (to tweak) For volumes when Xfading effects in series or parallel
+~fxMulVolume = 1.0; // For volumes when Xfading effects in series or parallel (to tweak)
 ~fxMul2Volume = 1.0; // idem
 ~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // Pour le volume général ~trackAllVolView -> à 1 = + 6dB // 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> Active l'arrêt des FX // Check de preset[\fxSynth]==1 sur toutes les pistes sélectionnées à chaque changement de preset et après le temps Xfade des FX (mais pas après celui du FX INOUT...)
+~fxCPUCheck = 1; // 1 -> Active l'arrêt des FX // Check de "preset[\fxSynth]==1" sur toutes les pistes sélectionnées à chaque changement de preset et après le temps Xfade des FX (mais pas après celui du FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Durée en sec. max pour chaque synthèse - tester avec 60 sec. ou à moduler selon les séquences ?
 ~keyBoardPerfProtect = 0; // 1 -> Empêche le déclenchement de certains shortcuts trop dangereux ou incontrolables en performance (concernant le random ou la sélection dans la liste de presets)
 ~keyBoardPerfProtectFX = 1; // 1 -> Empêche le déclenchement du shortcut (shift + ?) de changement aléatoire des FX (résultat incontrôlable... rester à 1 pour préserver ses oreilles et le système de son)
