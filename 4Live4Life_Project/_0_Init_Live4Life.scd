@@ -1,5 +1,5 @@
 
-( // Initialisation Configuration Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation Configuration Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ~viaJACK = 0; // 0 without Jack - 1 with Jack
 
@@ -34,10 +34,10 @@
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhyhthm tracks (begins with 0)
 
-// Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 
-// Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
 ~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
 ~numChannelsConfig = "4";
@@ -62,7 +62,7 @@
 ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // This last line chooses spatial configuration form
 ~numChannelsConfig = "2-Performance";
 
-// Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~presetsFileName = "MyPresetFile.txt";
 // ~presetsFileName2 = "MyPresetFile2.txt"; if you have 2 presets files
 
@@ -121,7 +121,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-// INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 "_1_Init_BuffersSynths_128.scd".loadRelative; // Load server functions
 // ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0; // Just for my performance setup to launch a specific server for specific synths and sentences
 
@@ -139,7 +139,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-// INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_221.scd".loadRelative;
 
 // Lemur Connection
@@ -149,7 +149,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-// INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_181.scd".loadRelative;
 
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
