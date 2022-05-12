@@ -112,19 +112,19 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-( // Initialisation MIDI avec la librairie Modality & Quark APC Mini XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation MIDI avec la librairie Modality & Quark APC Mini & Twister XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 { // MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache;
-	~midiTouchBar = MKtl('iac', "gestionnaire-iac"); "_Init Midi T.scd".loadRelative; // Canal 7
-	~akFXVol8 = 1; "_Init Midi Ak.scd".loadRelative; // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI"); // Canal 1
-	// Mettre le ~akFXVol8 = 1; pour contrôler le volume des FX sur l'Akai APC Mini au lieu du volume de la 8ème piste
-	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B - Canal 2 - plus utilisé pour l'instant
-	// fichier "keith-mcmillen-qunexus_port1_AB.desc de Modality" -> changer de midiChan de 0 à 2 - à faire si réutilisé
-	// ~uController = MKtl('csbm330', "evolution-ucontrol-uc33"); "_Init Midi U.scd".loadRelative; // Canal 0 - plus utilisé pour l'instant
-	// For Midi Fighter Twister, change Midi Encoder Type to "Enc 3FH/41H"
+	// ~uController = MKtl('csbm330', "evolution-ucontrol-uc33"); "_Init Midi U.scd".loadRelative; // Midi Channel 0
+	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B // Midi Channel 3
+	// File "keith-mcmillen-qunexus_port1_AB.desc de Modality" -> change Midi Channel from 0 to 3, if Leith-mcmillen-qunexus controller is used
+	// ~midiTouchBar = MKtl('iac', "gestionnaire-iac"); "_Init Midi T.scd".loadRelative; // Midi Channel 7
+	~akFXVol8 = 1; "_Init Midi Ak.scd".loadRelative; // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI"); // Midi Channel 1
+	// ~akFXVol8 = 1; to control FX volume on the 8th slider of Akai APC Mini instead of the volume of the 8th track
 	1.wait;
-	"_Init Midi Twister7.scd".loadRelative; // Encoder Midi - Canal 1 / Switch Midi - Canal 2 / Global sttings for side buttons - Canal 4
+	"_Init Midi Twister7.scd".loadRelative; // Encoder Midi - Midi Channel 1 // Switch Midi - Midi Channel 2 // Global settings for side buttons - Midi Channel 4
+	// For Midi Fighter Twister, change Midi Encoder Type to "Enc 3FH/41H"
 	0.2.wait;
-	"_Init Midi Morph.scd".loadRelative; // Sensel Morph - Canal 6
+	"_Init Midi Morph.scd".loadRelative; // Sensel Morph // Midi Channel 6
 	"Controllers connected if available !".postln;
 }.fork;
 )
