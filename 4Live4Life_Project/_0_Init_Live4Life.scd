@@ -55,8 +55,11 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~numChannelsConfig = "8-PairPair"; // Pairwise Links / Right XXXXXXXXX
 
 ~numChannelsConfig = "16-PairClock"; // Clockwise from Links
+
 ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // Pairwise Links / Right - XXXXXXXXX
+
 ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
+
 ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
 
 // Clockwise from Links - Sound card Outputs to reassign :
