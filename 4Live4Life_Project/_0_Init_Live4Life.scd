@@ -39,48 +39,33 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 // Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 
-// Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-// To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
-~numChannelsConfig = "2-MultiChannelSequencer";
-
-// Mixage global donc utilisation d'effets stéréo seulement
-~numChannelsConfig = "2-Performance";
-
+// Spatial configuration (Nb of outputs and spatial distribution)
+~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
+// ~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
 ~numChannelsConfig = "4";
-
-// Clockwise from Centre = 0
-~numChannelsConfig = "5-Clock";
-
-// Clockwise from Links (except Centre = 3) - XXXXXXXXX
-~numChannelsConfig = "5-Centre";
-
-~numChannelsConfig = "7"; Clockwise from Centre
-
-~numChannelsConfig = "8-Centre"; Clockwise from Centre
-
-~numChannelsConfig = "8-PairClock"; Clockwise from Links - XXXXXXXXX
-
-~numChannelsConfig = "8-PairPair"; Pairwise Links / Right - XXXXXXXXX
-
-~numChannelsConfig = "16-PairClock"; Clockwise from Links
-
-~numChannelsConfig = "16-Dome-8-6-2-Pair"; Pairwise Links / Right - XXXXXXXXX
-
-~numChannelsConfig = "16-Dome-8-6-2-Clock"; Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
-
-~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; IDEM (+ 4 Subs)
-
-~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
-
-~numChannelsConfig = "24-UsineC-3Octo"; 3 circles of 8 speakers + Subs
-
-~numChannelsConfig = "32-Dome-12-10-8-2"; Clockwise from Links (+ 2 Subs) XXXXXXXXX
-// ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
-// ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
-// ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
-// ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context
-
+// ~numChannelsConfig = "5-Clock"; // Clockwise à partir du Centre = 0
+// ~numChannelsConfig = "5-Centre"; // Clockwise à partir de la gauche sauf Centre = 3 - XXXXXXXXX
+// ~numChannelsConfig = "7"; // Clockwise à partir du Centre
+// ~numChannelsConfig = "8-Centre"; // Clockwise à partir du Centre
+~numChannelsConfig = "8-PairClock"; // Clockwise à partir de la gauche - XXXXXXXXX
+// ~numChannelsConfig = "8-PairPair"; // par paire de gauche à droite - utile pour spatialisation avec le SpatGris - XXXXXXXXX
+// ~numChannelsConfig = "16-PairClock"; // Clockwise à partir de la gauche
+// ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // par paire de gauche à droite XXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (Hexa + 2 Subs) XXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM avec 4 Subs
+// Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (spécifique à la Salle CC pour Subs) XXXXXXXXX
+// 1-1 / 2-2 / 3-4 / 4-6 / 5-8 / 6-7 / 7-5 / 8-3 /
+// 9-13(17) / 10-10(14) / 11-12(16) / 12-14(18) / 13-11(15) / 14-9(13) / 15-15(19) / 16-16(20) -- (+ 4 car phones et SPDIF de 9 à 13)
+// Pour CC Test Juillet 2018 car avant / arrière haut en 1er et non à la fin comme l'Hexa - 9-9 / 10-12 / 11-14 / 12-10 / 13-13 / 14-11 / 15-15 / 16-16
+// Subs -> 17-27 / 18-28 / 19-29 / 20-30
+// ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Salle CC
+~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise à partir de la gauche (+ 2 Subs) XXXXXXXXX
+// ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise à partir de la droite - spirale avec quelques variations Config Motu
+// ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise à partir du Centre
+// ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise à partir du Centre
+// ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise à partir du Centre
+// ~numChannelsConfig = "24-UsineC-3Octo";
+// Ajustement volume, controle et attribution des subs dans Salle CC ou Motu...
 ~numChannelsConfig = "16-Dome-8-6-2-Clock";
 
 // Nom du Fichier de Presets XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
