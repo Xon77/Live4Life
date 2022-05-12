@@ -165,7 +165,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 
 
-// Info sur les servers
+// Info on SCsynth servers
 ~server1.queryAllNodes;
 ~server2.queryAllNodes;
 ~server1.numSynthDefs.postln; ~server2.numSynthDefs;
