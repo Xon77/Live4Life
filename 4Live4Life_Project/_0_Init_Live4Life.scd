@@ -146,8 +146,8 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 ~initBuffersSynths.(\server2, 1);
 
 
-// INIT GUI (Server 1 jusqu'à la piste 2 et Server 2 au delà) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2 Init GUI 220.scd".loadRelative;
+// INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_221.scd".loadRelative;
 
 // Lemur Connection
 ~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "192.168.0.109", 8000);
