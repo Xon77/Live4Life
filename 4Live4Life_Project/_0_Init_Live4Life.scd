@@ -48,9 +48,9 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~numChannelsConfig = "7"; // Clockwise from Centre
 ~numChannelsConfig = "8-Centre"; // Clockwise from Centre
 ~numChannelsConfig = "8-PairClock"; // Clockwise à partir de la gauche - XXXXXXXXX
-// ~numChannelsConfig = "8-PairPair"; // par paire de gauche à droite - utile pour spatialisation avec le SpatGris - XXXXXXXXX
-// ~numChannelsConfig = "16-PairClock"; // Clockwise à partir de la gauche
-// ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // par paire de gauche à droite XXXXXXXXX
+~numChannelsConfig = "8-PairPair"; // par paire de gauche à droite - utile pour spatialisation avec le SpatGris - XXXXXXXXX
+~numChannelsConfig = "16-PairClock"; // Clockwise à partir de la gauche
+~numChannelsConfig = "16-Dome-8-6-2-Pair"; // par paire de gauche à droite XXXXXXXXX
 ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (Hexa + 2 Subs) XXXXXXXXX
 ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM avec 4 Subs
 // Clockwise à partir de la gauche - sorties de la carte son à réassigner selon SpatioScope (spécifique à la Salle CC pour Subs) XXXXXXXXX
@@ -58,9 +58,9 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 // 9-13(17) / 10-10(14) / 11-12(16) / 12-14(18) / 13-11(15) / 14-9(13) / 15-15(19) / 16-16(20) -- (+ 4 car phones et SPDIF de 9 à 13)
 // Pour CC Test Juillet 2018 car avant / arrière haut en 1er et non à la fin comme l'Hexa - 9-9 / 10-12 / 11-14 / 12-10 / 13-13 / 14-11 / 15-15 / 16-16
 // Subs -> 17-27 / 18-28 / 19-29 / 20-30
-// ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Salle CC
+~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Salle CC
 ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise à partir de la gauche (+ 2 Subs) XXXXXXXXX
-// ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise à partir de la droite - spirale avec quelques variations Config Motu
+~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise à partir de la droite - spirale avec quelques variations Config Motu
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise à partir du Centre
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise à partir du Centre
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise à partir du Centre
