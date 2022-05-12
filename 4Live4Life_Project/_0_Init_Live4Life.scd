@@ -6,7 +6,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~viaJACK = 0; // 0 without Jack - 1 with Jack
 
 ~soundIn = 0; // Sound Card Input Channel
-~nbOfSeqs = 240/*99*/; // Nb of sequences in a track
+~nbOfSeqs = 240 /*99*/; // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
 ~defaultFolder = 0; // Buffer folder by default at initialisation
 
@@ -24,8 +24,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample cloc
 ~trackXFadeDefault = 20; // Default value for Xfade of tracks (in beats, divide by 2 in seconds -> if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
 ~mixAllFxDefault = 0; // Default value for mix of effects
-~lagTimeAllFxDefault = 7/*4*/; // Default value for parameter lag of effects
-
+~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
 ~fxMulVolume = 1.0; // Pour la gestion des volumes lors du Xfade des FX entre Série et Parallèle - à tweeker...
 ~fxMul2Volume = 1.0; // idem
