@@ -60,6 +60,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context
+
 ~numChannelsConfig = "16-Dome-8-6-2-Clock";
 
 // Nom du Fichier de Presets XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
