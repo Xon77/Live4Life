@@ -59,13 +59,13 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 // Pour CC Test Juillet 2018 car avant / arrière haut en 1er et non à la fin comme l'Hexa - 9-9 / 10-12 / 11-14 / 12-10 / 13-13 / 14-11 / 15-15 / 16-16
 // Subs -> 17-27 / 18-28 / 19-29 / 20-30
 ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Salle CC
+~numChannelsConfig = "24-UsineC-3Octo";
 ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise à partir de la gauche (+ 2 Subs) XXXXXXXXX
 ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise à partir de la droite - spirale avec quelques variations Config Motu
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise à partir du Centre
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise à partir du Centre
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise à partir du Centre
-// ~numChannelsConfig = "24-UsineC-3Octo";
-// Ajustement volume, controle et attribution des subs dans Salle CC ou Motu...
+
 ~numChannelsConfig = "16-Dome-8-6-2-Clock";
 
 // Nom du Fichier de Presets XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
