@@ -171,6 +171,12 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 ~serverVolume[0].freeSynth;
 
 // Info on size of sound folders
-~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut;// Lists the size of sound folders
-("open" + ~soundsFolder).unixCmdGetStdOut;// opens in Finder the sound folder
-("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut;// opens in Finder the folder to execute the files and presets
+
+// lists the size of sound folders
+~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut;
+
+// opens in Finder the sound folder
+("open" + ~soundsFolder).unixCmdGetStdOut;
+
+// opens in Finder the folder to execute the files and presets
+("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut;
