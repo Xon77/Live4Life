@@ -132,7 +132,8 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-"_1 Init Buffers Synths 127.scd".loadRelative; ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0;
+"_1_Init_BuffersSynths_128.scd".loadRelative; // Load server functions
+// ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0; // Just for my performance setup to launch a specific server for specific synths and sentences
 
 ~loadServer.(\server1, \Local1, 0, 57110); // Nom du server -> ~server1 // limité à 96 canaux, mais séquences d'effets multicanaux s'exprimant moins bien au delà de 16 canaux
 // ~loadServer.(\server1, \Local1, 0, 57110, \serverFX1, \LocalFX1, 57111); // Noms des servers -> [~server1, ~serverFX1] // limité à 32 canaux via Jack ?
