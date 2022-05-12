@@ -44,7 +44,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~numChannelsConfig = "2-Performance"; // Stereo mix and effects
 ~numChannelsConfig = "4";
 ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
-~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
+~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) XXXXXXXXX
 ~numChannelsConfig = "7"; // Clockwise from Centre
 ~numChannelsConfig = "8-Centre"; // Clockwise from Centre
 ~numChannelsConfig = "8-PairClock"; // Clockwise à partir de la gauche - XXXXXXXXX
