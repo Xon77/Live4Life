@@ -135,16 +135,15 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 "_1_Init_BuffersSynths_128.scd".loadRelative; // Load server functions
 // ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0; // Just for my performance setup to launch a specific server for specific synths and sentences
 
-// 1st Server XXX
-// Server name -> ~server1 // tested in real context with 32 loudspeakers, but multichnnal FX or synths may lack CPU above 16 channels
+// 1st Server // Server name -> ~server1 // tested in real context with 32 loudspeakers, but multichnnal FX or synths may lack CPU above 16 channels
 ~loadServer.(\server1, \Local1, 0, 57110);
-~initBuffersSynths.(\server1, 0); // Initialisation chack when the server is loaded with synths and buffers
+// Initialisation chack when the server is loaded with synths and buffers
+~initBuffersSynths.(\server1, 0);
 
-// 2ème Serveur
-~loadServer.(\server2, \Local2, 1, 57112); // Nom du server -> ~server2
-// ~loadServer.(\server2, \Local2, 1, 57112, \serverFX2, \LocalFX2, 57113); // Noms des servers -> [~server2,  ~serverFX2]
+// 2nd Server // Server name -> ~server2
+~loadServer.(\server2, \Local2, 1, 57112);
+// Error and probable crash from the second server if the computer is not plugged into an AC power source
 ~initBuffersSynths.(\server2, 1);
-
 
 
 // INIT GUI (Server 1 jusqu'à la piste 2 et Server 2 au delà) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
