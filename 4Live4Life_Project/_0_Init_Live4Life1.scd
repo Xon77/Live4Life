@@ -1,12 +1,10 @@
 
-
-( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation Configuration Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ~viaJACK = 0; // 0 without Jack - 1 with Jack
 
 ~soundIn = 0; // Sound Card Input Channel
-
-~nbOfSeqs = 240; /*99*/ // Nb of sequences in a track
+~nbOfSeqs = 240 /*99*/ ; // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
 ~defaultFolder = 0; // Buffer folder by default at initialisation
 
@@ -29,13 +27,12 @@
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
 ~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==)" when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
+~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==1" when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
 ~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
 ~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
-
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
-~rhythmTracks = [4,5,6,7,3]; /*[4,5,3]*/ // Identifies rhyhthm tracks (begins with 0)
+~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhyhthm tracks (begins with 0)
 
 // Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
