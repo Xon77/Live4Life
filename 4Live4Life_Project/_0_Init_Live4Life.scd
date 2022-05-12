@@ -1,5 +1,5 @@
 Server.scsynth;
-Server.supernova; ~supernovaThreads = 2; ~scClock = true; /* false = sample clock - true = system clock */
+Server.supernova; ~supernovaThreads = 2; ~scClock = true; /*false = sample clock - true = system clock*/
 
 ( // Initialisation des Données Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
