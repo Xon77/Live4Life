@@ -27,7 +27,7 @@
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
 ~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==)" when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
+~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==1" when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
 ~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
 ~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
