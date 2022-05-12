@@ -36,8 +36,8 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 ~rtmMulMinProtect = 4; // Multiplicateur de niveau minimum du multicateur du module de rythme (qui s'adapte en fonction du nombre d'évènements) pour atteindre un onset minimal de 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,3] /*[3,4,5]*/ /*[4,5,6,7,3]*/; // Manipulation des pistes rythmiques en commençant par 0
 
-// Chemin du Dossier de Sons XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~soundsFolder = "/Users/xon/Desktop/_Sounds2021C/";
+// Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 
 // Config spatiale (Nb de sorties et organisation spatiale) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // ~numChannelsConfig = "2-MultiChannelSequencer"; // Pour récupérer les 8 pistes stéréo séparées dans un séquenceur et donc effets multi-canaux 16 pistes mono
