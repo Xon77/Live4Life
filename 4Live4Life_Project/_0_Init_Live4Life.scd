@@ -1,20 +1,20 @@
 
-( // Initialisation Configuration Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-~viaJACK = 0; // 0 without Jack - 1 with Jack
+~viaJACK = 0; // 0 without Jack // 1 with Jack (tested on on OSX)
 
 ~soundIn = 0; // Sound Card Input Channel
-~nbOfSeqs = 240 /*99*/ ; // Nb of sequences in a track
+~nbOfSeqs = 240 /*99*/; // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
 ~defaultFolder = 0; // Buffer folder by default at initialisation
 
 ~recordMontage = 0; // 1 if you want to record GUI action
 
-~synthDefsBuild = 0; // 1 to rebuild synthDefs - automatic rebuild if no synthDefs in Application Supprt
-~synthDefsManagementChoose = 1; // 0 -> add - 1 -> load --- useful only if ~synthDefsBuild = 1
+~synthDefsBuild = 0; // 1 to rebuild synthDefs // automatic rebuild if no synthDefs in Application Support
+~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
 
-~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 - Performance = 1
-~visualizeLevels = "ServerMeter"; /*"SpatioScope";*/ // "ServerMeter"; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
+~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
+~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
 // But with a second server running, SpatioScope is less interesting because only on 1 server
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals
 ~mainWindowScroll = false; // For smaller screen sizes in height
@@ -27,10 +27,10 @@
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
 ~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==1" when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
+~fxCPUCheck = 1; // 1 -> Allows to avoid change of effects (see preset[\fxSynth]==1) when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
-~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
-~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
+~keyBoardPerfProtect = 0; // 1 -> Avoids to trigger some shortcuts too dangerous or uncontrollable in performance
+~keyBoardPerfProtectFX = 1; // 1 -> Avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhyhthm tracks (begins with 0)
 
@@ -40,7 +40,7 @@
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
 ~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
-~numChannelsConfig = "4";
+~numChannelsConfig = "4"; // Clockwise Quad
 ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
 ~numChannelsConfig = "7"; // Clockwise from Centre
@@ -70,7 +70,7 @@
 // Keep ~ambATKConfig at "binaural" if you have a headphone, or "stereo" if you have 2 speakers, otherwise ~ambATKConfig is "multiChannel" if more than 2 channels
 if (~numChannelsConfig[0].digit == 2, { ~ambATKConfig = "stereo" /*"stereo" */}, { ~ambATKConfig = "multiChannel"});
 ~binauralDecoderName = "FoaDecoderKernel.newSpherical"; // newSpherical ou newCIPIC (44100.0 is not available for cipic kernel decoder)
-~ambATKkFactor = 'velocity'; // 'dual' / 'velocity' - uniquement pour multicanal
+~ambATKkFactor = 'velocity'; // 'dual' / 'velocity' - only for multiChannel
 
 /*
 The default k ( 'single' ), for decoders accepting k as an argument, returns an 'energy' optimised (aka "max rE") decoder (see FoaDecoderMatrix).
@@ -165,5 +165,5 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 // Info on size of sound folders
 ~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut; // lists the size of sound folders
-("open" + ~soundsFolder).unixCmdGetStdOut; // opens in Finder the sound folder
-("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut; // opens in Finder the folder to execute the files and presets
+("open" + ~soundsFolder).unixCmdGetStdOut; // opens the sound folder in Finder
+("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut; // opens the folder to execute the files and presets in Finder
