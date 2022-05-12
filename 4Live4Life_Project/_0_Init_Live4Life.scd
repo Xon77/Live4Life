@@ -157,11 +157,10 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~updateTime = 0.2 /*0.1*/; "_3 Init Pattern 181.scd".loadRelative;
+~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_181.scd".loadRelative;
 
-
-if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } ); // dans fichier _Init Buffers & Synths XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } ); // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
+if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
 
 
 
@@ -171,7 +170,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 ~server1.numSynthDefs.postln; ~server2.numSynthDefs;
 ~serverVolume[0].freeSynth;
 
-// Info sur la taille des dossiers sons
+// Info on size of sound folders
 ~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut; // Listing de la taille des dossiers sons
 ("open" + ~soundsFolder).unixCmdGetStdOut; // Ouverture du dossier son dans le Finder
 ("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut; // Ouverture du dossier des fichiers texte et de presets
