@@ -3,7 +3,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 
 ( // Initialisation des Données Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-~viaJACK = 0; // 0 without Jack - 1 with Jack
+~viaJACK = 0; // 0 without Jack // 1 with Jack
 
 ~soundIn = 0; // Sound Card Input Channel
 ~nbOfSeqs = 240; // (99) Nb of sequences in a track
@@ -12,10 +12,10 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 
 ~recordMontage = 0; // 1 if you want to record GUI action
 
-~synthDefsBuild = 0; // 1 to rebuild synthDefs - automatic rebuild if no synthDefs in Application Supprt
-~synthDefsManagementChoose = 1; // 0 -> add - 1 -> load // useful only if ~synthDefsBuild = 1
+~synthDefsBuild = 0; // 1 to rebuild synthDefs // automatic rebuild if no synthDefs in Application Supprt
+~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
 
-~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 - Performance = 1
+~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
 ~visualizeLevels = "ServerMeter"; // (SpatioScope or ServerMeter) ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
 // But with a second server running, SpatioScope is less interesting because only on 1 server
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals
