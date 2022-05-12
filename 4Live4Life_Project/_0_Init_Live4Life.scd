@@ -41,7 +41,7 @@ Server.supernova; ~supernovaThreads = 2; ~scClock = true; // false = sample cloc
 
 // Spatial configuration (Nb of outputs and spatial distribution)
 ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
-~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement
+~numChannelsConfig = "2-Performance"; // Stereo mix and effects
 ~numChannelsConfig = "4";
 ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 // ~numChannelsConfig = "5-Centre"; // Clockwise à partir de la gauche sauf Centre = 3 - XXXXXXXXX
