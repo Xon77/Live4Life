@@ -1,2 +1,6 @@
-# Example of a `.gitattributes` file which reclassifies `.scd` files as SuperCollider:
+
+# Example of a `.gitattributes` file which reclassifies `.scd` files as SuperCollider, because _0_Init_Live4Life.scd was recognized as a Markdown file:
+# see https://github.com/github/linguist/discussions/5891
+
 *.scd linguist-language=SuperCollider
+
