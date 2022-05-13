@@ -8,7 +8,7 @@
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
 ~defaultFolder = 0; // Buffer folder number by default at initialisation
 
-~recordMontage = 0; // 1 if you want to record GUI action
+~recordMontage = 0; // 1, if you want to record GUI action
 
 ~synthDefsBuild = 0; // 1 to rebuild synthDefs // automatic rebuild if no synthDefs in Application Support
 ~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
@@ -20,17 +20,17 @@
 ~mainWindowScroll = false; // For smaller screen sizes in height
 
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
-~hpModulation = 1; // 1 -> allows effects with parameter modulation between the loudspeakers, otherwise 0
+~hpModulation = 1; // 1 allows effects with parameter modulation between the loudspeakers, otherwise 0
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
 ~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==1) when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
+~fxCPUCheck = 1; // 1 allows to avoid change of effects (see preset[\fxSynth]==1) when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
-~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
-~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
+~keyBoardPerfProtect = 0; // 1 avoids to trigger some shortcuts too dangerous or uncontrollable in performance
+~keyBoardPerfProtectFX = 1; // 1 avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhyhthm tracks (begins with 0)
 
@@ -38,7 +38,7 @@
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
+~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
 ~numChannelsConfig = "2-Performance"; // Stereo Mix and effects
 ~numChannelsConfig = "4"; // Clockwise Quad
 ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
@@ -94,7 +94,7 @@ For large-scale concert presentation, the authors advise auditioning values of k
 ~sampleRate = 48000 /*44100*/; // Concat complains: sample rate not 44100, you have 48000
 ~hardwareBufferSize = 128 /*512*/ /*256*/; // 512 by default -> 128 to get less audio input latency and to avoid long clicks when the server is overloaded
 
-// 3.do { Server.killAll }; // Attendre RESULT = 1 avant d'exécuter la suite
+// 3.do { Server.killAll }; // Wait RESULT = 1 before executing the following steps
 fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wait; Server.killAll };
 	0.1.wait; "".postln; ("Spatial Config ->" + ~numChannelsConfig).postln; ("Preset Filename ->" + ~presetsFileName).postln; if (~presetsFileName2.notNil, {("Preset Filename 2 ->" + ~presetsFileName2).postln}); "".postln;
 }); }; // Server.allRunningServers;
@@ -102,7 +102,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-( // Initialisation MIDI avec la librairie Modality & Quark APC Mini & Twister XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Initialisation MIDI with some Quarks (Modality APC Mini & Twister) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 { // MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache;
 	// ~uController = MKtl('csbm330', "evolution-ucontrol-uc33"); "_Init Midi U.scd".loadRelative; // Midi Channel 0
 	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B // Midi Channel 3
