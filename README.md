@@ -122,7 +122,7 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 0. [define default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_128.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd) if not available.
 
-1. Execute a [function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L132):
+1. execute a [function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L132):
 
 * initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
@@ -132,7 +132,7 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 3. [initialise a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L151), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
-4. You can now play the first track with sounds and synth events by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)).
+4. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)).
 
 A wiki, tutorials and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
 
