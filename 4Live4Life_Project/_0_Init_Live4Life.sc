@@ -6,7 +6,7 @@
 ~soundIn = 0; // Sound Card Input Channel
 ~nbOfSeqs = 240 /*99*/; // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
-~defaultFolder = 0; // Buffer folder by default at initialisation
+~defaultFolder = 0; // Buffer folder number by default at initialisation
 
 ~recordMontage = 0; // 1 if you want to record GUI action
 
@@ -20,17 +20,17 @@
 ~mainWindowScroll = false; // For smaller screen sizes in height
 
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
-~hpModulation = 1; // Allows effects with parameter modulation between the loudspeakers
+~hpModulation = 1; // 1 -> allows effects with parameter modulation between the loudspeakers, otherwise 0
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
-~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
-~fxCPUCheck = 1; // 1 -> Allows to avoid change of effects (see preset[\fxSynth]==1) when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
+~maxMulVolControllers = 0.7945 // -> -3dB; // for max main volume ~trackAllVolView -> à 1 = + 6dB // 0.5957 = -3dB
+~fxCPUCheck = 1; // 1 -> allows to avoid change of effects (see preset[\fxSynth]==1) when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
-~keyBoardPerfProtect = 0; // 1 -> Avoids to trigger some shortcuts too dangerous or uncontrollable in performance
-~keyBoardPerfProtectFX = 1; // 1 -> Avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
+~keyBoardPerfProtect = 0; // 1 -> avoids to trigger some shortcuts too dangerous or uncontrollable in performance
+~keyBoardPerfProtectFX = 1; // 1 -> avoids to trigger other shortcuts too dangerous or uncontrollable in performance (shift + ?) for random FX
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhyhthm tracks (begins with 0)
 
@@ -39,7 +39,7 @@
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - effets multi-canaux 16 pistes mono ?
-~numChannelsConfig = "2-Performance"; // Mixage global donc utilisation d'effets stéréo seulement // ~ambATKConfig = "binaural" // "stereo"
+~numChannelsConfig = "2-Performance"; // Stereo Mix and effects
 ~numChannelsConfig = "4"; // Clockwise Quad
 ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
@@ -59,8 +59,7 @@
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 
-~numChannelsConfig = "16-Dome-8-6-2-Clock"; // This last line chooses spatial configuration form
-~numChannelsConfig = "2-Performance";
+~numChannelsConfig = "2-Performance"; // This last line chooses spatial configuration form
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~presetsFileName = "MyPresetFile.txt";
