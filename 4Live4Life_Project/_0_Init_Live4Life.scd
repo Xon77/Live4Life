@@ -58,7 +58,6 @@
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context
-
 ~numChannelsConfig = "2-Performance"; // This last line chooses spatial configuration form
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
