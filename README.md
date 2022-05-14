@@ -109,10 +109,10 @@ Let me know. I might maybe help.
 1. [Install SuperCollider](https://supercollider.github.io/downloads). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
-4. Change 4 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support:
+4. Change 4 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change):
 	1. replace the Quark [APCmini](https://github.com/andresperezlopez/APCmini) (if you have the controller), 
 	2. replace the file [plusServer.sc](/Quarks_to_change/plusServer.sc) in the Quark [ServerTools](https://github.com/supercollider-quarks/ServerTools),
-	3. replace the Quark [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change). Concerning this last Quark, it is just a small change, commenting the lines 220 and 223 of the file [`/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc`](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220), to avoid an error in the post window by closing the trajectory editor. 
+	3. replace the Quark [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library). Concerning this last Quark, it is just a small change, commenting the lines 220 and 223 of the file [`/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc`](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220), to avoid an error in the post window by closing the trajectory editor. 
 	4. If you use some controllers, such as the [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark Modality.
 5. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
