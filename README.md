@@ -125,7 +125,7 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 1. [evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_128.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd) if not available.
 
-2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L132):
+2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L131):
 
 	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
 
