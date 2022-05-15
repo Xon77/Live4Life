@@ -135,7 +135,7 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 4. [evaluate a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L151), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
-5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)).
+5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [Controllers](/Controllers) for full performance control.
 
 A wiki, tutorials and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
 
