@@ -94,6 +94,7 @@ Let me know. I might maybe help.
   - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
   - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status),
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
+  - [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
   - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
