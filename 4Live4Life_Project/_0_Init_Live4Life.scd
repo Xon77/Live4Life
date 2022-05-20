@@ -194,6 +194,31 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 })
 )
 
+// To synchronise TidalCucles with SC
+// https://club.tidalcycles.org/t/synchronising-tidal-with-volca-sequencer/2680/6
+(
+var quant = /*1.0*/ 4; // ~quant;
+~dirt.receiveAction = { |e|
+	var cycle = e[\cycle];
+	var cps = e[\cps];
+	var latency = e[\latency];
+	cycle !? {
+		if(cycle % quant == 0) { // set clock only quant in cycle
+			/*TempoClock.default*/ ~gblTempo.beats = cycle; // ~gblTempo.beats
+		};
+	};
+	cps !? {
+		/*TempoClock.default*/ ~gblTempo.tempo = cps;
+	};
+	latency !? {
+		// ~server1.latency
+		Server.default/*~server1*/.latency = latency;
+	}
+}
+);
+
+~dirt.receiveAction = { |e| e.postln; };
+
 SuperDirt.postTidalParameters([\default, \supercomparator]);
 ~dirt.postSampleInfo;
 
