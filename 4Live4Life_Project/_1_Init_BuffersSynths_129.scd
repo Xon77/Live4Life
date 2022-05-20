@@ -14,7 +14,7 @@
 		currentEnvironment[server] = Server(name, NetAddr("127.0.0.1", port));
 
 		// Server.default = s = Server.local;
-		if (currentEnvironment[server] == ~server1, {Server.default = currentEnvironment[server]; } );
+		if (currentEnvironment[server] == ~server1 and: {~mainServer1Window == 0}, {Server.default = currentEnvironment[server]; } );
 
 
 
@@ -315,6 +315,17 @@
 
 
 
+		if (currentEnvironment[server] == ~server1 and: {~mainServer1Window == 1}, {
+			~server1Window = currentEnvironment[server].makeWindow;
+			if (~serverFX == 1, {
+				~server1Window.window/*.alpha_(0.6)*/.bounds_(Rect.new(33,925,283,94)).alwaysOnTop_(true);
+			},{
+				// ~server2Window.window.bounds_(Rect.new(0,124,305,100)).alwaysOnTop_(true);
+				// ~server2Window = currentEnvironment[\server2].makeWindow;
+				~server1Window.window/*.alpha_(0.7)*/.bounds_(Rect.new(230, /*1080*/ /*(~windowHeight-1329)*/ 0, 286,94)).alwaysOnTop_(true);
+			});
+		});
+
 		if (currentEnvironment[server] == ~server2, {
 			~server2Window = currentEnvironment[server].makeWindow;
 			if (~serverFX == 1, {
@@ -322,7 +333,7 @@
 			},{
 				// ~server2Window.window.bounds_(Rect.new(0,124,305,100)).alwaysOnTop_(true);
 				// ~server2Window = currentEnvironment[\server2].makeWindow;
-				~server2Window.window.alpha_(0.7).bounds_(Rect.new(41, /*1080*/ (~windowHeight-120) ,274,94)).alwaysOnTop_(true);
+				~server2Window.window.alpha_(0.7).bounds_(Rect.new(41, /*1080*/ (~windowHeight-120), 274,94)).alwaysOnTop_(true);
 			});
 		});
 
