@@ -194,7 +194,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 })
 )
 
-// To synchronise TidalCucles with SC
+// To synchronise TidalCycles with SC
 // https://club.tidalcycles.org/t/synchronising-tidal-with-volca-sequencer/2680/6
 (
 var quant = /*1.0*/ 4; // ~quant;
