@@ -68,7 +68,7 @@ What makes the difference with other spatialisation tools ?
 The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
 It might work for Linux and Windows platforms after solving some issues. 
-Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit `numWireBufs_` to some values, like 800, in the file [_1_Init_BuffersSynths_128.scd](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd#L75), since MacOS seem to accept very high values without generating errors. Since then, there may probably be other errors on Linux.
+Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit `numWireBufs_` to some values, like 800, in the file [_1_Init_BuffersSynths_129.scd](/4Live4Life_Project/_1_Init_BuffersSynths_129.scd#L75), since MacOS seem to accept very high values without generating errors. Since then, there may probably be other errors on Linux.
 For Windows, I do not know, since currently I do not have a simple access to both of them.
 Let me know. I might maybe help.
 
@@ -120,11 +120,11 @@ Let me know. I might maybe help.
 
 ### Setup
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_128.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd), [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_129.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_129.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd), [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
 
 In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) in order to:
 
-1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_128.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_128.scd) if not available.
+1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_129.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_129.scd) if not available.
 
 2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L131) (this process may take a few minutes depending on the size of the sound library):
 
