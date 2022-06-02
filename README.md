@@ -121,7 +121,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) in order to:
 
-1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [absolute path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd) if not available.
+1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L1-L99). You mainly have to choose the [absolute path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L41-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd) if not available.
 
 2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L131) (this process may take a few minutes depending on the size of the sound library):
 
