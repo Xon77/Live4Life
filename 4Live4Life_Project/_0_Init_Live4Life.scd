@@ -13,7 +13,7 @@
 ~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
 
 ~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
-~mainServer1Window = 1; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see below how to start SuperDirt if you also want to use TidalCycles on main Server s
+~mainServer1Window = 0; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see below how to start SuperDirt if you also want to use TidalCycles on main Server s
 ~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
 // But with a second server running, SpatioScope is less interesting because only on 1 server
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals
@@ -34,31 +34,31 @@
 ~rtmMulMinProtect = 4; // Multiples the minimum level of Mul Slider for rhythm (adapts according to the number of events) to reach a minimal onset of 0.004 sec. à x1 (2 pour 0.008...)
 ~rhythmTracks = [4,5,6,7,3] /*[4,5,3]*/; // Identifies rhythm tracks (begins with 0)
 
-// Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// Define the Absolute Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
+// ~soundsFolder = "/home/<user>/SoundFolder/"; // For Linux, it may look like this
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
-~numChannelsConfig = "2-Performance"; // Stereo Mix and effects
-~numChannelsConfig = "4"; // Clockwise Quad
-~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
-~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
-~numChannelsConfig = "7"; // Clockwise from Centre
-~numChannelsConfig = "8-Centre"; // Clockwise from Centre
-~numChannelsConfig = "8-PairClock"; // Clockwise from Links - XXXXXXXXX
-~numChannelsConfig = "8-PairPair"; // Pairwise Links / Right - XXXXXXXXX
-~numChannelsConfig = "16-PairClock"; // Clockwise from Links
-~numChannelsConfig = "16-Dome-8-6-2-Pair"; // Pairwise Links / Right - XXXXXXXXX
-~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
-~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
-~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
-~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
-~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
+~numChannelsConfig = "2-Performance"; // Stereo Mix and effects // This line chooses spatial configuration setup // Uncomment according your preferred setup
+// ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
+// ~numChannelsConfig = "4"; // Clockwise Quad
+// ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
+// ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
+// ~numChannelsConfig = "7"; // Clockwise from Centre
+// ~numChannelsConfig = "8-Centre"; // Clockwise from Centre
+// ~numChannelsConfig = "8-PairClock"; // Clockwise from Links - XXXXXXXXX
+// ~numChannelsConfig = "8-PairPair"; // Pairwise Links / Right - XXXXXXXXX
+// ~numChannelsConfig = "16-PairClock"; // Clockwise from Links
+// ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // Pairwise Links / Right - XXXXXXXXX
+// ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
+// ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
+// ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
+// ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
+// ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
 // ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
-// ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context
-~numChannelsConfig = "2-Performance"; // This last line chooses spatial configuration setup
+// ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context - Crash with ~initBuffersSynths.(\server1, 0); because some synths are not stored
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~presetsFileName = "MyPresetFile.txt";
@@ -66,7 +66,7 @@
 
 // Ambisonic Spatialisation
 // Keep ~ambATKConfig at "binaural" if you have a headphone, or "stereo" if you have 2 speakers, otherwise ~ambATKConfig is "multiChannel" if more than 2 channels
-if (~numChannelsConfig[0].digit == 2, { ~ambATKConfig = "stereo" /*"stereo" */}, { ~ambATKConfig = "multiChannel"});
+if (~numChannelsConfig[0].digit == 2, { ~ambATKConfig = "binaural" /*"stereo" */}, { ~ambATKConfig = "multiChannel"});
 ~binauralDecoderName = "FoaDecoderKernel.newSpherical"; // newSpherical ou newCIPIC (44100.0 is not available for cipic kernel decoder)
 ~ambATKkFactor = 'velocity'; // 'dual' / 'velocity' - only for multiChannel
 
@@ -100,7 +100,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 
-( // Initialisation MIDI with some Quarks (Modality APC Mini & Twister) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+( // Only if you have controllers - Initialisation MIDI with some Quarks (Modality APC Mini & Twister) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 { // MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache;
 	// ~uController = MKtl('csbm330', "evolution-ucontrol-uc33"); "_Init Midi U.scd".loadRelative; // Midi Channel 0
 	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B // Midi Channel 3
@@ -120,12 +120,12 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-"_1_Init_BuffersSynths_129.scd".loadRelative; // Load server functions
+"_1_Init_BuffersSynths_130.scd".loadRelative; // Load server functions
 // ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0; // Just for my performance setup to launch a specific server for specific synths and sentences
 
 // 1st Server
-~loadServer.(\server1, \Local1, 0, 57111); // Server name -> ~server1 // tested in real context with 32 loudspeakers, but multichnnal FX or synths may lack CPU above 16 channels
-~initBuffersSynths.(\server1, 0); // Initialisation chack when the server is loaded with synths and buffers
+~loadServer.(\server1, \Local1, 0, 57111); // Server name -> ~server1 // tested in real context with 32 loudspeakers, but multichannel FX or synths may lack CPU above 16 channels
+~initBuffersSynths.(\server1, 0); // Initialisation check when the server is loaded with synths and buffers
 
 // 2nd Server
 ~loadServer.(\server2, \Local2, 1, 57112); // Server name -> ~server2
@@ -171,6 +171,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 
 
+
 // Example for loading SuperDirt TidalCycles if you also want to use TidalCycles on main Server s - To synchronise
 (if (~mainServer1Window == 1, {
 	SynthDef.synthDefDir = Platform.userAppSupportDir ++ "/synthdefs"; "SC_SYNTHDEF_PATH".setenv(SynthDef.synthDefDir.standardizePath);
@@ -197,7 +198,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 // To synchronise TidalCycles with SC
 // https://club.tidalcycles.org/t/synchronising-tidal-with-volca-sequencer/2680/6
 (
-var quant = /*1.0*/ 4; // ~quant;
+var quant = /*1.0*/ 2; // ~quant;
 ~dirt.receiveAction = { |e|
 	var cycle = e[\cycle];
 	var cps = e[\cps];
@@ -212,7 +213,9 @@ var quant = /*1.0*/ 4; // ~quant;
 	};
 	latency !? {
 		// ~server1.latency
-		Server.default/*~server1*/.latency = latency;
+		/*Server.default*/ s.latency = latency;
+		~server1.latency = latency;
+		if (~server2.notNil, {~server2.latency = latency});
 	}
 }
 );
@@ -235,3 +238,7 @@ w.view.layout = HLayout(*~dirt.orbits.collect { |x|
 	Slider().value_(val).action_({ |v| x.set(\amp, spec.map(v.value).dbamp.postln) })
 });
 )
+
+
+
+
