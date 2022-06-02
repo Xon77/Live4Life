@@ -72,15 +72,19 @@
 
 
 
-		~serverOptions.numWireBufs_(8192*12000); // 5000 auparavant - default 64 The maximum number of buffers that are allocated to interconnect unit generators -> This sets the limit of complexity of SynthDefs that can be loaded at runtime. This value will be automatically increased if a more complex def is loaded at startup, but it cannot be increased thereafter without rebooting.
+		Platform.case(
+			\osx,       { /*"OSX".postln*/ ~serverOptions.numWireBufs_( /*8192*12000*/ 2.pow(26) ); }, // try 4096 / 2.pow(12) or 1024 / 2.pow(10) if still you generate errors
+			\linux,     { /*"Linux".postln*/ ~serverOptions.numWireBufs_(2.pow(10)); }, // numWireBufs to limit to 800 if you generate errors like grey count ????
+			\windows,   { /*"Windows".postln*/ ~serverOptions.numWireBufs_(2.pow(12)); }
+		);
+		// ~serverOptions.numWireBufs_(8192*12000); // 5000 auparavant - default 64 The maximum number of buffers that are allocated to interconnect unit generators -> This sets the limit of complexity of SynthDefs that can be loaded at runtime. This value will be automatically increased if a more complex def is loaded at startup, but it cannot be increased thereafter without rebooting.
 		/*
 		(8192*5000)
 		(8192*9000)
 		(2.pow(16))
-		(2.pow(26))
+		(2.pow(27))
 		*/
 
-		// numWireBufs à limiter à 800 ou 500 car génère une erreur sur Linux ???????????????????????????
 
 		~serverOptions.maxNodes_(8192*5000); // default 1024
 
@@ -95,7 +99,7 @@
 
 		~serverOptions.numBuffers_(7000); // default 1024
 
-		~serverOptions.maxSynthDefs_(7000); // to adapt according to the nb of synthdefs created
+		~serverOptions.maxSynthDefs_(10000); // to adapt according to the nb of synthdefs created
 
 		~serverOptions.hardwareBufferSize = ~hardwareBufferSize; // 512 par défaut sur la carte son ->  to get less audio input latency -> impact CPU et sur enregistrement ???
 		// 64 apparemment suporte mieux les surcharges du server mais ne résoud pas la coupure de l'enregistrement à certains moments ??? XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -108,14 +112,14 @@
 		~serverOptions.zeroConf = true; // A Boolean indication whether or not the server should publish its port using zero configuration networking, to facilitate network interaction. This is true by default; if you find unacceptable delays (beachballing) upon server boot, you can try setting this to false.
 
 		// intérêt ??? - apparemment pas d'effet
-		~serverOptions.memoryLocking = false /*true*/; // A Boolean indicating whether the server should try to lock its memory into physical RAM. Default is false.
+		~serverOptions.memoryLocking = true; // A Boolean indicating whether the server should try to lock its memory into physical RAM. Default is false.
 
-		~serverOptions.numBuffers;
-		~serverOptions.numWireBufs;
-		~serverOptions.maxNodes;
-		~serverOptions.memSize/1024; // en MB
-		~serverOptions.blockSize; // The number of samples in one control period. The default is 64.
-		~serverOptions.hardwareBufferSize; // The preferred hardware buffer size. If non-nil the server app will attempt to set the hardware buffer frame size.
+		// ~serverOptions.numBuffers;
+		// ~serverOptions.numWireBufs;
+		// ~serverOptions.maxNodes;
+		// ~serverOptions.memSize/1024; // en MB
+		// ~serverOptions.blockSize; // The number of samples in one control period. The default is 64.
+		// ~serverOptions.hardwareBufferSize; // The preferred hardware buffer size. If non-nil the server app will attempt to set the hardware buffer frame size.
 		// SC_AudioDriver: sample rate = 44100.000000, driver's block size = 512 ??? for audio internal card & RME
 
 
@@ -230,13 +234,19 @@
 
 	// SynthDef Management
 
-	~synthDefsFolderS1 = Platform.userAppSupportDir ++ "/synthdefsLive4Life-" ++ ~numChannelsConfig ++"-S1";
-	~synthDefsFolderS2 = Platform.userAppSupportDir ++ "/synthdefsLive4Life-" ++ ~numChannelsConfig ++"-S2";
+	if (currentEnvironment[server] == ~server1, {
+		~synthDefsFolderS1 = Platform.userAppSupportDir ++ "/synthdefsLive4Life-" ++ ~numChannelsConfig ++"-S1";
+		// Création d'un dossier de synthé pour chaque type de config multi-canale
+		// Nécessité de rajouter les synthés dans synthdefsInit, par exemple pour jitlib ou autres - utiliser SynthDescLib.send(s); ?????????
+		if (PathName(~synthDefsFolderS1).isFolder == false, {~synthDefsFolderS1.mkdir; /*~synthDefsBuild = 1; ~synthDefsManagementChoose = 1*/ } );
+		if (PathName(~synthDefsFolderS1).files == [ ], {~synthDefsBuild = 1; ~synthDefsManagementChoose = 1} ); // Construction des synthés si dossier vide
+	},{
+		~synthDefsFolderS2 = Platform.userAppSupportDir ++ "/synthdefsLive4Life-" ++ ~numChannelsConfig ++"-S2";
+		if (PathName(~synthDefsFolderS2).isFolder == false, {~synthDefsFolderS2.mkdir; /*~synthDefsBuild = 1; ~synthDefsManagementChoose = 1*/ } );
+		if (PathName(~synthDefsFolderS2).files == [ ], {~synthDefsBuild = 1; ~synthDefsManagementChoose = 1} ); // Construction des synthés si dossier vide
+	});
 
-	// Création d'un dossier de synthé pour chaque type de config multi-canale
-	// Nécessité de rajouter les synthés dans synthdefsInit, par exemple pour jitlib ou autres - utiliser SynthDescLib.send(s); ?????????
-	if (PathName(~synthDefsFolderS1).isFolder == false, {~synthDefsFolderS1.mkdir; ~synthDefsFolderS2.mkdir; /*~synthDefsBuild = 1; ~synthDefsManagementChoose = 1*/ } );
-	if (PathName(~synthDefsFolderS1).files == [ ], {~synthDefsBuild = 1; ~synthDefsManagementChoose = 1} ); // Construction des synthés si dossier vide
+
 
 	// See SynthDesc helpfile
 	// Store the SynthDef along with metadata
@@ -269,7 +279,7 @@
 
 
 	SynthDescLib.global.addServer(currentEnvironment[server]); // n'a pas l'air d'être nécessaire ???
-	// SI, sinon les synthé du 2ème serveur ne sont pas chargés lors de la constuction des synthés et obligé de rebooter le server pour que les synthés soient lus
+	// SI, sinon les synthés du 2ème serveur ne sont pas chargés lors de la constuction des synthés et obligé de rebooter le server pour que les synthés soient lus
 
 	if (~serverFX == 1, { SynthDescLib.global.addServer(currentEnvironment[serverFXV]); }); // n'a pas l'air d'être nécessaire au chargement des synthés dans le 2ème serveur ??? voire ci-dessus
 
@@ -292,7 +302,7 @@
 
 	currentEnvironment[server].waitForBoot(limit: 1000, onComplete:{
 
-		currentEnvironment[server].sync; // 3.wait;
+		// currentEnvironment[server].sync; // Apparemment aide à faire cracher le serveur // 3.wait;
 
 		// { // à décommenter pour mesurer la rapidité d'affichage de la GUI et réorganistion des sons
 
@@ -651,7 +661,8 @@
 
 
 
-		if (currentEnvironment[server] == ~server1, { ~limiter = 0 ! 2; ~limiterNotification = 0 ! 2; } );
+		// if (currentEnvironment[server] == ~server1, { ~limiter = 0 ! 2; ~limiterNotification = 0 ! 2; } );
+		if (~limiter.isNil, { ~limiter = 0 ! 2; ~limiterNotification = 0 ! 2; } );
 
 		~limiterFunction = { |serverFX, serverNb|
 			{
@@ -705,7 +716,8 @@
 		// if (~serverVolume.isNil, { ~serverVolume = s.volume }); // Protection pour éviter de le relancer quand relancement de la GUI
 		*/
 
-		if (currentEnvironment[server] == ~server1, { ~serverVolume = 0 ! 2 });
+		// if (currentEnvironment[server] == ~server1, { ~serverVolume = 0 ! 2 });
+		if (~serverVolume.isNil, { ~serverVolume = 0 ! 2 });
 
 		~serverVolume[serverNb] = Volume(currentEnvironment[serverFXV], 0, ~numChannels, -90, 6, false /*true*/).lag_(7);
 
@@ -732,33 +744,39 @@
 
 
 		// Allocation de buffers pour le synthé WarpIn
-		if (currentEnvironment[server] == ~server1, { ~bufEmpty = 0 ! 2 });
+		// if (currentEnvironment[server] == ~server1, { ~bufEmpty = 0 ! 2 });
+		if (~bufEmpty.isNil, { ~bufEmpty = 0 ! 2 });
 		~bufEmpty[serverNb] = Buffer.alloc(currentEnvironment[server], currentEnvironment[server].sampleRate * 16, 1);
 
 
 
-		~chaoticEnvString = 0 ! 3; // ajout des buffers d'enveloppes
+		if (~chaoticEnvString.isNil, { ~chaoticEnvString = 0 ! 3;  // ajout des buffers d'enveloppes
 
-		// ~chaoticEnv[0] = Env([0, 1], [0.1]) ++ Env.saw2(segs: 700, amp: 1, startPhase: 0, endPhase: 1900pi, dur: 1-0.1-0.1).range(0, 1) ++ Env.cutoff(0.1, 0); // avec fades
-		// à utiliser pour éviter Env.linen dans les enveloppes -> plus économique ???
-		~chaoticEnvString[0] = "Env.saw2(segs: 700, startPhase: 0, endPhase: 1900pi, amp: 1, dur: 1) .range(0, 1)";
-		~chaoticEnvString[1] = "Env.triangle2(segs: 700, startPhase: 0, endPhase: 401pi, amp: 1, dur: 1) .range(0, 1)";
-		~chaoticEnvString[2] = "Env.square2(segs: 1000, startPhase: 0, endPhase: 401pi, amp: 1, dur: 1) .range(0, 1)";
+			// ~chaoticEnv[0] = Env([0, 1], [0.1]) ++ Env.saw2(segs: 700, amp: 1, startPhase: 0, endPhase: 1900pi, dur: 1-0.1-0.1).range(0, 1) ++ Env.cutoff(0.1, 0); // avec fades
+			// à utiliser pour éviter Env.linen dans les enveloppes -> plus économique ???
+			~chaoticEnvString[0] = "Env.saw2(segs: 700, startPhase: 0, endPhase: 1900pi, amp: 1, dur: 1) .range(0, 1)";
+			~chaoticEnvString[1] = "Env.triangle2(segs: 700, startPhase: 0, endPhase: 401pi, amp: 1, dur: 1) .range(0, 1)";
+			~chaoticEnvString[2] = "Env.square2(segs: 1000, startPhase: 0, endPhase: 401pi, amp: 1, dur: 1) .range(0, 1)";
 
-		~chaoticEnv = 0 ! 3; // ajout des enveloppes
+		});
+
+		if (~chaoticEnv.isNil, { ~chaoticEnv = 0 ! 3 }); // ajout des enveloppes
+
 		3.do { |i| ~chaoticEnv[i] = ~chaoticEnvString[i].interpret };
 		~bufEnvFunc = { |servers, serverNbs, i| ~bufEnv[serverNbs][i] = Buffer.sendCollection(servers, ~chaoticEnv[i].asArray, numChannels: 1, wait: -1, action: { "Chaotic Buffer loaded".postln }) };
 
 		// currentEnvironment[\server1]
 
-		if (currentEnvironment[server] == ~server1, {
-			~bufEnv = 0 ! 3 ! 2; // ajout des buffers d'enveloppes
-			// ~bufEnvFunc = { |i| ~bufEnv[0][i] = Buffer.sendCollection(currentEnvironment[server], ~chaoticEnv[i].asArray, numChannels: 1, wait: -1, action: { "Chaotic Buffer loaded".postln }) };
-			// 3.do { |i| ~bufEnvFunc.(i) };
+		if (~bufEnv.isNil, { ~bufEnv = 0 ! 3 ! 2 });
+
+		/*if (currentEnvironment[server] == ~server1, {
+		~bufEnv = 0 ! 3 ! 2; // ajout des buffers d'enveloppes
+		// ~bufEnvFunc = { |i| ~bufEnv[0][i] = Buffer.sendCollection(currentEnvironment[server], ~chaoticEnv[i].asArray, numChannels: 1, wait: -1, action: { "Chaotic Buffer loaded".postln }) };
+		// 3.do { |i| ~bufEnvFunc.(i) };
 		},{
-			// ~bufEnvFunc = { |i| ~bufEnv[1][i] = Buffer.sendCollection(currentEnvironment[server], ~chaoticEnv[i].asArray, numChannels: 1, wait: -1, action: { "Chaotic Buffer loaded".postln }) };
-			// 3.do { |i| ~bufEnvFunc.(i) };
-		});
+		// ~bufEnvFunc = { |i| ~bufEnv[1][i] = Buffer.sendCollection(currentEnvironment[server], ~chaoticEnv[i].asArray, numChannels: 1, wait: -1, action: { "Chaotic Buffer loaded".postln }) };
+		// 3.do { |i| ~bufEnvFunc.(i) };
+		});*/
 
 		3.do { |i| ~bufEnvFunc.(currentEnvironment[server], serverNb, i) };
 
@@ -771,9 +789,11 @@
 
 
 
+		if (~qitchBuffer.isNil,{ ~qitchBuffer = 0 ! 2; });
+
 		// path to auxiliary wav file for Qitch - frequency tracking
 		if (currentEnvironment[server] == ~server1, {
-			~qitchBuffer = 0 ! 2;
+			// ~qitchBuffer = 0 ! 2;
 			if (~sampleRate == 44100, {
 				~qitchBuffer[0] = Buffer.read(currentEnvironment[server],
 					// "/Users/Xon/sc3-plugins/build/build_osx/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
@@ -1213,7 +1233,8 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 
 
 
-				if (currentEnvironment[server] == ~server1, {~configVBAPBuffers = 0 ! 2} ); // Chargement des Buffers VBAP sur les 2 serveurs
+				// if (currentEnvironment[server] == ~server1, {~configVBAPBuffers = 0 ! 2} ); // Chargement des Buffers VBAP sur les 2 serveurs
+				if (~configVBAPBuffers.isNil, {~configVBAPBuffers = 0 ! 2} );
 
 				case
 
@@ -1439,7 +1460,7 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 					// [ -0.125pi, 0.125pi, 0.375pi, 0.625pi, 0.875pi, 1.125pi, 1.375pi, -0.375pi, 0pi, 0.3333pi, (0.3333*2)*pi, 1pi, (-0.3333*2)*pi, -0.3333pi, -0.5pi, 0.5pi].raddeg.wrap(-180,180)
 				}
 
-				// Mise en place seulement du dôme de 24 UsineC - Clock - sorties à réorganiser dans la carte son selon l'attribution du SpatioScope (+ Subs selon config)
+				// Mise en place seulement du dôme de 16 UsineC - Clock - sorties à réorganiser dans la carte son selon l'attribution du SpatioScope (+ Subs selon config)
 				{~numChannelsConfig == "16-UsineC-2Octo"}
 				// Config Output Dome 16 sorties - Clockwise à partir de la gauche
 				{
@@ -1583,10 +1604,10 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 
 					// préférable en termes de performance, mais pas en termes de lignes rajoutées :
 					// de rajouter dans ~allSpas une variable sil = Silent.ar(1), afin d'éviter de répéter ce UGen 32 x ou plus... mais nécessaire de rajouter 8 conditions pour seulement ~numChannelsConfig == "64-CentreClock" pour éviter d'introduire encore un UGen, même si ce n'est que Silent.ar ???
-					// ~configOutsVPM = /*~configOuts*/ "[ src1[0], src1[1], src1[2], src1[3], src1[4], src1[5], src1[6], src1[7], src1[8], src1[9], src1[10], src1[11], src1[12], src1[13], src1[14], src1[15], src1[16], src1[17], src1[18], src1[19], src1[20], src1[21], src1[22], src1[23], src1[24], src1[25], src1[26], src1[27], src1[28], src1[29], src1[30], src1[31] ]";
-					~configOutsVPM = /*~configOuts*/ "[ src1[0], Silent.ar(1), src1[1], Silent.ar(1), src1[2], Silent.ar(1), src1[3], Silent.ar(1), src1[4], Silent.ar(1), src1[5], Silent.ar(1), src1[6], Silent.ar(1), src1[7], Silent.ar(1), src1[8], Silent.ar(1), src1[9], Silent.ar(1), src1[10], Silent.ar(1), src1[11], Silent.ar(1), src1[12], Silent.ar(1), src1[13], Silent.ar(1), src1[14], Silent.ar(1), src1[15], Silent.ar(1), src1[16], Silent.ar(1), src1[17], Silent.ar(1), src1[18], Silent.ar(1), src1[19], Silent.ar(1), src1[20], Silent.ar(1), src1[21], Silent.ar(1), src1[22], Silent.ar(1), src1[23], Silent.ar(1), src1[24], Silent.ar(1), src1[25], Silent.ar(1), src1[26], Silent.ar(1), src1[27], Silent.ar(1), src1[28], Silent.ar(1), src1[29], Silent.ar(1), src1[30], Silent.ar(1), src1[31], Silent.ar(1) ]";
-					// ~configOutsVPS = "[ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31] ]";
-					~configOutsVPS = "[ src[0], Silent.ar(1), src[1], Silent.ar(1), src[2], Silent.ar(1), src[3], Silent.ar(1), src[4], Silent.ar(1), src[5], Silent.ar(1), src[6], Silent.ar(1), src[7], Silent.ar(1), src[8], Silent.ar(1), src[9], Silent.ar(1), src[10], Silent.ar(1), src[11], Silent.ar(1), src[12], Silent.ar(1), src[13], Silent.ar(1), src[14], Silent.ar(1), src[15], Silent.ar(1), src[16], Silent.ar(1), src[17], Silent.ar(1), src[18], Silent.ar(1), src[19], Silent.ar(1), src[20], Silent.ar(1), src[21], Silent.ar(1), src[22], Silent.ar(1), src[23], Silent.ar(1), src[24], Silent.ar(1), src[25], Silent.ar(1), src[26], Silent.ar(1), src[27], Silent.ar(1), src[28], Silent.ar(1), src[29], Silent.ar(1), src[30], Silent.ar(1), src[31], Silent.ar(1) ]";
+					~configOutsVPM = /*~configOuts*/ "[ src1[0], src1[1], src1[2], src1[3], src1[4], src1[5], src1[6], src1[7], src1[8], src1[9], src1[10], src1[11], src1[12], src1[13], src1[14], src1[15], src1[16], src1[17], src1[18], src1[19], src1[20], src1[21], src1[22], src1[23], src1[24], src1[25], src1[26], src1[27], src1[28], src1[29], src1[30], src1[31] ]";
+					// ~configOutsVPM = /*~configOuts*/ "[ src1[0], Silent.ar(1), src1[1], Silent.ar(1), src1[2], Silent.ar(1), src1[3], Silent.ar(1), src1[4], Silent.ar(1), src1[5], Silent.ar(1), src1[6], Silent.ar(1), src1[7], Silent.ar(1), src1[8], Silent.ar(1), src1[9], Silent.ar(1), src1[10], Silent.ar(1), src1[11], Silent.ar(1), src1[12], Silent.ar(1), src1[13], Silent.ar(1), src1[14], Silent.ar(1), src1[15], Silent.ar(1), src1[16], Silent.ar(1), src1[17], Silent.ar(1), src1[18], Silent.ar(1), src1[19], Silent.ar(1), src1[20], Silent.ar(1), src1[21], Silent.ar(1), src1[22], Silent.ar(1), src1[23], Silent.ar(1), src1[24], Silent.ar(1), src1[25], Silent.ar(1), src1[26], Silent.ar(1), src1[27], Silent.ar(1), src1[28], Silent.ar(1), src1[29], Silent.ar(1), src1[30], Silent.ar(1), src1[31], Silent.ar(1) ]";
+					~configOutsVPS = "[ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31] ]";
+					// ~configOutsVPS = "[ src[0], Silent.ar(1), src[1], Silent.ar(1), src[2], Silent.ar(1), src[3], Silent.ar(1), src[4], Silent.ar(1), src[5], Silent.ar(1), src[6], Silent.ar(1), src[7], Silent.ar(1), src[8], Silent.ar(1), src[9], Silent.ar(1), src[10], Silent.ar(1), src[11], Silent.ar(1), src[12], Silent.ar(1), src[13], Silent.ar(1), src[14], Silent.ar(1), src[15], Silent.ar(1), src[16], Silent.ar(1), src[17], Silent.ar(1), src[18], Silent.ar(1), src[19], Silent.ar(1), src[20], Silent.ar(1), src[21], Silent.ar(1), src[22], Silent.ar(1), src[23], Silent.ar(1), src[24], Silent.ar(1), src[25], Silent.ar(1), src[26], Silent.ar(1), src[27], Silent.ar(1), src[28], Silent.ar(1), src[29], Silent.ar(1), src[30], Silent.ar(1), src[31], Silent.ar(1) ]";
 					~numChannelsVP = 32 /*~numChannels*/;
 
 					~configVBAP = VBAPSpeakerArray.new(2, Array.series(64,0,2pi/64).raddeg /*[ -22.5, 22.5, 67.5, 112.5, 157.5, -157.5, -112.5, -67.5 ]*/);
@@ -1614,10 +1635,10 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 
 					// préférable en termes de performance, mais pas en termes de lignes rajoutées :
 					// de rajouter dans ~allSpas une variable sil = Silent.ar(1), afin d'éviter de répéter ce UGen 32 x ou plus... mais nécessaire de rajouter 8 conditions pour seulement ~numChannelsConfig == "64-CentreClock" pour éviter d'introduire encore un UGen, même si ce n'est que Silent.ar ???
-					// ~configOutsVPM = /*~configOuts*/ "[ src1[0], src1[1], src1[2], src1[3], src1[4], src1[5], src1[6], src1[7], src1[8], src1[9], src1[10], src1[11], src1[12], src1[13], src1[14], src1[15], src1[16], src1[17], src1[18], src1[19], src1[20], src1[21], src1[22], src1[23], src1[24], src1[25], src1[26], src1[27], src1[28], src1[29], src1[30], src1[31] ]";
-					~configOutsVPM = /*~configOuts*/ "[ src1[0], Silent.ar(1), Silent.ar(1), src1[1], Silent.ar(1), Silent.ar(1), src1[2], Silent.ar(1), Silent.ar(1), src1[3], Silent.ar(1), Silent.ar(1), src1[4], Silent.ar(1), Silent.ar(1), src1[5], Silent.ar(1), Silent.ar(1), src1[6], Silent.ar(1), Silent.ar(1), src1[7], Silent.ar(1), Silent.ar(1), src1[8], Silent.ar(1), Silent.ar(1), src1[9], Silent.ar(1), Silent.ar(1), src1[10], Silent.ar(1), Silent.ar(1), src1[11], Silent.ar(1), Silent.ar(1), src1[12], Silent.ar(1), Silent.ar(1), src1[13], Silent.ar(1), Silent.ar(1), src1[14], Silent.ar(1), Silent.ar(1), src1[15], Silent.ar(1), Silent.ar(1), src1[16], Silent.ar(1), Silent.ar(1), src1[17], Silent.ar(1), Silent.ar(1), src1[18], Silent.ar(1), Silent.ar(1), src1[19], Silent.ar(1), Silent.ar(1), src1[20], Silent.ar(1), Silent.ar(1), src1[21], Silent.ar(1), Silent.ar(1), src1[22], Silent.ar(1), Silent.ar(1), src1[23], Silent.ar(1), Silent.ar(1), src1[24], Silent.ar(1), Silent.ar(1), src1[25], Silent.ar(1), Silent.ar(1), src1[26], Silent.ar(1), Silent.ar(1), src1[27], Silent.ar(1), Silent.ar(1), src1[28], Silent.ar(1), Silent.ar(1), src1[29], Silent.ar(1),  Silent.ar(1), src1[30], Silent.ar(1), Silent.ar(1), src1[31], Silent.ar(1), Silent.ar(1) ]";
-					// ~configOutsVPS = "[ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31] ]";
-					~configOutsVPS = "[ src[0], Silent.ar(1), Silent.ar(1), src[1], Silent.ar(1), Silent.ar(1), src[2], Silent.ar(1), Silent.ar(1), src[3], Silent.ar(1), Silent.ar(1), src[4], Silent.ar(1), Silent.ar(1), src[5], Silent.ar(1), Silent.ar(1), src[6], Silent.ar(1), Silent.ar(1), src[7], Silent.ar(1), Silent.ar(1), src[8], Silent.ar(1), Silent.ar(1), src[9], Silent.ar(1), Silent.ar(1), src[10], Silent.ar(1), Silent.ar(1), src[11], Silent.ar(1), Silent.ar(1), src[12], Silent.ar(1), Silent.ar(1), src[13], Silent.ar(1), Silent.ar(1), src[14], Silent.ar(1), Silent.ar(1), src[15], Silent.ar(1), Silent.ar(1), src[16], Silent.ar(1), Silent.ar(1), src[17], Silent.ar(1), Silent.ar(1), src[18], Silent.ar(1), Silent.ar(1), src[19], Silent.ar(1), Silent.ar(1), src[20], Silent.ar(1), Silent.ar(1), src[21], Silent.ar(1), Silent.ar(1), src[22], Silent.ar(1), Silent.ar(1), src[23], Silent.ar(1), Silent.ar(1), src[24], Silent.ar(1), Silent.ar(1), src[25], Silent.ar(1), Silent.ar(1), src[26], Silent.ar(1), Silent.ar(1), src[27], Silent.ar(1), Silent.ar(1), src[28], Silent.ar(1), Silent.ar(1), src[29], Silent.ar(1), Silent.ar(1), src[30], Silent.ar(1), Silent.ar(1), src[31], Silent.ar(1), Silent.ar(1) ]";
+					~configOutsVPM = /*~configOuts*/ "[ src1[0], src1[1], src1[2], src1[3], src1[4], src1[5], src1[6], src1[7], src1[8], src1[9], src1[10], src1[11], src1[12], src1[13], src1[14], src1[15], src1[16], src1[17], src1[18], src1[19], src1[20], src1[21], src1[22], src1[23], src1[24], src1[25], src1[26], src1[27], src1[28], src1[29], src1[30], src1[31] ]";
+					// ~configOutsVPM = /*~configOuts*/ "[ src1[0], Silent.ar(1), Silent.ar(1), src1[1], Silent.ar(1), Silent.ar(1), src1[2], Silent.ar(1), Silent.ar(1), src1[3], Silent.ar(1), Silent.ar(1), src1[4], Silent.ar(1), Silent.ar(1), src1[5], Silent.ar(1), Silent.ar(1), src1[6], Silent.ar(1), Silent.ar(1), src1[7], Silent.ar(1), Silent.ar(1), src1[8], Silent.ar(1), Silent.ar(1), src1[9], Silent.ar(1), Silent.ar(1), src1[10], Silent.ar(1), Silent.ar(1), src1[11], Silent.ar(1), Silent.ar(1), src1[12], Silent.ar(1), Silent.ar(1), src1[13], Silent.ar(1), Silent.ar(1), src1[14], Silent.ar(1), Silent.ar(1), src1[15], Silent.ar(1), Silent.ar(1), src1[16], Silent.ar(1), Silent.ar(1), src1[17], Silent.ar(1), Silent.ar(1), src1[18], Silent.ar(1), Silent.ar(1), src1[19], Silent.ar(1), Silent.ar(1), src1[20], Silent.ar(1), Silent.ar(1), src1[21], Silent.ar(1), Silent.ar(1), src1[22], Silent.ar(1), Silent.ar(1), src1[23], Silent.ar(1), Silent.ar(1), src1[24], Silent.ar(1), Silent.ar(1), src1[25], Silent.ar(1), Silent.ar(1), src1[26], Silent.ar(1), Silent.ar(1), src1[27], Silent.ar(1), Silent.ar(1), src1[28], Silent.ar(1), Silent.ar(1), src1[29], Silent.ar(1),  Silent.ar(1), src1[30], Silent.ar(1), Silent.ar(1), src1[31], Silent.ar(1), Silent.ar(1) ]";
+					~configOutsVPS = "[ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31] ]";
+					// ~configOutsVPS = "[ src[0], Silent.ar(1), Silent.ar(1), src[1], Silent.ar(1), Silent.ar(1), src[2], Silent.ar(1), Silent.ar(1), src[3], Silent.ar(1), Silent.ar(1), src[4], Silent.ar(1), Silent.ar(1), src[5], Silent.ar(1), Silent.ar(1), src[6], Silent.ar(1), Silent.ar(1), src[7], Silent.ar(1), Silent.ar(1), src[8], Silent.ar(1), Silent.ar(1), src[9], Silent.ar(1), Silent.ar(1), src[10], Silent.ar(1), Silent.ar(1), src[11], Silent.ar(1), Silent.ar(1), src[12], Silent.ar(1), Silent.ar(1), src[13], Silent.ar(1), Silent.ar(1), src[14], Silent.ar(1), Silent.ar(1), src[15], Silent.ar(1), Silent.ar(1), src[16], Silent.ar(1), Silent.ar(1), src[17], Silent.ar(1), Silent.ar(1), src[18], Silent.ar(1), Silent.ar(1), src[19], Silent.ar(1), Silent.ar(1), src[20], Silent.ar(1), Silent.ar(1), src[21], Silent.ar(1), Silent.ar(1), src[22], Silent.ar(1), Silent.ar(1), src[23], Silent.ar(1), Silent.ar(1), src[24], Silent.ar(1), Silent.ar(1), src[25], Silent.ar(1), Silent.ar(1), src[26], Silent.ar(1), Silent.ar(1), src[27], Silent.ar(1), Silent.ar(1), src[28], Silent.ar(1), Silent.ar(1), src[29], Silent.ar(1), Silent.ar(1), src[30], Silent.ar(1), Silent.ar(1), src[31], Silent.ar(1), Silent.ar(1) ]";
 					~numChannelsVP = 32 /*~numChannels*/;
 
 					~configVBAP = VBAPSpeakerArray.new(2, Array.series(96,0,2pi/96).raddeg /*[ -22.5, 22.5, 67.5, 112.5, 157.5, -157.5, -112.5, -67.5 ]*/);
@@ -1638,10 +1659,10 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 
 					// préférable en termes de performance, mais pas en termes de lignes rajoutées :
 					// de rajouter dans ~allSpas une variable sil = Silent.ar(1), afin d'éviter de répéter ce UGen 32 x ou plus... mais nécessaire de rajouter 8 conditions pour seulement ~numChannelsConfig == "64-CentreClock" pour éviter d'introduire encore un UGen, même si ce n'est que Silent.ar ???
-					// ~configOutsVPM = /*~configOuts*/ "[ src1[0], src1[1], src1[2], src1[3], src1[4], src1[5], src1[6], src1[7], src1[8], src1[9], src1[10], src1[11], src1[12], src1[13], src1[14], src1[15], src1[16], src1[17], src1[18], src1[19], src1[20], src1[21], src1[22], src1[23], src1[24], src1[25], src1[26], src1[27], src1[28], src1[29], src1[30], src1[31] ]";
-					~configOutsVPM = /*~configOuts*/ "[ src1[0], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[1], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[2], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[3], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[4], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[5], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[6], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[7], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[8], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[9], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[10], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[11], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[12], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[13], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[14], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[15], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[16], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[17], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[18], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[19], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[20], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[21], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[22], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[23], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[24], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[25], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[26], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[27], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[28], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[29], Silent.ar(1),  Silent.ar(1), Silent.ar(1),src1[30], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[31], Silent.ar(1), Silent.ar(1), Silent.ar(1) ]";
-					// ~configOutsVPS = "[ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31] ]";
-					~configOutsVPS = "[ src[0], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[1], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[2], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[3], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[4], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[5], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[6], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[7], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[8], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[9], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[10], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[11], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[12], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[13], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[14], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[15], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[16], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[17], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[18], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[19], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[20], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[21], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[22], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[23], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[24], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[25], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[26], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[27], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[28], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[29], Silent.ar(1),  Silent.ar(1), Silent.ar(1), src[30], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[31], Silent.ar(1), Silent.ar(1), Silent.ar(1) ]";
+					~configOutsVPM = /*~configOuts*/ "[ src1[0], src1[1], src1[2], src1[3], src1[4], src1[5], src1[6], src1[7], src1[8], src1[9], src1[10], src1[11], src1[12], src1[13], src1[14], src1[15], src1[16], src1[17], src1[18], src1[19], src1[20], src1[21], src1[22], src1[23], src1[24], src1[25], src1[26], src1[27], src1[28], src1[29], src1[30], src1[31] ]";
+					// ~configOutsVPM = /*~configOuts*/ "[ src1[0], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[1], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[2], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[3], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[4], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[5], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[6], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[7], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[8], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[9], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[10], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[11], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[12], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[13], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[14], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[15], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[16], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[17], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[18], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[19], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[20], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[21], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[22], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[23], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[24], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[25], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[26], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[27], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[28], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[29], Silent.ar(1),  Silent.ar(1), Silent.ar(1),src1[30], Silent.ar(1), Silent.ar(1), Silent.ar(1), src1[31], Silent.ar(1), Silent.ar(1), Silent.ar(1) ]";
+					~configOutsVPS = "[ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31] ]";
+					// ~configOutsVPS = "[ src[0], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[1], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[2], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[3], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[4], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[5], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[6], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[7], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[8], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[9], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[10], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[11], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[12], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[13], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[14], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[15], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[16], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[17], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[18], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[19], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[20], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[21], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[22], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[23], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[24], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[25], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[26], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[27], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[28], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[29], Silent.ar(1),  Silent.ar(1), Silent.ar(1), src[30], Silent.ar(1), Silent.ar(1), Silent.ar(1), src[31], Silent.ar(1), Silent.ar(1), Silent.ar(1) ]";
 					~numChannelsVP = 32 /*~numChannels*/;
 
 					~configVBAP = VBAPSpeakerArray.new(2, Array.series(128,0,2pi/128).raddeg /*[ -22.5, 22.5, 67.5, 112.5, 157.5, -157.5, -112.5, -67.5 ]*/);
@@ -1659,14 +1680,18 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 				{~ambATKConfig == "binaural"}
 				{
 					// var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; ~binauralDecoder = 0 ! 2; }, { sv = ~server2; } );
-					if (currentEnvironment[server] == ~server1, { ~binauralDecoder = 0 ! 2; } );
-					~binauralDecoder[serverNb] = (~binauralDecoderName ++( "(server:"++ "~server" ++ (serverNb+1)/*1*/.asString) ++")" ).interpret; currentEnvironment[server].sync; 2.wait;
+					// if (currentEnvironment[server] == ~server1, { ~binauralDecoder = 0 ! 2; } );
+					var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; }, { sv = ~server2; } );
+					if (~binauralDecoder.isNil, {~binauralDecoder = 0 ! 2});
+					~binauralDecoder[serverNb] = (~binauralDecoderName ++( "(server:"++ "~server" ++ (serverNb+1)/*1*/.asString) ++")" ).interpret; currentEnvironment[server].sync; // 2.wait;
 				}
 				{~ambATKConfig == "stereo"}
 				{
-					var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; ~stereoDecoder = 0 ! 2; }, { sv = ~server2; } );
+					// var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; ~stereoDecoder = 0 ! 2; }, { sv = ~server2; } );
 					// if (currentEnvironment[server] == ~server1, { ~stereoDecoder = 0 ! 2; } );
-					~stereoDecoder[serverNb] = FoaDecoderKernel.newUHJ(server: sv); currentEnvironment[server].sync; 2.wait; /* Apparemment le .wait est necessaire car sinon les Buffers binauraux ne sont pas tous chargés */
+					var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; }, { sv = ~server2; } );
+					if (~stereoDecoder.isNil, {~stereoDecoder = 0 ! 2});
+					~stereoDecoder[serverNb] = FoaDecoderKernel.newUHJ(server: sv); currentEnvironment[server].sync; // 2.wait; /* Apparemment le .wait est necessaire car sinon les Buffers binauraux ne sont pas tous chargés */
 				};
 
 
@@ -3463,7 +3488,7 @@ OffsetOut.ar(\\outsR.ar([8,9,10,11,12,13,14,15]), src[1]);",
 						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
 
 							// Buffer Mono simple
-							// A comparer version avec un petit lag comme au dessus et sans lag ci-dessus XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+							// A comparer version avec un petit lag comme au dessus et sans lag ci-dessous XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 							~synth =
 							("SynthDef(\\BufM_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", rater= 1, offset= 0, bufm, trig, loop= 0 |
@@ -6433,7 +6458,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 
 				// Fork nécessaire avec un petit wait nécessaire, sinon ERROR: Message '-' not understood -> provoqué la fin de Spectral diffusion ?????????
-				0.01.wait;
+				0.1.wait;
 
 			}.fork;
 
@@ -10222,7 +10247,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 					~defEQUnitLib = EQdef /*( 'lowShelf', BLowShelf, 'peak', BPeakEQ, 'hiShelf', BHiShelf )*/; // define een eq (name, Filter class)
 					~nbOfEQ = 3;
-					if (currentEnvironment[server] == ~server1, { ~eqUnitLib = 0 ! 2 });
+					// if (currentEnvironment[server] == ~server1, { ~eqUnitLib = 0 ! 2 });
+					if (~eqUnitLib.isNil, { ~eqUnitLib = 0 ! 2 });
 					~eqUnitLib[serverNb] = EQSetting( ~defEQUnitLib ) ! ~nbOfEQ;
 
 					~eqSynthDefNames = [\EQ1, \EQ2, \EQ3];
@@ -10299,7 +10325,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 					~defEQUnitLib2 = EQdef ( 'lowShelf', BLowShelf, 'peak', BPeakEQ, 'hiShelf', BHiShelf ); // define een eq (name, Filter class)
 					~nbOfChannelEQ = 9 /*~nbOfTracks+1 // Le nb de Tracks n'est pas encore défini*/ ; // +1 pour les canaux FX
-					if (currentEnvironment[server] == ~server1, { ~eqChannelUnitLib = 0 ! 2 });
+					// if (currentEnvironment[server] == ~server1, { ~eqChannelUnitLib = 0 ! 2 });
+					if (~eqChannelUnitLib.isNil, { ~eqChannelUnitLib = 0 ! 2 });
 					~eqChannelUnitLib[serverNb] = EQSetting( ~defEQUnitLib2 ) ! ~nbOfChannelEQ;
 					// ~eqChannelUnitLib.do { |i| i.set( \lowShelf, \freq, 150); i.set( \peak, \freq, 1500); i.set( \hiShelf, \freq, 5000); }; // setting parameters à intégrer dans la GUI car sinon pas mis à jour
 
@@ -10339,7 +10366,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 					~fftEQSize = 1024; // FFTsize containing for each bin -> magnitude and phase - à diviser / 2 pour obtenir la taille réelle de la FFT // léger ralentissement lorsque modif des minisliders des bins avec des valeurs aléatoires avec FFTsize de 2048
 					~fftEQNbOfBins = ~fftEQSize / 2;
-					if (currentEnvironment[server] == ~server1, { ~fftEQBufValues = 0 ! 2; ~fftEQBufs = 0 ! 2; });
+					// if (currentEnvironment[server] == ~server1, { ~fftEQBufValues = 0 ! 2; ~fftEQBufs = 0 ! 2; });
+					if (~fftEQBufValues.isNil, { ~fftEQBufValues = 0 ! 2; ~fftEQBufs = 0 ! 2; });
 					~fftEQBufValues[serverNb] = 0 ! ~fftEQSize ! 2; // initialize FFT buffer values
 
 					~fftEQBufs[serverNb] = 2.collect { |i| Buffer.loadCollection(currentEnvironment[serverFXV], ~fftEQBufValues[serverNb][i]) }; // cette ligne remplace les 2 lignes c-dessous
@@ -10401,7 +10429,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 					~fftDelSize = 512;
 					~fftDelNbOfBins = ~fftDelSize / 2;
-					if (currentEnvironment[server] == ~server1, { ~fftDelfbValues = 0 ! 2; ~fftDelfbBufs = 0 ! 2; });
+					// if (currentEnvironment[server] == ~server1, { ~fftDelfbValues = 0 ! 2; ~fftDelfbBufs = 0 ! 2; });
+					if (~fftDelfbValues.isNil, { ~fftDelfbValues = 0 ! 2; ~fftDelfbBufs = 0 ! 2; });
 					~fftDelfbValues[serverNb] = 0 ! ~fftDelNbOfBins ! 4; // initialize delay and feedback values
 
 					~fftDelfbBufs[serverNb] = Array.fill(4, {Buffer.alloc(currentEnvironment[serverFXV], ~fftDelNbOfBins, 1)}); // initialize delay and feedback buffer
@@ -10455,7 +10484,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 					~numChannelsFX16 = ~numChannelsFX.min(16);
 					~fftOutSize = 1024;
 					~fftOutNbOfBins = ~fftOutSize / 2;
-					if (currentEnvironment[server] == ~server1, { ~fftOut1MagValues = 0 ! 2; ~fftOutMagPhaValues = 0 ! 2; ~fftOutChannelValues = 0 ! 2; ~fftOutBufs = 0 ! 2; });
+					// if (currentEnvironment[server] == ~server1, { ~fftOut1MagValues = 0 ! 2; ~fftOutMagPhaValues = 0 ! 2; ~fftOutChannelValues = 0 ! 2; ~fftOutBufs = 0 ! 2; });
+					if (~fftOut1MagValues.isNil, { ~fftOut1MagValues = 0 ! 2; ~fftOutMagPhaValues = 0 ! 2; ~fftOutChannelValues = 0 ! 2; ~fftOutBufs = 0 ! 2; });
 					~fftOut1MagValues[serverNb] = {0 ! ~fftOutNbOfBins ! ~numChannelsFX16} ! 2;
 					~fftOutMagPhaValues[serverNb] = {0 ! ~fftOutSize ! ~numChannelsFX16} ! 2;
 					~fftOutChannelValues[serverNb] = 0 ! ~fftOutNbOfBins ! 2;
@@ -13183,346 +13213,350 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 
 
-				(
-					~renderEncode = { arg src; var configEncoderATK;
+				if (~renderEncode.isNil, {
 
-						case
-						{~numChannelsConfig == "2"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newStereo(pi/4);
-							FoaEncode.ar([ src[0], src[1] ], configEncoderATK);
-							// voir si préférable de garder 0 pour l'angle ??????
-							// When angle = 0, the left and right channels of the input signal arrive at [90, -90] degrees.
-							// angle = pi/4 distorts the arrivals to [45, -45] degrees.
-							// angle = pi/2, places both the left and right inputs at front centre, [0, 0] degrees.
-						}
-						{~numChannelsConfig == "4"} // Clockwise
-						{
-							configEncoderATK = FoaEncoderMatrix.newQuad;
-							FoaEncode.ar([ src[0], src[3], src[2], src[1] ], configEncoderATK);
-							// Inputs are in anti-clockwise order. The position of the first input channel is either centre or left of centre.
-							// de 0 à 180 -> de devant à derriere sur la gauche
-							// de -180 à 0 -> de derrière à devant sur la droite
-							// FoaEncoderMatrix.newQuad.dirChannels * 180/pi
-						}
-						{~numChannelsConfig == "5-Centre"} // Clockwise sauf Centre = 3
-						{
-							// configEncoderATK = FoaEncoderMatrix.newPanto(5, orientation: 'point');
-							// FoaEncoderMatrix.newPanto(5, orientation: 'point').dirChannels * 180/pi // Besoin de mettre une orientation point si HP central comme dans le cas du 5.1
+					(
+						~renderEncode = { arg src; var configEncoderATK;
 
-							// configEncoderATK = FoaEncoderMatrix.new5_0;
-							// ~configSrcATK = "[ src[1], src[4], src[0], src[3], src[2] ]"; // for new5_0
-							// FoaEncoderMatrix.new5_0.dirChannels * 180/pi
-
-							// préférable d'utiliser newDirections pour préciser un angle de 45° pour le L & R - new5_0 -> espacement trop petit (30°) & newPanto -> espacement trop grand (72°)
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5); // Comme la quadriphonie, plus 1 HP central
-							FoaEncode.ar([ src[1], src[4], src[0], src[3], src[2] ], configEncoderATK);
-							// voire avec des patterns différents de 0.5 - cardiod ???
-							// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5).dirChannels * 180/pi
-							// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5).dirChannels.raddeg
-							// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5).matrix // answers encoding matrix [ W, X, Y ]
-						}
-						{~numChannelsConfig == "5-Clock"} // Clockwise à partir du Centre = 0 - XXXXXX
-						{
-							// configEncoderATK = FoaEncoderMatrix.new5_0;
-							// ~configSrcATK = "[ src[0], src[4], src[3], src[2], src[1] ]"; // for new5_0 - identique à newDirections
-
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5);
-							FoaEncode.ar([ src[0], src[4], src[3], src[2], src[1] ], configEncoderATK);
-							// voire avec des patterns différents de 0.5 - cardiod ???
-						}
-						{~numChannelsConfig == "7"}
-						{
-							// configEncoderATK = FoaEncoderMatrix.new7_0; // [ 0, 30, 90, 135, -135, -90, -30 ]
-							// encodage avec newDirections préférable pour positionner les HP L & R à 45° au lieu de 30° - comme le 8-Centre mais sans arrière ?????????
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 90, 135, -135, -90, -45], 0.5);
-							FoaEncode.ar([ src[0], src[6], src[5], src[4], src[3], src[2], src[1] ], configEncoderATK);
-							// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 90, 135, -135, -90, -45], 0.5).dirChannels.raddeg;
-						}
-						{~numChannelsConfig == "8-Centre"} // // Clockwise à partir du Centre = 0
-						{
-							configEncoderATK = FoaEncoderMatrix.newPanto(8, orientation: 'point');
-							FoaEncode.ar([ src[0], src[7], src[6], src[5], src[4], src[3], src[2], src[1] ], configEncoderATK);
-							// FoaEncoderMatrix.newPanto(8, orientation: 'point').dirChannels * 180/pi // Attribution renversée vs BFEncode (plus haut) ??????
-						}
-						{~numChannelsConfig == "8-PairClock"} // Clockwise à partir de la gauche - XXXXXX
-						{
-							configEncoderATK = FoaEncoderMatrix.newPanto(8, orientation: 'flat');
-							FoaEncode.ar([ src[0], src[7], src[6], src[5], src[4], src[3], src[2], src[1] ], configEncoderATK);
-							// FoaEncoderMatrix.newPanto(8, orientation: 'flat').dirChannels * 180/pi
-						}
-						{~numChannelsConfig == "8-PairPair"} // en alternant gauche / droite, du devant vers l'arrière
-						{
-							configEncoderATK = FoaEncoderMatrix.newPanto(8, orientation: 'flat');
-							FoaEncode.ar([ src[0], src[7], src[1], src[6], src[2], src[5], src[3], src[4] ], configEncoderATK);
-							// préférable d'utiliser newDirections pour préciser un angle
-							// voire le niveau d'élévation à indiquer -> 0 / 35 / 80 (90 pour 1 HP à la verticale)
-						}
-						{~numChannelsConfig == "16-Dome-8-6-2-Pair"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 45], [-60, 45], [120, 45], [-120, 45], [0, 45], [180, 45], [90, 85], [-90, 85]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[7], src[2], src[6], src[3], src[5], src[4], src[13], src[9], src[12], src[10], src[8], src[11], src[14], src[15] ], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"}}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [0, 45], [-60, 45], [-120, 45], [180, 45], [120, 45], [60, 45], [90, 85], [-90, 85]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15]], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "16-UsineC-2Octo"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 45], [-22.5, 45], [-67.5, 45], [-112.5, 45], [-157.5, 45], [157.5, 45], [112.5, 45], [67.5, 45]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15]], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "24-UsineC-3Octo"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 33], [-22.5, 33], [-67.5, 33], [-112.5, 33], [-157.5, 33], [157.5, 33], [112.5, 33], [67.5, 33], [22.5, 66], [-22.5, 66], [-67.5, 66], [-112.5, 66], [-157.5, 66], [157.5, 66], [112.5, 66], [67.5, 66]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23]], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "32-Dome-12-10-8-2"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 85], [-90, 85]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "32-Dome-12-10-8-2-Motu"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [15, 0], [-15, 0], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [18, 30], [-18, 30], [90, 85], [-90, 85], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60]], 0.5)
-							/*( pi/180 * [[75, 0], [45, 0], [15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [90, 30], [54, 30], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80], [22.5, 60], [-22.5, 60]], 0.5)*/;
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "22-8+Dome-8-4-2-Pair"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 35], [-60, 35], [120, 35], [-120, 35], [90, 80], [-90, 80]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[7], src[2], src[6], src[3], src[5], src[4], src[8], src[9], src[11], src[10], src[12], src[13] ], configEncoderATK);
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "64-CentreClock"}
-						{
-							// Array.series(64,0,2pi/64).raddeg
-							// [ 0, -5.625, -11.25, -16.875, -22.5, -28.125, -33.75, -39.375, -45, -50.625, -56.25, -61.875, -67.5, -73.125, -78.75, -84.375, -90, -95.625, -101.25, -106.875, -112.5, -118.125, -123.75, -129.375, -135, -140.625, -146.25, -151.875, -157.5, -163.125, -168.75, -174.375, -180 ]++ [ 174.375, 168.75, 163.125, 157.5, 151.875, 146.25, 140.625, 135, 129.375, 123.75, 118.125, 112.5, 106.875, 101.25, 95.625, 90, 84.375, 78.75, 73.125, 67.5, 61.875, 56.25, 50.625, 45, 39.375, 33.75, 28.125, 22.5, 16.875, 11.25, 5.625 ]
-
-							/*
-							ERROR: matrix singular in Matrix-inverse avec 64 HP ????????????????????????????????????
-							configEncoderATK = FoaEncoderMatrix.newDirections( /*pi/180 * */[ [0, 0], [-5.625, 0], [-11.25, 0], [-16.875, 0], [-22.5, 0], [-28.125, 0], [-33.75, 0], [-39.375, 0], [-45, 0], [-50.625, 0], [-56.25, 0], [-61.875, 0], [-67.5, 0], [-73.125, 0], [-78.75, 0], [-84.375, 0], [-90, 0], [-95.625, 0], [-101.25, 0], [-106.875, 0], [-112.5, 0], [-118.125, 0], [-123.75, 0], [-129.375, 0], [-135, 0], [-140.625, 0], [-146.25, 0], [-151.875, 0], [-157.5, 0], [-163.125, 0], [-168.75, 0], [-174.375, 0], [180, 0], [174.375, 0], [168.75, 0], [163.125, 0], [157.5, 0], [151.875, 0], [146.25, 0], [140.625, 0], [135, 0], [129.375, 0], [123.75, 0], [118.125, 0], [112.5, 0], [106.875, 0], [101.25, 0], [95.625, 0], [90, 0], [84.375, 0], [78.75, 0], [73.125, 0], [67.5, 0], [61.875, 0], [56.25, 0], [50.625, 0], [45, 0], [39.375, 0], [33.75, 0], [28.125, 0], [22.5, 0], [16.875, 0], [11.25, 0], [5.625, 0] ].degrad, 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31], src[32], src[33], src[34], src[35], src[36], src[37], src[38], src[39], src[40], src[41], src[42], src[43], src[44], src[45], src[46], src[47], src[48], src[49], src[50], src[51], src[52], src[53], src[54], src[55], src[56], src[57], src[58], src[59], src[60], src[61], src[62], src[63] ], configEncoderATK);*/
-
-							configEncoderATK = FoaEncoderMatrix.newPanto(64, orientation: 'point');
-							FoaEncode.ar([ src[63], src[62], src[61], src[60], src[59], src[58], src[57], src[56], src[55], src[54], src[53], src[52], src[51], src[50], src[49], src[48], src[46], src[46], src[45], src[44], src[43], src[42], src[41], src[40], src[39], src[38], src[37], src[36], src[35], src[34], src[33], src[32], src[31], src[30], src[29], src[28], src[27], src[26], src[25], src[24], src[23], src[22], src[21], src[20], src[19], src[18], src[17], src[16], src[15], src[14], src[13], src[12], src[11], src[10], src[9], src[8], src[7], src[6], src[5], src[4], src[3], src[2], src[1], src[0] ], configEncoderATK);
-							// FoaEncoderMatrix.newPanto(64, orientation: 'point').dirChannels * 180/pi
-
-							/*
-							// Pourquoi ne marche pas alors qu'ok en dessous ???
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [ [-1, 0], [-11, 0], [-22, 0], [-33, 0], [-45, 0], [-56, 0], [-67, 0], [-78, 0], [-90, 0], [-101, 0], [-112, 0], [-123, 0], [-135, 0], [-146, 0], [-157, 0], [-168, 0], [-179, 0], [168, 0], [157, 0], [146, 0], [135, 0], [123, 0], [112, 0], [101, 0], [90, 0], [78, 0], [73, 0], [61, 0], [50, 0], [39, 0], [28, 0], [16, 0] ], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
-							*/
-
-							/* // OK repis du 32 ???
-							configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 85], [-90, 85]], 0.5);
-							FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
-							*/
-
-						} // le signe négatif correspond à la droite
-
-						{~numChannelsConfig == "96-CentreClock"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newPanto(96, orientation: 'point');
-							FoaEncode.ar([ src[95], src[94], src[93], src[92], src[91], src[90], src[89], src[88], src[87], src[86], src[85], src[84], src[83], src[82], src[81], src[80], src[79], src[78], src[77], src[76], src[75], src[74], src[73], src[72], src[71], src[70], src[69], src[68], src[67], src[66], src[65], src[64], src[63], src[62], src[61], src[60], src[59], src[58], src[57], src[56], src[55], src[54], src[53], src[52], src[51], src[50], src[49], src[48], src[46], src[46], src[45], src[44], src[43], src[42], src[41], src[40], src[39], src[38], src[37], src[36], src[35], src[34], src[33], src[32], src[31], src[30], src[29], src[28], src[27], src[26], src[25], src[24], src[23], src[22], src[21], src[20], src[19], src[18], src[17], src[16], src[15], src[14], src[13], src[12], src[11], src[10], src[9], src[8], src[7], src[6], src[5], src[4], src[3], src[2], src[1], src[0] ], configEncoderATK);
-							// FoaEncoderMatrix.newPanto(64, orientation: 'point').dirChannels * 180/pi
-						}
-
-						{~numChannelsConfig == "128-CentreClock"}
-						{
-							configEncoderATK = FoaEncoderMatrix.newPanto(128, orientation: 'point');
-							FoaEncode.ar([ src[127], src[126], src[125], src[124], src[123], src[122], src[121], src[120], src[119], src[118], src[117], src[116], src[115], src[114], src[113], src[112], src[111], src[110], src[109], src[108], src[107], src[106], src[105], src[104], src[103], src[102], src[101], src[100], src[99], src[98], src[97], src[96], src[95], src[94], src[93], src[92], src[91], src[90], src[89], src[88], src[87], src[86], src[85], src[84], src[83], src[82], src[81], src[80], src[79], src[78], src[77], src[76], src[75], src[74], src[73], src[72], src[71], src[70], src[69], src[68], src[67], src[66], src[65], src[64], src[63], src[62], src[61], src[60], src[59], src[58], src[57], src[56], src[55], src[54], src[53], src[52], src[51], src[50], src[49], src[48], src[46], src[46], src[45], src[44], src[43], src[42], src[41], src[40], src[39], src[38], src[37], src[36], src[35], src[34], src[33], src[32], src[31], src[30], src[29], src[28], src[27], src[26], src[25], src[24], src[23], src[22], src[21], src[20], src[19], src[18], src[17], src[16], src[15], src[14], src[13], src[12], src[11], src[10], src[9], src[8], src[7], src[6], src[5], src[4], src[3], src[2], src[1], src[0] ], configEncoderATK);
-							// FoaEncoderMatrix.newPanto(64, orientation: 'point').dirChannels * 180/pi
-						}
-					}
-				);
-
-
-
-
-				(
-					~renderDecode = { arg in;
-						var fl, bl, br, fr; // Front links / Back Links / Back right / Front right
-						var fc/*, lo*/; // Font Center / LFO
-						var bc, l, r; // Back Center / Links / Right (aux extrémités) -> pour la ~numChannelsConfig == "8-Centre"
-						var ml1, mr1, ml2, mr2; // Mid Links & Right 1 & 2 -> pour la numChannelsConfig == "8-PairClock" & "8-PairPair"
-
-						// var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32;
-						// h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64;
-						// impact CPU si trop de variables ????????????????????????????????????????????????????????????????????????????????????????????????????????????
-
-						var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128;
-
-						/*if (~numChannelsConfig == "128-CentreClock", {
-						var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128;
-						},{
-						if (~numChannelsConfig == "64-CentreClock", {
-						var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64;
-						},{
-						var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32;
-						});
-						});*/
-
-
-
-						case
-						{~ambATKConfig == "binaural"}
-						{ FoaDecode.ar(in, ~binauralDecoder[serverNb]) } // voire pour la mise en place d'un décodeur binaural ???
-
-						{~ambATKConfig == "stereo"}
-						// voire aussi intérêt du Virtual microphone stereophonic decoder -> FoaDecoderMatrix.newStereo(~angle, ~pattern) ???
-						{ FoaDecode.ar(in, ~stereoDecoder[serverNb] /*FoaDecoderKernel.newUHJ*/) } // Stéréo - incidence et importance de la taille du kernelSize en stereo ??? - voire ci-dessous en partie
-
-						{~ambATKConfig == "multiChannel"}
-
-						{ // différentes configs pour multicanal et stéréo
 							case
 							{~numChannelsConfig == "2"}
 							{
-								FoaDecode.ar(in, ~stereoDecoder[serverNb]); // Stéréo
-								/*
-								For stereo decoding, you should think of the UHJ decoder as the ambisonic 'native' stereo output...
-								so that when you plan to distribute or otherwise monitor in stereo, this should be your first choice.
-								UHJ gives a broad image beyound the edges of the stereo pair with a natural sounding depth into the image.
-
-								UHJ is also interesting in that we can go back and forth between UHJ and horizontal only b-format.
-								(The ATK includes a UHJ encoder!)
-								We do lose information in this process--decoding to UHJ 'compresses' three channels [W, X, Y] down to two [L, R],
-								so it shouldn't be surprising that some information is lost.
-
-								It should be noted that the kernel decoders add a delay to the signal of approximately kernelSize/2 samples.
-								*/
+								configEncoderATK = FoaEncoderMatrix.newStereo(pi/4);
+								FoaEncode.ar([ src[0], src[1] ], configEncoderATK);
+								// voir si préférable de garder 0 pour l'angle ??????
+								// When angle = 0, the left and right channels of the input signal arrive at [90, -90] degrees.
+								// angle = pi/4 distorts the arrivals to [45, -45] degrees.
+								// angle = pi/2, places both the left and right inputs at front centre, [0, 0] degrees.
 							}
-							{~numChannelsConfig == "4"}
+							{~numChannelsConfig == "4"} // Clockwise
 							{
-								#fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newQuad(angle: pi/4, k: ~ambATKkFactor));
-
-								// reorder output to match speaker arrangement
-								[fl, fr, br, bl]
+								configEncoderATK = FoaEncoderMatrix.newQuad;
+								FoaEncode.ar([ src[0], src[3], src[2], src[1] ], configEncoderATK);
+								// Inputs are in anti-clockwise order. The position of the first input channel is either centre or left of centre.
+								// de 0 à 180 -> de devant à derriere sur la gauche
+								// de -180 à 0 -> de derrière à devant sur la droite
+								// FoaEncoderMatrix.newQuad.dirChannels * 180/pi
 							}
-							{~numChannelsConfig == "5-Centre"}
+							{~numChannelsConfig == "5-Centre"} // Clockwise sauf Centre = 3
 							{
-								// #fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [0, 45, 135, -135, -45], k: ~ambATKkFactor) );
-								// FoaDecoderMatrix.newDiametric( pi/180 * [0, 45, 135, -135, -45]).dirChannels // Pas bon car double les coordonnées selon un axe et requiert un nb de HP pairs ???
+								// configEncoderATK = FoaEncoderMatrix.newPanto(5, orientation: 'point');
+								// FoaEncoderMatrix.newPanto(5, orientation: 'point').dirChannels * 180/pi // Besoin de mettre une orientation point si HP central comme dans le cas du 5.1
 
-								#fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.new5_0(irregKind: 'equal')); // equal - focused - four
-								// FoaDecoderMatrix.new5_0(irregKind: 'equal').dirChannels.raddeg
+								// configEncoderATK = FoaEncoderMatrix.new5_0;
+								// ~configSrcATK = "[ src[1], src[4], src[0], src[3], src[2] ]"; // for new5_0
+								// FoaEncoderMatrix.new5_0.dirChannels * 180/pi
 
-								// #fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(5, orientation: 'point', k: ~ambATKkFactor));
-								// FoaDecoderMatrix.newPanto(5, orientation: 'point', k: ~ambATKkFactor).dirChannels.raddeg
-
-								// lo = Silent.ar;
-								// reorder output to match speaker arrangement
-								// [fl, fr, fc, lo, bl, br]
-
-								// reorder output to match speaker arrangement - CL
-								[fl, fr, fc, br, bl] // dans le sens des aiguilles d'une montre excepté le centre
+								// préférable d'utiliser newDirections pour préciser un angle de 45° pour le L & R - new5_0 -> espacement trop petit (30°) & newPanto -> espacement trop grand (72°)
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5); // Comme la quadriphonie, plus 1 HP central
+								FoaEncode.ar([ src[1], src[4], src[0], src[3], src[2] ], configEncoderATK);
+								// voire avec des patterns différents de 0.5 - cardiod ???
+								// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5).dirChannels * 180/pi
+								// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5).dirChannels.raddeg
+								// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5).matrix // answers encoding matrix [ W, X, Y ]
 							}
-							{~numChannelsConfig == "5-Clock"}
+							{~numChannelsConfig == "5-Clock"} // Clockwise à partir du Centre = 0 - XXXXXX
 							{
-								#fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.new5_0(irregKind: 'equal')); // equal - focused - four
-								// #fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(5, orientation: 'point', k: ~ambATKkFactor));
+								// configEncoderATK = FoaEncoderMatrix.new5_0;
+								// ~configSrcATK = "[ src[0], src[4], src[3], src[2], src[1] ]"; // for new5_0 - identique à newDirections
 
-								// reorder output to match speaker arrangement - CL
-								[fc, fr, br, bl, fl] // dans le sens des aiguilles à partir du centre
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 135, -135, -45], 0.5);
+								FoaEncode.ar([ src[0], src[4], src[3], src[2], src[1] ], configEncoderATK);
+								// voire avec des patterns différents de 0.5 - cardiod ???
 							}
 							{~numChannelsConfig == "7"}
 							{
-								#fc, fl, l, bl, br, r, fr =  FoaDecode.ar(in, FoaDecoderMatrix.newPanto(7, orientation: 'point', k: ~ambATKkFactor));
-								// à vérifier l'encodage et le décodage pour le 7.0 ?????????
-								// FoaDecoderMatrix.newPanto(7, orientation: 'point', k: ~ambATKkFactor).dirChannels.raddeg.round(0.5)
-								[fc, fr, r, br, bl, l, fl]
+								// configEncoderATK = FoaEncoderMatrix.new7_0; // [ 0, 30, 90, 135, -135, -90, -30 ]
+								// encodage avec newDirections préférable pour positionner les HP L & R à 45° au lieu de 30° - comme le 8-Centre mais sans arrière ?????????
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 90, 135, -135, -90, -45], 0.5);
+								FoaEncode.ar([ src[0], src[6], src[5], src[4], src[3], src[2], src[1] ], configEncoderATK);
+								// FoaEncoderMatrix.newDirections( pi/180 * [0, 45, 90, 135, -135, -90, -45], 0.5).dirChannels.raddeg;
 							}
-							{~numChannelsConfig == "8-Centre"}
+							{~numChannelsConfig == "8-Centre"} // // Clockwise à partir du Centre = 0
 							{
-								#fc, fl, l, bl, bc, br, r, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(8, orientation: 'point', k: ~ambATKkFactor));
-								// FoaDecoderMatrix.newPanto(8, orientation: 'point', k: ~ambATKkFactor).dirChannels.raddeg
-								[fc, fr, r, br, bc, bl, l, fl]
+								configEncoderATK = FoaEncoderMatrix.newPanto(8, orientation: 'point');
+								FoaEncode.ar([ src[0], src[7], src[6], src[5], src[4], src[3], src[2], src[1] ], configEncoderATK);
+								// FoaEncoderMatrix.newPanto(8, orientation: 'point').dirChannels * 180/pi // Attribution renversée vs BFEncode (plus haut) ??????
 							}
-							{~numChannelsConfig == "8-PairClock"}
+							{~numChannelsConfig == "8-PairClock"} // Clockwise à partir de la gauche - XXXXXX
 							{
-								#fl, ml1, ml2, bl, br, mr2, mr1, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(8, orientation: 'flat', k: ~ambATKkFactor));
-								// FoaDecoderMatrix.newPanto(8, orientation: 'flat', k: ~ambATKkFactor).dirChannels.raddeg
-								[fl, fr, mr1, mr2, br, bl, ml2, ml1]
+								configEncoderATK = FoaEncoderMatrix.newPanto(8, orientation: 'flat');
+								FoaEncode.ar([ src[0], src[7], src[6], src[5], src[4], src[3], src[2], src[1] ], configEncoderATK);
+								// FoaEncoderMatrix.newPanto(8, orientation: 'flat').dirChannels * 180/pi
+							}
+							{~numChannelsConfig == "8-PairPair"} // en alternant gauche / droite, du devant vers l'arrière
+							{
+								configEncoderATK = FoaEncoderMatrix.newPanto(8, orientation: 'flat');
+								FoaEncode.ar([ src[0], src[7], src[1], src[6], src[2], src[5], src[3], src[4] ], configEncoderATK);
+								// préférable d'utiliser newDirections pour préciser un angle
+								// voire le niveau d'élévation à indiquer -> 0 / 35 / 80 (90 pour 1 HP à la verticale)
 							}
 							{~numChannelsConfig == "16-Dome-8-6-2-Pair"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 35], [-60, 35], [120, 35], [-120, 35], [0, 35], [180, 35], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h8, h3, h7, h4, h6, h5, h14, h10, h13, h11, h9, h12, h15, h16]
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 45], [-60, 45], [120, 45], [-120, 45], [0, 45], [180, 45], [90, 85], [-90, 85]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[7], src[2], src[6], src[3], src[5], src[4], src[13], src[9], src[12], src[10], src[8], src[11], src[14], src[15] ], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"}}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [0, 35], [-60, 35], [-120, 35], [180, 35], [120, 35], [60, 35], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16] // réattribution dans la carte son
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [0, 45], [-60, 45], [-120, 45], [180, 45], [120, 45], [60, 45], [90, 85], [-90, 85]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15]], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "16-UsineC-2Octo"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 45], [-22.5, 45], [-67.5, 45], [-112.5, 45], [-157.5, 45], [157.5, 45], [112.5, 45], [67.5, 45]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16] // réattribution dans la carte son
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 45], [-22.5, 45], [-67.5, 45], [-112.5, 45], [-157.5, 45], [157.5, 45], [112.5, 45], [67.5, 45]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15]], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "24-UsineC-3Octo"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 33], [-22.5, 33], [-67.5, 33], [-112.5, 33], [-157.5, 33], [157.5, 33], [112.5, 33], [67.5, 33], [22.5, 66], [-22.5, 66], [-67.5, 66], [-112.5, 66], [-157.5, 66], [157.5, 66], [112.5, 66], [67.5, 66]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24] // réattribution dans la carte son
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 33], [-22.5, 33], [-67.5, 33], [-112.5, 33], [-157.5, 33], [157.5, 33], [112.5, 33], [67.5, 33], [22.5, 66], [-22.5, 66], [-67.5, 66], [-112.5, 66], [-157.5, 66], [157.5, 66], [112.5, 66], [67.5, 66]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23]], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "32-Dome-12-10-8-2"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32] // réattribution dans la carte son
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 85], [-90, 85]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "32-Dome-12-10-8-2-Motu"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[75, 0], [45, 0], [15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [90, 30], [54, 30], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80], [22.5, 60], [-22.5, 60]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32] // réattribution adaptée à la carte son Motu
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [15, 0], [-15, 0], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [18, 30], [-18, 30], [90, 85], [-90, 85], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60]], 0.5)
+								/*( pi/180 * [[75, 0], [45, 0], [15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [90, 30], [54, 30], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80], [22.5, 60], [-22.5, 60]], 0.5)*/;
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "22-8+Dome-8-4-2-Pair"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 35], [-60, 35], [120, 35], [-120, 35], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h8, h3, h7, h4, h6, h5, h9, h10, h12, h11, h13, h14]
-							}
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 35], [-60, 35], [120, 35], [-120, 35], [90, 80], [-90, 80]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[7], src[2], src[6], src[3], src[5], src[4], src[8], src[9], src[11], src[10], src[12], src[13] ], configEncoderATK);
+							} // le signe négatif correspond à la droite
+
 							{~numChannelsConfig == "64-CentreClock"}
 							{
-								// #h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [ [0, 0], [-5.625, 0], [-11.25, 0], [-16.875, 0], [-22.5, 0], [-28.125, 0], [-33.75, 0], [-39.375, 0], [-45, 0], [-50.625, 0], [-56.25, 0], [-61.875, 0], [-67.5, 0], [-73.125, 0], [-78.75, 0], [-84.375, 0], [-90, 0], [-95.625, 0], [-101.25, 0], [-106.875, 0], [-112.5, 0], [-118.125, 0], [-123.75, 0], [-129.375, 0], [-135, 0], [-140.625, 0], [-146.25, 0], [-151.875, 0], [-157.5, 0], [-163.125, 0], [-168.75, 0], [-174.375, 0], [-180, 0], [174.375, 0], [168.75, 0], [163.125, 0], [157.5, 0], [151.875, 0], [146.25, 0], [140.625, 0], [135, 0], [129.375, 0], [123.75, 0], [118.125, 0], [112.5, 0], [106.875, 0], [101.25, 0], [95.625, 0], [90, 0], [84.375, 0], [78.75, 0], [73.125, 0], [67.5, 0], [61.875, 0], [56.25, 0], [50.625, 0], [45, 0], [39.375, 0], [33.75, 0], [28.125, 0], [22.5, 0], [16.875, 0], [11.25, 0], [5.625, 0] ], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-
-								/*#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( /*pi/180 * */[0, -5.625, -11.25, -16.875, -22.5, -28.125, -33.75, -39.375, -45, -50.625, -56.25, -61.875, -67.5, -73.125, -78.75, -84.375, -90, -95.625, -101.25, -106.875, -112.5, -118.125, -123.75, -129.375, -135, -140.625, -146.25, -151.875, -157.5, -163.125, -168.75, -174.375, -180, 174.375, 168.75, 163.125, 157.5, 151.875, 146.25, 140.625, 135, 129.375, 123.75, 118.125, 112.5, 106.875, 101.25, 95.625, 90, 84.375, 78.75, 73.125, 67.5, 61.875, 56.25, 50.625, 45, 39.375, 33.75, 28.125, 22.5, 16.875, 11.25, 5.625 ].degrad, k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64]*/
-
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64 = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(64, orientation: 'flat', k: ~ambATKkFactor));
-								// FoaDecoderMatrix.newPanto(64, orientation: 'point', k: 0.5).dirChannels.raddeg
-								[ h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1 ] // réattribution dans la carte son
+								// Array.series(64,0,2pi/64).raddeg
+								// [ 0, -5.625, -11.25, -16.875, -22.5, -28.125, -33.75, -39.375, -45, -50.625, -56.25, -61.875, -67.5, -73.125, -78.75, -84.375, -90, -95.625, -101.25, -106.875, -112.5, -118.125, -123.75, -129.375, -135, -140.625, -146.25, -151.875, -157.5, -163.125, -168.75, -174.375, -180 ]++ [ 174.375, 168.75, 163.125, 157.5, 151.875, 146.25, 140.625, 135, 129.375, 123.75, 118.125, 112.5, 106.875, 101.25, 95.625, 90, 84.375, 78.75, 73.125, 67.5, 61.875, 56.25, 50.625, 45, 39.375, 33.75, 28.125, 22.5, 16.875, 11.25, 5.625 ]
 
 								/*
-								// OK repis du 32 ???
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
-								[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32] // réattribution dans la carte son
+								ERROR: matrix singular in Matrix-inverse avec 64 HP ????????????????????????????????????
+								configEncoderATK = FoaEncoderMatrix.newDirections( /*pi/180 * */[ [0, 0], [-5.625, 0], [-11.25, 0], [-16.875, 0], [-22.5, 0], [-28.125, 0], [-33.75, 0], [-39.375, 0], [-45, 0], [-50.625, 0], [-56.25, 0], [-61.875, 0], [-67.5, 0], [-73.125, 0], [-78.75, 0], [-84.375, 0], [-90, 0], [-95.625, 0], [-101.25, 0], [-106.875, 0], [-112.5, 0], [-118.125, 0], [-123.75, 0], [-129.375, 0], [-135, 0], [-140.625, 0], [-146.25, 0], [-151.875, 0], [-157.5, 0], [-163.125, 0], [-168.75, 0], [-174.375, 0], [180, 0], [174.375, 0], [168.75, 0], [163.125, 0], [157.5, 0], [151.875, 0], [146.25, 0], [140.625, 0], [135, 0], [129.375, 0], [123.75, 0], [118.125, 0], [112.5, 0], [106.875, 0], [101.25, 0], [95.625, 0], [90, 0], [84.375, 0], [78.75, 0], [73.125, 0], [67.5, 0], [61.875, 0], [56.25, 0], [50.625, 0], [45, 0], [39.375, 0], [33.75, 0], [28.125, 0], [22.5, 0], [16.875, 0], [11.25, 0], [5.625, 0] ].degrad, 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31], src[32], src[33], src[34], src[35], src[36], src[37], src[38], src[39], src[40], src[41], src[42], src[43], src[44], src[45], src[46], src[47], src[48], src[49], src[50], src[51], src[52], src[53], src[54], src[55], src[56], src[57], src[58], src[59], src[60], src[61], src[62], src[63] ], configEncoderATK);*/
+
+								configEncoderATK = FoaEncoderMatrix.newPanto(64, orientation: 'point');
+								FoaEncode.ar([ src[63], src[62], src[61], src[60], src[59], src[58], src[57], src[56], src[55], src[54], src[53], src[52], src[51], src[50], src[49], src[48], src[46], src[46], src[45], src[44], src[43], src[42], src[41], src[40], src[39], src[38], src[37], src[36], src[35], src[34], src[33], src[32], src[31], src[30], src[29], src[28], src[27], src[26], src[25], src[24], src[23], src[22], src[21], src[20], src[19], src[18], src[17], src[16], src[15], src[14], src[13], src[12], src[11], src[10], src[9], src[8], src[7], src[6], src[5], src[4], src[3], src[2], src[1], src[0] ], configEncoderATK);
+								// FoaEncoderMatrix.newPanto(64, orientation: 'point').dirChannels * 180/pi
+
+								/*
+								// Pourquoi ne marche pas alors qu'ok en dessous ???
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [ [-1, 0], [-11, 0], [-22, 0], [-33, 0], [-45, 0], [-56, 0], [-67, 0], [-78, 0], [-90, 0], [-101, 0], [-112, 0], [-123, 0], [-135, 0], [-146, 0], [-157, 0], [-168, 0], [-179, 0], [168, 0], [157, 0], [146, 0], [135, 0], [123, 0], [112, 0], [101, 0], [90, 0], [78, 0], [73, 0], [61, 0], [50, 0], [39, 0], [28, 0], [16, 0] ], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
 								*/
 
-							}
+								/* // OK repis du 32 ???
+								configEncoderATK = FoaEncoderMatrix.newDirections( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 85], [-90, 85]], 0.5);
+								FoaEncode.ar([ src[0], src[1], src[2], src[3], src[4], src[5], src[6], src[7], src[8], src[9], src[10], src[11], src[12], src[13], src[14], src[15], src[16], src[17], src[18], src[19], src[20], src[21], src[22], src[23], src[24], src[25], src[26], src[27], src[28], src[29], src[30], src[31]], configEncoderATK);
+								*/
+
+							} // le signe négatif correspond à la droite
 
 							{~numChannelsConfig == "96-CentreClock"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96 = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(128, orientation: 'flat', k: ~ambATKkFactor));
-								// FoaDecoderMatrix.newPanto(64, orientation: 'point', k: 0.5).dirChannels.raddeg
-								[ h96, h95, h94, h93, h92, h91, h90, h89, h88, h87, h86, h85, h84, h83, h82, h81, h80, h79, h78, h77, h76, h75, h74, h73, h72, h71, h70, h69, h68, h67, h66, h65, h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1 ] // réattribution dans la carte son
+								configEncoderATK = FoaEncoderMatrix.newPanto(96, orientation: 'point');
+								FoaEncode.ar([ src[95], src[94], src[93], src[92], src[91], src[90], src[89], src[88], src[87], src[86], src[85], src[84], src[83], src[82], src[81], src[80], src[79], src[78], src[77], src[76], src[75], src[74], src[73], src[72], src[71], src[70], src[69], src[68], src[67], src[66], src[65], src[64], src[63], src[62], src[61], src[60], src[59], src[58], src[57], src[56], src[55], src[54], src[53], src[52], src[51], src[50], src[49], src[48], src[46], src[46], src[45], src[44], src[43], src[42], src[41], src[40], src[39], src[38], src[37], src[36], src[35], src[34], src[33], src[32], src[31], src[30], src[29], src[28], src[27], src[26], src[25], src[24], src[23], src[22], src[21], src[20], src[19], src[18], src[17], src[16], src[15], src[14], src[13], src[12], src[11], src[10], src[9], src[8], src[7], src[6], src[5], src[4], src[3], src[2], src[1], src[0] ], configEncoderATK);
+								// FoaEncoderMatrix.newPanto(64, orientation: 'point').dirChannels * 180/pi
 							}
 
 							{~numChannelsConfig == "128-CentreClock"}
 							{
-								#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128 = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(128, orientation: 'flat', k: ~ambATKkFactor));
-								// FoaDecoderMatrix.newPanto(64, orientation: 'point', k: 0.5).dirChannels.raddeg
-								[ h128, h127, h126, h125, h124, h123, h122, h121, h120, h119, h118, h117, h116, h115, h114, h113, h112, h111, h110, h109, h108, h107, h106, h105, h104, h103, h102, h101, h100, h99, h98, h97, h96, h95, h94, h93, h92, h91, h90, h89, h88, h87, h86, h85, h84, h83, h82, h81, h80, h79, h78, h77, h76, h75, h74, h73, h72, h71, h70, h69, h68, h67, h66, h65, h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1 ] // réattribution dans la carte son
+								configEncoderATK = FoaEncoderMatrix.newPanto(128, orientation: 'point');
+								FoaEncode.ar([ src[127], src[126], src[125], src[124], src[123], src[122], src[121], src[120], src[119], src[118], src[117], src[116], src[115], src[114], src[113], src[112], src[111], src[110], src[109], src[108], src[107], src[106], src[105], src[104], src[103], src[102], src[101], src[100], src[99], src[98], src[97], src[96], src[95], src[94], src[93], src[92], src[91], src[90], src[89], src[88], src[87], src[86], src[85], src[84], src[83], src[82], src[81], src[80], src[79], src[78], src[77], src[76], src[75], src[74], src[73], src[72], src[71], src[70], src[69], src[68], src[67], src[66], src[65], src[64], src[63], src[62], src[61], src[60], src[59], src[58], src[57], src[56], src[55], src[54], src[53], src[52], src[51], src[50], src[49], src[48], src[46], src[46], src[45], src[44], src[43], src[42], src[41], src[40], src[39], src[38], src[37], src[36], src[35], src[34], src[33], src[32], src[31], src[30], src[29], src[28], src[27], src[26], src[25], src[24], src[23], src[22], src[21], src[20], src[19], src[18], src[17], src[16], src[15], src[14], src[13], src[12], src[11], src[10], src[9], src[8], src[7], src[6], src[5], src[4], src[3], src[2], src[1], src[0] ], configEncoderATK);
+								// FoaEncoderMatrix.newPanto(64, orientation: 'point').dirChannels * 180/pi
 							}
-
 						}
-					}
-				);
+					);
+
+
+
+
+					(
+						~renderDecode = { arg in;
+							var fl, bl, br, fr; // Front links / Back Links / Back right / Front right
+							var fc/*, lo*/; // Font Center / LFO
+							var bc, l, r; // Back Center / Links / Right (aux extrémités) -> pour la ~numChannelsConfig == "8-Centre"
+							var ml1, mr1, ml2, mr2; // Mid Links & Right 1 & 2 -> pour la numChannelsConfig == "8-PairClock" & "8-PairPair"
+
+							// var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32;
+							// h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64;
+							// impact CPU si trop de variables ????????????????????????????????????????????????????????????????????????????????????????????????????????????
+
+							var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128;
+
+							/*if (~numChannelsConfig == "128-CentreClock", {
+							var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128;
+							},{
+							if (~numChannelsConfig == "64-CentreClock", {
+							var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64;
+							},{
+							var h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32;
+							});
+							});*/
+
+
+
+							case
+							{~ambATKConfig == "binaural"}
+							{ FoaDecode.ar(in, ~binauralDecoder[serverNb]) } // voire pour la mise en place d'un décodeur binaural ???
+
+							{~ambATKConfig == "stereo"}
+							// voire aussi intérêt du Virtual microphone stereophonic decoder -> FoaDecoderMatrix.newStereo(~angle, ~pattern) ???
+							{ FoaDecode.ar(in, ~stereoDecoder[serverNb] /*FoaDecoderKernel.newUHJ*/) } // Stéréo - incidence et importance de la taille du kernelSize en stereo ??? - voire ci-dessous en partie
+
+							{~ambATKConfig == "multiChannel"}
+
+							{ // différentes configs pour multicanal et stéréo
+								case
+								{~numChannelsConfig == "2"}
+								{
+									FoaDecode.ar(in, ~stereoDecoder[serverNb]); // Stéréo
+									/*
+									For stereo decoding, you should think of the UHJ decoder as the ambisonic 'native' stereo output...
+									so that when you plan to distribute or otherwise monitor in stereo, this should be your first choice.
+									UHJ gives a broad image beyound the edges of the stereo pair with a natural sounding depth into the image.
+
+									UHJ is also interesting in that we can go back and forth between UHJ and horizontal only b-format.
+									(The ATK includes a UHJ encoder!)
+									We do lose information in this process--decoding to UHJ 'compresses' three channels [W, X, Y] down to two [L, R],
+									so it shouldn't be surprising that some information is lost.
+
+									It should be noted that the kernel decoders add a delay to the signal of approximately kernelSize/2 samples.
+									*/
+								}
+								{~numChannelsConfig == "4"}
+								{
+									#fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newQuad(angle: pi/4, k: ~ambATKkFactor));
+
+									// reorder output to match speaker arrangement
+									[fl, fr, br, bl]
+								}
+								{~numChannelsConfig == "5-Centre"}
+								{
+									// #fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [0, 45, 135, -135, -45], k: ~ambATKkFactor) );
+									// FoaDecoderMatrix.newDiametric( pi/180 * [0, 45, 135, -135, -45]).dirChannels // Pas bon car double les coordonnées selon un axe et requiert un nb de HP pairs ???
+
+									#fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.new5_0(irregKind: 'equal')); // equal - focused - four
+									// FoaDecoderMatrix.new5_0(irregKind: 'equal').dirChannels.raddeg
+
+									// #fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(5, orientation: 'point', k: ~ambATKkFactor));
+									// FoaDecoderMatrix.newPanto(5, orientation: 'point', k: ~ambATKkFactor).dirChannels.raddeg
+
+									// lo = Silent.ar;
+									// reorder output to match speaker arrangement
+									// [fl, fr, fc, lo, bl, br]
+
+									// reorder output to match speaker arrangement - CL
+									[fl, fr, fc, br, bl] // dans le sens des aiguilles d'une montre excepté le centre
+								}
+								{~numChannelsConfig == "5-Clock"}
+								{
+									#fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.new5_0(irregKind: 'equal')); // equal - focused - four
+									// #fc, fl, bl, br, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(5, orientation: 'point', k: ~ambATKkFactor));
+
+									// reorder output to match speaker arrangement - CL
+									[fc, fr, br, bl, fl] // dans le sens des aiguilles à partir du centre
+								}
+								{~numChannelsConfig == "7"}
+								{
+									#fc, fl, l, bl, br, r, fr =  FoaDecode.ar(in, FoaDecoderMatrix.newPanto(7, orientation: 'point', k: ~ambATKkFactor));
+									// à vérifier l'encodage et le décodage pour le 7.0 ?????????
+									// FoaDecoderMatrix.newPanto(7, orientation: 'point', k: ~ambATKkFactor).dirChannels.raddeg.round(0.5)
+									[fc, fr, r, br, bl, l, fl]
+								}
+								{~numChannelsConfig == "8-Centre"}
+								{
+									#fc, fl, l, bl, bc, br, r, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(8, orientation: 'point', k: ~ambATKkFactor));
+									// FoaDecoderMatrix.newPanto(8, orientation: 'point', k: ~ambATKkFactor).dirChannels.raddeg
+									[fc, fr, r, br, bc, bl, l, fl]
+								}
+								{~numChannelsConfig == "8-PairClock"}
+								{
+									#fl, ml1, ml2, bl, br, mr2, mr1, fr = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(8, orientation: 'flat', k: ~ambATKkFactor));
+									// FoaDecoderMatrix.newPanto(8, orientation: 'flat', k: ~ambATKkFactor).dirChannels.raddeg
+									[fl, fr, mr1, mr2, br, bl, ml2, ml1]
+								}
+								{~numChannelsConfig == "16-Dome-8-6-2-Pair"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 35], [-60, 35], [120, 35], [-120, 35], [0, 35], [180, 35], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h8, h3, h7, h4, h6, h5, h14, h10, h13, h11, h9, h12, h15, h16]
+								}
+								{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"}}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [0, 35], [-60, 35], [-120, 35], [180, 35], [120, 35], [60, 35], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16] // réattribution dans la carte son
+								}
+								{~numChannelsConfig == "16-UsineC-2Octo"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 45], [-22.5, 45], [-67.5, 45], [-112.5, 45], [-157.5, 45], [157.5, 45], [112.5, 45], [67.5, 45]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16] // réattribution dans la carte son
+								}
+								{~numChannelsConfig == "24-UsineC-3Octo"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [-67.5, 0], [-112.5, 0], [-157.5, 0], [157.5, 0], [112.5, 0], [67.5, 0], [22.5, 33], [-22.5, 33], [-67.5, 33], [-112.5, 33], [-157.5, 33], [157.5, 33], [112.5, 33], [67.5, 33], [22.5, 66], [-22.5, 66], [-67.5, 66], [-112.5, 66], [-157.5, 66], [157.5, 66], [112.5, 66], [67.5, 66]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24] // réattribution dans la carte son
+								}
+								{~numChannelsConfig == "32-Dome-12-10-8-2"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32] // réattribution dans la carte son
+								}
+								{~numChannelsConfig == "32-Dome-12-10-8-2-Motu"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[75, 0], [45, 0], [15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [90, 30], [54, 30], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80], [22.5, 60], [-22.5, 60]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32] // réattribution adaptée à la carte son Motu
+								}
+								{~numChannelsConfig == "22-8+Dome-8-4-2-Pair"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[22.5, 0], [-22.5, 0], [67.5, 0], [-67.5, 0], [112.5, 0], [-112.5, 0], [157.5, 0], [-157.5, 0], [60, 35], [-60, 35], [120, 35], [-120, 35], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h8, h3, h7, h4, h6, h5, h9, h10, h12, h11, h13, h14]
+								}
+								{~numChannelsConfig == "64-CentreClock"}
+								{
+									// #h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [ [0, 0], [-5.625, 0], [-11.25, 0], [-16.875, 0], [-22.5, 0], [-28.125, 0], [-33.75, 0], [-39.375, 0], [-45, 0], [-50.625, 0], [-56.25, 0], [-61.875, 0], [-67.5, 0], [-73.125, 0], [-78.75, 0], [-84.375, 0], [-90, 0], [-95.625, 0], [-101.25, 0], [-106.875, 0], [-112.5, 0], [-118.125, 0], [-123.75, 0], [-129.375, 0], [-135, 0], [-140.625, 0], [-146.25, 0], [-151.875, 0], [-157.5, 0], [-163.125, 0], [-168.75, 0], [-174.375, 0], [-180, 0], [174.375, 0], [168.75, 0], [163.125, 0], [157.5, 0], [151.875, 0], [146.25, 0], [140.625, 0], [135, 0], [129.375, 0], [123.75, 0], [118.125, 0], [112.5, 0], [106.875, 0], [101.25, 0], [95.625, 0], [90, 0], [84.375, 0], [78.75, 0], [73.125, 0], [67.5, 0], [61.875, 0], [56.25, 0], [50.625, 0], [45, 0], [39.375, 0], [33.75, 0], [28.125, 0], [22.5, 0], [16.875, 0], [11.25, 0], [5.625, 0] ], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+
+									/*#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( /*pi/180 * */[0, -5.625, -11.25, -16.875, -22.5, -28.125, -33.75, -39.375, -45, -50.625, -56.25, -61.875, -67.5, -73.125, -78.75, -84.375, -90, -95.625, -101.25, -106.875, -112.5, -118.125, -123.75, -129.375, -135, -140.625, -146.25, -151.875, -157.5, -163.125, -168.75, -174.375, -180, 174.375, 168.75, 163.125, 157.5, 151.875, 146.25, 140.625, 135, 129.375, 123.75, 118.125, 112.5, 106.875, 101.25, 95.625, 90, 84.375, 78.75, 73.125, 67.5, 61.875, 56.25, 50.625, 45, 39.375, 33.75, 28.125, 22.5, 16.875, 11.25, 5.625 ].degrad, k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64]*/
+
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64 = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(64, orientation: 'flat', k: ~ambATKkFactor));
+									// FoaDecoderMatrix.newPanto(64, orientation: 'point', k: 0.5).dirChannels.raddeg
+									[ h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1 ] // réattribution dans la carte son
+
+									/*
+									// OK repis du 32 ???
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32 = FoaDecode.ar(in, FoaDecoderMatrix.newDiametric( pi/180 * [[15, 0], [-15, 0], [-45, 0], [-75, 0], [-105, 0], [-135, 0], [-165, 0], [165, 0], [135, 0], [105, 0], [75, 0], [45, 0], [18, 30], [-18, 30], [-54, 30], [-90, 30], [-126, 30], [-162, 30], [162, 30], [126, 30], [90, 30], [54, 30], [22.5, 60], [-22.5, 60], [-67.5, 60], [-112.5, 60], [-157.5, 60], [157.5, 60], [112.5, 60], [67.5, 60], [90, 80], [-90, 80]], k: ~ambATKkFactor)); // le signe négatif correspond à la droite
+									[h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32] // réattribution dans la carte son
+									*/
+
+								}
+
+								{~numChannelsConfig == "96-CentreClock"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96 = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(128, orientation: 'flat', k: ~ambATKkFactor));
+									// FoaDecoderMatrix.newPanto(64, orientation: 'point', k: 0.5).dirChannels.raddeg
+									[ h96, h95, h94, h93, h92, h91, h90, h89, h88, h87, h86, h85, h84, h83, h82, h81, h80, h79, h78, h77, h76, h75, h74, h73, h72, h71, h70, h69, h68, h67, h66, h65, h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1 ] // réattribution dans la carte son
+								}
+
+								{~numChannelsConfig == "128-CentreClock"}
+								{
+									#h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h46, h47, h48, h49, h50, h51, h52, h53, h54, h55, h56, h57, h58, h59, h60, h61, h62, h63, h64, h65, h66, h67, h68, h69, h70, h71, h72, h73, h74, h75, h76, h77, h78, h79, h80, h81, h82, h83, h84, h85, h86, h87, h88, h89, h90, h91, h92, h93, h94, h95, h96, h97, h98, h99, h100, h101, h102, h103, h104, h105, h106, h107, h108, h109, h110, h111, h112, h113, h114, h115, h116, h117, h118, h119, h120, h121, h122, h123, h124, h125, h126, h127, h128 = FoaDecode.ar(in, FoaDecoderMatrix.newPanto(128, orientation: 'flat', k: ~ambATKkFactor));
+									// FoaDecoderMatrix.newPanto(64, orientation: 'point', k: 0.5).dirChannels.raddeg
+									[ h128, h127, h126, h125, h124, h123, h122, h121, h120, h119, h118, h117, h116, h115, h114, h113, h112, h111, h110, h109, h108, h107, h106, h105, h104, h103, h102, h101, h100, h99, h98, h97, h96, h95, h94, h93, h92, h91, h90, h89, h88, h87, h86, h85, h84, h83, h82, h81, h80, h79, h78, h77, h76, h75, h74, h73, h72, h71, h70, h69, h68, h67, h66, h65, h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1 ] // réattribution dans la carte son
+								}
+
+							}
+						}
+					);
+
+				});
 
 
 
@@ -14306,57 +14340,60 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 
 
-			// Utilisation des méthodes unix pour identifier le nom des dossiers même des alias dont le nom a été changé
-			// Tous les éléments, même les fichiers seront affichés - pas de filtrage effectué sur les dossiers - A faire XXXXXX
-			// ~arrayOfFolderNamesRaw = ("ls -m" + "\""  + ~soundsFolder + "\"" ).unixCmdGetStdOut;
-			~arrayOfFolderNamesRaw = ("ls -m" + ~soundsFolder).unixCmdGetStdOut;
-			// http://linux.about.com/od/commands/l/blcmdl1_ls.htm
-			// -m -> fill width with a comma separated list of entries
+			if (~arrayOfFolderNamesRaw.isNil, {
 
-			// stripWhiteSpace -> Strips whitespace at the beginning and end of the string
-			~arrayOfFolderNamesWS = ~arrayOfFolderNamesRaw.split($, ).collect { |i| i.stripWhiteSpace };
-			// Supression des espaces au début et à la fin et des strings Alias dans le nom des dossiers
-			~arrayOfFolderNames = ~arrayOfFolderNamesWS.collect { |i| i.replace(" alias","")};
+				// Utilisation des méthodes unix pour identifier le nom des dossiers même des alias dont le nom a été changé
+				// Tous les éléments, même les fichiers seront affichés - pas de filtrage effectué sur les dossiers - A faire XXXXXX
+				// ~arrayOfFolderNamesRaw = ("ls -m" + "\""  + ~soundsFolder + "\"" ).unixCmdGetStdOut;
+				~arrayOfFolderNamesRaw = ("ls -m" + ~soundsFolder).unixCmdGetStdOut;
+				// http://linux.about.com/od/commands/l/blcmdl1_ls.htm
+				// -m -> fill width with a comma separated list of entries
 
-			// Pour prendre en compte les noms de dossiers alias
-			// Si un nom de dossier alias a le même nom qu'un autre dossier, le nom de dossier alias est pris en compte
-			~arrayOfFolderPaths = ~arrayOfFolderNames.collect { |item, i| PathName(~soundsFolder /*++ "/"*/ ++ ~arrayOfFolderNamesWS[i]) };
-			// Retrait du ++ "/" car génère 2 x // quand pas de dossier alias - mais peut être nécessaire pour les dossiers alias ?????????
+				// stripWhiteSpace -> Strips whitespace at the beginning and end of the string
+				~arrayOfFolderNamesWS = ~arrayOfFolderNamesRaw.split($, ).collect { |i| i.stripWhiteSpace };
+				// Supression des espaces au début et à la fin et des strings Alias dans le nom des dossiers
+				~arrayOfFolderNames = ~arrayOfFolderNamesWS.collect { |i| i.replace(" alias","")};
 
-			// ~foldersSize = ~arrayOfFolderNames.collect {|i| ~soundm[i.asSymbol].size }; // Pour protection quand preset enregistré avec une taille de fichier différente
+				// Pour prendre en compte les noms de dossiers alias
+				// Si un nom de dossier alias a le même nom qu'un autre dossier, le nom de dossier alias est pris en compte
+				~arrayOfFolderPaths = ~arrayOfFolderNames.collect { |item, i| PathName(~soundsFolder /*++ "/"*/ ++ ~arrayOfFolderNamesWS[i]) };
+				// Retrait du ++ "/" car génère 2 x // quand pas de dossier alias - mais peut être nécessaire pour les dossiers alias ?????????
 
-
-
-			( // Création d'un dico pour les sous-dossiers inclus dans le dossier Sounds - Dictionary
-				// ~soundsFolderDict = ~soundsFolderDict ? (); // évite d'écraser un dico déjà existant
-				~soundsFolderDict = IdentityDictionary.new; // Changement de ~soundm de Event en IdentityDictionary
-				~arrayOfFolderPaths.collect { |item, i|
-					~soundsFolderDict.put(~arrayOfFolderNames[i].asSymbol, ~arrayOfFolderPaths[i]);
-				};
-
-				/*
-				{~arrayOfFolderNames}.bench
-				{~arrayOfFolderNames[0]}.bench
-				{~arrayOfFolderPaths[0].files[0].folderName.asSymbol}.bench
-				*/
+				// ~foldersSize = ~arrayOfFolderNames.collect {|i| ~soundm[i.asSymbol].size }; // Pour protection quand preset enregistré avec une taille de fichier différente
 
 
 
-				// Chargement d'un dossier de sons en dehors du dossier principal de sons
-				// ~soundsFolderDict.put('ins', "/Users/Xon/Documents/Projets/ConsProject2_Logorrhee2010/Z_Suite_Declaration_de_guerre/InsultesEricIndi/");
+				( // Création d'un dico pour les sous-dossiers inclus dans le dossier Sounds - Dictionary
+					// ~soundsFolderDict = ~soundsFolderDict ? (); // évite d'écraser un dico déjà existant
+					~soundsFolderDict = IdentityDictionary.new; // Changement de ~soundm de Event en IdentityDictionary
+					~arrayOfFolderPaths.collect { |item, i|
+						~soundsFolderDict.put(~arrayOfFolderNames[i].asSymbol, ~arrayOfFolderPaths[i]);
+					};
 
-				// ~soundsFolderDict.put('InsOMax', "/Users/Xon/Documents/Projets/ConsProject2_Logorrhee2010/Z_Suite_Declaration_de_guerre/InsultesEricDecOM_SP500Dec2PapeFinFB.aif");
-				// ~soundsFolderDict.put('Baka', "/Users/Xon/Documents/Projets/ConsProject1_Baka2009/ToBakaConcert.aif");
-				// ~soundsFolderDict.put('Logo', "/Users/Xon/Documents/Projets/ConsProject2_Logorrhee2010/1erePartie/ConcertXon/Logotomie Stereo.aif");
+					/*
+					{~arrayOfFolderNames}.bench
+					{~arrayOfFolderNames[0]}.bench
+					{~arrayOfFolderPaths[0].files[0].folderName.asSymbol}.bench
+					*/
 
-				/*
-				Post << ~soundsFolderDict; // Event Dictionary containing a key and a path to each subfolder
-				~soundsFolderDict.size;
-				~soundsFolderDict.keys; // clés du dico
-				*/
-				~soundsFolderDict.associationsDo { |assoc| postln("the association: " ++ assoc) };
 
-			);
+
+					// Chargement d'un dossier de sons en dehors du dossier principal de sons
+					// ~soundsFolderDict.put('ins', "/Users/Xon/Documents/Projets/ConsProject2_Logorrhee2010/Z_Suite_Declaration_de_guerre/InsultesEricIndi/");
+
+					// ~soundsFolderDict.put('InsOMax', "/Users/Xon/Documents/Projets/ConsProject2_Logorrhee2010/Z_Suite_Declaration_de_guerre/InsultesEricDecOM_SP500Dec2PapeFinFB.aif");
+					// ~soundsFolderDict.put('Baka', "/Users/Xon/Documents/Projets/ConsProject1_Baka2009/ToBakaConcert.aif");
+					// ~soundsFolderDict.put('Logo', "/Users/Xon/Documents/Projets/ConsProject2_Logorrhee2010/1erePartie/ConcertXon/Logotomie Stereo.aif");
+
+					/*
+					Post << ~soundsFolderDict; // Event Dictionary containing a key and a path to each subfolder
+					~soundsFolderDict.size;
+					~soundsFolderDict.keys; // clés du dico
+					*/
+					~soundsFolderDict.associationsDo { |assoc| postln("the association: " ++ assoc) };
+
+				);
+			});
 
 
 
@@ -14439,7 +14476,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 
 
-			if (currentEnvironment[server] == ~server1, {~soundm = 0 ! 2} ); // Chargement des Buffers (VBAP) sur les 2 serveurs
+			// if (currentEnvironment[server] == ~server1, {~soundm = 0 ! 2} ); // Chargement des Buffers (VBAP) sur les 2 serveurs
+			if (~soundm.isNil, {~soundm = 0 ! 2} );
 
 			// Chargement fichiers monos doublés (& doublement des fichiers monos si nécessaire) sans découpage avec méthode Buffer.readAndQueryChannel
 			// Au cas ou pb de chargement, voire Server.queryAllBuffers (timeout: 1.2, wait: 0.001, action) from DewdropLib
@@ -14453,7 +14491,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 				~soundm[serverNb] = ~soundsFolderDict.collect { |dir|
 
-					/*0.5.wait;*/ currentEnvironment[server].sync; // à la place du 0.2.wait;
+					0.5.wait; // currentEnvironment[server].sync; // à la place du 0.2.wait;
 
 					// 0.5.wait; // Blocage pratiquement systématique et parfois affichage d'erreur comme (voire fichier Erreur Loading Buffers):
 					// ^^ The preceding error dump is for ERROR: Message 'at' not understood.
@@ -14478,7 +14516,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 						if (ind % 10 == 9, {  // adjust - here every 10th file
 							// "breathing".postln;
-							0.001.wait; currentEnvironment[server].sync;
+							0.01.wait; currentEnvironment[server].sync;
 							// can even add tiny .wait here but only if desperately needed
 						});
 
@@ -14649,15 +14687,15 @@ t.quit;
 		currentEnvironment[server].sync;
 
 		{
-				~trajectoryBuffersX = Env( { 10.0.rand2 }!2, 0.5!1 );
-				~trajectoryBuffersY = Env( { 10.0.rand2 }!2, 0.5!1 );
-				~testWindow = Window.new; ~testWindow.front;
-				~trajectoryBuffersA = WFSPathGUI.new(~testWindow);
-				~trajectoryBuffersA.object = WFSPath2( [ ~trajectoryBuffersX.levels, ~trajectoryBuffersY.levels ].flop.collect(_.asPoint), ~trajectoryBuffersX.times );
-				~trajectoryBuffersTest = ~trajectoryBuffersA.object.asBuffer(currentEnvironment[server]);
-				~testWindow.close;
+			~trajectoryBuffersX = Env( { 10.0.rand2 }!2, 0.5!1 );
+			~trajectoryBuffersY = Env( { 10.0.rand2 }!2, 0.5!1 );
+			~testWindow = Window.new; ~testWindow.front;
+			~trajectoryBuffersA = WFSPathGUI.new(~testWindow);
+			~trajectoryBuffersA.object = WFSPath2( [ ~trajectoryBuffersX.levels, ~trajectoryBuffersY.levels ].flop.collect(_.asPoint), ~trajectoryBuffersX.times );
+			~trajectoryBuffersTest = ~trajectoryBuffersA.object.asBuffer(currentEnvironment[server]);
+			~testWindow.close;
 
-			}.defer; 0.1.wait;
+		}.defer; 0.1.wait;
 
 		(
 
