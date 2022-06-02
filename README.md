@@ -67,7 +67,7 @@ What makes the difference with other spatialisation tools ?
 
 It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-For Windows, I do not know.
+For Windows, I do not know, since I do not have this OS to test. Let me know. I might maybe help.
 
 
 ## Requirements
