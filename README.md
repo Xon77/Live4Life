@@ -65,12 +65,9 @@ What makes the difference with other spatialisation tools ?
 
 ***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.1 Monterey on a MacBook Pro M1 16".
 
-The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
+It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-It might work for Linux and Windows platforms after solving some issues. 
-Several years ago, I succeeded to make it work on Linux: I remember I had to change and limit `numWireBufs_` to some values, like 800, in the file [_1_Init_BuffersSynths_129.scd](/4Live4Life_Project/_1_Init_BuffersSynths_129.scd#L75), since MacOS seem to accept very high values without generating errors. Since then, there may probably be other errors on Linux.
-For Windows, I do not know, since currently I do not have a simple access to both of them.
-Let me know. I might maybe help.
+For Windows, I do not know.
 
 
 ## Requirements
@@ -97,7 +94,7 @@ Let me know. I might maybe help.
   - [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
   - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
-  - [Twister](https://github.com/scztt/Twister.quark) (for MIDI Fighter Twister controllers; since it is not in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
+  - [Twister](https://github.com/scztt/Twister.quark) (you have to install it, even if you don't have a MIDI Fighter Twister controller; since it is not in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
   - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor),
   - [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
   - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
@@ -110,7 +107,7 @@ Let me know. I might maybe help.
 1. [Install SuperCollider](https://supercollider.github.io/downloads). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
-4. Change 4 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change):
+4. Change 4 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change) (if you do not replace the two last quarks, it will just generate errors in the post window, but the tool will still work):
 	1. If you have the controller [Akai APC Mini](https://www.akaipro.com/apc-mini), replace the Quark [APCmini](https://github.com/andresperezlopez/APCmini).
 	2. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Quarks_to_change/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
 	3. Replace the Quark [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library). Concerning this Quark, it is just a small change, commenting the lines [220](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220) and [223](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L223) of the file [`WFSPathGUI.sc`](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220), to avoid an error in the post window by closing the trajectory editor.
@@ -120,17 +117,18 @@ Let me know. I might maybe help.
 
 ### Setup
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_129.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_129.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd), [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd), [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
 
 In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) in order to:
 
-1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_129.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_129.scd) if not available.
+1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L2-L99). You mainly have to choose the [absolute path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L40-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd) if not available.
 
 2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L131) (this process may take a few minutes depending on the size of the sound library):
 
-	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded.),
+	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms (the first time, a folder of synthDefs for each specific spatial configuration will be created in SuperCollider user support directory for each of the two servers that can be currently created, the next times, scsyndef files will be more quickly loaded. If you get an error (more or less given your computer) the first time when you create the folder of synthDefs for a spatial setup, delete the folder created, reboot the server and start from step 1 again.),
 
-	2. initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like: `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [**folder**](https://github.com/Xon77/L4LSoundsDataBase/tree/main/SoundFolder) a collection of sounds (to expand and improve), including drum machine sounds specifically sorted for this tool.),
+
+	2. initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like: `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [**folder to download a collection of sounds**](https://github.com/Xon77/L4LSoundsDataBase/tree/main/SoundFolder) (to expand and improve), including drum machine sounds specifically sorted for this tool.),
 
 3. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L141) (this process may take a dozen seconds) with different tabs like a Sequence view for the composition and the Global view for the performance (see above figures), as well as views for global multichannel and ambisonic effects,
 
