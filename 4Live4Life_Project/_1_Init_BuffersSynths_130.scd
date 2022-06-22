@@ -74,7 +74,7 @@
 
 		Platform.case(
 			\osx,       { /*"OSX".postln*/ ~serverOptions.numWireBufs_( /*8192*12000*/ 2.pow(26) ); }, // try 4096 / 2.pow(12) or 1024 / 2.pow(10) if still you generate errors
-			\linux,     { /*"Linux".postln*/ ~serverOptions.numWireBufs_(2.pow(10)); }, // numWireBufs to limit to 800 if you generate errors like grey count ????
+			\linux,     { /*"Linux".postln*/ ~serverOptions.numWireBufs_(2.pow(10)); }, // numWireBufs to limit to 800 or 1024 if you generate errors like grey count ????
 			\windows,   { /*"Windows".postln*/ ~serverOptions.numWireBufs_(2.pow(12)); } //
 		);
 		// ~serverOptions.numWireBufs_(8192*12000); // 5000 auparavant - default 64 The maximum number of buffers that are allocated to interconnect unit generators -> This sets the limit of complexity of SynthDefs that can be loaded at runtime. This value will be automatically increased if a more complex def is loaded at startup, but it cannot be increased thereafter without rebooting.
