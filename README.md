@@ -63,7 +63,7 @@ What makes the difference with other spatialisation tools ?
 
 ### Platform support
 
-***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.1 Monterey on a MacBook Pro M1 16".
+***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.4 Monterey on a MacBook Pro M1 16".
 
 It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
@@ -142,7 +142,7 @@ A wiki, tutorials and code examples to automate some utility functions will be a
 
 ## References
 
-***Live 4 Life*** has been presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
+***Live 4 Life*** has been presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2017, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, Akousma 2021, [Cube Fest 2022](https://artscenter.vt.edu/performances/cube-fest-2022.html), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
 
 All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my [doctoral thesis](https://www.researchgate.net/publication/360018268_L'improvisation_spatiale_generee_a_partir_de_motifs_polyrythmiques_et_de_sequences_de_parametres_en_boucle_via_l'outil_de_performance_Live_4_Life) (in french, sorry), about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
 
