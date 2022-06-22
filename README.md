@@ -56,7 +56,7 @@ What makes the difference with other spatialisation tools ?
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
-* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw with lots of old comments and I have developed over time my own coding strategies, which might be old, bad or unoptimised. Even though there are some bugs, particularly during the setup process (causing to reboot), the tool generally works well for me with my workflow during performances. But I cannot guarantee it will work for you the way you want.
+* due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw with lots of old comments and I have developed over time my own coding strategies, which might be old, bad or unoptimised. Even though there are some bugs or errors, particularly during the setup process (causing to reboot), the tool generally works well for me with my workflow during performances. But I cannot guarantee it will work for you the way you want.
 
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume and change sliders and parameters slowly if you do not know the effect or what (kind of parameter) you are changing.
 
