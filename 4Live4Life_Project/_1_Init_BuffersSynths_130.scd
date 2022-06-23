@@ -662,7 +662,7 @@
 
 
 		// if (currentEnvironment[server] == ~server1, { ~limiter = 0 ! 2; ~limiterNotification = 0 ! 2; } );
-		if (currentEnvironment[server] == ~server1, { ~limiter = 0 ! 2; ~limiterNotification = 0 ! 2; } );
+		if (~limiter.isNil, { ~limiter = 0 ! 2; ~limiterNotification = 0 ! 2; } );
 
 		~limiterFunction = { |serverFX, serverNb|
 			{
@@ -717,7 +717,7 @@
 		*/
 
 		// if (currentEnvironment[server] == ~server1, { ~serverVolume = 0 ! 2 });
-		if (currentEnvironment[server] == ~server1, { ~serverVolume = 0 ! 2 });
+		if (~serverVolume.isNil, { ~serverVolume = 0 ! 2 });
 
 		~serverVolume[serverNb] = Volume(currentEnvironment[serverFXV], 0, ~numChannels, -90, 6, false /*true*/).lag_(7);
 
@@ -745,12 +745,12 @@
 
 		// Allocation de buffers pour le synthé WarpIn
 		// if (currentEnvironment[server] == ~server1, { ~bufEmpty = 0 ! 2 });
-		if (currentEnvironment[server] == ~server1, { ~bufEmpty = 0 ! 2 });
+		if (~bufEmpty.isNil, { ~bufEmpty = 0 ! 2 });
 		~bufEmpty[serverNb] = Buffer.alloc(currentEnvironment[server], currentEnvironment[server].sampleRate * 16, 1);
 
 
 
-		if (currentEnvironment[server] == ~server1, { ~chaoticEnvString = 0 ! 3;  // ajout des buffers d'enveloppes
+		if (~chaoticEnvString.isNil, { ~chaoticEnvString = 0 ! 3;  // ajout des buffers d'enveloppes
 
 			// ~chaoticEnv[0] = Env([0, 1], [0.1]) ++ Env.saw2(segs: 700, amp: 1, startPhase: 0, endPhase: 1900pi, dur: 1-0.1-0.1).range(0, 1) ++ Env.cutoff(0.1, 0); // avec fades
 			// à utiliser pour éviter Env.linen dans les enveloppes -> plus économique ???
@@ -760,14 +760,14 @@
 
 		});
 
-		if (currentEnvironment[server] == ~server1, { ~chaoticEnv = 0 ! 3 }); // ajout des enveloppes
+		if (~chaoticEnv.isNil, { ~chaoticEnv = 0 ! 3 }); // ajout des enveloppes
 
 		3.do { |i| ~chaoticEnv[i] = ~chaoticEnvString[i].interpret };
 		~bufEnvFunc = { |servers, serverNbs, i| ~bufEnv[serverNbs][i] = Buffer.sendCollection(servers, ~chaoticEnv[i].asArray, numChannels: 1, wait: -1, action: { "Chaotic Buffer loaded".postln }) };
 
 		// currentEnvironment[\server1]
 
-		if (currentEnvironment[server] == ~server1, { ~bufEnv = 0 ! 3 ! 2 });
+		if (~bufEnv.isNil, { ~bufEnv = 0 ! 3 ! 2 });
 
 		/*if (currentEnvironment[server] == ~server1, {
 		~bufEnv = 0 ! 3 ! 2; // ajout des buffers d'enveloppes
@@ -789,7 +789,7 @@
 
 
 
-		if (currentEnvironment[server] == ~server1,{ ~qitchBuffer = 0 ! 2; });
+		if (~qitchBuffer.isNil,{ ~qitchBuffer = 0 ! 2; });
 
 		// path to auxiliary wav file for Qitch - frequency tracking
 		if (currentEnvironment[server] == ~server1, {
@@ -1234,7 +1234,7 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 
 
 				// if (currentEnvironment[server] == ~server1, {~configVBAPBuffers = 0 ! 2} ); // Chargement des Buffers VBAP sur les 2 serveurs
-				if (currentEnvironment[server] == ~server1, {~configVBAPBuffers = 0 ! 2} );
+				if (~configVBAPBuffers.isNil, {~configVBAPBuffers = 0 ! 2} );
 
 				case
 
@@ -1682,7 +1682,7 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 					// var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; ~binauralDecoder = 0 ! 2; }, { sv = ~server2; } );
 					// if (currentEnvironment[server] == ~server1, { ~binauralDecoder = 0 ! 2; } );
 					var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; }, { sv = ~server2; } );
-					if (currentEnvironment[server] == ~server1, {~binauralDecoder = 0 ! 2});
+					if (~binauralDecoder.isNil, {~binauralDecoder = 0 ! 2});
 					~binauralDecoder[serverNb] = (~binauralDecoderName ++( "(server:"++ "~server" ++ (serverNb+1)/*1*/.asString) ++")" ).interpret; currentEnvironment[server].sync; // 2.wait;
 				}
 				{~ambATKConfig == "stereo"}
@@ -1690,7 +1690,7 @@ DetectSilence.kr(inBusVol, time: silenceTime, doneAction:2);",
 					// var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; ~stereoDecoder = 0 ! 2; }, { sv = ~server2; } );
 					// if (currentEnvironment[server] == ~server1, { ~stereoDecoder = 0 ! 2; } );
 					var sv; if (currentEnvironment[server] == ~server1, { sv = ~server1; }, { sv = ~server2; } );
-					if (currentEnvironment[server] == ~server1, {~stereoDecoder = 0 ! 2});
+					if (~stereoDecoder.isNil, {~stereoDecoder = 0 ! 2});
 					~stereoDecoder[serverNb] = FoaDecoderKernel.newUHJ(server: sv); currentEnvironment[server].sync; // 2.wait; /* Apparemment le .wait est necessaire car sinon les Buffers binauraux ne sont pas tous chargés */
 				};
 
@@ -10248,7 +10248,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 					~defEQUnitLib = EQdef /*( 'lowShelf', BLowShelf, 'peak', BPeakEQ, 'hiShelf', BHiShelf )*/; // define een eq (name, Filter class)
 					~nbOfEQ = 3;
 					// if (currentEnvironment[server] == ~server1, { ~eqUnitLib = 0 ! 2 });
-					if (currentEnvironment[server] == ~server1, { ~eqUnitLib = 0 ! 2 });
+					if (~eqUnitLib.isNil, { ~eqUnitLib = 0 ! 2 });
 					~eqUnitLib[serverNb] = EQSetting( ~defEQUnitLib ) ! ~nbOfEQ;
 
 					~eqSynthDefNames = [\EQ1, \EQ2, \EQ3];
@@ -10326,7 +10326,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 					~defEQUnitLib2 = EQdef ( 'lowShelf', BLowShelf, 'peak', BPeakEQ, 'hiShelf', BHiShelf ); // define een eq (name, Filter class)
 					~nbOfChannelEQ = 9 /*~nbOfTracks+1 // Le nb de Tracks n'est pas encore défini*/ ; // +1 pour les canaux FX
 					// if (currentEnvironment[server] == ~server1, { ~eqChannelUnitLib = 0 ! 2 });
-					if (currentEnvironment[server] == ~server1, { ~eqChannelUnitLib = 0 ! 2 });
+					if (~eqChannelUnitLib.isNil, { ~eqChannelUnitLib = 0 ! 2 });
 					~eqChannelUnitLib[serverNb] = EQSetting( ~defEQUnitLib2 ) ! ~nbOfChannelEQ;
 					// ~eqChannelUnitLib.do { |i| i.set( \lowShelf, \freq, 150); i.set( \peak, \freq, 1500); i.set( \hiShelf, \freq, 5000); }; // setting parameters à intégrer dans la GUI car sinon pas mis à jour
 
@@ -10367,7 +10367,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 					~fftEQSize = 1024; // FFTsize containing for each bin -> magnitude and phase - à diviser / 2 pour obtenir la taille réelle de la FFT // léger ralentissement lorsque modif des minisliders des bins avec des valeurs aléatoires avec FFTsize de 2048
 					~fftEQNbOfBins = ~fftEQSize / 2;
 					// if (currentEnvironment[server] == ~server1, { ~fftEQBufValues = 0 ! 2; ~fftEQBufs = 0 ! 2; });
-					if (currentEnvironment[server] == ~server1, { ~fftEQBufValues = 0 ! 2; ~fftEQBufs = 0 ! 2; });
+					if (~fftEQBufValues.isNil, { ~fftEQBufValues = 0 ! 2; ~fftEQBufs = 0 ! 2; });
 					~fftEQBufValues[serverNb] = 0 ! ~fftEQSize ! 2; // initialize FFT buffer values
 
 					~fftEQBufs[serverNb] = 2.collect { |i| Buffer.loadCollection(currentEnvironment[serverFXV], ~fftEQBufValues[serverNb][i]) }; // cette ligne remplace les 2 lignes c-dessous
@@ -10430,7 +10430,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 					~fftDelSize = 512;
 					~fftDelNbOfBins = ~fftDelSize / 2;
 					// if (currentEnvironment[server] == ~server1, { ~fftDelfbValues = 0 ! 2; ~fftDelfbBufs = 0 ! 2; });
-					if (currentEnvironment[server] == ~server1, { ~fftDelfbValues = 0 ! 2; ~fftDelfbBufs = 0 ! 2; });
+					if (~fftDelfbValues.isNil, { ~fftDelfbValues = 0 ! 2; ~fftDelfbBufs = 0 ! 2; });
 					~fftDelfbValues[serverNb] = 0 ! ~fftDelNbOfBins ! 4; // initialize delay and feedback values
 
 					~fftDelfbBufs[serverNb] = Array.fill(4, {Buffer.alloc(currentEnvironment[serverFXV], ~fftDelNbOfBins, 1)}); // initialize delay and feedback buffer
@@ -10485,7 +10485,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 					~fftOutSize = 1024;
 					~fftOutNbOfBins = ~fftOutSize / 2;
 					// if (currentEnvironment[server] == ~server1, { ~fftOut1MagValues = 0 ! 2; ~fftOutMagPhaValues = 0 ! 2; ~fftOutChannelValues = 0 ! 2; ~fftOutBufs = 0 ! 2; });
-					if (currentEnvironment[server] == ~server1, { ~fftOut1MagValues = 0 ! 2; ~fftOutMagPhaValues = 0 ! 2; ~fftOutChannelValues = 0 ! 2; ~fftOutBufs = 0 ! 2; });
+					if (~fftOut1MagValues.isNil, { ~fftOut1MagValues = 0 ! 2; ~fftOutMagPhaValues = 0 ! 2; ~fftOutChannelValues = 0 ! 2; ~fftOutBufs = 0 ! 2; });
 					~fftOut1MagValues[serverNb] = {0 ! ~fftOutNbOfBins ! ~numChannelsFX16} ! 2;
 					~fftOutMagPhaValues[serverNb] = {0 ! ~fftOutSize ! ~numChannelsFX16} ! 2;
 					~fftOutChannelValues[serverNb] = 0 ! ~fftOutNbOfBins ! 2;
@@ -14337,7 +14337,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 
 
-			if (currentEnvironment[server] == ~server1, {
+			if (~arrayOfFolderNamesRaw.isNil, { // if (currentEnvironment[server] == ~server1, {
 
 				// Utilisation des méthodes unix pour identifier le nom des dossiers même des alias dont le nom a été changé
 				// Tous les éléments, même les fichiers seront affichés - pas de filtrage effectué sur les dossiers - A faire XXXXXX
@@ -14473,7 +14473,7 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 
 
-			if (currentEnvironment[server] == ~server1, {~soundm = 0 ! 2} ); // Chargement des Buffers (VBAP) sur les 2 serveurs
+			if ( /*currentEnvironment[server] == ~server1*/ ~soundm.isNil, {~soundm = 0 ! 2} ); // Chargement des Buffers (VBAP) sur les 2 serveurs
 
 			// Chargement fichiers monos doublés (& doublement des fichiers monos si nécessaire) sans découpage avec méthode Buffer.readAndQueryChannel
 			// Au cas ou pb de chargement, voire Server.queryAllBuffers (timeout: 1.2, wait: 0.001, action) from DewdropLib
