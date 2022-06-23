@@ -40,7 +40,7 @@
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-Performance"; // Stereo Mix and effects // This line chooses spatial configuration setup // Uncomment according your preferred setup
-// ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
+~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
 // ~numChannelsConfig = "4"; // Clockwise Quad
 // ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 // ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
