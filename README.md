@@ -192,7 +192,7 @@ So, Big Thanks to (including previous and current developers):
 The list might be long. Sorry for those I forgot to mention. I cannot quote all of them.
 
 By giving soon this tool, it is my way to contribute to SuperCollider.
-And I encourage anyone (DSP developers or any user) to support this beautiful environment.
+And I encourage anyone (DSP developers or any user) to support and use this beautiful environment.
 
 
 ## Licence
