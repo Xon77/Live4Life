@@ -67,7 +67,7 @@ What makes the difference with other spatialisation tools ?
 
 It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200 or a little bit higher. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-For Windows, I do not know, since I do not have this OS to test. Let me know if you can.
+For Windows, I do not know. Let me know if you can.
 
 
 ## Requirements
@@ -121,17 +121,17 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) in order to:
 
-1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L1-L99). You mainly have to choose the [absolute path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L41-L61) (2, 4, 5, 7, 8, 16, 24, 32) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd) if not available.
+1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L1-L99). You mainly have to choose the [absolute path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L41-L61) (stereo, quad, circles of 5, 7, 8 loudspeakers, or domes of 16, 24, 32 loudspeakers) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd) if not available.
 
 2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L131):
 
 	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms. (For each new specific spatial configuration, two folders of synthDefs are created the first time in SuperCollider user support directory; the next times, scsyndef files will be more quickly loaded. 
-:warning: If you get an error (more or less given your computer and spatial setup) the first time when you create the folder of synthDefs, delete the folders for each of the 2 servers created, reboot the server and start from step 1 again.)
+:warning: If you get an error — which might happen more or less given your computer and spatial setup — the first time when you create the folder of synthDefs, delete the folders for each of the 2 servers created, reboot the server and start from step 1 again.)
 
 
-	2. initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like: `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [**folder to download a collection of sounds**](https://github.com/Xon77/L4LSoundsDataBase/tree/main/SoundFolder) (to expand and improve), including drum machine sounds specifically sorted for this tool. This process may take a few minutes depending on the size of the sound library and your computer.),
+	2. initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like: `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [**folder to download a collection of sounds**](https://github.com/Xon77/L4LSoundsDataBase/tree/main/SoundFolder) — to expand and improve — including drum machine sounds specifically sorted for this tool. This process may take a few minutes depending on the size of the sound library and your computer.),
 
-3. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L141) (this process may take a dozen seconds) with different tabs like a Sequence view for the composition and the Global view for the performance (see above figures), as well as views for global multichannel and ambisonic effects,
+3. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L141) (this process may take a dozen seconds) with different tabs like a Sequence view for the composition and the Global view for the performance (see figures above), as well as views for global multichannel and ambisonic effects,
 
 4. [evaluate a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L151), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
@@ -192,7 +192,7 @@ So, Big Thanks to (including previous and current developers):
 The list might be long. Sorry for those I forgot to mention. I cannot quote all of them.
 
 By giving soon this tool, it is my way to contribute to SuperCollider.
-And I encourage anyone (DSP developers or any user) to support this beautiful environment.
+And I encourage anyone (DSP developers or any user) to support and use this beautiful environment.
 
 
 ## Licence
