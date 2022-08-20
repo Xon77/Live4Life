@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////
-//
+// Adapted from the Quark APC Mini from Andrés Pérez López to work on Mac
 // Copyright (C) Andrés Pérez López, March 2015
 // www.andresperezlopez.com // contact@andresperezlopez.com
 //
@@ -24,7 +24,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-APCmini {
+APCmini2 {
 
 	var <out; // midi destination
 
