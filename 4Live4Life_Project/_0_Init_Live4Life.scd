@@ -175,7 +175,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 
 
-// Extra Tidal
+// Extra Tidal TO DO AND TEST
 // Example for loading SuperDirt TidalCycles if you also want to use TidalCycles on main Server s - To synchronise
 (if (~mainServer1Window == 1, {
 	SynthDef.synthDefDir = Platform.userAppSupportDir ++ "/synthdefs"; "SC_SYNTHDEF_PATH".setenv(SynthDef.synthDefDir.standardizePath);
