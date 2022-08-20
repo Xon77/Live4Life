@@ -23751,7 +23751,7 @@ u.drawFunc = { d.draw }
 			~trajectoryWindow = Window.new("TrajectoryView", Rect(380+~windowWidth-1920, 128+~windowHeight-1200+(~windowUpperMargin*4), 1480, 740)).alwaysOnTop_(true);
 			~trajectoryCompositeView = CompositeView(~trajectoryWindow, Rect(5, 5, 800, 700));
 			~trajectoryView = WFSPathGUI.new(~trajectoryCompositeView);
-			~trajectoryView.openGeneratorView(~trajectoryWindow, Rect(850, 25, 200, 200) );
+			~trajectoryView.openGeneratorView2(~trajectoryWindow, Rect(850, 25, 200, 200) );
 			// ~trajectoryView.generatorView.view.findWindow.close
 
 
