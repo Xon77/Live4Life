@@ -89,7 +89,6 @@ For Windows, I do not know. Let me know if you can.
   - ([KMeans](https://github.com/supercollider-quarks/KMeans)),
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
   - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
-  - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status),
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
   - [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
@@ -110,7 +109,6 @@ For Windows, I do not know. Let me know if you can.
 4. Change 3 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change) (if you do not replace the last quark, it will just generate errors in the post window, but the tool will still work):
 	1. If you have the controller [Akai APC Mini](https://www.akaipro.com/apc-mini), replace the Quark [APCmini](https://github.com/andresperezlopez/APCmini).
 	2. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Quarks_to_change/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
-	3. Replace the file [plusServer.sc](/Quarks_to_change/plusServer.sc) in the Quark [ServerTools](https://github.com/supercollider-quarks/ServerTools).
 5. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
 

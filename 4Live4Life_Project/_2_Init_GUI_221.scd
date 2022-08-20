@@ -5886,9 +5886,9 @@ Ndef(\sound).play
 		var col, server;
 		if (serv == 0, { server = currentEnvironment[\server1] }, { server = currentEnvironment[\server2] } );
 		if (~serverProtect == 0, { ~serverProtect = 1; // Vraiment nécessaire ???
-			server.getQueryTree({ |data| /*~serverCollection = nil;*/ ~serverCollection[serv] = data;
+			server.getQueryTree2({ |data| /*~serverCollection = nil;*/ ~serverCollection[serv] = data;
 				// ~serverCollection.cs
-				// s.getQueryTree({ |data|  data.postcs });
+				// s.getQueryTree2({ |data|  data.postcs });
 				case
 				{~trigAll == 0} // Track
 				{
@@ -5990,7 +5990,7 @@ Ndef(\sound).play
 		if (serv == 0, { server = currentEnvironment[\server1] }, { server = currentEnvironment[\server2] } );
 		if (~serverProtect == 0, { ~serverProtect = 1; // Vraiment nécessaire ???
 
-			server.getQueryTree({ |data| ~serverCollection[serv] = data;
+			server.getQueryTree2({ |data| ~serverCollection[serv] = data;
 
 				if (~numChannels >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 
@@ -14619,7 +14619,7 @@ data.postln;*/
 	if (serv == 0, { server = currentEnvironment[\server1] }, { server = currentEnvironment[\server2] } );
 	if (~serverProtect == 0, { ~serverProtect = 1; // Vraiment nécessaire ???
 
-		server.getQueryTree({ |data| ~serverCollection[serv] = data;
+		server.getQueryTree2({ |data| ~serverCollection[serv] = data;
 
 			if (~numChannels >= 32 or: {~numChannels == 8} or: {~numChannels == 4} and: {~serverFX == 0}, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 			col = ~serverCollection[serv]['children'][ch]['children'];
