@@ -50,7 +50,7 @@
 // ~numChannelsConfig = "8-PairPair"; // Pairwise Links / Right - XXXXXXXXX
 // ~numChannelsConfig = "16-PairClock"; // Clockwise from Links
 // ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // Pairwise Links / Right - XXXXXXXXX
-// ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
 // ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
 // ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
 // ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
@@ -175,7 +175,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 
 
-// Extra Tidal
+// Extra Tidal TO DO AND TEST
 // Example for loading SuperDirt TidalCycles if you also want to use TidalCycles on main Server s - To synchronise
 (if (~mainServer1Window == 1, {
 	SynthDef.synthDefDir = Platform.userAppSupportDir ++ "/synthdefs"; "SC_SYNTHDEF_PATH".setenv(SynthDef.synthDefDir.standardizePath);

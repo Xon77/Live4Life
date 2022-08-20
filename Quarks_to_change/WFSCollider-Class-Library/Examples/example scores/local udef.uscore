@@ -1,9 +1,0 @@
-UScore(
-	UMarker(0.0, 2.0, "about this score", nil, "This score contains a local udef. It is based on the pulse udef, and can be viewed and edited by clicking the [ code ] button in the uchain editor. This udef is saved within the score."), 
-	UChain(0, 0.0, 10.0, LocalUdef('pulse', { |freq = 440, width = 0.5, amp = 0.1, lag = 0|
-	UMixOut.ar( 0, 
-		Pulse.ar( freq.lag( lag ) + [-1,1], 
-		width.lag( lag ), 
-		amp.lag( lag ) 
-	).sum * 0.5, 0, true ) 
-}, [ ArgSpec('freq', 440, 'freq'.asSpec, false, 'sync'), ArgSpec('width', 0.500000, ControlSpec(0, 1, 'linear', 0, 0.5, ""), false, 'normal'), ArgSpec('amp', 0.100000, 'amp'.asSpec, false, 'normal'), ArgSpec('lag', 0, ControlSpec(0, 1, 'linear', 0.0, 0, ""), false, 'sync'), ArgSpec('u_o_ar_0_bus', 0, ControlSpec(0, 1, 'linear', 1, 0, ""), true, 'sync'), ArgSpec('u_o_ar_0_lvl', 0, 'amp'.asSpec, true, 'sync') ], 'synthesis'), [ 'wfsSource', [ 'point', Point(-0.36227822303772, 8.72687458992), 'maxAmpRadius', 2.0 ] ])).name_("local udef")

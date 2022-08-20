@@ -1,7 +1,10 @@
+// Adapted from ServerTools: This package is available as a Quark and at https://github.com/crucialfelix/ServerTools
+// It is just a small change since OSCresponderNode was deprecated and is replaced by OSCFunc.
+// Later, it is planned to clean, replace and improve this with the NodeSnapdhot Quark from Scott Carver.
 
 + Server {
 
-	async { arg msg, replyCmd, callback, timeout=3;
+	async2 { arg msg, replyCmd, callback, timeout=3;
 
 		var resp,done=false;
 		if(this.serverRunning.not,{
@@ -35,9 +38,9 @@
 		}.defer(timeout)
 	}
 
-	getQueryTree { arg callback;
+	getQueryTree2 { arg callback;
 
-		this.async(["/g_queryTree", 0, 1],'/g_queryTree.reply',{ arg msg;
+		this.async2(["/g_queryTree", 0, 1],'/g_queryTree.reply',{ arg msg;
 
 			var i = 1, synthControls = false, parseNode,suck;
 
@@ -75,8 +78,8 @@
 
 		})
 	}
-	queryNode { arg nodeID,callback;
-		this.getQueryTree({ arg tree; this.prSearchForNode(nodeID,callback,tree); });
+	queryNode2 { arg nodeID,callback;
+		this.getQueryTree2({ arg tree; this.prSearchForNode(nodeID,callback,tree); });
 	}
 	prSearchForNode { arg nodeID,callback,tree;
 		if(tree['id'] == nodeID,{

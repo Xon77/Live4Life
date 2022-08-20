@@ -78,7 +78,6 @@ For Windows, I do not know. Let me know if you can.
 
 * many [Quarks](https://github.com/supercollider-quarks):
   - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
-  - [APCmini](https://github.com/andresperezlopez/APCmini) (for Akai MIDI controller),
   - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
   - [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
   - [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
@@ -89,7 +88,6 @@ For Windows, I do not know. Let me know if you can.
   - ([KMeans](https://github.com/supercollider-quarks/KMeans)),
   - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
   - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
-  - [ServerTools](https://github.com/supercollider-quarks/ServerTools) (for server status),
   - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
   - [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
   - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
@@ -107,11 +105,7 @@ For Windows, I do not know. Let me know if you can.
 1. [Install SuperCollider](https://supercollider.github.io/downloads). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
-4. Change 4 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change) (if you do not replace the two last quarks, it will just generate errors in the post window, but the tool will still work):
-	1. If you have the controller [Akai APC Mini](https://www.akaipro.com/apc-mini), replace the Quark [APCmini](https://github.com/andresperezlopez/APCmini).
-	2. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Quarks_to_change/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
-	3. Replace the Quark [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library). Concerning this Quark, it is just a small change, commenting the lines [220](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220) and [223](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L223) of the file [`WFSPathGUI.sc`](/Quarks_to_change/WFSCollider-Class-Library/WFS/GUI/WFSPath/WFSPathGUI.sc#L220), to avoid an error in the post window by closing the trajectory editor.
-	4. Replace the file [plusServer.sc](/Quarks_to_change/plusServer.sc) in the Quark [ServerTools](https://github.com/supercollider-quarks/ServerTools).
+4. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Controllers/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
 5. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
 
