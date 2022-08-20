@@ -50,7 +50,7 @@
 // ~numChannelsConfig = "8-PairPair"; // Pairwise Links / Right - XXXXXXXXX
 // ~numChannelsConfig = "16-PairClock"; // Clockwise from Links
 // ~numChannelsConfig = "16-Dome-8-6-2-Pair"; // Pairwise Links / Right - XXXXXXXXX
-// ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
+~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
 // ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
 // ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
 // ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
