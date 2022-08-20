@@ -106,7 +106,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B // Midi Channel 3
 	// File "keith-mcmillen-qunexus_port1_AB.desc de Modality" -> change Midi Channel from 0 to 3, if Leith-mcmillen-qunexus controller is used
 	// ~midiTouchBar = MKtl('iac', "gestionnaire-iac"); "_Init Midi T.scd".loadRelative; // Midi Channel 7
-	~akFXVol8 = 1; "_Init Midi Ak.scd".loadRelative; // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI"); // Midi Channel 1
+	~akFXVol8 = 1; "_Init Midi Ak.scd".loadRelative; // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI"); // Midi Channel 5
 	// ~akFXVol8 = 1; to control FX volume on the 8th slider of Akai APC Mini instead of the volume of the 8th track
 	1.wait;
 	"_Init Midi Twister7.scd".loadRelative; // Encoder Midi - Midi Channel 1 // Switch Midi - Midi Channel 2 // Global settings for side buttons - Midi Channel 4
@@ -141,7 +141,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 ~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_221.scd".loadRelative;
 
 // Lemur Connection
-~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "192.168.0.109", 8000);
+~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "169.254.174.68", 8000);
 ~lemurConnected2 = 1; ~lemurAdress2 = NetAddr( "192.168.1.11", 8000);
 ~lemurConnected1 = 0; ~lemurAdress1 = nil; ~lemurConnected2 = 0; ~lemurAdress2 = nil;
 
