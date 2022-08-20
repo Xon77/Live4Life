@@ -1,18 +1,18 @@
 /*
+    Adapted from GameOfLife WFSCollider.
+    It is just a small change, commenting the lines 220 and 223 of the original file WFSPathGUI.sc, to avoid an error in the post window by closing the trajectory editor in L4L project.
+
     GameOfLife WFSCollider - Wave Field Synthesis spatialization for SuperCollider.
     The Game Of Life Foundation. http://gameoflife.nl
     Copyright 2006-2011 Wouter Snoei.
-
     GameOfLife WFSCollider software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
     GameOfLife WFSCollider is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with GameOfLife WFSCollider.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -145,7 +145,7 @@ WFSPathGUI {
 
 	}
 
-	openGeneratorView { |parent, bounds|
+	openGeneratorView2 { |parent, bounds|
 		var ctrl, ctrl2, ctrl3;
 		var myWindow, closeFunc;
 		var generatorWindow;
