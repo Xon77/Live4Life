@@ -115,7 +115,7 @@
 			if (d.device == "APC MINI" , {
 
 				// create a new instance...
-				~aController = APCmini.new;
+				~aController = APCmini2.new;
 				~akaiSwichSpeed = 0;
 				~akaiSpeedTime = 0.2;
 				~aControllerConnected = 1;
