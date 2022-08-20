@@ -105,7 +105,7 @@ For Windows, I do not know. Let me know if you can.
 1. [Install SuperCollider](https://supercollider.github.io/downloads). 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. [Install the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned above and recompile. 
-4. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Controllers/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
+4. Change 3 Quarks in the folder `downloaded-quarks` within SuperCollider Application Support with the versions available within the folder [`Quarks_to_change`](/Quarks_to_change) (if you do not replace the last quark, it will just generate errors in the post window, but the tool will still work):
 5. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
 
