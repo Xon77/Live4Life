@@ -70,15 +70,6 @@ It has also been tested on Linux and works considering that you have a minimum r
 For Windows, I do not know. Let me know if you can.
 
 
-## Requirements
-
-* [SuperCollider 3.12.2](https://supercollider.github.io/downloads) or above,
-
-* [sc3-plugins](https://supercollider.github.io/sc3-plugins/),
-
-* many [Quarks](https://github.com/supercollider-quarks):
-
-
 ## Installation
 
 1. Install [SuperCollider 3.12.2](https://supercollider.github.io/downloads) or above. 
@@ -87,24 +78,24 @@ For Windows, I do not know. Let me know if you can.
 	- [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
 	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
 	- [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
-  - [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
-  - [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue),
-  - [crucialviews](https://github.com/crucialfelix/crucialviews) (for GUI BoxMatrix),
-  - [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes),
-  - [FPLib](https://github.com/miguel-negrao/FPLib) (for functional programming to get back to previous presets. This Quark will also install automatically [JITLibExtensions](https://github.com/supercollider-quarks/JITLibExtensions) and [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) for some MIDI controllers.),
-  - ([KMeans](https://github.com/supercollider-quarks/KMeans)),
-  - [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
-  - ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
-  - [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
-  - [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
-  - [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
-  - [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
-  - [Twister](https://github.com/scztt/Twister.quark) (you have to install it, even if you don't have a MIDI Fighter Twister controller; since it is not in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
-  - [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor),
-  - [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
-  - [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
-  - [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
-  - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
+	- [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
+	- [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue),
+	- [crucialviews](https://github.com/crucialfelix/crucialviews) (for GUI BoxMatrix),
+	- [Ctk](https://github.com/supercollider-quarks/Ctk) (for Sam Potter extensions and chaotic envelopes),
+	- [FPLib](https://github.com/miguel-negrao/FPLib) (for functional programming to get back to previous presets. This Quark will also install automatically [JITLibExtensions](https://github.com/supercollider-quarks/JITLibExtensions) and [Modality-toolkit](https://github.com/ModalityTeam/Modality-toolkit) for some MIDI controllers.),
+	- ([KMeans](https://github.com/supercollider-quarks/KMeans)),
+	- [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
+	- ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
+	- [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
+	- [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
+	- [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
+	- [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
+	- [Twister](https://github.com/scztt/Twister.quark) (you have to install it, even if you don't have a MIDI Fighter Twister controller; since it is not in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
+	- [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor),
+	- [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
+	- [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
+	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
+	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 4. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Controllers/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
 5. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
