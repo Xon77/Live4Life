@@ -75,6 +75,7 @@ For Windows, I do not know. Let me know if you can.
 1. Install [SuperCollider 3.12.2](https://supercollider.github.io/downloads) or above. 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned below and recompile:
+
 	- [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
 	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
 	- [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
@@ -96,6 +97,7 @@ For Windows, I do not know. Let me know if you can.
 	- [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
+
 4. If you have the controller [MIDI TouchBar](https://urbanlienert.com/miditouchbar) on previous MacBook Pros or the UC-33 MIDI controller, put the files available within the folder [`Modality_desc_to_add`](Controllers/Modality_desc_to_add) in the folder `MKtlDescriptions` within the Quark [Modality](https://github.com/ModalityTeam/Modality-toolkit/tree/master/Modality).
 5. Put the folder [`4Live4Life_Extensions`](/4Live4Life_Extensions) in your SuperCollider Extensions folder and recompile again.
 
