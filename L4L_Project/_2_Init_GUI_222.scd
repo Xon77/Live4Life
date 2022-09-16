@@ -1376,12 +1376,19 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		// Pour la rythmique euclidienne
 		~proBjorSpec[track][seq] = ControlSpec(0, ~dur[track][seq].size, \lin, 1);
-		~proBjorView.step_(1/dur);
-		~proBjor2View.step_(1/dur);
+		if (~proPatSel[~tracksValue][~seqsValue] > 18, {
+			~proBjorView.step_(0.001); ~proBjor2View.step_(0.001); ~proBjor3View.step_(0.001); ~proBjor4View.step_(0.001);
+		},{
+			~proBjorView.step_(1/dur); ~proBjor2View.step_(1/dur); ~proBjor3View.step_(dur); ~proBjor4View.step_(dur);
+		});
 		~proBjorView.doAction;
 		~proBjor2View.doAction;
+		~proBjor3View.doAction;
+		~proBjor4View.doAction;
 		~proBjor[track][seq] = ~dur[track][seq].size;
 		~proBjor2[track][seq] = ~dur[track][seq].size;
+		~proBjor3[track][seq] = ~dur[track][seq].size;
+		~proBjor4[track][seq] = ~dur[track][seq].size;
 	};
 
 	// Changement des menus mis dans le Copy & Paste mais à ne pas mettre dans les presets XXXXXXX
@@ -1442,6 +1449,10 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 		~proSeqMode.valueAction_(1);
 		~proRangeMode.valueAction_(0);
 		~proBjorView.valueAction_(1);
+		~proBjor2View.valueAction_(1);
+		~proBjor3View.valueAction_(1);
+		~proBjor4View.valueAction_(1);
+		~proWeightView.valueAction_(1);
 		~proDirView.valueAction_(0);
 		~proPatView.valueAction_(0);
 		~proPatSelView.valueAction_(13);
@@ -1450,10 +1461,14 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 		~proBjorSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1);
 		~proBjorView.step_(1/~dur[~tracksValue][~seqsValue].size);
 		~proBjor2View.step_(1/~dur[~tracksValue][~seqsValue].size);
+		// ~proBjor4View.step_(1/~dur[~tracksValue][~seqsValue].size);
 		~proBjorView.doAction;
 		~proBjor2View.doAction;
+		// ~proBjor4View.doAction;
 		~proBjor[track][seq] = seqDur;
 		~proBjor2[track][seq] = seqDur;
+		~proBjor3[track][seq] = seqDur;
+		~proBjor4[track][seq] = seqDur;
 	};
 
 
@@ -3103,8 +3118,10 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 	~quantView.valueAction_(~quantSpec.unmap(~quant[tr]));
 	~rtmMulView.valueAction_(~rtmMulSpec[tr][seq].unmap(~rtmMul[tr][seq]));
 	~proPatView.valueAction_(~proPat[tr][seq]);
-	~proBjorView.valueAction_(~proBjorSpec[tr][seq].unmap(~proBjor[tr][seq]));
-	~proBjor2View.valueAction_(~proBjorSpec[tr][seq].unmap(~proBjor2[tr][seq]));
+	// ~proBjorView.valueAction_(~proBjorSpec[tr][seq].unmap(~proBjor[tr][seq])); // Old avant SC Grids
+	// ~proBjor2View.valueAction_(~proBjorSpec[tr][seq].unmap(~proBjor2[tr][seq])); // Old avant SC Grids
+	~proBjorView.valueAction_(~proBjorGridsX[tr][seq]);
+	~proBjor2View.valueAction_(~proBjorGridsY[tr][seq]);
 	~proSelectView.valueAction_(~proSelect[tr][seq]);
 	~proMulView.valueAction_(~proMulSpec.unmap(~proMul[tr][seq]));
 	~ratMulView.valueAction_(~ratMulSpec.unmap(~ratMul[tr][seq])); ~rat2MulView.valueAction_(~ratMulSpec.unmap(~rat2Mul[tr][seq]));
@@ -3131,8 +3148,10 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 	// ~quantViewG[tr].value_(~quantSpec.unmap(~quant[tr])).string = ("Q:%-%s").format(~quant[tr], (~quant[tr] / ~toTempo).round(0.01)); // pas necessaire car pas une info d'un preset
 	~rtmMulViewG[tr].value_(~rtmMulSpec[tr][seq].unmap(~rtmMul[tr][seq])).string = "Rtm : %".format(~rtmMul[tr][seq].round(0.001));
 	~proPatViewG[tr].value_(~proPat[tr][seq]);
-	~proBjorViewG[tr].value_(~proBjorSpec[tr][seq].unmap(~proBjor[tr][seq])).string = "Hit : %".format(~proBjor[tr][seq].asInteger);
-	~proBjor2ViewG[tr].value_(~proBjorSpec[tr][seq].unmap(~proBjor2[tr][seq])).string = "Off : %".format(~proBjor2[tr][seq].asInteger);
+	// ~proBjorViewG[tr].value_(~proBjorSpec[tr][seq].unmap(~proBjor[tr][seq])).string = "Hit : %".format(~proBjor[tr][seq].asInteger); // Old avant SC Grids
+	// ~proBjor2ViewG[tr].value_(~proBjorSpec[tr][seq].unmap(~proBjor2[tr][seq])).string = "Off : %".format(~proBjor2[tr][seq].asInteger); // Old avant SC Grids
+	~proBjorViewG[tr].value_(~proBjorGridsX[tr][seq]).string = "H: %-%".format(~proBjor[tr][seq], ~proBjorGridsX[tr][seq]);
+	~proBjor2ViewG[tr].value_(~proBjorGridsY[tr][seq]).string = "O: %-%".format(~proBjor2[tr][seq], ~proBjorGridsY[tr][seq]);
 	~proSelectViewG[tr].value_(~proSelect[tr][seq]);
 	~proMulViewG[tr].value_(~proMulSpec.unmap(~proMul[tr][seq])).string = "Pro : %".format(~proMul[tr][seq].round(0.01));
 	~ratMulViewG[tr].value_(~ratMulSpec.unmap(~ratMul[tr][seq])).string = "Rat : %".format(~ratMul[tr][seq].round(0.01)); // ~rat2MulView.valueAction_(~ratMulSpec.unmap(~rat2Mul[tr][seq]));
@@ -3498,9 +3517,9 @@ Ndef(\sound).play
 
 	// ~dbSpec = \db.asSpec
 	// 12.dbamp
-	~dbSpec =  ControlSpec(0.ampdb, 1.9952/*3.98107*/.ampdb, \db, units: " dB");
-	~dbSpec2 =  ControlSpec(0.ampdb, 1/*3.98107*/.ampdb, \db, units: " dB");
-	~dbSpec2b =  ControlSpec(0.ampdb, 1.9952/*3.98107*/.ampdb, \db, units: " dB"); // Pour booster les pistes trames
+	~dbSpec = ControlSpec(0.ampdb, 1.9952/*3.98107*/.ampdb, \db, units: " dB");
+	~dbSpec2 = ControlSpec(0.ampdb, 1/*3.98107*/.ampdb, \db, units: " dB");
+	~dbSpec2b = ControlSpec(0.ampdb, 1.9952/*3.98107*/.ampdb, \db, units: " dB"); // Pour booster les pistes trames
 	// ~globalBus.set(~dbSpec.unmap(0));
 	// ~volumeBus[0];
 
@@ -10782,7 +10801,7 @@ pair for phase modulation, which sounds similar to FM
 	case
 	{ [\dur].includes(data) }
 	{
-		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Rt", "Rt_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I"])
+		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I"])
 		.valueAction_(0);
 	}
 	{ [\syn, \env, /*\buf, \off,*/ \fxL, \fxR /*, \del*/].includes(data) }
@@ -10800,12 +10819,12 @@ pair for phase modulation, which sounds similar to FM
 	}
 	{ [\leg, \pan, \buf, \off, \del].includes(data) }
 	{
-		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I"])
+		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I"])
 		.valueAction_(4); // Initialisation à Pwhite
 	}
 	{ [\amp, \rat, \str, \cen, \rat2, \str2, \cen2].includes(data) }
 	{
-		envir[patSelView].items_([["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I"], ~controlBusNames/*, ~controlBusNames01, ~controlBusNames0R*/].flatten)
+		envir[patSelView].items_([["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I"], ~controlBusNames/*, ~controlBusNames01, ~controlBusNames0R*/].flatten)
 		.valueAction_(4); // Initialisation à Pwhite
 	}
 	/*{ \leg == data } // DurRe ?????????
@@ -10820,17 +10839,17 @@ pair for phase modulation, which sounds similar to FM
 	}*/
 	{ \pro == data }
 	{
-		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", /*"Leh_1", "Leh_2",*/ "Eucli"])
+		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", /*"Leh_1", "Leh_2",*/ "Eucli", "EuWe", "Eu2X", "Eu2R", "Eu2S", "Eu2W", "Grids", "Gri_D", "Gri_P", "Gri_R"])
 		.valueAction_(13);
 	}
 	{ \outL == data }
 	{
-		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I", "Sq +1", "Sq -1", "Sq +2", "Sq -2", "Sq Mir"])
+		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I", "Sq +1", "Sq -1", "Sq +2", "Sq -2", "Sq Mir"])
 		.valueAction_(47); // ~controlBus0 -> mais déclaré dans le pattern
 	}
 	{ \outR == data }
 	{
-		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I", "L +1", "L -1", "L+1/4", "L-1/4", "L Opp", "Other"])
+		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I", "L +1", "L -1", "L+1/4", "L-1/4", "L Opp", "Other"])
 		.valueAction_(47);
 	};
 
@@ -11016,8 +11035,16 @@ readView, readBackgroundColorView, posView
 
 	~posPro = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // Déclaration variables pour le Pattern
 	~proBjorSpec = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // pour Bjorklund
-	~proBjor = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // pour Bjorklund
-	~proBjor2 = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // pour Bjorklund
+	~proBjor = /*0*/ ~dur[~tracksValue][~seqsValue].size ! ~nbOfSeqs ! ~nbOfTracksX2; // pour Bjorklund
+	~proBjorGridsX = 1 ! ~nbOfSeqs ! ~nbOfTracksX2; // pour SC Grids X - Bjorklund en raw
+	~proBjor2 = /*0*/ ~dur[~tracksValue][~seqsValue].size ! ~nbOfSeqs ! ~nbOfTracksX2; // pour Bjorklund
+	~proBjorGridsY = 1 ! ~nbOfSeqs ! ~nbOfTracksX2; // pour SC Grids Y - Bjorklund en raw
+	~proWeight = 1 ! ~nbOfSeqs ! ~nbOfTracksX2;
+	~proDrumType = \kick ! ~nbOfSeqs ! ~nbOfTracksX2;
+	~proBjor3 = /*0*/ ~dur[~tracksValue][~seqsValue].size ! ~nbOfSeqs ! ~nbOfTracksX2;
+	~proBjor4 = /*0*/ ~dur[~tracksValue][~seqsValue].size ! ~nbOfSeqs ! ~nbOfTracksX2;
+	~proGridsBias = 1 ! ~nbOfSeqs ! ~nbOfTracksX2;
+	~proGridsBias2 = 1 ! ~nbOfSeqs ! ~nbOfTracksX2;
 
 	~proT = 0 ! ~nbOfTracksX2; // Changement du nom de ~proTemp à ~proT, car ~proTemp est déjà utilisé pour faire le copier / coller du module PRO
 	~proSelect = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
@@ -11041,9 +11068,27 @@ readView, readBackgroundColorView, posView
 		\proReadView, Color.grey(0.6) /*Color.magenta*/ /*~rtmCompColor.alpha_(0)*/, \proPosView
 	);
 
+
+	~drawSCGrids = { // inclure la fonction ~drawSCGrids dans ~proMulView - mais pas fait pour éviter de rajouter une fonction if dans ~proMulView
+		if (~visuelSlider == 0, {
+			~getSCGridsLevels = ~pro[~tracksValue][~seqsValue].size.collect { |i|
+				var level = ScGrids.calculateLevel(\kick, i, ~proBjorGridsX[~tracksValue][~seqsValue], ~proBjorGridsY[~tracksValue][~seqsValue], ~proGridsBias[~tracksValue][~seqsValue] );
+				if  ( level >= (1-~gridsDens[~tracksValue][~seqsValue]), {level}, {0});
+			};
+			{~proView.valueAction_(~getSCGridsLevels)}.defer;
+		});
+	};
+
+
 	~proBjorView = SmoothSlider(~proComp, ~miniSlider1Pos5)
-	.action_({ |view| ~proBjor[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
-		view.string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
+	.action_({ |view|
+		~proBjor[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
+		~proBjorGridsX[~tracksValue][~seqsValue] = view.value.round(0.001);
+		if (~proPatSel[~tracksValue][~seqsValue] > 18 /*and: {~proPat[~tracksValue][~seqsValue] == 1}*/, {
+			view.string = "GX : %".format(~proBjorGridsX[~tracksValue][~seqsValue]); ~drawSCGrids.();
+		}, {
+			view.string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
+		});
 	}) // Action redéfinie dans le Global
 	.font_(Font("Verdana", 9))
 	.background_(Color.magenta)
@@ -11052,12 +11097,18 @@ readView, readBackgroundColorView, posView
 	.border_(~border)
 	.borderColor_(~borderColor)
 	.step_(1/~pro[~tracksValue][~seqsValue].size)
-	.valueAction_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
+	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
 	.doAction;
 
 	~proBjor2View = SmoothSlider(~proComp, ~miniSlider2Pos5)
-	.action_({ |view| ~proBjor2[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
-		view.string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
+	.action_({ |view|
+		~proBjor2[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
+		~proBjorGridsY[~tracksValue][~seqsValue] = view.value.round(0.001);
+		if (~proPatSel[~tracksValue][~seqsValue] > 18 /*and: {~proPat[~tracksValue][~seqsValue] == 1}*/, {
+			view.string = "GY : %".format(~proBjorGridsY[~tracksValue][~seqsValue]); ~drawSCGrids.();
+		}, {
+			view.string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
+		});
 	}) // Action redéfinie dans le Global
 	.font_(Font("Verdana", 9))
 	.background_(Color.magenta)
@@ -11066,8 +11117,103 @@ readView, readBackgroundColorView, posView
 	.border_(~border)
 	.borderColor_(~borderColor)
 	.step_(1/~pro[~tracksValue][~seqsValue].size)
-	.valueAction_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
+	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
 	.doAction;
+
+	~proBjor3View = SmoothSlider(~proComp, Rect(274, 156, 60, 18))
+	.action_({ |view|
+		~proBjor3[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
+		~proGridsBias[~tracksValue][~seqsValue] = view.value.round(0.001);
+		if (~proPatSel[~tracksValue][~seqsValue] > 18 /*and: {~proPat[~tracksValue][~seqsValue] == 1}*/, {
+			// view.string = "Bi : %".format(~proGridsBias[~tracksValue][~seqsValue]);
+			if (~proPatSel[~tracksValue][~seqsValue] > 21, { view.string = "GX2 : %".format(~proGridsBias[~tracksValue][~seqsValue]) }, { view.string = "Bi : %".format(~proGridsBias[~tracksValue][~seqsValue]); ~drawSCGrids.(); });
+		}, {
+			view.string = "H2 : %".format(~proBjor3[~tracksValue][~seqsValue]);
+		});
+	})
+	.font_(Font("Verdana", 9))
+	.background_(Color.magenta)
+	.hilightColor_(~sliderHilightColor)
+	.stringColor_(Color.white)
+	.border_(~border)
+	.borderColor_(~borderColor)
+	.step_(1/~pro[~tracksValue][~seqsValue].size)
+	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
+	.doAction;
+
+	~proBjor4View = SmoothSlider(~proComp, Rect(274, 174, 60, 18))
+	.action_({ |view|
+		~proBjor4[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
+		~proGridsBias2[~tracksValue][~seqsValue] = view.value.round(0.001);
+
+		case
+		{ ~proPatSel[~tracksValue][~seqsValue] < 20 } { view.string = "O2 : %".format(~proBjor4[~tracksValue][~seqsValue]) }
+		{ ~proPatSel[~tracksValue][~seqsValue] < 22 } { view.string = "Px : %".format(~proGridsBias2[~tracksValue][~seqsValue]) }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 22 } { view.string = "GY2 : %".format(~proGridsBias2[~tracksValue][~seqsValue]) }
+
+	})
+	.font_(Font("Verdana", 9))
+	.background_(Color.magenta)
+	.hilightColor_(~sliderHilightColor)
+	.stringColor_(Color.white)
+	.border_(~border)
+	.borderColor_(~borderColor)
+	.step_(1/~pro[~tracksValue][~seqsValue].size)
+	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
+	.doAction;
+
+	~proWeightView = SmoothSlider(~proComp, Rect(212, 156, 60, 18))
+	.action_({ |view|
+		~proWeight[~tracksValue][~seqsValue] = view.value;
+		view.string = "We : %".format(~proWeight[~tracksValue][~seqsValue])
+	})
+	.font_(Font("Verdana", 9))
+	.background_(Color.magenta)
+	.hilightColor_(~sliderHilightColor)
+	.stringColor_(Color.white)
+	.border_(~border)
+	.borderColor_(~borderColor)
+	.step_(0.001)
+	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
+	.doAction;
+
+	~proDrumTypeView = PopUpMenu.new(~proComp, Rect(212, 174, 60, 18))
+	.allowsReselection_(true)
+	.background_(~popUpMenuBackgroundColor)
+	.stringColor_(~popUpMenuStringColor)
+	.font_(Font("Verdana",9))
+	.action_({|menu| ~proDrumType[~tracksValue][~seqsValue] = menu.item; })
+	.items_([\kick, \hihat, \snare]);
+
+	// Redéfinition de l'action pour prendre en compte SC Grids et variations d'Euclid
+	~proPatSelView.action_({|menu| var dur = 1/~pro[~tracksValue][~seqsValue].size;
+		~proPatSel[~tracksValue][~seqsValue] = menu.value;
+		~proBlock[~tracksValue] = 1;
+
+		case
+		{ ~proPatSel[~tracksValue][~seqsValue] < 14 } { ~proBjor3View.visible_(0); ~proBjor4View.visible_(0); ~proWeightView.visible_(0); ~proDrumTypeView.visible_(0); }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 14 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(0); ~proWeightView.visible_(1); ~proDrumTypeView.visible_(0); }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 15 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(1); ~proWeightView.visible_(0); ~proDrumTypeView.visible_(0); }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 16 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(0); ~proWeightView.visible_(0); ~proDrumTypeView.visible_(0); }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 17 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(0); ~proWeightView.visible_(0); ~proDrumTypeView.visible_(0); }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 18 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(1); ~proWeightView.visible_(1); ~proDrumTypeView.visible_(0); }
+		{ ~proPatSel[~tracksValue][~seqsValue] == 19 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(0); ~proWeightView.visible_(1); ~proDrumTypeView.visible_(1); }
+		{ ~proPatSel[~tracksValue][~seqsValue] > 19 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(1); ~proWeightView.visible_(1); ~proDrumTypeView.visible_(1); };
+		// { ~proPatSel[~tracksValue][~seqsValue] == 21 } { ~proBjor3View.visible_(1); ~proBjor4View.visible_(1); ~proWeightView.visible_(1); ~proDrumTypeView.visible_(1); }
+
+		if (~proPatSel[~tracksValue][~seqsValue] > 18, {
+			~proBjorView.step_(0.001); ~proBjor2View.step_(0.001); ~proBjor3View.step_(0.001); ~proBjor4View.step_(0.001);
+		},{
+			~proBjorView.step_(dur); ~proBjor2View.step_(dur); ~proBjor3View.step_(dur); ~proBjor4View.step_(dur);
+		});
+
+		~proBjorView.value_(~proBjorGridsX[~tracksValue][~seqsValue]).doAction;
+		~proBjor2View.value_(~proBjorGridsY[~tracksValue][~seqsValue]).doAction;
+		~proBjor3View.value_(~proGridsBias[~tracksValue][~seqsValue]).doAction;
+		~proBjor4View.value_(~proGridsBias2[~tracksValue][~seqsValue]).doAction;
+
+		if (~patFlag == 1, {~seqs.do {|sequence| ~proPatSel[~tracksValue][sequence] = menu.value }});
+	});
 
 	// Action mis plus bas car necessité de le déclarer après ~proSelectViewG car action sur le Global
 	~proSelectView = RoundButton(~proComp, Rect(337, 2, 60/*30*/, 16))
@@ -14831,7 +14977,7 @@ data.postln;*/
 
 		var presetIndex;
 		var serv;
-		// Utilisation seulement du ~dur car la nb d'éléments dans toutes les séquences est le même
+		// Utilisation seulement du ~dur car le nb d'éléments dans toutes les séquences est le même
 		var rtmSeqSize = ~dur[~tracksValue][~seqsValue].size;
 		var rtmThumbSize = max(333 / rtmSeqSize, ~readViewThumbSize);
 		var rtmSeqStep = 1 / rtmSeqSize;
@@ -15130,10 +15276,10 @@ data.postln;*/
 		// ~offMulView.value_(~offMulSpec.unmap(~offMul[~tracksValue][~seqsValue])).doAction;
 		~strMulView.value_(~strMulSpec.unmap(~strMul[~tracksValue][~seqsValue])).doAction;
 		~cenMulView.value_(~cenMulSpec.unmap(~cenMul[~tracksValue][~seqsValue])).doAction;
-		~bufMulView.value_(~bufMulSpec.unmap(~bufMul[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/)).doAction;
+		~bufMulView.value_(~bufMulSpec.unmap(~bufMul[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue])).doAction; // Changement GUI 221
 		// ~bufMul[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.postln; ~bufMul[~tracksValue][~seqsValue].postln;
 		// 2 mises à jour successives : [~seqSeq[~tracksValue]] donne une première bonne valeur, alors [~seqsValue] donne une première mauvaise valeur qui est bien updaté par la suite
-		~offMulView.value_(~offMulSpec.unmap(~offMul[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/)).doAction;
+		~offMulView.value_(~offMulSpec.unmap(~offMul[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue])).doAction; // Changement GUI 221
 
 		/*if (~twister.notNil, {
 		~ratValues[~tracksValue].value_(~ratMulSpec.unmap(~ratMul[~tracksValue][~seqsValue]/*[~seqSeq[~tracksValue]]*/));
@@ -15191,9 +15337,9 @@ data.postln;*/
 		~fxRDirView.valueAction_(~fxRDir[~tracksValue][~seqsValue]);
 
 		~rtmPatView.valueAction_(~rtmPat[~tracksValue][~seqsValue]);
-		~proPatView.value_(~proPat[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/).doAction; // A mettre sur tout ??? pour action sur le global
+		~proPatView.value_(~proPat[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]).doAction; // A mettre sur tout ??? pour action sur le global // Changement GUI 221
 		~synPatView.valueAction_(~synPat[~tracksValue][~seqsValue]);
-		~spaPatView.value_(~spaPat[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/).doAction; // A mettre sur tout ??? pour action sur le global
+		~spaPatView.value_(~spaPat[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]).doAction; // A mettre sur tout ??? pour action sur le global // Changement GUI 221
 		~legPatView.valueAction_(~legPat[~tracksValue][~seqsValue]);
 		~envPatView.valueAction_(~envPat[~tracksValue][~seqsValue]);
 		~bufPatView.valueAction_(~bufPat[~tracksValue][~seqsValue]);
@@ -15218,9 +15364,9 @@ data.postln;*/
 		~fxRPatView.valueAction_(~fxRPat[~tracksValue][~seqsValue]);
 
 		~rtmPatSelView.valueAction_(~rtmPatSel[~tracksValue][~seqsValue]);
-		~proPatSelView.valueAction_(~proPatSel[~tracksValue][~seqsValue]);
+		// ~proPatSelView.valueAction_(~proPatSel[~tracksValue][~seqsValue]); // remis plus bas car agit sur le step et l'apparition des données
 		~synPatSelView.valueAction_(~synPatSel[~tracksValue][~seqsValue]);
-		~spaPatSelView.valueAction_(~spaPatSel[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/); //
+		~spaPatSelView.valueAction_(~spaPatSel[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]); // Changement GUI 221
 		~legPatSelView.valueAction_(~legPatSel[~tracksValue][~seqsValue]);
 		~envPatSelView.valueAction_(~envPatSel[~tracksValue][~seqsValue]);
 		~bufPatSelView.valueAction_(~bufPatSel[~tracksValue][~seqsValue]);
@@ -15241,11 +15387,22 @@ data.postln;*/
 		~rtmTypeView.valueAction_(~rtmType[~tracksValue][~seqsValue]);
 		~rtmTypeView2.valueAction_(~sequenceType[~tracksValue][~seqsValue]);
 		// if (~rtmTypeView2.value != ~sequenceType[~tracksValue][~seqsValue], {~rtmTypeView2.valueAction_(~sequenceType[~tracksValue][~seqsValue]) });
+
 		// ~proBjorSpec[~tracksValue][~seqsValue] = rtmSeqSpec; // Pas nécessaire car les SeqSpec sont initiés auparavant
-		~proBjorView.step_(rtmSeqStep).value_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/)).doAction; // doAction pour mise à jour du Spec & action sur le global
-		~proBjor2View.step_(rtmSeqStep).value_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor2[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/)).doAction; // doAction pour mise à jour du Spec & action sur le global
+		/*~proBjorView.step_(rtmSeqStep).valueAction_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor[~tracksValue][~seqSeq[~tracksValue]] /*[~seqsValue]*/)).doAction; // doAction pour mise à jour du Spec & action sur le global
+		~proBjor2View.step_(rtmSeqStep).valueAction_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor2[~tracksValue][~seqSeq[~tracksValue]] /*[~seqsValue]*/)).doAction; // doAction pour mise à jour du Spec & action sur le global*/
 		// ~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]].postln; ~proBjorSpec[~tracksValue][~seqsValue].postln;
-		~proSelectView.value_(~proSelect[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/).doAction; // doAction -> necessaire pour action sur le global
+		// Auparavant [~seqSeq[~tracksValue]] à la place de [~seqsValue] - To check ???
+		~proBjorView/*.step_(rtmSeqStep)*/.value_(/*~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].unmap(~proBjor[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue])*/ ~proBjorGridsX[~tracksValue][~seqsValue]).doAction; // doAction pour mise à jour du Spec & action sur le global // Changement GUI 221
+		~proBjor2View/*.step_(rtmSeqStep)*/.value_(/*~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].unmap(~proBjor2[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue])*/ ~proBjorGridsY[~tracksValue][~seqsValue]).doAction; // doAction pour mise à jour du Spec & action sur le global // Changement GUI 221
+		~proSelectView.value_(~proSelect[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]).doAction; // doAction -> necessaire pour action sur le global // Changement GUI 221
+
+		~proBjor3View.value_(~proGridsBias[~tracksValue][~seqsValue]).doAction;
+		~proBjor4View.value_(~proGridsBias2[~tracksValue][~seqsValue]).doAction;
+		~proWeightView.valueAction_(~proWeight[~tracksValue][~seqsValue]);
+		~proDrumTypeView.valueAction_(~proDrumType[~tracksValue][~seqsValue]);
+
+		~proPatSelView.valueAction_(~proPatSel[~tracksValue][~seqsValue]); // était plus haut mais doit agir sur le step et l'apparition des données
 
 		~synTypeView.valueAction_(~synType[~tracksValue][~seqsValue]);
 		~offRateSecondBufView.valueAction_(~offRateSecondBufSpec.unmap(~offRateSecondBuf[~tracksValue][~seqsValue]));
@@ -15832,6 +15989,14 @@ if (File.fileSize(~presetspath) <= 21, {
 			\seqType -> ~sequenceType[~tracksValue][~seqsValue],
 			\proBjor -> ~proBjor[~tracksValue][~seqsValue],
 			\proBjor2 -> ~proBjor2[~tracksValue][~seqsValue],
+
+			\proBjor3 -> ~proBjor3[~tracksValue][~seqsValue],
+			\proBjor4 -> ~proBjor4[~tracksValue][~seqsValue],
+			\proGridsBias -> ~proGridsBias[~tracksValue][~seqsValue],
+			\proGridsBias2 -> ~proGridsBias2[~tracksValue][~seqsValue],
+			\proWeight -> ~proWeight[~tracksValue][~seqsValue],
+			\proDrumType -> ~proDrumType[~tracksValue][~seqsValue],
+
 			\proSelect -> ~proSelect[~tracksValue][~seqsValue],
 			\synType -> ~synType[~tracksValue][~seqsValue],
 			\offRateSecondBuf -> ~offRateSecondBuf[~tracksValue][~seqsValue],
@@ -16587,7 +16752,7 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 	~cen2PatView.value_(~presets[index][\cen2PatView]).doAction;
 
 	~rtmPatSelView.valueAction_(~presets[index][\rtmPatSelView]);
-	~proPatSelView.valueAction_(~presets[index][\proPatSelView]);
+	// ~proPatSelView.valueAction_(~presets[index][\proPatSelView]); // remis plus bas car agit sur le step et l'apparition des données
 	~synPatSelView.valueAction_(~presets[index][\synPatSelView]);
 	~spaPatSelView.valueAction_(~presets[index][\spaPatSelView]);
 	~legPatSelView.valueAction_(~presets[index][\legPatSelView]);
@@ -16614,9 +16779,16 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 	~rtmTypeView2.valueAction_(~presets[index][\seqType]);
 
 	~proBjorSpec[~tracksValue][~seqsValue] = rtmSeqSpec;
-	~proBjorView.step_(rtmSeqStep).valueAction_(~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor])).doAction; // doAction pour mise à jour du Spec & action sur le global
-	~proBjor2View.step_(rtmSeqStep).valueAction_(~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor2])).doAction; // doAction pour mise à jour du Spec & action sur le global
+	~proBjorView/*.step_(rtmSeqStep)*/.value_( ~proBjorGridsX /*~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor])*/).doAction; // doAction pour mise à jour du Spec & action sur le global
+	~proBjor2View/*.step_(rtmSeqStep)*/.value_(~proBjorGridsY /*~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor2])*/).doAction; // doAction pour mise à jour du Spec & action sur le global
 	~proSelectView.value_(~presets[index][\proSelect]).doAction; // doAction -> necessaire pour action sur le global
+
+	if (~presets[index][\proGridsBias].notNil, {~proBjor3View.valueAction_(~presets[index][\proGridsBias]) } );
+	if (~presets[index][\proGridsBias2].notNil, {~proBjor4View.valueAction_(~presets[index][\proGridsBias2]) } );
+	if (~presets[index][\proWeight].notNil, {~proWeightView.valueAction_(~presets[index][\proWeight]) } );
+	if (~presets[index][\proDrumType].notNil, {~proDrumTypeView.valueAction_(~presets[index][\proDrumType]) } );
+
+	~proPatSelView.valueAction_(~presets[index][\proPatSelView]); // était plus haut mais doit agir sur le step et l'apparition des données
 
 	~synTypeView.valueAction_(~presets[index][\synType]);
 	~offRateSecondBufView.valueAction_(~offRateSecondBufSpec.unmap(~presets[index][\offRateSecondBuf]));
@@ -18080,6 +18252,13 @@ case
 
 	~proBjor[track][seq] = ~presets[index][\proBjor];
 	~proBjor2[track][seq] = ~presets[index][\proBjor2];
+
+	~proBjor3[track][seq] = ~presets[index][\proBjor3];
+	~proBjor4[track][seq] = ~presets[index][\proBjor4];
+	~proGridsBias[track][seq] = ~presets[index][\proGridsBias];
+	~proGridsBias2[track][seq] = ~presets[index][\proGridsBias2];
+	~proWeight[track][seq] = ~presets[index][\proWeight];
+	~proDrumType[track][seq] = ~presets[index][\proDrumType];
 
 	~synType[track][seq] = ~presets[index][\synType];
 	~offRateSecondBuf[track][seq] = ~presets[index][\offRateSecondBuf];
@@ -21805,29 +21984,29 @@ u.drawFunc = { d.draw }
 	.action_({ |view| ~proBjor[tr][~seqsValue] = ~proBjorSpec[tr][~seqsValue].map(view.value).asInteger;
 		view.string = "Hit : %".format(~proBjor[tr][~seqsValue]);
 	})
-	.font_(Font("Verdana", 11))
+	.font_(Font("Verdana", 10))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
 	.border_(~border)
 	.borderColor_(~borderColor)
-	.step_(1/~pro[tr][~seqsValue].size)
+	// .step_(1/~pro[tr][~seqsValue].size) // retrait car intégration de ~proBjorGridsX qui ne doit pas avoir de step
 	.valueAction_(1)
 	.action_({ |view| var val, seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); val = ~proBjorSpec[tr][seq].map(view.value).asInteger;
 		case
 		{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
 		{
-			~proBjor[tr][seq] = val; ~presetSeqTextViewG[tr][seq].background_(Color.red)
+			~proBjor[tr][seq] = val; ~proBjorGridsX[tr][seq] = view.value.round(0.001); ~presetSeqTextViewG[tr][seq].background_(Color.red)
 		}
 		{ ~triggerAllSeqs[tr] == 1} // toutes les séquences sélectionnées
 		{
 			var sequenceSelected = (~presetSeqStart[tr]..~presetSeqStop[tr]).collect { |i| i };
-			sequenceSelected.do {|i| ~proBjor[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~presetSeqTextViewG[tr][i].background_(Color.red) }
+			sequenceSelected.do {|i| ~proBjor[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~proBjorGridsX[tr][i] = view.value.round(0.001); ~presetSeqTextViewG[tr][i].background_(Color.red) }
 		}
 		{ ~triggerAllSeqs[tr] == 2} // tous les presets
-		{ ~presetSeqRandList[tr].do {|i| ~proBjor[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~presetSeqTextViewG[tr][i].background_(Color.red) } };
+		{ ~presetSeqRandList[tr].do {|i| ~proBjor[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~proBjorGridsX[tr][i] = view.value.round(0.001); ~presetSeqTextViewG[tr][i].background_(Color.red) } };
 
-		view.string = "Hit : %".format( val );
+		view.string = "H: %-%".format( val, ~proBjorGridsX[tr][seq] );
 
 		if (~lemurConnected1 == 1 and: {tr == ~tracksValue}, {
 			~lemurAdress1.sendMsg("/ParC/HitM/value", val); ~lemurAdress1.sendMsg("/ParC/HitLed/value", view.value );
@@ -21842,29 +22021,30 @@ u.drawFunc = { d.draw }
 	.action_({ |view| ~proBjor2[tr][~seqsValue] = ~proBjorSpec[tr][~seqsValue].map(view.value).asInteger;
 		view.string = "Off : %".format(~proBjor2[tr][~seqsValue]);
 	})
-	.font_(Font("Verdana", 11))
+	.font_(Font("Verdana", 10))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
 	.border_(~border)
 	.borderColor_(~borderColor)
-	.step_(1/~pro[tr][~seqsValue].size)
+	// .step_(1/~pro[tr][~seqsValue].size) // retrait car intégration de ~proBjorGridsX qui ne doit pas avoir de step
+	.valueAction_(1)
 	.valueAction_(1)
 	.action_({ |view| var val, seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); val = ~proBjorSpec[tr][seq].map(view.value).asInteger;
 		case
 		{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
 		{
-			~proBjor2[tr][seq] = val; ~presetSeqTextViewG[tr][seq].background_(Color.red)
+			~proBjor2[tr][seq] = val; ~proBjorGridsY[tr][seq] = view.value.round(0.001); ~presetSeqTextViewG[tr][seq].background_(Color.red)
 		}
 		{ ~triggerAllSeqs[tr] == 1} // toutes les séquences sélectionnées
 		{
 			var sequenceSelected = (~presetSeqStart[tr]..~presetSeqStop[tr]).collect { |i| i };
-			sequenceSelected.do {|i| ~proBjor2[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~presetSeqTextViewG[tr][i].background_(Color.red) }
+			sequenceSelected.do {|i| ~proBjor2[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~proBjorGridsY[tr][i] = view.value.round(0.001); ~presetSeqTextViewG[tr][i].background_(Color.red) }
 		}
 		{ ~triggerAllSeqs[tr] == 2} // tous les presets
-		{ ~presetSeqRandList[tr].do {|i| ~proBjor2[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~presetSeqTextViewG[tr][i].background_(Color.red) } };
+		{ ~presetSeqRandList[tr].do {|i| ~proBjor2[tr][i] = ~proBjorSpec[tr][i].map(view.value).asInteger; ~proBjorGridsY[tr][i] = view.value.round(0.001); ~presetSeqTextViewG[tr][i].background_(Color.red) } };
 
-		view.string = "Off : %".format( val );
+		view.string = "O: %-%".format( val, ~proBjorGridsY[tr][seq] );
 
 		if (~lemurConnected1 == 1 and: {tr == ~tracksValue}, {
 			~lemurAdress1.sendMsg("/ParC/OffM/value", val); ~lemurAdress1.sendMsg("/ParC/OffLed/value", view.value );
@@ -22144,15 +22324,15 @@ u.drawFunc = { d.draw }
 			case
 			{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
 			{
-				~proMul[tr][seq] = val; {~presetSeqTextViewG[tr][seq].background_(Color.red)}.defer;
+				~proMul[tr][seq] = val; ~gridsDens[tr][seq] = view.value; {~presetSeqTextViewG[tr][seq].background_(Color.red)}.defer;
 			}
 			{ ~triggerAllSeqs[tr] == 1} // toutes les séquences sélectionnées
 			{
 				var sequenceSelected = (~presetSeqStart[tr]..~presetSeqStop[tr]).collect { |i| i };
-				sequenceSelected.do {|i| ~proMul[tr][i] = val; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer }
+				sequenceSelected.do {|i| ~proMul[tr][i] = val; ~gridsDens[tr][i] = view.value; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer }
 			}
 			{ ~triggerAllSeqs[tr] == 2} // tous les presets
-			{ ~presetSeqRandList[tr].do {|i| ~proMul[tr][i] = val; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer } };
+			{ ~presetSeqRandList[tr].do {|i| ~proMul[tr][i] = val; ~gridsDens[tr][i] = view.value; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer } };
 
 			view.string = "Pro : %".format( val );
 
@@ -22174,15 +22354,15 @@ u.drawFunc = { d.draw }
 				case
 				{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
 				{
-					~proMul[tr][seq] = val; {~presetSeqTextViewG[tr][seq].background_(Color.red)}.defer;
+					~proMul[tr][seq] = val; ~gridsDens[tr][seq] = view.value; {~presetSeqTextViewG[tr][seq].background_(Color.red)}.defer;
 				}
 				{ ~triggerAllSeqs[tr] == 1} // toutes les séquences sélectionnées
 				{
 					var sequenceSelected = (~presetSeqStart[tr]..~presetSeqStop[tr]).collect { |i| i };
-					sequenceSelected.do {|i| ~proMul[tr][i] = val; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer }
+					sequenceSelected.do {|i| ~proMul[tr][i] = val; ~gridsDens[tr][i] = view.value; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer }
 				}
 				{ ~triggerAllSeqs[tr] == 2} // tous les presets
-				{ ~presetSeqRandList[tr].do {|i| ~proMul[tr][i] = val; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer } };
+				{ ~presetSeqRandList[tr].do {|i| ~proMul[tr][i] = val; ~gridsDens[tr][i] = view.value; {~presetSeqTextViewG[tr][i].background_(Color.red)}.defer } };
 
 				view.string = "Pro : %".format( val );
 
@@ -22684,11 +22864,19 @@ u.drawFunc = { d.draw }
 	});
 });
 
-~proBjorView.action_({ |view| ~proBjor[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.map(view.value).asInteger;
-	// 2 mises à jour successives : [~seqSeq[~tracksValue]] donne une première bonne valeur, alors [~seqsValue] donne une première mauvaise valeur qui est bien updaté par la suite
-	view.string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
+~proBjorView.action_({ |view| ~proBjor[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].map(view.value).asInteger;
+	// 2 mises à jour successives : [~seqSeq[~tracksValue]] donne une première bonne valeur, alors [~seqsValue] donne une première mauvaise valeur qui est bien updaté par la suite -> arrêté car ne donne pas de bonnes valeurs avec Arm
+	~proBjorGridsX[~tracksValue][~seqsValue] = view.value.round(0.001);
+
+	if (~proPatSel[~tracksValue][~seqsValue] > 18 /*and: {~proPat[~tracksValue][~seqsValue] == 1}*/, {
+		view.string = "GX : %".format(~proBjorGridsX[~tracksValue][~seqsValue]); ~drawSCGrids.();
+	}, {
+		view.string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
+	});
 	// Action sur le global
-	~proBjorViewG[~tracksValue].step_(1/~pro[~tracksValue][~seqsValue].size).value_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor[~tracksValue][~seqsValue])).string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
+	// ~proBjorViewG[~tracksValue].step_(1/~pro[~tracksValue][~seqsValue].size).value_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor[~tracksValue][~seqsValue])).string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
+	// ~proBjorViewG[~tracksValue].step_(0.001).value_(~proBjorGridsX[~tracksValue][~seqsValue]).string = "GX : %".format(~proBjorGridsX[~tracksValue][~seqsValue]);
+	~proBjorViewG[~tracksValue].value_(~proBjorGridsX[~tracksValue][~seqsValue]).string = "H: %-%".format(~proBjor[~tracksValue][~seqsValue], ~proBjorGridsX[~tracksValue][~seqsValue]);
 
 	if (~lemurConnected1 == 1, {
 		~lemurAdress1.sendMsg("/ParC/HitM/value", ~proBjor[~tracksValue][~seqsValue]);
@@ -22700,11 +22888,19 @@ u.drawFunc = { d.draw }
 	});
 });
 
-~proBjor2View.action_({ |view| ~proBjor2[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.map(view.value).asInteger;
-	// 2 mises à jour successives : [~seqSeq[~tracksValue]] donne une première bonne valeur, alors [~seqsValue] donne une première mauvaise valeur qui est bien updaté par la suite
-	view.string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
-	// Action asur le global
-	~proBjor2ViewG[~tracksValue].step_(1/~pro[~tracksValue][~seqsValue].size).value_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor2[~tracksValue][~seqsValue])).string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
+~proBjor2View.action_({ |view| ~proBjor2[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].map(view.value).asInteger;
+	// 2 mises à jour successives : [~seqSeq[~tracksValue]] donne une première bonne valeur, alors [~seqsValue] donne une première mauvaise valeur qui est bien updaté par la suite -> arrêté car ne donne pas de bonnes valeurs avec Arm
+	~proBjorGridsY[~tracksValue][~seqsValue] = view.value.round(0.001);
+
+	if (~proPatSel[~tracksValue][~seqsValue] > 18 /*and: {~proPat[~tracksValue][~seqsValue] == 1}*/, {
+		view.string = "GY : %".format(~proBjorGridsY[~tracksValue][~seqsValue]); ~drawSCGrids.();
+	}, {
+		view.string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
+	});
+	// Action sur le global
+	// ~proBjor2ViewG[~tracksValue].step_(1/~pro[~tracksValue][~seqsValue].size).value_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor2[~tracksValue][~seqsValue])).string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
+	// ~proBjor2ViewG[~tracksValue].step_(0.001).value_(~proBjorGridsY[~tracksValue][~seqsValue]).string = "GY : %".format(~proBjorGridsY[~tracksValue][~seqsValue]);
+	~proBjor2ViewG[~tracksValue].value_(~proBjorGridsY[~tracksValue][~seqsValue]).string = "O: %-%".format(~proBjor2[~tracksValue][~seqsValue], ~proBjorGridsY[~tracksValue][~seqsValue]);
 
 	if (~lemurConnected1 == 1, {
 		~lemurAdress1.sendMsg("/ParC/OffM/value", ~proBjor2[~tracksValue][~seqsValue]);
@@ -22760,8 +22956,10 @@ u.drawFunc = { d.draw }
 	});
 }).doAction;
 
+~gridsDens = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
+
 // Intégration du multiplicateur dans le .map
-~proMulView.action_({ |view| ~proMul[~tracksValue][~seqsValue] = ~proMulSpec.map(view.value);
+~proMulView.action_({ |view| ~proMul[~tracksValue][~seqsValue] = ~proMulSpec.map(view.value); ~gridsDens[~tracksValue][~seqsValue] = view.value;
 	view.string = "%".format(~proMul[~tracksValue][~seqsValue]);
 	// ~proRangeView.string_("%\n to \n%".format((~proMax[~tracksValue][~seqsValue]).round(~proRound[~tracksValue][~seqsValue]), (~proMin[~tracksValue][~seqsValue]).round(~proRound[~tracksValue][~seqsValue])));
 	~proIndexView.string_("At : %".format((~proSpec[~tracksValue][~seqsValue].map(~proIndexView.value * ~proMul[~tracksValue][~seqsValue])).round(~proRound[~tracksValue][~seqsValue]))); // léger pb de rounding ?
@@ -30862,7 +31060,9 @@ PopUpMenu.defaultKeyDownAction
 			// Dans le Tab d'effets
 			~nbOfServers.collect {|s| ~fxInSerieListView[s]},
 
-			~rySpaTypeTrackView, if (~acousItems.notNil, {~acousTypeSensView}, {~rySpaTypeTrackView}) // ListView
+			~rySpaTypeTrackView, if (~acousItems.notNil, {~acousTypeSensView}, {~rySpaTypeTrackView}), // ListView
+
+			~proDrumTypeView
 
 		].flatten(2).do {|i| i.canFocus = focus; i.focus(false); /*pour désélectionner le dernier*/
 			// i.acceptsMouseOver = focus; i.mouseOverAction = {};
@@ -30878,7 +31078,7 @@ PopUpMenu.defaultKeyDownAction
 		[~trackAllVolView, ~trackInVolView, ~trackFXVolView, ~trackVolView,
 			~toTempoView, ~toSecView, ~gblSeqIndexView, ~gblSeqView, ~nbTotalBeatsView,
 			~seqIndexView, ~harIndexView, ~nbEventView,
-			~proBjorView, ~proBjor2View, ~offRateSecondBufView, ~ampRatView, ~aAmpView, ~offThreshView, ~freqRatView, ~fAmpView, ~psPitchDispersView, ~psTimeDispersView, ~psWindowSizeView, ~pAmpView, ~panRatView,
+			~proBjorView, ~proBjor2View, ~proBjor3View, ~proBjor4View, ~proWeightView, ~offRateSecondBufView, ~ampRatView, ~aAmpView, ~offThreshView, ~freqRatView, ~fAmpView, ~psPitchDispersView, ~psTimeDispersView, ~psWindowSizeView, ~pAmpView, ~panRatView,
 			~pFadeView, ~pFadeViewG, ~quantView, ~quantViewG,
 			// ~mixAllFxView2[0], ~lagTimeAllFxView2[0], ~fadeTimeSynthFxView2[0], ~nbOfServers.collect {|s|
 			~nbOfServers.collect {|s| ~mixAllFxView2[s]}, ~nbOfServers.collect {|s| ~lagTimeAllFxView2[s]}, ~nbOfServers.collect {|s| ~fadeTimeSynthFxView2[s]},

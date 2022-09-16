@@ -197,12 +197,12 @@ if (~serverFX == 1, {
 
 
 // Numéro des bus de contrôle Rat...
-~controlBus0 = 47 /*45*/;
-~controlBus1 = 48 /*46*/;
-~controlBus2 = 49 /*47*/;
-~controlBus3 = 50 /*48*/;
-~controlBus4 = 51 /*49*/;
-~controlBus5 = 52 /*50*/;
+~controlBus0 = 49 /*45*/;
+~controlBus1 = 50 /*46*/;
+~controlBus2 = 51 /*47*/;
+~controlBus3 = 52 /*48*/;
+~controlBus4 = 53 /*49*/;
+~controlBus5 = 54 /*50*/;
 
 
 
@@ -436,6 +436,30 @@ envir[key][track][seq] = value;
 
 
 
+~patternKeyRand0ElementFunction = { | envir, track, seq, key, pos, block, stream |
+	block{|break|
+		key.envirGet[track][seq].size.do{|i|
+			if (block.envirGet[track] == 1, {break.value}, {
+				r = stream.next;
+				envir[pos][track][seq] = 0;
+				r.yield;
+			})
+		}
+	}
+};
+
+~patternKeyRand0ElementCutLoopFunction = { | envir, track, seq, key, pos, block, stream |
+	envir[block][track] = 0; block{|break|
+		~seqGlobalRemainingSize[track].do{|i|
+			if (block.envirGet[track] == 1, {break.value}, {
+				r = stream.next;
+				envir[pos][track][seq] = 0;
+				r.yield;
+			})
+		}
+	}
+};
+
 ~patternKeyRand1ElementFunction = { | envir, track, seq, key, pos, block, selection, stream |
 	block{|break|
 		key.envirGet[track][seq].size.do{|i|
@@ -591,35 +615,37 @@ envir[key][track][seq] = value;
 	{pat.envirGet[track][seq] == 0 or: { patSel.envirGet[track][seq] < 17 }} { ev[key] }
 	{patSel.envirGet[track][seq] == 17 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.durU } // ~posRat[track][seq] = 0; // nécessaire sinon décalage ??? Au moins pour le Repérage
 	{patSel.envirGet[track][seq] == 18 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.durU }
-	{patSel.envirGet[track][seq] == 19 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.legU }
-	{patSel.envirGet[track][seq] == 20 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.legU }
-	{patSel.envirGet[track][seq] == 21 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.ampU }
-	{patSel.envirGet[track][seq] == 22 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.ampU }
-	{patSel.envirGet[track][seq] == 23 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.preprateU }
-	{patSel.envirGet[track][seq] == 24 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.preprateU }
-	{patSel.envirGet[track][seq] == 25 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.stretcherU }
-	{patSel.envirGet[track][seq] == 26 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.stretcherU }
-	{patSel.envirGet[track][seq] == 27 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.centerU }
-	{patSel.envirGet[track][seq] == 28 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.centerU }
-	{patSel.envirGet[track][seq] == 29 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.preprate2U }
-	{patSel.envirGet[track][seq] == 30 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.preprate2U }
-	{patSel.envirGet[track][seq] == 31 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.stretcher2U }
-	{patSel.envirGet[track][seq] == 32 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.stretcher2U }
-	{patSel.envirGet[track][seq] == 33 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.center2U }
-	{patSel.envirGet[track][seq] == 34 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.center2U }
-	{patSel.envirGet[track][seq] == 35 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepbufU }
-	{patSel.envirGet[track][seq] == 36 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepbufU }
-	{patSel.envirGet[track][seq] == 37 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.offsetU }
-	{patSel.envirGet[track][seq] == 38 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.offsetU }
-	{patSel.envirGet[track][seq] == 39 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.panU }
-	{patSel.envirGet[track][seq] == 40 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.panU }
-	{patSel.envirGet[track][seq] == 41 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.delayU }
-	{patSel.envirGet[track][seq] == 42 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.delayU }
-	{patSel.envirGet[track][seq] == 43 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepoutLU }
-	{patSel.envirGet[track][seq] == 44 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepoutLU }
-	{patSel.envirGet[track][seq] == 45 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepoutRU }
-	{patSel.envirGet[track][seq] == 46 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepoutRU }
-	{patSel.envirGet[track][seq] > 46 /*and: { ~legPat[track][seq] == 1 }*/} { envir[pos][track][seq] = 100000; }
+	{patSel.envirGet[track][seq] == 19 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepproU }
+	{patSel.envirGet[track][seq] == 20 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepproU }
+	{patSel.envirGet[track][seq] == 21 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.legU }
+	{patSel.envirGet[track][seq] == 22 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.legU }
+	{patSel.envirGet[track][seq] == 23 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.ampU }
+	{patSel.envirGet[track][seq] == 24 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.ampU }
+	{patSel.envirGet[track][seq] == 25 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.preprateU }
+	{patSel.envirGet[track][seq] == 26 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.preprateU }
+	{patSel.envirGet[track][seq] == 27 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.stretcherU }
+	{patSel.envirGet[track][seq] == 28 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.stretcherU }
+	{patSel.envirGet[track][seq] == 29 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.centerU }
+	{patSel.envirGet[track][seq] == 30 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.centerU }
+	{patSel.envirGet[track][seq] == 31 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.preprate2U }
+	{patSel.envirGet[track][seq] == 32 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.preprate2U }
+	{patSel.envirGet[track][seq] == 33 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.stretcher2U }
+	{patSel.envirGet[track][seq] == 34 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.stretcher2U }
+	{patSel.envirGet[track][seq] == 35 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.center2U }
+	{patSel.envirGet[track][seq] == 36 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.center2U }
+	{patSel.envirGet[track][seq] == 37 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepbufU }
+	{patSel.envirGet[track][seq] == 38 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepbufU }
+	{patSel.envirGet[track][seq] == 39 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.offsetU }
+	{patSel.envirGet[track][seq] == 40 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.offsetU }
+	{patSel.envirGet[track][seq] == 41 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.panU }
+	{patSel.envirGet[track][seq] == 42 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.panU }
+	{patSel.envirGet[track][seq] == 43 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.delayU }
+	{patSel.envirGet[track][seq] == 44 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.delayU }
+	{patSel.envirGet[track][seq] == 45 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepoutLU }
+	{patSel.envirGet[track][seq] == 46 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepoutLU }
+	{patSel.envirGet[track][seq] == 47 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; ev.prepoutRU }
+	{patSel.envirGet[track][seq] == 48 and: { pat.envirGet[track][seq] == 1 }} { envir[pos][track][seq] = 1000; 1-ev.prepoutRU }
+	{patSel.envirGet[track][seq] > 48 /*and: { ~legPat[track][seq] == 1 }*/} { envir[pos][track][seq] = 100000; }
 };
 
 
@@ -1603,311 +1629,311 @@ envir[key][track][seq] = value;
 				{ev.delayUElev != 90} { 0 }
 			}))
 
-	/*
-	\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
-	\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
-
-	// panning circulaire multiple - permet de sélectionner si panning circulaire régulier ou accélérant ou déccélérant - pas utile pour circ unique
-	\spaSpeed, (Pfunc({ |ev|
-	ev.prepspa.collect { |i|
-	case
-	/*{i.inclusivelyBetween(2,3)} // pour les lines Aller ou Aller/retour
-	{0}*/
-	{i.inclusivelyBetween(4,5)} // pour les lines Aller ou Aller/retour
-	{1}
-	/*{i.inclusivelyBetween(8,9)} // Circ multiple régulier
-	{0}*/
-	{i.inclusivelyBetween(10,11)} // Circ multiple Acc
-	{1}
-	{i.inclusivelyBetween(12,13)} // Circ multiple Decc
-	{2}
-	{i >= 0 /*.inclusivelyBetween(6,7)*/} // Circ unique & autres
-	{0}
-	}
-	})) /*.trace(prefix: "spaSpeed -> ")*/,
-	*/
-
-),
-
-vmSt: Pbind(
-
-	\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
-	\speakerRadius, (Pfunc({ ~speakRad[track][~seqSeq[track]] }) ) /*.trace(prefix: "speakerRadius -> ")*/,
-	\pointScale, (Pfunc({ ~vmPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
-
-	/*
-	// Pour effectuer les trajectoires Gauche / Droite - seulement utile pour les lines
-	\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
-	\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
-
-	// seulement utile pour les lines Aller ou Aller/retour
-	\spaSpeed, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.inclusivelyBetween(2,3), {0}, {1} ) } }) ),
-	*/
-
-),
-
-vmSD: Pbind(
-
-	\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
-
-	\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
-	\speakerRadius, (Pfunc({ ~speakRad[track][~seqSeq[track]] }) ) /*.trace(prefix: "speakerRadius -> ")*/,
-	\pointScale, (Pfunc({ ~vmPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
-	\orientation, (Pfunc({ ~orientation[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
-
-	// ci-dessous pour le circulaire selon données spectrales
-	\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
-	\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
-	\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
-	\dbMin, Pfunc({ ~sdDbRangeMin[track][~seqSeq[track]] }),
-	\dbMax, Pfunc({ ~sdDbRangeMax[track][~seqSeq[track]] }),
-
-	\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }) // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
-
-	/*
-	// Pour effectuer les trajectoires Gauche / Droite
-	\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
-	\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
-	*/
-
-),
-
-vmTraj: Pbind(
-
-	\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
-
-	\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
-	\speakerRadius, (Pfunc({ ~speakRad[track][~seqSeq[track]] }) ) /*.trace(prefix: "speakerRadius -> ")*/,
-	\pointScale, (Pfunc({ ~vmPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
-	\orientation, (Pfunc({ ~orientation[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
-
-	\trajBufLoop, Pfunc({ ~trajSpatLoop[track][~seqSeq[track]] }) /*.trace(prefix: "trajBufLoop -> ")*/,
-
-	/*
-	\prepspa3, (Pfunc({ |ev| ev.prepspa.collect { |i| i - 18 } })) /*.trace(prefix: "prepspa3 -> ")*/,
-	\trajBuf, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][0] }, { ~trajectoryBuffers[i][0] }) } })) /*.trace(prefix: "trajBuf -> ")*/,
-	// Durée réelle de la trajectoire du buffer
-	\trajBufDur, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][1] }, { ~trajectoryBuffers[i][1] }) } })) /*.trace(prefix: "trajBufDur -> ")*/,
-	*/
-
-	// avant ev.trajBufDur et non ev.trajBufDur[0]
-	// -> Comment faire ??????
-	\trajBufRatio, (Pfunc({ |ev| var seq = ~seqSeq[track];
-		case
-		{~trajSpatTimeType[track][seq] == 0} // Adapt Time
-		{ (ev.durenv / ev.trajBufDur).reciprocal }
-		{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ > ev.trajBufDur0/*[0]*/}} // Trajectory Time
-		{ (ev.durenv / ev.trajBufDur).reciprocal }
-		{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ <= ev.trajBufDur0/*[0]*/}} // Trajectory Time
-		{ 1 }
-		{~trajSpatTimeType[track][seq] == 2 } // Slider Time
-		{ /*ev.trajBufRat*/ ~trajSpatRate[track][seq] }
-	})) /*.trace(prefix: "trajBufRatio -> ")*/
-
-),
-
-vbSD: Pbind(
+			/*
+			\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
+			\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
+
+			// panning circulaire multiple - permet de sélectionner si panning circulaire régulier ou accélérant ou déccélérant - pas utile pour circ unique
+			\spaSpeed, (Pfunc({ |ev|
+			ev.prepspa.collect { |i|
+			case
+			/*{i.inclusivelyBetween(2,3)} // pour les lines Aller ou Aller/retour
+			{0}*/
+			{i.inclusivelyBetween(4,5)} // pour les lines Aller ou Aller/retour
+			{1}
+			/*{i.inclusivelyBetween(8,9)} // Circ multiple régulier
+			{0}*/
+			{i.inclusivelyBetween(10,11)} // Circ multiple Acc
+			{1}
+			{i.inclusivelyBetween(12,13)} // Circ multiple Decc
+			{2}
+			{i >= 0 /*.inclusivelyBetween(6,7)*/} // Circ unique & autres
+			{0}
+			}
+			})) /*.trace(prefix: "spaSpeed -> ")*/,
+			*/
+
+		),
+
+		vmSt: Pbind(
+
+			\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
+			\speakerRadius, (Pfunc({ ~speakRad[track][~seqSeq[track]] }) ) /*.trace(prefix: "speakerRadius -> ")*/,
+			\pointScale, (Pfunc({ ~vmPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+
+			/*
+			// Pour effectuer les trajectoires Gauche / Droite - seulement utile pour les lines
+			\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
+			\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
+
+			// seulement utile pour les lines Aller ou Aller/retour
+			\spaSpeed, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.inclusivelyBetween(2,3), {0}, {1} ) } }) ),
+			*/
+
+		),
+
+		vmSD: Pbind(
+
+			\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
+
+			\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
+			\speakerRadius, (Pfunc({ ~speakRad[track][~seqSeq[track]] }) ) /*.trace(prefix: "speakerRadius -> ")*/,
+			\pointScale, (Pfunc({ ~vmPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+			\orientation, (Pfunc({ ~orientation[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+
+			// ci-dessous pour le circulaire selon données spectrales
+			\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
+			\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
+			\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
+			\dbMin, Pfunc({ ~sdDbRangeMin[track][~seqSeq[track]] }),
+			\dbMax, Pfunc({ ~sdDbRangeMax[track][~seqSeq[track]] }),
+
+			\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }) // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
+
+			/*
+			// Pour effectuer les trajectoires Gauche / Droite
+			\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
+			\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
+			*/
+
+		),
+
+		vmTraj: Pbind(
+
+			\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
+
+			\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
+			\speakerRadius, (Pfunc({ ~speakRad[track][~seqSeq[track]] }) ) /*.trace(prefix: "speakerRadius -> ")*/,
+			\pointScale, (Pfunc({ ~vmPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+			\orientation, (Pfunc({ ~orientation[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+
+			\trajBufLoop, Pfunc({ ~trajSpatLoop[track][~seqSeq[track]] }) /*.trace(prefix: "trajBufLoop -> ")*/,
+
+			/*
+			\prepspa3, (Pfunc({ |ev| ev.prepspa.collect { |i| i - 18 } })) /*.trace(prefix: "prepspa3 -> ")*/,
+			\trajBuf, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][0] }, { ~trajectoryBuffers[i][0] }) } })) /*.trace(prefix: "trajBuf -> ")*/,
+			// Durée réelle de la trajectoire du buffer
+			\trajBufDur, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][1] }, { ~trajectoryBuffers[i][1] }) } })) /*.trace(prefix: "trajBufDur -> ")*/,
+			*/
+
+			// avant ev.trajBufDur et non ev.trajBufDur[0]
+			// -> Comment faire ??????
+			\trajBufRatio, (Pfunc({ |ev| var seq = ~seqSeq[track];
+				case
+				{~trajSpatTimeType[track][seq] == 0} // Adapt Time
+				{ (ev.durenv / ev.trajBufDur).reciprocal }
+				{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ > ev.trajBufDur0/*[0]*/}} // Trajectory Time
+				{ (ev.durenv / ev.trajBufDur).reciprocal }
+				{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ <= ev.trajBufDur0/*[0]*/}} // Trajectory Time
+				{ 1 }
+				{~trajSpatTimeType[track][seq] == 2 } // Slider Time
+				{ /*ev.trajBufRat*/ ~trajSpatRate[track][seq] }
+			})) /*.trace(prefix: "trajBufRatio -> ")*/
+
+		),
+
+		vbSD: Pbind(
 
-	\outSpa, (Pkey(\prepfxL) * ~fxMulChannel)/*.trace(prefix: "outSpa -> ")*/,
+			\outSpa, (Pkey(\prepfxL) * ~fxMulChannel)/*.trace(prefix: "outSpa -> ")*/,
 
-	\spread, Pfunc({ ~vbapSpread[track][~seqSeq[track]] }), // Spread du VBAP
-	\x2Off, Pfunc({ ~vbapX2Off[track][~seqSeq[track]] }),
+			\spread, Pfunc({ ~vbapSpread[track][~seqSeq[track]] }), // Spread du VBAP
+			\x2Off, Pfunc({ ~vbapX2Off[track][~seqSeq[track]] }),
 
-	// ci-dessous pour VBAP Distance
-	\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
-	\pointScale, (Pfunc({ ~vbPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+			// ci-dessous pour VBAP Distance
+			\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
+			\pointScale, (Pfunc({ ~vbPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
 
-	\delayUElev, (Pfunc({ |ev| ev.delayX.range(0, 90) })),
-	\selElev, (Pfunc({ |ev| case
-		{ev.delayUElev == 0} { 1 }
-		{ev.delayUElev == 90} { 2 }
-		{ev.delayUElev != 90} { 0 }
-	})),
+			\delayUElev, (Pfunc({ |ev| ev.delayX.range(0, 90) })),
+			\selElev, (Pfunc({ |ev| case
+				{ev.delayUElev == 0} { 1 }
+				{ev.delayUElev == 90} { 2 }
+				{ev.delayUElev != 90} { 0 }
+			})),
 
-	// ci-dessous pour le circulaire selon données spectrales
-	\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
-	\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
-	\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
-	\dbMin, Pfunc({ ~sdDbRangeMin[track][~seqSeq[track]] }),
-	\dbMax, Pfunc({ ~sdDbRangeMax[track][~seqSeq[track]] }),
+			// ci-dessous pour le circulaire selon données spectrales
+			\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
+			\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
+			\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
+			\dbMin, Pfunc({ ~sdDbRangeMin[track][~seqSeq[track]] }),
+			\dbMax, Pfunc({ ~sdDbRangeMax[track][~seqSeq[track]] }),
 
-	\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }) // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
-
-	/*
-	// Pour effectuer les trajectoires Gauche / Droite
-	\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
-	\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
-	*/
-
-),
-
-vbTraj: Pbind(
-
-	\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
-
-	\spread, Pfunc({ ~vbapSpread[track][~seqSeq[track]] }), // Spread du VBAP
-
-	\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
-	\pointScale, (Pfunc({ ~vbPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
+			\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }) // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
+
+			/*
+			// Pour effectuer les trajectoires Gauche / Droite
+			\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
+			\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
+			*/
+
+		),
+
+		vbTraj: Pbind(
+
+			\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
+
+			\spread, Pfunc({ ~vbapSpread[track][~seqSeq[track]] }), // Spread du VBAP
+
+			\dbRollOff, (Pfunc({ ~dbRollOff[track][~seqSeq[track]] }) ) /*.trace(prefix: "dbRollOff -> ")*/,
+			\pointScale, (Pfunc({ ~vbPointScale[track][~seqSeq[track]] }) ) /*.trace(prefix: "pointScale -> ")*/,
 
-	\trajBufLoop, Pfunc({ ~trajSpatLoop[track][~seqSeq[track]] }) /*.trace(prefix: "trajBufLoop -> ")*/,
+			\trajBufLoop, Pfunc({ ~trajSpatLoop[track][~seqSeq[track]] }) /*.trace(prefix: "trajBufLoop -> ")*/,
 
-	/*
-	\prepspa3, (Pfunc({ |ev| ev.prepspa.collect { |i| i - 18 } })) /*.trace(prefix: "prepspa3 -> ")*/,
-	\trajBuf, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][0] }, { ~trajectoryBuffers[i][0] }) } })) /*.trace(prefix: "trajBuf -> ")*/,
-	// Durée réelle de la trajectoire du buffer
-	\trajBufDur, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][1] }, { ~trajectoryBuffers[i][1] }) } })) /*.trace(prefix: "trajBufDur -> ")*/,
-	*/
+			/*
+			\prepspa3, (Pfunc({ |ev| ev.prepspa.collect { |i| i - 18 } })) /*.trace(prefix: "prepspa3 -> ")*/,
+			\trajBuf, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][0] }, { ~trajectoryBuffers[i][0] }) } })) /*.trace(prefix: "trajBuf -> ")*/,
+			// Durée réelle de la trajectoire du buffer
+			\trajBufDur, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][1] }, { ~trajectoryBuffers[i][1] }) } })) /*.trace(prefix: "trajBufDur -> ")*/,
+			*/
 
-	\trajBufRatio, (Pfunc({ |ev| var seq = ~seqSeq[track];
-		case
-		{~trajSpatTimeType[track][seq] == 0} // Adapt Time
-		{ (ev.durenv / ev.trajBufDur).reciprocal }
-		{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ > ev.trajBufDur0/*[0]*/}} // Trajectory Time
-		{ (ev.durenv / ev.trajBufDur).reciprocal }
-		{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ <= ev.trajBufDur0/*[0]*/}} // Trajectory Time
-		{ 1 }
-		{~trajSpatTimeType[track][seq] == 2 } // Slider Time
-		{ /*ev.trajBufRat*/ ~trajSpatRate[track][seq] }
-	})), /*.trace(prefix: "trajBufRatio -> ")*/
+			\trajBufRatio, (Pfunc({ |ev| var seq = ~seqSeq[track];
+				case
+				{~trajSpatTimeType[track][seq] == 0} // Adapt Time
+				{ (ev.durenv / ev.trajBufDur).reciprocal }
+				{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ > ev.trajBufDur0/*[0]*/}} // Trajectory Time
+				{ (ev.durenv / ev.trajBufDur).reciprocal }
+				{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ <= ev.trajBufDur0/*[0]*/}} // Trajectory Time
+				{ 1 }
+				{~trajSpatTimeType[track][seq] == 2 } // Slider Time
+				{ /*ev.trajBufRat*/ ~trajSpatRate[track][seq] }
+			})), /*.trace(prefix: "trajBufRatio -> ")*/
 
-	\delayUElev, (Pfunc({ |ev| ev.delayX.range(0.1, 90) })),
-	\selElev, (Pfunc({ |ev| case
-		{ev.delayUElev == 0.1} { 1 }
-		{ev.delayUElev == 90} { 2 }
-		{ev.delayUElev != 90} { 0 }
-	})),
-
-),
+			\delayUElev, (Pfunc({ |ev| ev.delayX.range(0.1, 90) })),
+			\selElev, (Pfunc({ |ev| case
+				{ev.delayUElev == 0.1} { 1 }
+				{ev.delayUElev == 90} { 2 }
+				{ev.delayUElev != 90} { 0 }
+			})),
+
+		),
 
-ambSD: Pbind(
+		ambSD: Pbind(
 
-	\outSpa, (Pkey(\prepfxL) * ~fxMulChannel)/*.trace(prefix: "outSpa -> ")*/,
+			\outSpa, (Pkey(\prepfxL) * ~fxMulChannel)/*.trace(prefix: "outSpa -> ")*/,
 
-	\pointScale, (Pfunc({ ~ambPointScale[track][~seqSeq[track]] })) /*.trace(prefix: "trajLevelScale -> ")*/,
-	\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }), // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
-
-	\delayUElev, (Pfunc({ |ev| ev.delayX.range(-0.5pi, 0.5pi) })),
-	\selElev, (Pfunc({ |ev| case
-		{ev.delayUElev == (-0.5pi)} { 1 }
-		{ev.delayUElev == 0.5pi} { 2 }
-		{ev.delayUElev != 0.5pi} { 0 }
-	})),
+			\pointScale, (Pfunc({ ~ambPointScale[track][~seqSeq[track]] })) /*.trace(prefix: "trajLevelScale -> ")*/,
+			\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }), // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
+
+			\delayUElev, (Pfunc({ |ev| ev.delayX.range(-0.5pi, 0.5pi) })),
+			\selElev, (Pfunc({ |ev| case
+				{ev.delayUElev == (-0.5pi)} { 1 }
+				{ev.delayUElev == 0.5pi} { 2 }
+				{ev.delayUElev != 0.5pi} { 0 }
+			})),
 
-	// ci-dessous pour le circulaire selon données spectrales
-	\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
-	\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
-	\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
-	\dbMin, Pfunc({ ~sdDbRangeMin[track][~seqSeq[track]] }),
-	\dbMax, Pfunc({ ~sdDbRangeMax[track][~seqSeq[track]] })
-
-	/*
-	// Pour effectuer les trajectoires Gauche / Droite
-	\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
-	\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
-	*/
-
-),
-
-ambTraj: Pbind(
-
-	\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
-
-	\pointScale, (Pfunc({ ~ambPointScale[track][~seqSeq[track]] })) /*.trace(prefix: "trajLevelScale -> ")*/,
-
-	\trajBufLoop, Pfunc({ ~trajSpatLoop[track][~seqSeq[track]] }) /*.trace(prefix: "trajBufLoop -> ")*/,
-
-	/*
-	\prepspa3, (Pfunc({ |ev| ev.prepspa.collect { |i| i - 18 } })) /*.trace(prefix: "prepspa3 -> ")*/,
-	\trajBuf, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][0] }, { ~trajectoryBuffers[i][0] }) } })) /*.trace(prefix: "trajBuf -> ")*/,
-	// Durée réelle de la trajectoire du buffer
-	\trajBufDur, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][1] }, { ~trajectoryBuffers[i][1] }) } })) /*.trace(prefix: "trajBufDur -> ")*/,
-	*/
-
-	\trajBufRatio, (Pfunc({ |ev| var seq = ~seqSeq[track];
-		case
-		{~trajSpatTimeType[track][seq] == 0} // Adapt Time
-		{ (ev.durenv / ev.trajBufDur).reciprocal }
-		{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ > ev.trajBufDur0/*[0]*/}} // Trajectory Time
-		{ (ev.durenv / ev.trajBufDur).reciprocal }
-		{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ <= ev.trajBufDur0/*[0]*/}} // Trajectory Time
-		{ 1 }
-		{~trajSpatTimeType[track][seq] == 2 } // Slider Time
-		{ /*ev.trajBufRat*/ ~trajSpatRate[track][seq] }
-	})) /*.trace(prefix: "trajBufRatio -> ")*/,
-
-	\delayUElev, (Pfunc({ |ev| ev.delayX.range(-0.5pi, 0.5pi) })),
-	\selElev, (Pfunc({ |ev| case
-		{ev.delayUElev == (-0.5pi)} { 1 }
-		{ev.delayUElev == 0.5pi} { 2 }
-		{ev.delayUElev != 0.5pi} { 0 }
-	}))
-
-),
-
-spec: Pbind(
-
-	\panSpectralCurve, (Pfunc({ ~spec2spaCurve[track][~seqSeq[track]] })) /*.trace(prefix: "panSpectralCurve -> ")*/
-
-	/*
-	// Pour effectuer les trajectoires Gauche / Droite - seulement utile pour les lines
-	\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
-	\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
-
-	// seulement utile pour les lines Aller ou Aller/retour
-	\spaSpeed, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.inclusivelyBetween(2,3), {0}, {1} ) } }) ),
-	*/
-
-),
-
-acous: Pbind(
-
-	// \outsL, (Pfunc({ |ev| [~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][0]] })) /*.trace(prefix: "Outs L -> ")*/,
-	// Le fait de ne pas mettre une Array autour provoque le déclenchement de 2 synthés au lieu d'1, l'un avec les arguments par défaut et l'autre avec les argument de \outsL
-
-	// Pour prendre en compte les FX
-	/*\outL, Pif((Pkey(\prepfxL) <= 0),
-	(Pkey(\prepoutL) - 1),
-	(Pkey(\prepoutL) - 1) + (Pkey(\prepfxL) * ~fxMulChannel)) /*.trace(prefix: "L -> ")*/,*/
-
-	\outsL, (Pfunc({ |ev|
-		if ( ev.prepfxL <= 0, {
-			[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][0]]
-		},{
-			[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][0] + (ev.prepfxL * ~fxMulChannel)]
-		});
-	})) /*.trace(prefix: "Outs L -> ")*/,
-
-	// \outsR, (Pfunc({ |ev| [~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][1]] })) /*.trace(prefix: "Outs R -> ")*/,
-	// ~bigStereoOuts[31-(18+~allSpasGUIAmbi.size)][1]
-
-	\outsR, (Pfunc({ |ev| if ( ev.prepfxR <= 0, {
-		[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][1]]
-	},{
-		[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][1] + (ev.prepfxR * ~fxMulChannel)]
-	});
-	})) /*.trace(prefix: "Outs R -> ")*/,
-
-),
-
-others: Pbind(
-
-	/*// ci-dessous pas forcément nécessaire / seulement utile pour visualisation si pas trop gourmand en CPU XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX - apparemment non
-	// à retirer du synthé et rajouter les arguments pour éviter doublon
-	\panCircMReg, (Pfunc({ |ev| /*ev.pan.lincurve(-1, 1, 20, 0.1, -4)*/ ev.pan.abs.linexp(0, 1, 0.01, ~circSpeedRangeMax[track][~seqSeq[track]]) })) /*.trace(prefix: "pannning CircM Reg -> ")*/,
-	/*
-	0.5.lincurve(0, 1, 0.1, 66, 6)
-	0.5.linexp(0, 1, 0.1, 66)
-	*/
-
-	// obligé de mettre 0.001 ci-dessous car panCircMVarMax utilise une fonction exponentielle et ne peut pas recevoir 0
-	// Place dans le coeur du Pbind car generetion dune erreur avec le retour visuel
-	\panCircMVarMin, (Pfunc({ |ev| (ev.prepoutRU * ~circSpeedRangeMin[track][~seqSeq[track]]) + 0.001 })) /*.trace(prefix: "pannning CircM Var min -> ")*/,
-	\panCircMVarMax, (Pfunc({ |ev| /*ev.panU.range(ev.prepoutRU*3, 20)*/ /*ev.pan.lincurve(-1, 1, 20, ev.panCircMVarMin, -4)*/ ev.pan.abs.linexp(0, 1, ev.panCircMVarMin, ~circSpeedRangeMax[track][~seqSeq[track]]) })) /*.trace(prefix: "pannning CircM Var max -> ")*/,*/
-
-)
-
-))
+			// ci-dessous pour le circulaire selon données spectrales
+			\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
+			\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
+			\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
+			\dbMin, Pfunc({ ~sdDbRangeMin[track][~seqSeq[track]] }),
+			\dbMax, Pfunc({ ~sdDbRangeMax[track][~seqSeq[track]] })
+
+			/*
+			// Pour effectuer les trajectoires Gauche / Droite
+			\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
+			\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
+			*/
+
+		),
+
+		ambTraj: Pbind(
+
+			\outSpa, (Pkey(\prepfxL) * ~fxMulChannel) /*.trace(prefix: "outSpa -> ")*/,
+
+			\pointScale, (Pfunc({ ~ambPointScale[track][~seqSeq[track]] })) /*.trace(prefix: "trajLevelScale -> ")*/,
+
+			\trajBufLoop, Pfunc({ ~trajSpatLoop[track][~seqSeq[track]] }) /*.trace(prefix: "trajBufLoop -> ")*/,
+
+			/*
+			\prepspa3, (Pfunc({ |ev| ev.prepspa.collect { |i| i - 18 } })) /*.trace(prefix: "prepspa3 -> ")*/,
+			\trajBuf, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][0] }, { ~trajectoryBuffers[i][0] }) } })) /*.trace(prefix: "trajBuf -> ")*/,
+			// Durée réelle de la trajectoire du buffer
+			\trajBufDur, (Pfunc({ |ev| ev.prepspa3.collect { |i| if (i < 0, { ~trajectoryBuffers[0][1] }, { ~trajectoryBuffers[i][1] }) } })) /*.trace(prefix: "trajBufDur -> ")*/,
+			*/
+
+			\trajBufRatio, (Pfunc({ |ev| var seq = ~seqSeq[track];
+				case
+				{~trajSpatTimeType[track][seq] == 0} // Adapt Time
+				{ (ev.durenv / ev.trajBufDur).reciprocal }
+				{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ > ev.trajBufDur0/*[0]*/}} // Trajectory Time
+				{ (ev.durenv / ev.trajBufDur).reciprocal }
+				{~trajSpatTimeType[track][seq] == 1 and: {ev.durenv0/*[0]*/ <= ev.trajBufDur0/*[0]*/}} // Trajectory Time
+				{ 1 }
+				{~trajSpatTimeType[track][seq] == 2 } // Slider Time
+				{ /*ev.trajBufRat*/ ~trajSpatRate[track][seq] }
+			})) /*.trace(prefix: "trajBufRatio -> ")*/,
+
+			\delayUElev, (Pfunc({ |ev| ev.delayX.range(-0.5pi, 0.5pi) })),
+			\selElev, (Pfunc({ |ev| case
+				{ev.delayUElev == (-0.5pi)} { 1 }
+				{ev.delayUElev == 0.5pi} { 2 }
+				{ev.delayUElev != 0.5pi} { 0 }
+			}))
+
+		),
+
+		spec: Pbind(
+
+			\panSpectralCurve, (Pfunc({ ~spec2spaCurve[track][~seqSeq[track]] })) /*.trace(prefix: "panSpectralCurve -> ")*/
+
+			/*
+			// Pour effectuer les trajectoires Gauche / Droite - seulement utile pour les lines
+			\panL, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.odd, {1}, {-1} ) } })) /*.trace(prefix: "panL -> ")*/,
+			\panR, (Pfunc({ |ev| ev.panL * (-1)	})) /*.trace(prefix: "panR -> ")*/,
+
+			// seulement utile pour les lines Aller ou Aller/retour
+			\spaSpeed, (Pfunc({ |ev| ev.prepspa.collect { |i| if (i.inclusivelyBetween(2,3), {0}, {1} ) } }) ),
+			*/
+
+		),
+
+		acous: Pbind(
+
+			// \outsL, (Pfunc({ |ev| [~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][0]] })) /*.trace(prefix: "Outs L -> ")*/,
+			// Le fait de ne pas mettre une Array autour provoque le déclenchement de 2 synthés au lieu d'1, l'un avec les arguments par défaut et l'autre avec les argument de \outsL
+
+			// Pour prendre en compte les FX
+			/*\outL, Pif((Pkey(\prepfxL) <= 0),
+			(Pkey(\prepoutL) - 1),
+			(Pkey(\prepoutL) - 1) + (Pkey(\prepfxL) * ~fxMulChannel)) /*.trace(prefix: "L -> ")*/,*/
+
+			\outsL, (Pfunc({ |ev|
+				if ( ev.prepfxL <= 0, {
+					[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][0]]
+				},{
+					[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][0] + (ev.prepfxL * ~fxMulChannel)]
+				});
+			})) /*.trace(prefix: "Outs L -> ")*/,
+
+			// \outsR, (Pfunc({ |ev| [~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][1]] })) /*.trace(prefix: "Outs R -> ")*/,
+			// ~bigStereoOuts[31-(18+~allSpasGUIAmbi.size)][1]
+
+			\outsR, (Pfunc({ |ev| if ( ev.prepfxR <= 0, {
+				[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][1]]
+			},{
+				[~bigStereoOuts[ev.prepspa0-(18+~allSpasGUIAmbi.size)][1] + (ev.prepfxR * ~fxMulChannel)]
+			});
+			})) /*.trace(prefix: "Outs R -> ")*/,
+
+		),
+
+		others: Pbind(
+
+			/*// ci-dessous pas forcément nécessaire / seulement utile pour visualisation si pas trop gourmand en CPU XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX - apparemment non
+			// à retirer du synthé et rajouter les arguments pour éviter doublon
+			\panCircMReg, (Pfunc({ |ev| /*ev.pan.lincurve(-1, 1, 20, 0.1, -4)*/ ev.pan.abs.linexp(0, 1, 0.01, ~circSpeedRangeMax[track][~seqSeq[track]]) })) /*.trace(prefix: "pannning CircM Reg -> ")*/,
+			/*
+			0.5.lincurve(0, 1, 0.1, 66, 6)
+			0.5.linexp(0, 1, 0.1, 66)
+			*/
+
+			// obligé de mettre 0.001 ci-dessous car panCircMVarMax utilise une fonction exponentielle et ne peut pas recevoir 0
+			// Place dans le coeur du Pbind car generetion dune erreur avec le retour visuel
+			\panCircMVarMin, (Pfunc({ |ev| (ev.prepoutRU * ~circSpeedRangeMin[track][~seqSeq[track]]) + 0.001 })) /*.trace(prefix: "pannning CircM Var min -> ")*/,
+			\panCircMVarMax, (Pfunc({ |ev| /*ev.panU.range(ev.prepoutRU*3, 20)*/ /*ev.pan.lincurve(-1, 1, 20, ev.panCircMVarMin, -4)*/ ev.pan.abs.linexp(0, 1, ev.panCircMVarMin, ~circSpeedRangeMax[track][~seqSeq[track]]) })) /*.trace(prefix: "pannning CircM Var max -> ")*/,*/
+
+		)
+
+	))
 
 };
 
@@ -2100,7 +2126,7 @@ others: Pbind(
 			}})) /*.trace(prefix: "probU -> ")*/,
 			\preppro,	(Pfunc({ |ev| ~proSpec[track][~seqSeq[track]].map(ev.prepproU) * ~proMul[track][~seqSeq[track]]})) /*.trace(prefix: "prob -> ")*/,*/
 
-			\prepproU, (Prout({ var x, x2, r, seq; /*~proBlock[track] = 0;*/
+			\prepproU, (Prout({ var x, x2, r, seq, prev; /*~proBlock[track] = 0;*/
 				loop {
 					seq = ~seqSeq[track];
 					case
@@ -2342,16 +2368,21 @@ others: Pbind(
 						x2 = x2.linlin(x2.minItem, x2.maxItem, 0, 1);
 						~patternKeyRand2ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, ~proView, x2, 0);
 					}
-					/*// Pwrand([1,Pbjorklund2(5,16,1)/4],[0.8,0.2],inf)
-					// Pwrand([1, Pbjorklund(1, 2, 1, 0)],[0.9,0.1],inf).asStream.nextN(100) // XXXXXXXXXXXXXXXXXXXXX
+
+					/*// a = Pwrand([1,Pbjorklund2(5,16,1)/4],[0.8,0.2],inf).asStream; a.next // implémenté
+					// Pwrand([1, Pbjorklund(1, 2, 1, 0)],[0.6,0.1],inf).asStream.nextN(100) // XXXXXXXXXXXXXXXXXXXXX
+					Pwrand([1, Pbjorklund(1, 3, 1, 0)],[0.6,0.1],inf).asStream.nextN(100) // XXXXXXXXXXXXXXXXXXXXX
+					Pbjorklund(1, 2, 1, 0).asStream.nextN(100);
+					Pbjorklund(1, 3, 1, 0).asStream.nextN(100);
+					Pbjorklund(Pseq([1,2,3], inf), 4, inf).asStream.nextN(100)
 					{~proPatSel[track][seq] == 13 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // Pbjorklund
 					// Euclidean Algorithm for generating traditional musical rhythms
 					// args -> k (The number of hits), n (The total array size)
-					{x2 = Pwrand([1, Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, inf, ~proBjor2[track][seq]) ],[~test1,1-~test1],inf).asStream.nextN(~pro[track][seq].size);
+					{x2 = Pwrand([1, Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, inf, ~proBjor2[track][seq]) ],[~test,1-~test],inf).asStream.nextN(~pro[track][seq].size);
 					~patternKeyRand2ElementFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, ~proView, x2, 0);
 					}
 					{~proPatSel[track][seq] == 13 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}} // Pbjorklund (quand boucle cassée)
-					{x2 = Pwrand([1, Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, inf, ~proBjor2[track][seq]) ],[~test1,1-~test1],inf).asStream.nextN(~pro[track][seq].size);
+					{x2 = Pwrand([1, Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, inf, ~proBjor2[track][seq]) ],[~test,1-~test],inf).asStream.nextN(~pro[track][seq].size);
 					~patternKeyRand2ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, ~proView, x2, 0);
 					}*/
 					{~proPatSel[track][seq] == 13 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // Pbjorklund
@@ -2364,14 +2395,193 @@ others: Pbind(
 					{x2 = Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, inf, ~proBjor2[track][seq]).asStream.nextN(~pro[track][seq].size);
 						~patternKeyRand2ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, ~proView, x2, 0);
 					}
+					// Euclidean Algorithm with probability to alternate with 1 - the duration of the Euclidean sequence is determined by ~proBjor3
+					{~proPatSel[track][seq] == 14 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // EuWe
+					{x2 = Pwrand([1, Pbjorklund(~proBjor[track][seq], ~proBjor3[track][seq], 1, ~proBjor2[track][seq])], [~proWeight[track][seq], 1-~proWeight[track][seq]], inf).asStream;
+						~patternKeyRand0ElementFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					{~proPatSel[track][seq] == 14 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}} // EuWe (quand boucle cassée)
+					{x2 = Pwrand([1, Pbjorklund(~proBjor[track][seq], ~proBjor3[track][seq], 1, ~proBjor2[track][seq])], [~proWeight[track][seq], 1-~proWeight[track][seq]], inf).asStream;
+						~patternKeyRand0ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					// 2 Euclidean Algorithms with alternance Pxrand
+					{~proPatSel[track][seq] == 15 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // Eu2X
+					{x2 = Pxrand([Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, 1, ~proBjor2[track][seq]), Pbjorklund(~proBjor3[track][seq], ~pro[track][seq].size, 1, ~proBjor4[track][seq])], inf).asStream;
+						~patternKeyRand0ElementFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					{~proPatSel[track][seq] == 15 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}} // Eu2X (quand boucle cassée)
+					{x2 = Pxrand([Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, 1, ~proBjor2[track][seq]), Pbjorklund(~proBjor3[track][seq], ~pro[track][seq].size, 1, ~proBjor4[track][seq])], inf).asStream;
+						~patternKeyRand0ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					// 2 Euclidean Algorithms with random Pwhite
+					{~proPatSel[track][seq] == 16 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // Eu2R
+					{x2 = Pbjorklund(Pwhite(~proBjor[track][seq], ~proBjor3[track][seq]), ~pro[track][seq].size, inf, ~proBjor2[track][seq] /*Pwhite(~proBjor2[track][seq], ~proBjor4[track][seq])*/).asStream;
+						~patternKeyRand0ElementFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					{~proPatSel[track][seq] == 16 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}} // Eu2R (quand boucle cassée)
+					{x2 = Pbjorklund(Pwhite(~proBjor[track][seq], ~proBjor3[track][seq]), ~pro[track][seq].size, inf, ~proBjor2[track][seq] /*Pwhite(~proBjor2[track][seq], ~proBjor4[track][seq])*/).asStream;
+						~patternKeyRand0ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					// 2 Euclidean Algorithms in sequence with PShuf - Pseq does not work
+					/*
+					a = Pbjorklund(Pseq((~proBjor[~tracksValue][~seqsValue]..~proBjor3[~tracksValue][~seqsValue]), inf), ~pro[~tracksValue][~seqsValue].size, inf, Pseq((~proBjor[~tracksValue][~seqsValue]..~proBjor3[~tracksValue][~seqsValue]), inf) /*~proBjor2[~tracksValue][~seqsValue]*/ /*Pseq((~proBjor2[~tracksValue][~seqsValue]..~proBjor4[~tracksValue][~seqsValue]), inf)*/).asStream;
+					a.next;
+					*/
+					// Pourquoi le Pseq ou Pseries ne marche pas même sur le nb de Hits et pourquoi l'offset doit être fixe, sinon bug ?????????????????????
+					{~proPatSel[track][seq] == 17 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // Eu2S
+					{// x2 = Pbjorklund(/*Pseq*/ Pseries(~proBjor[track][seq], 1, ~proBjor3[track][seq]).asStream, ~pro[track][seq].size, inf, ~proBjor2[track][seq] /*Pseq((~proBjor2[track][seq]..~proBjor4[track][seq]), inf)*/).asStream;
+						x2 = Pbjorklund(/*Pseq*/ Pshuf((~proBjor[track][seq]..~proBjor3[track][seq]), inf), ~pro[track][seq].size, inf, ~proBjor2[track][seq] /*Pseq((~proBjor2[track][seq]..~proBjor4[track][seq]), inf)*/).asStream;
+						~patternKeyRand0ElementFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					{~proPatSel[track][seq] == 17 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}} // Eu2S (quand boucle cassée)
+					{// x2 = Pbjorklund(/*Pseq*/ Pseries(~proBjor[track][seq], 1, ~proBjor3[track][seq]).asStream, ~pro[track][seq].size, inf, ~proBjor2[track][seq] /*Pseq((~proBjor2[track][seq]..~proBjor4[track][seq]), inf)*/).asStream;
+						x2 = Pbjorklund(/*Pseq*/ Pshuf((~proBjor[track][seq].copy..~proBjor3[track][seq]), inf), ~pro[track][seq].size, inf, ~proBjor2[track][seq] /*Pseq((~proBjor2[track][seq]..~proBjor4[track][seq]), inf)*/).asStream; // Pn Plazy
+						~patternKeyRand0ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					// 2 Euclidean Algorithms with probability for the 1st one
+					{~proPatSel[track][seq] == 18 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}} // Eu2W
+					{x2 = Pwrand([Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, 1, ~proBjor2[track][seq]), Pbjorklund(~proBjor3[track][seq], ~pro[track][seq].size, 1, ~proBjor4[track][seq])], [~proWeight[track][seq], 1-~proWeight[track][seq]], inf).asStream;
+						~patternKeyRand0ElementFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+					{~proPatSel[track][seq] == 18 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}} // Eu2W (quand boucle cassée)
+					{x2 = Pwrand([Pbjorklund(~proBjor[track][seq], ~pro[track][seq].size, 1, ~proBjor2[track][seq]), Pbjorklund(~proBjor3[track][seq], ~pro[track][seq].size, 1, ~proBjor4[track][seq])], [~proWeight[track][seq], 1-~proWeight[track][seq]], inf).asStream;
+						~patternKeyRand0ElementCutLoopFunction.(currentEnvironment, track, seq, \pro, \posPro, \proBlock, x2);
+					}
+
+					// "Grids is a topographic drum sequencer and allows you to sequence up to six different sounds. Three in its basic mode, six with use of accent" ???
+					// Hacking Mutable Instruments Grids - Getting Started:
+					// https://www.youtube.com/watch?v=Eex-iLuUdiw
+					// https://goodtohear.co.uk/tools/grids-sequencer
+					// "Noise Engineering has Numeric Repetitor and Zularic Repetitor which operate similar to Grids."
+					// "Coupled with Doepfer quad switches and an Alesis DM-Pro is my percussive backbone."
+
+					// Mise en place de multiples sliders pour contrôler ScGrids et les variations Euclidiennes : ~proBjorGridsX, ~proBjorGridsY, ~gridsDens, ~proBjor3, ~proGridsBias, ~proBjor4, ~proWeight, ~proDrumType
+					// Still To Do : XXXXXXXXXXXXXXXXXX
+					// Faire un bouton random sur certains sliders du Grid comme GX et GY ou drumType
+					// Intégrer un LFO directement dans les paramètres du pattern comme X, Y ou chaos (voire ceux de Fredrik Oloffson) XXX
+					// Il serait bien d'ajouter le proWeight & proDrumType dans le Global
+					// Mettre à jour les valeurs dans les controleurs (notamment le Lemur)
+
+					// SC Grids modifié
+					// avec ornementation avec un % d'aléatoire sur des notes supplémentaires où le RangeView détermine le range du volume aléatoire
+					{~proPatSel[track][seq] == 19 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}}
+					{block{|break|
+						~pro[track][seq].size.do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((i % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: ~proBjorGridsX[track][seq], y: ~proBjorGridsY[track][seq], bias: ~proGridsBias[track][seq]);
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {gridsLevel = gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield;
+							})
+						}
+					}}
+					{~proPatSel[track][seq] == 19 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}}
+					{~proBlock[track] = 0; block{|break|
+						~seqGlobalRemainingSize[track].do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((~seqGlobalIndex[track] % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: ~proBjorGridsX[track][seq], y: ~proBjorGridsY[track][seq], bias: ~proGridsBias[track][seq]);
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {gridsLevel = gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield;
+							})
+						}
+					}}
+
+					// SC Grids prenant en compte la valeur précédente
+					// avec ornementation avec un % d'aléatoire sur des notes supplémentaires où le RangeView détermine le range du volume aléatoire
+					{~proPatSel[track][seq] == 20 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}}
+					{block{|break|
+						~pro[track][seq].size.do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((i % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: ~proBjorGridsX[track][seq], y: ~proBjorGridsY[track][seq], bias: ~proGridsBias[track][seq]);
+								// if (gridsLevel > (1-~gridsDens[track][seq]), {gridsLevel = 1- gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield; // inverse de la valeur de gridsLevel, mais ne marche pas bien
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {
+									gridsLevel = gridsLevel; prev = gridsLevel;
+								},{
+									if (~proWeight[track][seq].coin, {
+										gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq]); prev = 0;
+									},{
+										if (prev.notNil and: {prev > 0}, {gridsLevel = prev * ~proGridsBias2[track][seq]; prev = gridsLevel; /*gridsLevel.postln*/}, {gridsLevel = 0; prev = 0});
+									});
+								}); gridsLevel.yield; // "a".postln
+							})
+						}
+					}}
+					{~proPatSel[track][seq] == 20 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}}
+					{~proBlock[track] = 0; block{|break|
+						~seqGlobalRemainingSize[track].do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((~seqGlobalIndex[track] % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: ~proBjorGridsX[track][seq], y: ~proBjorGridsY[track][seq], bias: ~proGridsBias[track][seq]);
+								// if (gridsLevel > (1-~gridsDens[track][seq]), {gridsLevel = 1- gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield; // inverse de la valeur de gridsLevel, mais ne marche pas bien
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {
+									gridsLevel = gridsLevel; prev = gridsLevel;
+								},{
+									if (~proWeight[track][seq].coin, {
+										gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq]); prev = 0;
+									},{
+										if (prev.notNil and: {prev > 0}, {gridsLevel = prev * ~proGridsBias2[track][seq]; prev = gridsLevel; /*gridsLevel.postln*/}, {gridsLevel = 0; prev = 0});
+									});
+								}); gridsLevel.yield; // "b".postln
+							})
+						}
+					}}
+
+					// SC Grids aléatoire dans un range pour GX et GY (afin d'utiliser ~proGridsBias)
+					// avec ornementation avec un % d'aléatoire sur des notes supplémentaires où le RangeView détermine le range du volume aléatoire
+					{~proPatSel[track][seq] == 21 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}}
+					{block{|break|
+						~pro[track][seq].size.do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((i % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: (~proBjorGridsX[track][seq] + ~proGridsBias2[track][seq].rand2).clip(0,1), y: (~proBjorGridsY[track][seq] + ~proGridsBias2[track][seq].rand2).clip(0,1), bias: ~proGridsBias[track][seq]);
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {gridsLevel = gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield;
+							})
+						}
+					}}
+					{~proPatSel[track][seq] == 21 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}}
+					{~proBlock[track] = 0; block{|break|
+						~seqGlobalRemainingSize[track].do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((~seqGlobalIndex[track] % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: (~proBjorGridsX[track][seq] + ~proGridsBias2[track][seq].rand2).clip(0,1), y: (~proBjorGridsY[track][seq] + ~proGridsBias2[track][seq].rand2).clip(0,1), bias: ~proGridsBias[track][seq]);
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {gridsLevel = gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield;
+							})
+						}
+					}}
+
+					// SC Grids aléatoire entre 2 valeurs (pas d'utilisation de ~proGridsBias car pas assez de sliders pour random à la fois de GX et GY)
+					// avec ornementation avec un % d'aléatoire sur des notes supplémentaires où le RangeView détermine le range du volume aléatoire
+					{~proPatSel[track][seq] == 22 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 0}}
+					{block{|break|
+						~pro[track][seq].size.do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((i % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: ~proBjorGridsX[track][seq].rrand(~proGridsBias[track][seq]), y: ~proBjorGridsY[track][seq].rrand(~proGridsBias2[track][seq]));
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {gridsLevel = gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield;
+							})
+						}
+					}}
+					{~proPatSel[track][seq] == 22 and: { ~proPat[track][seq] == 1 } and: {~proBlock[track] == 1}}
+					{~proBlock[track] = 0; block{|break|
+						~seqGlobalRemainingSize[track].do{|i| var gridsLevel;
+							if (~proBlock[track] == 1, {break.value}, {
+								~posPro[track][seq] = ((~seqGlobalIndex[track] % ~seqDurPro[track][seq]) + ~proSeqStart[track][seq])/*.postln*/; // necessary to get position ???
+								gridsLevel = ScGrids.calculateLevel(instrument: ~proDrumType[track][seq], curBeat: i, x: ~proBjorGridsX[track][seq].rrand(~proGridsBias[track][seq]), y: ~proBjorGridsY[track][seq].rrand(~proGridsBias2[track][seq]));
+								if (gridsLevel >= (1-~gridsDens[track][seq]), {gridsLevel = gridsLevel}, { if (~proWeight[track][seq].coin, {gridsLevel = ~proMin[track][seq].rrand(~proMax[track][seq])}, {gridsLevel = 0}); /*gridsLevel = 0*/}); gridsLevel.yield;
+							})
+						}
+					}}
 
 			}})) /*.trace(prefix: "prepproU -> ")*/,
 
 			\preppro, (Pfunc({ |ev| var seq = ~seqSeq[track]; ~proSpec[track][seq].map(ev.prepproU * ~proMul[track][seq])})) /*.trace(prefix: "preppro -> ")*/,
 
-			\typePro, Pfunc({|ev| ev.preppro.coin })/*.trace(prefix: "typePro -> ")*/,
+			// \typePro, Pfunc({|ev| ev.preppro.coin })/*.trace(prefix: "typePro -> ")*/,
+			\typePro, Pfunc({|ev| var seq = ~seqSeq[track]; if (~proPatSel[track][seq] > 18 and: {~proPat[track][seq] == 1}, { if (/*~gridsLevel*/ ev.prepproU > 0, {true}, {false}) }, {ev.preppro.coin}) }) /*.trace(prefix: "typePro -> ")*/,
+
 			\typePro2, Pfunc({|ev| if (ev.typePro == true, {~proT[track] = ~proT[track]+1}, {~proT[track]} ); ~proT[track] }) /*.trace(prefix: "typePro2 -> ")*/, // Pour ne faire avancer les autres modules comme Buf ou Rat seulement quand une note est déclenchée // 0 redéclenché au début de chaque pattern
 			\typePro3, Pfunc({|ev| if (ev.typePro == true, {~proT2[track] = ~proT2[track]+1 }, {~proT2[track]} ); ~proT2[track] }) /*.trace(prefix: "typePro3 -> ")*/, // pour le Lehmer avec note
+			// voir à éliminer \typePro3 et remplacer ~proT2 par ~proT puisqu'il s'agit de toute façon de la même valeur ??? to check ???
 
 
 
@@ -2965,6 +3175,7 @@ others: Pbind(
 
 
 
+
 			\legU, (Prout({ ~patternKeyFunction.( currentEnvironment, track, \leg, \legDir, \legPat, \legPatSel, \posLeg, \seqDurLeg, \legSeqStart, \legSeqStop, \legBlock, ~legView) })) /*.trace(prefix: "legatoU -> ")*/,
 
 			\ampU, (Prout({ ~patternKeyFunction.( currentEnvironment, track, \amp, \ampDir, \ampPat, \ampPatSel, \posAmp, \seqDurAmp, \ampSeqStart, \ampSeqStop, \ampBlock, ~ampView) }))/*.trace(prefix: "ampU -> ")*/,
@@ -3022,6 +3233,7 @@ others: Pbind(
 
 			\amp, (Pfunc({ |ev| var seq = ~seqSeq[track];
 				case
+				{~proPatSel[track][seq] > 18 and: { ~proPat[track][seq] == 1 }} { ev.ampH * /*~gridsLevel*/ ev.prepproU } // Special case SC Grids
 				{~ampPatSel[track][seq] < ~controlBus0  or:  { ~ampPat[track][seq] == 0 }} { ev.ampH }
 				{~ampPatSel[track][seq] == ~controlBus0 and: { ~ampPat[track][seq] == 1 }} {~controlBus[ev.serverNb][0].asMap} // à normaliser de 0 à 1 ???
 				{~ampPatSel[track][seq] == ~controlBus1 and: { ~ampPat[track][seq] == 1 }} {~controlBus[ev.serverNb][1].asMap}
@@ -3091,35 +3303,37 @@ others: Pbind(
 				{ ~rtmPat[track][seq] == 0  or: {~rtmPatSel[track][seq] < 13}} { ev.durU }
 				{~rtmPatSel[track][seq] == 13 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.durU.max(maxV) }
 				{~rtmPatSel[track][seq] == 14 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.durU.max(maxV) }
-				{~rtmPatSel[track][seq] == 15 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.legU.max(maxV) }
-				{~rtmPatSel[track][seq] == 16 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.legU.max(maxV) }
-				{~rtmPatSel[track][seq] == 17 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.ampU.max(maxV) }
-				{~rtmPatSel[track][seq] == 18 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.ampU.max(maxV) }
-				{~rtmPatSel[track][seq] == 19 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.preprateU.max(maxV) }
-				{~rtmPatSel[track][seq] == 20 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.preprateU.max(maxV) }
-				{~rtmPatSel[track][seq] == 21 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.stretcherU.max(maxV) }
-				{~rtmPatSel[track][seq] == 22 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.stretcherU.max(maxV) }
-				{~rtmPatSel[track][seq] == 23 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.centerU.max(maxV) }
-				{~rtmPatSel[track][seq] == 24 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.centerU.max(maxV) }
-				{~rtmPatSel[track][seq] == 25 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.preprate2U.max(maxV) }
-				{~rtmPatSel[track][seq] == 26 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.preprate2U.max(maxV) }
-				{~rtmPatSel[track][seq] == 27 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.stretcher2U.max(maxV) }
-				{~rtmPatSel[track][seq] == 28 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.stretcher2U.max(maxV) }
-				{~rtmPatSel[track][seq] == 29 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.center2U.max(maxV) }
-				{~rtmPatSel[track][seq] == 30 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.center2U.max(maxV) }
-				{~rtmPatSel[track][seq] == 31 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepbufU.max(maxV) }
-				{~rtmPatSel[track][seq] == 32 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepbufU.max(maxV) }
-				{~rtmPatSel[track][seq] == 33 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.offsetU.max(maxV) }
-				{~rtmPatSel[track][seq] == 34 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.offsetU.max(maxV) }
-				{~rtmPatSel[track][seq] == 35 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.panU.max(maxV) }
-				{~rtmPatSel[track][seq] == 36 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.panU.max(maxV) }
-				{~rtmPatSel[track][seq] == 37 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.delayU.max(maxV) }
-				{~rtmPatSel[track][seq] == 38 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.delayU.max(maxV) }
-				{~rtmPatSel[track][seq] == 39 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepoutLU.max(maxV) }
-				{~rtmPatSel[track][seq] == 40 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepoutLU.max(maxV) }
-				{~rtmPatSel[track][seq] == 41 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepoutRU.max(maxV) }
-				{~rtmPatSel[track][seq] == 42 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepoutRU.max(maxV) }
-				{~rtmPatSel[track][seq] > 42 /*and: { ~rtmPat[track][seq] == 1 }*/} { ~posRtm[track][seq] = 100000; }
+				{~rtmPatSel[track][seq] == 15 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepproU.max(maxV) }
+				{~rtmPatSel[track][seq] == 16 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepproU.max(maxV) }
+				{~rtmPatSel[track][seq] == 17 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.legU.max(maxV) }
+				{~rtmPatSel[track][seq] == 18 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.legU.max(maxV) }
+				{~rtmPatSel[track][seq] == 19 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.ampU.max(maxV) }
+				{~rtmPatSel[track][seq] == 20 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.ampU.max(maxV) }
+				{~rtmPatSel[track][seq] == 21 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.preprateU.max(maxV) }
+				{~rtmPatSel[track][seq] == 22 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.preprateU.max(maxV) }
+				{~rtmPatSel[track][seq] == 23 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.stretcherU.max(maxV) }
+				{~rtmPatSel[track][seq] == 24 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.stretcherU.max(maxV) }
+				{~rtmPatSel[track][seq] == 25 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.centerU.max(maxV) }
+				{~rtmPatSel[track][seq] == 26 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.centerU.max(maxV) }
+				{~rtmPatSel[track][seq] == 27 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.preprate2U.max(maxV) }
+				{~rtmPatSel[track][seq] == 28 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.preprate2U.max(maxV) }
+				{~rtmPatSel[track][seq] == 29 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.stretcher2U.max(maxV) }
+				{~rtmPatSel[track][seq] == 30 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.stretcher2U.max(maxV) }
+				{~rtmPatSel[track][seq] == 31 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.center2U.max(maxV) }
+				{~rtmPatSel[track][seq] == 32 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.center2U.max(maxV) }
+				{~rtmPatSel[track][seq] == 33 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepbufU.max(maxV) }
+				{~rtmPatSel[track][seq] == 34 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepbufU.max(maxV) }
+				{~rtmPatSel[track][seq] == 35 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.offsetU.max(maxV) }
+				{~rtmPatSel[track][seq] == 36 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.offsetU.max(maxV) }
+				{~rtmPatSel[track][seq] == 37 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.panU.max(maxV) }
+				{~rtmPatSel[track][seq] == 39 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.panU.max(maxV) }
+				{~rtmPatSel[track][seq] == 39 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.delayU.max(maxV) }
+				{~rtmPatSel[track][seq] == 40 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.delayU.max(maxV) }
+				{~rtmPatSel[track][seq] == 41 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepoutLU.max(maxV) }
+				{~rtmPatSel[track][seq] == 42 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepoutLU.max(maxV) }
+				{~rtmPatSel[track][seq] == 43 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; ev.prepoutRU.max(maxV) }
+				{~rtmPatSel[track][seq] == 44 and: { ~rtmPat[track][seq] == 1 }} { ~posRtm[track][seq] = 1000; 1-ev.prepoutRU.max(maxV) }
+				{~rtmPatSel[track][seq] > 44 /*and: { ~rtmPat[track][seq] == 1 }*/} { ~posRtm[track][seq] = 100000; }
 			})) /*.trace(prefix: "durX -> ")*/,
 
 			/*\durX, (Pfunc({ |ev| var seq = ~seqSeq[track]; // Version sans mini comme ci-dessus
@@ -5685,67 +5899,67 @@ fork {
 		Pdef(~patterns[tr]).quant_(/*~quant[tr]*/ 0); Pdef(~patterns[tr]).pause;
 		~oneEvent[tr] = Pdef(~patterns[tr]).asStream;
 	};
-// };
+	// };
 
 
 
-~trackAllVolView.value_(~dbSpec.unmap(~globalVolume)).doAction; // pas forcément pris en compte avec .valueAction si on est déjà sur la même valeur
-// ~trackAllVolView.valueAction_(0); // ~globalVolume
+	~trackAllVolView.value_(~dbSpec.unmap(~globalVolume)).doAction; // pas forcément pris en compte avec .valueAction si on est déjà sur la même valeur
+	// ~trackAllVolView.valueAction_(0); // ~globalVolume
 
 
 
-/*
-Pdef(~patterns[0]).gui
-Pdef(~patterns[0]).asStream.iter
+	/*
+	Pdef(~patterns[0]).gui
+	Pdef(~patterns[0]).asStream.iter
 
-a = Pdef(~patterns[0]).asStream
-a.nextN(10)
+	a = Pdef(~patterns[0]).asStream
+	a.nextN(10)
 
-Pdef(~patterns[0]).asStream.asESP
-Editor.for(Event.default)
-Editor.for(~lastTrigEvent[0][0])
-*/
-
-
-
-/*~oneEvent = 0 ! ~nbOfSeqs ! ~nbOfTracks;
-
-{
-0.01.wait;
-~tracks.do { |tr|
-~nbOfSeqs.do { |seq|
-if (~presetSelection[tr][~presetSeqStart[tr]] != 0, {
-// try { ~presetGetFunctionQuick.value(~presetSelection[tr][~presetSeqStart[tr] /*~seqsValue*/].asSymbol, tr, ~presetSeqStart[tr]); };
-~tracksView.valueAction_(tr);
-~seqsView.valueAction_(seq);
-// try { ~presetGetFunction.value(~presetSelection[tr][~presetSeqStart[tr] /*~seqsValue*/].asSymbol/*, tr, ~presetSeqStart[tr];*/ ) };
-
-~play.value(npdef: ~patterns2[tr], track: (~tracks[tr]), nfade: ~nFade[tr], pfade: 0, quant: 0, stretchdur: 1/1);
-Pdef(~patterns2[tr]).quant_(/*~quant[tr]*/ 0); Pdef(~patterns2[tr]).pause;
-~oneEvent[tr][seq] = Pdef(~patterns2[tr]).asStream;
-})
-}
-};
-"fini".postln;
-}.fork(AppClock);*/
+	Pdef(~patterns[0]).asStream.asESP
+	Editor.for(Event.default)
+	Editor.for(~lastTrigEvent[0][0])
+	*/
 
 
 
+	/*~oneEvent = 0 ! ~nbOfSeqs ! ~nbOfTracks;
 
+	{
+	0.01.wait;
+	~tracks.do { |tr|
+	~nbOfSeqs.do { |seq|
+	if (~presetSelection[tr][~presetSeqStart[tr]] != 0, {
+	// try { ~presetGetFunctionQuick.value(~presetSelection[tr][~presetSeqStart[tr] /*~seqsValue*/].asSymbol, tr, ~presetSeqStart[tr]); };
+	~tracksView.valueAction_(tr);
+	~seqsView.valueAction_(seq);
+	// try { ~presetGetFunction.value(~presetSelection[tr][~presetSeqStart[tr] /*~seqsValue*/].asSymbol/*, tr, ~presetSeqStart[tr];*/ ) };
 
-/*
-~oneEvent[0].next(()).play; // 1ère piste
-~oneEvent[(~tracksValue/2).floor].next(()).play; // piste du ~tracksValue
-*/
-
-// Quelle est la vitesse de déclenchement lorsqu'on reste appuyé sur l'évaluation ?????????
+	~play.value(npdef: ~patterns2[tr], track: (~tracks[tr]), nfade: ~nFade[tr], pfade: 0, quant: 0, stretchdur: 1/1);
+	Pdef(~patterns2[tr]).quant_(/*~quant[tr]*/ 0); Pdef(~patterns2[tr]).pause;
+	~oneEvent[tr][seq] = Pdef(~patterns2[tr]).asStream;
+	})
+	}
+	};
+	"fini".postln;
+	}.fork(AppClock);*/
 
 
 
 
 
-// "Pattern Function & Routine triggered"; // n'est pas affichée la 1ère fois que fichier lancé ?????????
-0.2.wait; "Pattern Function & Routine triggered".postln;
+	/*
+	~oneEvent[0].next(()).play; // 1ère piste
+	~oneEvent[(~tracksValue/2).floor].next(()).play; // piste du ~tracksValue
+	*/
+
+	// Quelle est la vitesse de déclenchement lorsqu'on reste appuyé sur l'évaluation ?????????
+
+
+
+
+
+	// "Pattern Function & Routine triggered"; // n'est pas affichée la 1ère fois que fichier lancé ?????????
+	0.2.wait; "Pattern Function & Routine triggered".postln;
 
 	( // Uniquement Si le pattern (CmdPeriod) est arrêté, obligé de relancer l'APC Mini et le Morph - Pourquoi ?
 		if (~initAkai == 1, {"_Init Midi Ak.scd".loadRelative}); // Akai APC Mini à partir du Quark hacké d'Andrés Pérez López // ~akController = MKtl('pcmn0', "APC MINI");
