@@ -40,7 +40,7 @@
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-Performance"; // Stereo Mix and effects // This line chooses spatial configuration setup // Uncomment according your preferred setup
-~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
+// ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
 // ~numChannelsConfig = "4"; // Clockwise Quad
 // ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 // ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
@@ -94,7 +94,7 @@ For large-scale concert presentation, the authors advise auditioning values of k
 
 // 3.do { Server.killAll }; // Wait RESULT = 1 before executing the following steps
 fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wait; Server.killAll };
-	0.1.wait; "".postln; ("Spatial Config ->" + ~numChannelsConfig).postln; ("Preset Filename ->" + ~presetsFileName).postln; if (~presetsFileName2.notNil, {("Preset Filename 2 ->" + ~presetsFileName2).postln}); "".postln;
+	0.1.wait; "".postln; ("Spatial Config ->" + ~numChannelsConfig).postln; ("Preset Filename ->" + ~presetsFileName).postln; if (~presetsFileName2.notNil, {("Preset Filename 2 ->" + ~presetsFileName2).postln}); "".postln; // Document.current.selectRange(103,118);
 }); }; // Server.allRunningServers;
 )
 
@@ -138,7 +138,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_221.scd".loadRelative;
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_222.scd".loadRelative;
 
 // Lemur Connection
 ~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "169.254.174.68", 8000);
@@ -148,7 +148,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_181.scd".loadRelative;
+~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_182.scd".loadRelative;
 
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
