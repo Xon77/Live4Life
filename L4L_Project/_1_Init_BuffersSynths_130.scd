@@ -14685,7 +14685,7 @@ t.quit;
 		{
 			~trajectoryBuffersX = Env( { 10.0.rand2 }!2, 0.5!1 );
 			~trajectoryBuffersY = Env( { 10.0.rand2 }!2, 0.5!1 );
-			~testWindow = Window.new; ~testWindow.front;
+			~testWindow = Window.new; ~testWindow.visible = 1 /*front*/; // visible au lieu de front afin que l'IDE soit toujours en avant plan malgré la construction d'une GUI
 			~trajectoryBuffersA = WFSPathGUI.new(~testWindow);
 			~trajectoryBuffersA.object = WFSPath2( [ ~trajectoryBuffersX.levels, ~trajectoryBuffersY.levels ].flop.collect(_.asPoint), ~trajectoryBuffersX.times );
 			~trajectoryBuffersTest = ~trajectoryBuffersA.object.asBuffer(currentEnvironment[server]);
