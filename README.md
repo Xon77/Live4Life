@@ -63,7 +63,7 @@ What makes the difference with other spatialisation tools ?
 
 ### Platform support
 
-***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.4 Monterey on a MacBook Pro M1 16".
+***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".
 
 It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200 or a little bit higher. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
@@ -87,6 +87,7 @@ For Windows, I do not know. Let me know if you can.
 	- ([KMeans](https://github.com/supercollider-quarks/KMeans)),
 	- [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
 	- ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
+	- [SC-Grids](https://github.com/capital-G/sc-grids) (to play with a topographic drum sequencer from the Eurorack module [Grids](https://mutable-instruments.net/modules/grids/manual/) ported first in C++ by [Mutable Instruments](https://github.com/pichenettes) and then to SuperCollider by [Dennis Scheiba](https://github.com/capital-G). You can install it via `Quarks.install("https://github.com/capital-G/sc-grids")`. It is currently available only in the main version of the code and will be updated in the latest release later.),
 	- [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
 	- [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
 	- [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
@@ -103,13 +104,13 @@ For Windows, I do not know. Let me know if you can.
 
 ## Setup
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`4Live4Life_Project`](/4Live4Life_Project): [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd), [`_2_Init_GUI_221.scd`](/4Live4Life_Project/_2_Init_GUI_221.scd), [`_3_Init_Pattern_181.scd`](/4Live4Life_Project/_3_Init_Pattern_181.scd).
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`L4L_Project`](/L4L_Project): [`_1_Init_BuffersSynths_130.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd), [`_2_Init_GUI_221.scd`](/L4L_Project/_2_Init_GUI_221.scd), [`_3_Init_Pattern_181.scd`](/L4L_Project/_3_Init_Pattern_181.scd).
 
-In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/4Live4Life_Project/_0_Init_Live4Life.scd) in the folder [`4Live4Life_Project`](/4Live4Life_Project) in order to:
+In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd) in the folder [`L4L_Project`](/L4L_Project) in order to:
 
-1. [define and evaluate default configuration parameters](4Live4Life_Project/_0_Init_Live4Life.scd#L1-L99). You mainly have to choose the [absolute path of your sound folder](4Live4Life_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](4Live4Life_Project/_0_Init_Live4Life.scd#L41-L61) (stereo, quad, circles of 5, 7, 8 loudspeakers, or domes of 16, 24, 32 loudspeakers) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/4Live4Life_Project/_1_Init_BuffersSynths_130.scd) if not available.
+1. [define and evaluate default configuration parameters](L4L_Project/_0_Init_Live4Life.scd#L1-L99). You mainly have to choose the [absolute path of your sound folder](L4L_Project/_0_Init_Live4Life.scd#L38) and your [spatial configuration and distribution of loudspeakers](L4L_Project/_0_Init_Live4Life.scd#L41-L61) (stereo, quad, circles of 5, 7, 8 loudspeakers, or domes of 16, 24, 32 loudspeakers) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd) if not available.
 
-2. [evaluate a function](4Live4Life_Project/_0_Init_Live4Life.scd#L123) and [load one](4Live4Life_Project/_0_Init_Live4Life.scd#L127) or [two servers](4Live4Life_Project/_0_Init_Live4Life.scd#L131):
+2. [evaluate a function](L4L_Project/_0_Init_Live4Life.scd#L123) and [load one](L4L_Project/_0_Init_Live4Life.scd#L127) or [two servers](L4L_Project/_0_Init_Live4Life.scd#L131):
 
 	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms. (For each new specific spatial configuration, two folders of synthDefs are created the first time in SuperCollider user support directory; the next times, scsyndef files will be more quickly loaded. 
 :warning: If you get an error — which might happen more or less given your computer and spatial setup — the first time when you create the folder of synthDefs, delete the folders for each of the 2 servers created, reboot the server and start from step 1 again.)
@@ -117,9 +118,9 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 	2. initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like: `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [**folder to download a collection of sounds**](https://github.com/Xon77/L4LSoundsDataBase/tree/main/SoundFolder) — to expand and improve — including drum machine sounds specifically sorted for this tool. This process may take a few minutes depending on the size of the sound library and your computer.),
 
-3. [open a GUI](4Live4Life_Project/_0_Init_Live4Life.scd#L141) (this process may take a dozen seconds) with different tabs like a Sequence view for the composition and the Global view for the performance (see figures above), as well as views for global multichannel and ambisonic effects,
+3. [open a GUI](L4L_Project/_0_Init_Live4Life.scd#L141) (this process may take a dozen seconds) with different tabs like a Sequence view for the composition and the Global view for the performance (see figures above), as well as views for global multichannel and ambisonic effects,
 
-4. [evaluate a pattern function](4Live4Life_Project/_0_Init_Live4Life.scd#L151), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
+4. [evaluate a pattern function](L4L_Project/_0_Init_Live4Life.scd#L151), that triggers sound events with sequences of parameters for each track, and a routine updating the GUI.
 
 5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [Controllers](/Controllers) for full performance control.
 
@@ -137,7 +138,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 ## Contribute
 
-I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as the rhythmic pattern generator from [Eurorack module Grids by Mutable Instruments](https://github.com/capital-G/sc-grids)...
+I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as HOA (currently only FOA).
 
 If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance.
 
@@ -193,6 +194,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I do **not** want that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creation and research in their dome despite my proposals.
+Moreover, I do **not** want that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals.
 
 See the [License](/LICENCE.md) for more details.
