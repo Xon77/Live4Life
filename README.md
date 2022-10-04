@@ -63,7 +63,7 @@ What makes the difference with other spatialisation tools ?
 
 ### Platform support
 
-***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.4 Monterey on a MacBook Pro M1 16".
+***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".
 
 It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200 or a little bit higher. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
@@ -87,6 +87,7 @@ For Windows, I do not know. Let me know if you can.
 	- ([KMeans](https://github.com/supercollider-quarks/KMeans)),
 	- [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
 	- ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
+	- [SC-Grids](https://github.com/capital-G/sc-grids) (to play with the port of the Eurorack module [Grids](https://mutable-instruments.net/modules/grids/manual/) by Mutable Instruments ported to SuperCollider by [Dennis Scheiba](https://github.com/capital-G). You can install it via `Quarks.install("https://github.com/capital-G/sc-grids")`.)
 	- [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
 	- [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
 	- [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
