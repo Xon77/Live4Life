@@ -87,7 +87,7 @@ For Windows, I do not know. Let me know if you can.
 	- ([KMeans](https://github.com/supercollider-quarks/KMeans)),
 	- [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
 	- ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
-	- [SC-Grids](https://github.com/capital-G/sc-grids) (to play with the port of the Eurorack module [Grids](https://mutable-instruments.net/modules/grids/manual/) by Mutable Instruments ported to SuperCollider by [Dennis Scheiba](https://github.com/capital-G). You can install it via `Quarks.install("https://github.com/capital-G/sc-grids")`.)
+	- [SC-Grids](https://github.com/capital-G/sc-grids) (to play with a topographic drum sequencer from the Eurorack module [Grids](https://mutable-instruments.net/modules/grids/manual/) ported first in C++ by [Mutable Instruments](https://github.com/pichenettes) and then ported to SuperCollider by [Dennis Scheiba](https://github.com/capital-G). You can install it via `Quarks.install("https://github.com/capital-G/sc-grids")`.),
 	- [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
 	- [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
 	- [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
@@ -138,7 +138,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 ## Contribute
 
-I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as the rhythmic pattern generator from [Eurorack module Grids by Mutable Instruments](https://github.com/capital-G/sc-grids)...
+I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as HOA (currently only FOA).
 
 If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance.
 
