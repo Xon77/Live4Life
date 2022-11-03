@@ -123,7 +123,7 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [Controllers](/Controllers) for full performance control.
 
-A wiki, tutorials and code examples to automate some utility functions will be added over time, and hopefully real spatial workshops...
+A wiki, tutorials and code examples to automate some utility functions will be added over time, as well as training workshops in immersive sound and spatial improvisation.
 
 
 ## References
@@ -142,6 +142,11 @@ I have a lot of features I would like to improve or develop, such as the collect
 If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance.
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
+
+I am currently looking for (audio)visual collaborations for the creation of spatial improvisations in a multi-sensory context, combining and alternating music, video / light and dance in space:
+- video developers to create the visual from the sound data generated, 
+- and with dancers to finally assess the impact between the gesture of the performer, the dancing bodies and the video environment. 
+Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, as long as the creation process and the code are published on Github and open to everyone.
 
 <mark> You can also support thanks to donations via [**Ko-fi**](https://ko-fi.com/live4life) or get specific support and courses via [**Patreon**](https://www.patreon.com/live4life)</mark>. :grin:
 
