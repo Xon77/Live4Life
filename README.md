@@ -143,9 +143,9 @@ If you would like to contribute, please get in touch with me in order to organis
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
-For my current postdoctoral research at [UQÀM](https://eavm.uqam.ca), I am looking for (audio)visual collaborations for the creation of spatial improvisations in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
+For my current postdoctoral research at [UQÀM](https://eavm.uqam.ca) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/), I am looking for (audio)visual collaborations for the creation of spatial improvisations in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
 - video developers to create the visual from the sound data generated (Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, as long as the creation process and the code are published on Github and open to everyone.), 
-- dancers for improvising and to finally assess the impact between the gesture of the performer, the dancing bodies and the video environment. 
+- dancers for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video environment. 
 
 <mark> You can also support thanks to donations via [**Ko-fi**](https://ko-fi.com/live4life) or get specific support and courses via [**Patreon**](https://www.patreon.com/live4life)</mark>. :grin:
 
