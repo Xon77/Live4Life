@@ -6,7 +6,7 @@
 
 ## Overview
 
-Please read carefully the [**Licence**](#licence) before downloading, installing or using this tool!
+PLEASE READ CAREFULLY THE [**LICENCE**](#licence) BEFORE DOWNLOADING, INSTALLING OR USING THIS TOOL!
 
 The **spatial performance tool** ***Live 4 Life*** aims to simplify the creation and control in real time of mass of spatialised sound objects on various kinds of loudspeaker configurations (particularly stereo, quadriphonic or octophonic setups, as well as domes of 16, 24 or 32 loudspeakers...) with several controllers (currently, you can control it with the GUI and the keyboard, and you can also add an [Akai APC Mini](https://www.akaipro.com/apc-mini), 2 tablets with [Lemur App](https://liine.net/en/products/lemur/), 2 [MIDI Fighter Twister](https://www.midifighter.com/#Twister) and a [Sensel Morph](https://morph.sensel.com)). 
 
@@ -132,7 +132,7 @@ A wiki, tutorials and code examples to automate some utility functions will be a
 
 ***Live 4 Life*** has been presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2018, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, [video of Akousma 2021](https://player.vimeo.com/video/747391295?autoplay=1#t=1h21m40s), [Cube Fest 2022](https://artscenter.vt.edu/performances/cube-fest-2022.html)), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
 
-All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my [doctoral thesis](https://www.researchgate.net/publication/360018268_L'improvisation_spatiale_generee_a_partir_de_motifs_polyrythmiques_et_de_sequences_de_parametres_en_boucle_via_l'outil_de_performance_Live_4_Life) (in french, sorry), about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
+All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my [doctoral thesis](https://www.researchgate.net/publication/360018268_L'improvisation_spatiale_generee_a_partir_de_motifs_polyrythmiques_et_de_sequences_de_parametres_en_boucle_via_l'outil_de_performance_Live_4_Life) (in french, sorry) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/), about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
 
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
 
@@ -201,6 +201,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I do **not** want that this tool to be used by [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play an improvisation in their dome.
+Moreover, I do **not** want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play an improvisation in their dome.
 
 See the [License](/LICENCE.md) for more details.
