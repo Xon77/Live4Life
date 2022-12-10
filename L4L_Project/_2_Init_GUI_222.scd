@@ -16779,8 +16779,8 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 	~rtmTypeView2.valueAction_(~presets[index][\seqType]);
 
 	~proBjorSpec[~tracksValue][~seqsValue] = rtmSeqSpec;
-	~proBjorView/*.step_(rtmSeqStep)*/.value_( ~proBjorGridsX /*~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor])*/).doAction; // doAction pour mise à jour du Spec & action sur le global
-	~proBjor2View/*.step_(rtmSeqStep)*/.value_(~proBjorGridsY /*~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor2])*/).doAction; // doAction pour mise à jour du Spec & action sur le global
+	~proBjorView/*.step_(rtmSeqStep)*/.value_( /*~proBjorGridsX*/ ~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor])).doAction; // doAction pour mise à jour du Spec & action sur le global
+	~proBjor2View/*.step_(rtmSeqStep)*/.value_(/*~proBjorGridsY*/ ~proBjorSpec[~tracksValue][~seqsValue].unmap(~presets[index][\proBjor2])).doAction; // doAction pour mise à jour du Spec & action sur le global
 	~proSelectView.value_(~presets[index][\proSelect]).doAction; // doAction -> necessaire pour action sur le global
 
 	if (~presets[index][\proGridsBias].notNil, {~proBjor3View.valueAction_(~presets[index][\proGridsBias]) } );
