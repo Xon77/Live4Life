@@ -311,9 +311,9 @@ if (f == 'ins', {
 ~visualizeServerMeter = { |server, left, width|
 	// ServerMeter - Appremment affichage jusqu'à +6 et non 0 -> l'avant dernière marque infique le 0 ?
 	// depuis SC 3.13 -> en GUI server.meter.serverMeter.window -> serverMeter rajouté
-	if (server == ~server1, { ~levelsWindow = server.meter/*.serverMeter*/.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220); // Affichage des niveaux
+	if (server == ~server1, { ~levelsWindow = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220); // Affichage des niveaux
 	},{
-		~levelsWindow2 = server.meter/*.serverMeter*/.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220);
+		~levelsWindow2 = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220);
 	});
 	// s.meter; // ServerMeterView
 };
