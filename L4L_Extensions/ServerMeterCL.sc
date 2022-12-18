@@ -1,20 +1,20 @@
-ServerMeterView3 {
+ServerMeterViewCL {
 
-	classvar serverMeterViews, updateFreq = 5, dBLow = -80, meterWidth = 11, gapWidth = -2, <height = 230;
+	classvar serverMeterViews, updateFreq = 5, dBLow = -80, <height = 230;
 	classvar serverCleanupFuncs;
 
 	var <view;
-	var inresp, outresp, synthFunc, responderFunc, server, numIns, numOuts, inmeters, outmeters, startResponderFunc;
+	var inresp, outresp, synthFunc, responderFunc, server, numIns, numOuts, inmeters, outmeters, startResponderFunc, meterWidth, gapWidth;
 
-	*new { |aserver, parent, leftUp, numIns, numOuts|
-		^super.new.init(aserver, parent, leftUp, numIns, numOuts)
+	*new { |aserver, parent, leftUp, numIns, numOuts, meterWidth, gapWidth|
+		^super.new.init(aserver, parent, leftUp, numIns, numOuts, meterWidth, gapWidth)
 	}
 
-	*getWidth { arg numIns, numOuts, server;
+	*getWidth { arg numIns, numOuts, meterWidth, gapWidth, server;
 		^2/*20*/+((numIns + numOuts + 2) * (meterWidth + gapWidth))
 	}
 
-	init { arg aserver, parent, leftUp, anumIns, anumOuts;
+	init { arg aserver, parent, leftUp, anumIns, anumOuts, meterWidth, gapWidth;
 		var innerView, viewWidth, levelIndic, palette;
 
 		server = aserver;
@@ -22,13 +22,13 @@ ServerMeterView3 {
 		numIns = anumIns ?? { server.options.numInputBusChannels };
 		numOuts = anumOuts ?? { server.options.numOutputBusChannels };
 
-		viewWidth= this.class.getWidth(anumIns, anumOuts);
+		viewWidth= this.class.getWidth(anumIns, anumOuts, meterWidth, gapWidth);
 
 		leftUp = leftUp ? (0@0);
 
 		view = CompositeView(parent, Rect(leftUp.x, leftUp.y, viewWidth, height) );
 		view.onClose_( { this.stop });
-		innerView = CompositeView(view, Rect(7/*10*/, 3/*25*/, viewWidth, height) );
+		innerView = CompositeView(view, Rect(7/*10*/, 3/*25*/, viewWidth, height) ); // Rect(3 si -> numOuts==10 ou 18 ou 20
 		innerView.addFlowLayout(0@0, gapWidth@gapWidth);
 
 		// dB scale
@@ -50,7 +50,7 @@ ServerMeterView3 {
 			.string_("Inputs");*/
 			inmeters = Array.fill( numIns, { arg i;
 				var comp;
-				comp = CompositeView(innerView, Rect(0, 0, meterWidth, 95/*195*/))/*.resize_(5)*/;
+				comp = CompositeView(innerView, Rect(0, 0, meterWidth, 95/*195*/))/*.resize_(5)*/; // .resize_(5); pas commenté si numOuts==10 ou 18 ou 20
 				StaticText(comp, Rect(0, 80/*180*/, meterWidth, 15))
 				.font_(Font.sansSerif(9).boldVariant)
 				.string_((i+1).asString);
@@ -82,10 +82,25 @@ ServerMeterView3 {
 			outmeters = Array.fill( numOuts, { arg i;
 				var comp;
 				comp = CompositeView(innerView, Rect(0, 0, meterWidth, 95/*195*/));
-				StaticText(comp, Rect(0, 80/*180*/, meterWidth -5, 40)).align_(\topLeft)
-				.font_(Font.sansSerif(9).boldVariant)
+				// StaticText(comp, Rect(0, 80/*180*/, meterWidth, 15)) si numOuts==10 ou 18 ou 20
+				// .font_(Font.sansSerif(9).boldVariant) si numOuts==10 ou 18 ou 20
+				StaticText(comp, Rect(0, 83/*180*/, meterWidth /*-3*/, 40)).align_(\topLeft) // meterWidth -5 si numOuts==27
+				.font_(Font.sansSerif(8).boldVariant)
 				.string_((i+1).asString)
-				.stringColor_( case {i<12} {Color.yellow}  {i.inclusivelyBetween(12,21)} {Color.red}  {i.inclusivelyBetween(22,31)} {Color.blue} {i>31} {Color.yellow} );
+				.stringColor_( case
+					{numOuts==10 or:{numOuts==18} or:{numOuts==20}}
+					{case {i<8} {Color.yellow}  {i>15} {Color.yellow} {i<16} {Color.blue}}
+					{numOuts==27}
+					{case {i<8} {Color.yellow}  {i.inclusivelyBetween(8,15)} {Color.red}  {i.inclusivelyBetween(16,23)} {Color.blue} {i>23} {Color.yellow}}
+					{numOuts==32}
+					{case {i<11} {Color.yellow}  {i.inclusivelyBetween(11,21)} {Color.red}  {i.inclusivelyBetween(21,30)} {Color.blue} {i>30} {Color.yellow}}
+					{numOuts==34}
+					{case {i<12} {Color.yellow}  {i.inclusivelyBetween(12,21)} {Color.red}  {i.inclusivelyBetween(22,31)} {Color.blue} {i>31} {Color.yellow}}
+					{numOuts==64 or:{numOuts==96} or:{numOuts==128}}
+					{case {i<16} {Color.yellow}  {i.inclusivelyBetween(16,31)} {Color.red}  {i.inclusivelyBetween(32,47)} {Color.yellow} {i>48} {Color.blue}}
+					{numOuts>0}
+					{case {i<8} {Color.yellow}  {i>15} {Color.yellow} {i<16} {Color.blue}};
+				);
 				levelIndic = LevelIndicator( comp, Rect(0, 0, meterWidth, 80/*180*/) ).warning_(0.9).critical_(1.0)
 				.drawsPeak_(true)
 				.numTicks_(9)
@@ -230,7 +245,7 @@ ServerMeterView3 {
 	}
 }
 
-ServerMeter3 {
+ServerMeterCL {
 
 	var <window, <meterView;
 
@@ -242,10 +257,10 @@ ServerMeter3 {
 		numOuts = numOuts ?? { server.options.numOutputBusChannels };
 
 		window = Window.new(server.name ++ " levels (dBFS)",
-			Rect(5, 305, ServerMeterView3.getWidth(numIns, numOuts), ServerMeterView3.height),
+			Rect(5, 305, ServerMeterViewCL.getWidth(numIns, numOuts), ServerMeterViewCL.height),
 			false);
 
-		meterView = ServerMeterView3(server, window, 0@0, numIns, numOuts);
+		meterView = ServerMeterViewCL(server, window, 0@0, numIns, numOuts);
 		meterView.view.keyDownAction_( { arg view, char, modifiers;
 			if(modifiers & 16515072 == 0) {
 				case
