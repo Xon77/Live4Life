@@ -53,8 +53,10 @@
 // ~numChannelsConfig = "16-Dome-8-6-2-Clock"; // Clockwise from Links - Dome Hexa Université de Montréal (+ 2 Subs) XXXXXXXXX
 // ~numChannelsConfig = "16-Dome-8-6-2-Clock-CC"; // IDEM (+ 4 Subs)
 // ~numChannelsConfig = "22-8+Dome-8-4-2-Pair"; // Hall Claude Champagne Université de Montréal with 8 additional speakers in the Hall
+// ~numChannelsConfig = "16-UsineC-2Octo"; // 2 circles of 8 speakers + Subs
 // ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
 // ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
+~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
 // ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
@@ -66,7 +68,7 @@
 
 // Ambisonic Spatialisation
 // Keep ~ambATKConfig at "binaural" if you have a headphone, or "stereo" if you have 2 speakers, otherwise ~ambATKConfig is "multiChannel" if more than 2 channels
-if (~numChannelsConfig[0].digit == 2, { ~ambATKConfig = "binaural" /*"stereo" */}, { ~ambATKConfig = "multiChannel"});
+if (~numChannelsConfig.split($-)[0].asInteger == 2, { ~ambATKConfig = "binaural" /*"stereo" */}, { ~ambATKConfig = "multiChannel"});
 ~binauralDecoderName = "FoaDecoderKernel.newSpherical"; // newSpherical ou newCIPIC (44100.0 is not available for cipic kernel decoder)
 ~ambATKkFactor = 'velocity'; // 'dual' / 'velocity' - only for multiChannel
 
@@ -133,7 +135,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 // Another model with 2 main and 2 FX servers with Jack - currently abandonned
 // ~loadServer.(\server1, \Local1, 0, 57110, \serverFX1, \LocalFX1, 57111); // Server names -> [~server1, ~serverFX1] // limited to 32 output channels via Jack ?
-// ~loadServer.(\server2, \Local2, 1, 57112, \serverFX2, \LocalFX2, 57113); // Server names -> [~server2,  ~serverFX2]
+// ~loadServer.(\server2, \Local2, 1, 57112, \serverFX2, \LocalFX2, 57113); // Server names -> [~server2, ~serverFX2]
 
 
 
