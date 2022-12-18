@@ -310,9 +310,10 @@ if (f == 'ins', {
 
 ~visualizeServerMeter = { |server, left, width|
 	// ServerMeter - Appremment affichage jusqu'à +6 et non 0 -> l'avant dernière marque infique le 0 ?
-	if (server == ~server1, { ~levelsWindow = server.meter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220); // Affichage des niveaux
+	// depuis SC 3.13 -> en GUI server.meter.serverMeter.window -> serverMeter rajouté
+	if (server == ~server1, { ~levelsWindow = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220); // Affichage des niveaux
 	},{
-		~levelsWindow2 = server.meter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220);
+		~levelsWindow2 = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220);
 	});
 	// s.meter; // ServerMeterView
 };
@@ -409,15 +410,15 @@ if (f == 'ins', {
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
-					~serverLevels1 = ServerMeterView1.new(~server1, ~levelsWindow, -15@0, 0, 10);
+					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 10, 20, 7); // auparavant Classe ServerMeterView1 sans les 2 derniers meterWidth & gapWidth
 				},{
-					~serverLevels1 = ServerMeterView1.new(~serverFX1, ~levelsWindow, -15@0, 0, 10);
+					~serverLevels1 = ServerMeterViewCL.new(~serverFX1, ~levelsWindow, -15@0, 0, 10, 20, 7);
 				});
 				if (~nbOfServers == 2, {
 					if (~serverFX == 0, {
-						~serverLevels2 = ServerMeterView1.new(~server2, ~levelsWindow, -15@95, 0, 10);
+						~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 10, 20, 7);
 					},{
-						~serverLevels2 = ServerMeterView1.new(~serverFX2, ~levelsWindow, -15@95, 0, 10);
+						~serverLevels2 = ServerMeterViewCL.new(~serverFX2, ~levelsWindow, -15@95, 0, 10, 20, 7);
 					});
 				});
 			)
@@ -461,15 +462,15 @@ if (f == 'ins', {
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
-					~serverLevels1 = ServerMeterView2.new(~server1, ~levelsWindow, -15@0, 0, 18);
+					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 18, 14, 1); // auparavant Classe ServerMeterView2 sans les 2 derniers meterWidth & gapWidth
 				},{
-					~serverLevels1 = ServerMeterView2.new(~serverFX1, ~levelsWindow, -15@0, 0, 18);
+					~serverLevels1 = ServerMeterViewCL.new(~serverFX1, ~levelsWindow, -15@0, 0, 18, 14, 1);
 				});
 				if (~nbOfServers == 2, {
 					if (~serverFX == 0, {
-						~serverLevels2 = ServerMeterView2.new(~server2, ~levelsWindow, -15@95, 0, 18);
+						~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 18, 14, 1);
 					},{
-						~serverLevels2 = ServerMeterView2.new(~serverFX2, ~levelsWindow, -15@95, 0, 18);
+						~serverLevels2 = ServerMeterViewCL.new(~serverFX2, ~levelsWindow, -15@95, 0, 18, 14, 1);
 					});
 				});
 			)
@@ -491,15 +492,15 @@ if (f == 'ins', {
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
-					~serverLevels1 = ServerMeterView2.new(~server1, ~levelsWindow, -15@0, 0, 20);
+					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 20, 14, 1); // auparavant Classe ServerMeterView2 sans les 2 derniers meterWidth & gapWidth
 				},{
-					~serverLevels1 = ServerMeterView2.new(~serverFX1, ~levelsWindow, -15@0, 0, 20);
+					~serverLevels1 = ServerMeterViewCL.new(~serverFX1, ~levelsWindow, -15@0, 0, 20, 14, 1);
 				});
 				if (~nbOfServers == 2, {
 					if (~serverFX == 0, {
-						~serverLevels2 = ServerMeterView2.new(~server2, ~levelsWindow, -15@95, 0, 20);
+						~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 20, 14, 1);
 					},{
-						~serverLevels2 = ServerMeterView2.new(~serverFX2, ~levelsWindow, -15@95, 0, 20);
+						~serverLevels2 = ServerMeterViewCL.new(~serverFX2, ~levelsWindow, -15@95, 0, 20, 14, 1);
 					});
 				});
 			)
@@ -522,15 +523,15 @@ if (f == 'ins', {
 		(
 			~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 			if (~serverFX == 0, {
-				~serverLevels1 = ServerMeterView5.new(~server1, ~levelsWindow, -15@0, 0, 27);
+				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 27, 12, -1); // auparavant Classe ServerMeterView5 sans les 2 derniers meterWidth & gapWidth
 			},{
-				~serverLevels1 = ServerMeterView5.new(~serverFX1, ~levelsWindow, -15@0, 0, 27);
+				~serverLevels1 = ServerMeterViewCL.new(~serverFX1, ~levelsWindow, -15@0, 0, 27, 12, -1);
 			});
 			if (~nbOfServers == 2, {
 				if (~serverFX == 0, {
-					~serverLevels2 = ServerMeterView5.new(~server2, ~levelsWindow, -15@95, 0, 27);
+					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 27, 12, -1);
 				},{
-					~serverLevels2 = ServerMeterView5.new(~serverFX2, ~levelsWindow, -15@95, 0, 27);
+					~serverLevels2 = ServerMeterViewCL.new(~serverFX2, ~levelsWindow, -15@95, 0, 27, 12, -1);
 				});
 			});
 		);
@@ -553,16 +554,16 @@ if (f == 'ins', {
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 310, 197)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
-					~serverLevels1 = ServerMeterView3.new(~server1, ~levelsWindow, -15@0, 0, 34);
+					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 34, 11, -2); // auparavant Classe ServerMeterView3 sans les 2 derniers meterWidth & gapWidth
 				},{
-					~serverLevels1 = ServerMeterView3.new(~serverFX1, ~levelsWindow, -15@0, 0, 34);
+					~serverLevels1 = ServerMeterViewCL.new(~serverFX1, ~levelsWindow, -15@0, 0, 34, 11, -2);
 				});
 
 				if (~nbOfServers == 2, {
 					if (~serverFX == 0, {
-						~serverLevels2 = ServerMeterView3.new(~server2, ~levelsWindow, -15@95, 0, 34);
+						~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 34, 11, -2);
 					},{
-						~serverLevels2 = ServerMeterView3.new(~serverFX2, ~levelsWindow, -15@95, 0, 34);
+						~serverLevels2 = ServerMeterViewCL.new(~serverFX2, ~levelsWindow, -15@95, 0, 34, 11, -2);
 					})
 				});
 			)
@@ -579,6 +580,36 @@ if (f == 'ins', {
 		~spatioScopePlayer = SpatioScope([ Point(-0.23293714059227, -0.86933324366016), Point(0.23293714059227, -0.86933324366016), Point(0.63639610306789, -0.63639610306789), Point(0.86933324366016, -0.23293714059227), Point(0.86933324366016, 0.23293714059227), Point(0.63639610306789, 0.63639610306789), Point(0.23293714059227, 0.86933324366016), Point(-0.23293714059227, 0.86933324366016), Point(-0.63639610306789, 0.63639610306789), Point(-0.86933324366016, 0.23293714059227), Point(-0.86933324366016, -0.23293714059227), Point(-0.63639610306789, -0.63639610306789), Point(-0.20086104634372, -0.61818673559185), Point(0.20086104634372, -0.61818673559185), Point(0.52586104634372, -0.38206041399011), Point(0.65, -1.5920408388916e-16), Point(0.52586104634372, 0.38206041399011), Point(0.20086104634372, 0.61818673559185), Point(-0.20086104634372, 0.61818673559185), Point(-0.52586104634372, 0.38206041399011), Point(-0.65, 2.3880612583373e-16), Point(-0.52586104634372, -0.38206041399011), Point(-0.15307337294604, -0.36955181300451), Point(0.15307337294604, -0.36955181300451), Point(0.36955181300451, -0.15307337294604), Point(0.36955181300451, 0.15307337294604), Point(0.15307337294604, 0.36955181300451), Point(-0.15307337294604, 0.36955181300451), Point(-0.36955181300451, 0.15307337294604), Point(-0.36955181300452, -0.15307337294604), Point(-0.15, 1.836970198721e-17), Point(0.15, -3.6739403974421e-17) ][/*~outsOrganization*/ [11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 22, 13, 14, 15, 16, 17, 18, 19, 20, 25, 26, 27, 28, 29, 30, 31, 32, 23, 24 ].order], server:~server1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul));
 
 		/*[ Point(-0.23293714059227, -0.86933324366016), Point(0.23293714059227, -0.86933324366016), Point(0.63639610306789, -0.63639610306789), Point(0.86933324366016, -0.23293714059227), Point(0.86933324366016, 0.23293714059227), Point(0.63639610306789, 0.63639610306789), Point(0.23293714059227, 0.86933324366016), Point(-0.23293714059227, 0.86933324366016), Point(-0.63639610306789, 0.63639610306789), Point(-0.86933324366016, 0.23293714059227), Point(-0.86933324366016, -0.23293714059227), Point(-0.63639610306789, -0.63639610306789), Point(-0.20086104634372, -0.61818673559185), Point(0.20086104634372, -0.61818673559185), Point(0.52586104634372, -0.38206041399011), Point(0.65, -1.5920408388916e-16), Point(0.52586104634372, 0.38206041399011), Point(0.20086104634372, 0.61818673559185), Point(-0.20086104634372, 0.61818673559185), Point(-0.52586104634372, 0.38206041399011), Point(-0.65, 2.3880612583373e-16), Point(-0.52586104634372, -0.38206041399011), Point(-0.15307337294604, -0.36955181300451), Point(0.15307337294604, -0.36955181300451), Point(0.36955181300451, -0.15307337294604), Point(0.36955181300451, 0.15307337294604), Point(0.15307337294604, 0.36955181300451), Point(-0.15307337294604, 0.36955181300451), Point(-0.36955181300451, 0.15307337294604), Point(-0.36955181300452, -0.15307337294604), Point(-0.15, 1.836970198721e-17), Point(0.15, -3.6739403974421e-17) ][/*~outsOrganization*/ [11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 22, 13, 14, 15, 16, 17, 18, 19, 20, 25, 26, 27, 28, 29, 30, 31, 32, 23, 24 ].order]*/
+	}
+
+		{~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"} {
+		if (~visualizeLevels == "SpatioScope", {
+			// Version 32 Pistes - Dome avec 1 à gauche & attribution clockwise
+			// ~visualizeServerMeter.value(~server1, 0, 390)
+			if (~serverFX == 0, {
+				~spatioScopePlayer = SpatioScope.rings(nums: [12, 10, 8, 2], radii: [0.9, 0.65, 0.4, 0.15], angleOffsets: [(1.5 - (1/12)) * pi, (1.5 - (1/10)) * pi, (1.5 - (1/8)) * pi, (1.5 - (1/2)) * pi], server:~server1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul)); // avec 1.5, le 1er HP est devant
+			},{
+				~spatioScopePlayer = SpatioScope.rings(nums: [12, 10, 8, 2], radii: [0.9, 0.65, 0.4, 0.15], angleOffsets: [(1.5 - (1/12)) * pi, (1.5 - (1/10)) * pi, (1.5 - (1/8)) * pi, (1.5 - (1/2)) * pi], server:~serverFX1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul));
+			});
+		},{
+			(
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 310, 197)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				if (~serverFX == 0, {
+					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 32, 10, -1); // auparavant Classe ServerMeterView6 sans les 2 derniers meterWidth & gapWidth
+				},{
+					~serverLevels1 = ServerMeterViewCL.new(~serverFX1, ~levelsWindow, -15@0, 0, 32, 10, -1);
+				});
+
+				if (~nbOfServers == 2, {
+					if (~serverFX == 0, {
+						~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 32, 10, -1);
+					},{
+						~serverLevels2 = ServerMeterViewCL.new(~serverFX2, ~levelsWindow, -15@95, 0, 32, 10, -1);
+					})
+				});
+			)
+		});
+		~linksChannel = 1; ~rightChannel = 2;
 	}
 
 	{~numChannelsConfig == "22-8+Dome-8-4-2-Pair"} {
@@ -598,9 +629,9 @@ if (f == 'ins', {
 
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
-				~serverLevels1 = ServerMeterView4.new(~server1, ~levelsWindow, -15@0, 0, 64);
+				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 64, 9, -4); // auparavant Classe ServerMeterView4 sans les 2 derniers meterWidth & gapWidth
 				if (~nbOfServers == 2, {
-					~serverLevels2 = ServerMeterView4.new(~server2, ~levelsWindow, -15@95, 0, 64);
+					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 64, 9, -4);
 				});
 			)
 
@@ -618,9 +649,9 @@ if (f == 'ins', {
 
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
-				~serverLevels1 = ServerMeterView4.new(~server1, ~levelsWindow, -10@0, 0, 96);
+				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -10@0, 0, 96, 9, -4); // auparavant Classe ServerMeterView4 sans les 2 derniers meterWidth & gapWidth
 				if (~nbOfServers == 2, {
-					~serverLevels2 = ServerMeterView4.new(~server2, ~levelsWindow, -10@95, 0, 96);
+					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -10@95, 0, 96, 9, -4);
 				});
 			)
 
@@ -638,9 +669,9 @@ if (f == 'ins', {
 
 			(
 				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
-				~serverLevels1 = ServerMeterView4.new(~server1, ~levelsWindow, -10@0, 0, 128);
+				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -10@0, 0, 128, 9, -4); // auparavant Classe ServerMeterView4 sans les 2 derniers meterWidth & gapWidth
 				if (~nbOfServers == 2, {
-					~serverLevels2 = ServerMeterView4.new(~server2, ~levelsWindow, -10@95, 0, 128);
+					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -10@95, 0, 128, 9, -4);
 				});
 			)
 
@@ -5583,6 +5614,18 @@ Ndef(\sound).play
 			"1-7-Diag2",
 			"23-24-Elev",
 			"1-2-Ster"
+	])}}
+
+	// Dome 32 - Positionnement juste sur la 1ère couronne - à refaire XXXXXXXXXXXX
+	{~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"} {
+		[~tracksList.collect {|tr| ~outsConfigControlView[tr]}, ~outsConfigView].flat.do {|i| i.items_([
+			"1-2-Front",
+			"10-11-Links",
+			"4-5-Right",
+			"7-8-Rear",
+			"12-6-Diag1",
+			"3-9-Diag2",
+			"31-32-Elev",
 	])}}
 
 	// RESTE à Introduire la hauteur ?????????
