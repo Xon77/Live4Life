@@ -587,9 +587,9 @@ if (f == 'ins', {
 			// Version 32 Pistes - Dome avec 1 à gauche & attribution clockwise
 			// ~visualizeServerMeter.value(~server1, 0, 390)
 			if (~serverFX == 0, {
-				~spatioScopePlayer = SpatioScope.rings(nums: [12, 10, 8, 2], radii: [0.9, 0.65, 0.4, 0.15], angleOffsets: [(1.5 - (1/12)) * pi, (1.5 - (1/10)) * pi, (1.5 - (1/8)) * pi, (1.5 - (1/2)) * pi], server:~server1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul)); // avec 1.5, le 1er HP est devant
+				~spatioScopePlayer = SpatioScope.rings(nums: [11, 11, 9, 1], radii: [0.8, 0.65, 0.35, 0.05], angleOffsets: [(1.5 - (1/11)) * pi, (1.6 - (1/11)) * pi, (1.5 - (1/9)) * pi, (1.5 - (1)) * pi], server:~server1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul)); // avec 1.5, le 1er HP est devant
 			},{
-				~spatioScopePlayer = SpatioScope.rings(nums: [12, 10, 8, 2], radii: [0.9, 0.65, 0.4, 0.15], angleOffsets: [(1.5 - (1/12)) * pi, (1.5 - (1/10)) * pi, (1.5 - (1/8)) * pi, (1.5 - (1/2)) * pi], server:~serverFX1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul));
+				~spatioScopePlayer = SpatioScope.rings(nums: [11, 11, 9, 1], radii: [0.8, 0.65, 0.35, 0.05], angleOffsets: [(1.5 - (1/11)) * pi, (1.6 - (1/11)) * pi, (1.5 - (1/9)) * pi, (1.5 - (1)) * pi], server:~serverFX1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul));
 			});
 		},{
 			(
