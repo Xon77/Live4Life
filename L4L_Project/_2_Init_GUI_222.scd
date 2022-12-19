@@ -3236,7 +3236,7 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 ~tabEQ = ~tabbedView.add("X"/*, scroll:true*/)/*.tabWidth_(24)*/.focusAction={~currentTab = 2};
 ~tabAMB = ~tabbedView.add("A" /*, scroll:true*/)/*.tabWidth_(24)*/.focusAction={~currentTab = 5};
 
-~tabbedFX = TabbedView2(~tabFX, Rect(0, 0, 1600, 1110))
+~tabbedFX = TabbedView2(~tabFX, Rect(0, 0, 1600, 1082 /*1110*/))
 .lockPosition_(true)
 .lockEdges_(true)
 .backgrounds_([Color(0.8, 0.8, 0.8)])
@@ -3244,7 +3244,7 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 .labelColors_([Color.blue])
 .tabHeight_(15).tabWidth_(77).tabPosition_(\top)/*.tabCurve_(8)*/;
 
-~tabbedEQ = TabbedView2(~tabEQ, Rect(0, 0, 1600, 1110))
+~tabbedEQ = TabbedView2(~tabEQ, Rect(0, 0, 1600, 1082 /*1110*/))
 .lockPosition_(true)
 .lockEdges_(true)
 .backgrounds_([Color(0.8, 0.8, 0.8)])
