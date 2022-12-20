@@ -5954,7 +5954,7 @@ Ndef(\sound).play
 				case
 				{~trigAll == 0} // Track
 				{
-					var ch = 0; if (~numChannels >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 
 					// lié au serverMeter qui affiche les Inputs
 					col = ~serverCollection[serv]['children'][ch]['children'][~nbOfTracks-1-((~tracksValue/2).asInteger)];
@@ -5970,7 +5970,7 @@ Ndef(\sound).play
 				}
 				{~trigAll == 2}  // ALL
 				{
-					var ch = 0; if (~numChannels >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 					col = ~serverCollection[serv]['children'][ch]['children'];
 					// ~synthsIDCollection = ~nbOfTracks.collect { |t| ~serverCollection['children'][0]['children'][t]['children'].size.collect { |i| ~serverCollection['children'][0]['children'][t]['children'][i]['id'] } }.flatten;
 					// ~synthsIDCollection = ~nbOfTracks.collect { |t| col[t]['children'].size.collect { |i| col[t]['children'][i]['id'] } }.flatten;
@@ -5980,7 +5980,7 @@ Ndef(\sound).play
 				}
 				{~trigAll == 3} // Piste 1, 2 et 3
 				{
-					var ch = 0; if (~numChannels >= 32 or: {~numChannels <=8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <=8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 					col = ~serverCollection[serv]['children'][ch]['children'];
 					// [5,6,7] -> à l'envers, cela correspond aux pistes 1,2 & 3
 					// ~synthsIDCollection = [5,6,7].collect { |t| col[t]['children'].size.collect { |i| col[t]['children'][i]['id'] } }.flatten;
@@ -5990,7 +5990,7 @@ Ndef(\sound).play
 				{~trigAll == 1} // Other
 				{
 					var tracks, track;
-					var ch = 0; if (~numChannels >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 					track = ~nbOfTracks-1-((~tracksValue/2).asInteger); tracks = (0..~nbOfTracks-1); tracks.remove(track);
 					col = ~serverCollection[serv]['children'][ch]['children'];
 					// ~synthsIDCollection = ~nbOfTracks.collect { |t| ~serverCollection['children'][0]['children'][t]['children'].size.collect { |i| ~serverCollection['children'][0]['children'][t]['children'][i]['id'] } }.flatten;
@@ -6054,7 +6054,7 @@ Ndef(\sound).play
 
 			server.getQueryTree2({ |data| ~serverCollection[serv] = data;
 
-				if (~numChannels >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+				if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 
 				col = ~serverCollection[serv]['children'][ch]['children'];
 
@@ -15639,7 +15639,8 @@ The text archive written by Object.writeArchive will store an object and restore
 
 // ~presetspath = Document.current.dir++"/LiveForLifePresetZArchive.txt"; // ne marche plus avec l'ide
 // ~presetspath = "/Users/Xon/Documents/Projets/ConsProject3_BeatCut2011/WithMathis/Live4Life/LiveForLifePresetZArchive.txt";
-~presetspath = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName);
+// ~presetspath = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName);
+~presetspath = if (~presetsPath.isNil, { (PathName.new(~currentPath).pathOnly ++ ~presetsFileName) }, {~presetspath = ~presetsPath});
 
 // Création du fichier s'il n'existe pas
 if (File.exists(~presetspath), { }, {File.open(~presetspath, "w")});
@@ -15667,7 +15668,8 @@ if (~presetsFileName2.isNil, {
 		~presetsFileW.close;
 	});
 
-	~presetspath2 = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName2);
+	// ~presetspath2 = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName2);
+	~presetspath2 = if (~presetsPath2.isNil, { (PathName.new(~currentPath).pathOnly ++ ~presetsFileName2) }, {~presetspath2 = ~presetsPath2});
 	if (File.exists(~presetspath2), { }, {File.open(~presetspath2, "w")});
 
 	if (File.fileSize(~presetspath2) <= 21, {
@@ -18296,12 +18298,12 @@ case
 	~proBjor[track][seq] = ~presets[index][\proBjor];
 	~proBjor2[track][seq] = ~presets[index][\proBjor2];
 
-	~proBjor3[track][seq] = ~presets[index][\proBjor3];
-	~proBjor4[track][seq] = ~presets[index][\proBjor4];
-	~proGridsBias[track][seq] = ~presets[index][\proGridsBias];
-	~proGridsBias2[track][seq] = ~presets[index][\proGridsBias2];
-	~proWeight[track][seq] = ~presets[index][\proWeight];
-	~proDrumType[track][seq] = ~presets[index][\proDrumType];
+	if (~presets[index][\proBjor3].notNil, {~proBjor3[track][seq] = ~presets[index][\proBjor3]});
+	if (~presets[index][\proBjor4].notNil, {~proBjor4[track][seq] = ~presets[index][\proBjor4]});
+	if (~presets[index][\proGridsBias].notNil, {~proGridsBias[track][seq] = ~presets[index][\proGridsBias]});
+	if (~presets[index][\proGridsBias2].notNil, {~proGridsBias2[track][seq] = ~presets[index][\proGridsBias2]});
+	if (~presets[index][\proWeight].notNil, {~proWeight[track][seq] = ~presets[index][\proWeight]});
+	if (~presets[index][\proDrumType].notNil, {~proDrumType[track][seq] = ~presets[index][\proDrumType]});
 
 	~synType[track][seq] = ~presets[index][\synType];
 	~offRateSecondBuf[track][seq] = ~presets[index][\offRateSecondBuf];
@@ -18962,7 +18964,8 @@ case
 			if (~savePresetFile == 0, { // Pour éviter de sauvegarder le fichier de preset à chaque fois
 				// L'enregistrement rajoute environ 8 secondes
 
-				~presetspath = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName);
+				// ~presetspath = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName);
+				~presetspath = if (~presetsPath.isNil, { (PathName.new(~currentPath).pathOnly ++ ~presetsFileName) }, {~presetspath = ~presetsPath});
 				~presetsFile = ZArchive.write(~presetspath);
 				~presetsFile.writeItem(~presetSetFunction.(~presets, newItem.asSymbol));
 				~presetsFile.writeClose;
@@ -19100,7 +19103,8 @@ case
 			if (~savePresetFile == 0, { // Pour éviter de sauvegarder le fichier de preset à chaque fois
 				// L'enregistrement rajoute environ 8 secondes
 
-				~presetspath2 = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName2);
+				// ~presetspath2 = (PathName.new(~currentPath).pathOnly ++ ~presetsFileName2);
+				~presetspath2 = if (~presetsPath2.isNil, { (PathName.new(~currentPath).pathOnly ++ ~presetsFileName2) }, {~presetspath2 = ~presetsPath2});
 				~presetsFile2 = ZArchive.write(~presetspath2);
 				~presetsFile2.writeItem(~presetSetFunction.(~presets2, newItem.asSymbol));
 				~presetsFile2.writeClose;
