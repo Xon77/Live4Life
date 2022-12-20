@@ -14529,55 +14529,111 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 			// Au cas ou pb de chargement, voire Server.queryAllBuffers (timeout: 1.2, wait: 0.001, action) from DewdropLib
 			// a chargement des dossiers & fichiers alias
 
-			fork {
+			if (~buffersLoading == "slow", {
 
-				var sf /*, soundM, soundS = 0 !2*/;
+				fork {
 
-				4.wait; currentEnvironment[server].sync;
+					var sf /*, soundM, soundS = 0 !2*/;
 
-				~soundm[serverNb] = ~soundsFolderDict.collect { |dir|
+					4.wait; currentEnvironment[server].sync;
 
-					0.5.wait; // currentEnvironment[server].sync; // à la place du 0.2.wait;
+					~soundm[serverNb] = ~soundsFolderDict.collect { |dir|
 
-					// 0.5.wait; // Blocage pratiquement systématique et parfois affichage d'erreur comme (voire fichier Erreur Loading Buffers):
-					// ^^ The preceding error dump is for ERROR: Message 'at' not understood.
-					// RECEIVER: Frame (0x12f5534b8) of Meta_Post:putAll
+						0.5.wait; // currentEnvironment[server].sync; // à la place du 0.2.wait;
 
-					dir.files/*.sort*/.collect { |path, ind|
+						// 0.5.wait; // Blocage pratiquement systématique et parfois affichage d'erreur comme (voire fichier Erreur Loading Buffers):
+						// ^^ The preceding error dump is for ERROR: Message 'at' not understood.
+						// RECEIVER: Frame (0x12f5534b8) of Meta_Post:putAll
 
-						var pathn = path.fullPath;
-						sf = SoundFile.new; sf.openRead(pathn);
+						dir.files/*.sort*/.collect { |path, ind|
 
-						case
-						{ sf.duration > 20 } {0.2.wait}
-						{ sf.duration > 30 } {1.wait};
-						/*case
-						// { sf.duration > 60 } {0.5.wait}
-						{ sf.duration > (60*3) } {3.0.wait}
-						{ sf.duration > (60*5) } {5.0.wait}
-						{ sf.duration > (60*8) } {8.0.wait}
-						{ sf.duration > (60*12) } {12.0.wait};
-						// { sf.duration > (60*20) } {60.0.wait};
-						// if (sf.duration > (60*3), {3.0.wait} ); // OK si attente de l'affichage de l'index time*/
+							var pathn = path.fullPath;
+							sf = SoundFile.new; sf.openRead(pathn);
 
-						if (ind % 10 == 9, {  // adjust - here every 10th file
-							// "breathing".postln;
-							0.01.wait; currentEnvironment[server].sync;
-							// can even add tiny .wait here but only if desperately needed
-						});
+							case
+							{ sf.duration > 20 } {0.2.wait}
+							{ sf.duration > 30 } {1.wait};
+							/*case
+							// { sf.duration > 60 } {0.5.wait}
+							{ sf.duration > (60*3) } {3.0.wait}
+							{ sf.duration > (60*5) } {5.0.wait}
+							{ sf.duration > (60*8) } {8.0.wait}
+							{ sf.duration > (60*12) } {12.0.wait};
+							// { sf.duration > (60*20) } {60.0.wait};
+							// if (sf.duration > (60*3), {3.0.wait} ); // OK si attente de l'affichage de l'index time*/
 
-						if (sf.numChannels == 2, {
-							sf.close; 2.collect { |i| Buffer.readFAndQueryChannel(currentEnvironment[server], pathn, channel: [i]/*, timeout: 6*/); }
-						},{ // Erreur si on met un sf.close; avant ???
-							sf.close; [Buffer.readFAndQueryChannel(currentEnvironment[server], pathn, channel: [0]/*, timeout: 6*/)];
-						});
+							if (ind % 10 == 9, {  // adjust - here every 10th file
+								// "breathing".postln;
+								0.01.wait; currentEnvironment[server].sync;
+								// can even add tiny .wait here but only if desperately needed
+							});
 
-						// Buffer.readAndQuery(s, path);
-						// Buffer.readFAndQueryChannel(s, path, channel: [0]);
+							if (sf.numChannels == 2, {
+								sf.close; 2.collect { |i| Buffer.readFAndQueryChannel(currentEnvironment[server], pathn, channel: [i]/*, timeout: 6*/); }
+							},{ // Erreur si on met un sf.close; avant ???
+								sf.close; [Buffer.readFAndQueryChannel(currentEnvironment[server], pathn, channel: [0]/*, timeout: 6*/)];
+							});
+
+							// Buffer.readAndQuery(s, path);
+							// Buffer.readFAndQueryChannel(s, path, channel: [0]);
+						};
 					};
-				};
-				// "Sounds mono & stereo (1 or 2 mono) collected".postln; // ne s'affiche qu'en cours de processus et ne s'affiche pas à la fin comme voulu...
-			};
+					// "Sounds mono & stereo (1 or 2 mono) collected".postln; // ne s'affiche qu'en cours de processus et ne s'affiche pas à la fin comme voulu...
+				}
+
+			},{
+
+				fork { // Quick Loading
+
+					var sf /*, soundM, soundS = 0 !2*/;
+
+					3.wait; currentEnvironment[server].sync;
+
+					~soundm[serverNb] = ~soundsFolderDict.collect { |dir|
+
+						0.1.wait; // currentEnvironment[server].sync; // à la place du 0.2.wait;
+
+						// 0.5.wait; // Blocage pratiquement systématique et parfois affichage d'erreur comme (voire fichier Erreur Loading Buffers):
+						// ^^ The preceding error dump is for ERROR: Message 'at' not understood.
+						// RECEIVER: Frame (0x12f5534b8) of Meta_Post:putAll
+
+						dir.files/*.sort*/.collect { |path, ind|
+
+							var pathn = path.fullPath;
+							sf = SoundFile.new; sf.openRead(pathn);
+
+							case
+							{ sf.duration > 20 } {0.2.wait}
+							{ sf.duration > 30 } {1.wait};
+							/*case
+							// { sf.duration > 60 } {0.5.wait}
+							{ sf.duration > (60*3) } {3.0.wait}
+							{ sf.duration > (60*5) } {5.0.wait}
+							{ sf.duration > (60*8) } {8.0.wait}
+							{ sf.duration > (60*12) } {12.0.wait};
+							// { sf.duration > (60*20) } {60.0.wait};
+							// if (sf.duration > (60*3), {3.0.wait} ); // OK si attente de l'affichage de l'index time*/
+
+							if (ind % 50 == 49, {  // adjust - here every 50th file
+								// "breathing".postln;
+								0.001.wait; currentEnvironment[server].sync;
+								// can even add tiny .wait here but only if desperately needed
+							});
+
+							if (sf.numChannels == 2, {
+								sf.close; 2.collect { |i| Buffer.readFAndQueryChannel(currentEnvironment[server], pathn, channel: [i]/*, timeout: 6*/); }
+							},{ // Erreur si on met un sf.close; avant ???
+								sf.close; [Buffer.readFAndQueryChannel(currentEnvironment[server], pathn, channel: [0]/*, timeout: 6*/)];
+							});
+
+							// Buffer.readAndQuery(s, path);
+							// Buffer.readFAndQueryChannel(s, path, channel: [0]);
+						};
+					};
+					// "Sounds mono & stereo (1 or 2 mono) collected".postln; // ne s'affiche qu'en cours de processus et ne s'affiche pas à la fin comme voulu...
+				}
+
+			});
 
 
 
