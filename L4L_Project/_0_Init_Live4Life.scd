@@ -56,7 +56,7 @@
 // ~numChannelsConfig = "16-UsineC-2Octo"; // 2 circles of 8 speakers + Subs
 // ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
 // ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
-~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
+// ~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
 // ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
