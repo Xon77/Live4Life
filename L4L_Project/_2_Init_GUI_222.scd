@@ -9712,11 +9712,11 @@ pair for phase modulation, which sounds similar to FM
 			}
 			{ \outL == data }
 			{
-				~outLPatSel[tr][seq] = 45;
+				~outLPatSel[tr][seq] = 49; // ~controlBus0 -> mais déclaré dans le pattern
 			}
 			{ \outR == data }
 			{
-				~outRPatSel[tr][seq] = 45;
+				~outRPatSel[tr][seq] = 49; // ~controlBus0 -> mais déclaré dans le pattern
 			};
 		};
 	};
@@ -10888,12 +10888,12 @@ pair for phase modulation, which sounds similar to FM
 	{ \outL == data }
 	{
 		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I", "Sq +1", "Sq -1", "Sq +2", "Sq -2", "Sq Mir"])
-		.valueAction_(47); // ~controlBus0 -> mais déclaré dans le pattern
+		.valueAction_(49); // ~controlBus0 -> mais déclaré dans le pattern
 	}
 	{ \outR == data }
 	{
 		envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "Rt", "Rt_I", "Pro", "Pro_I", "Du", "Du_I", "Amp", "Amp_I", "Rat", "Rat_I", "Str", "Str_I", "Cen", "Cen_I", "Ra2", "Ra2_I", "St2", "St2_I", "Ce2", "Ce2_I", "Buf", "Buf_I", "Po", "Po_I", "Pan", "Pan_I", "Del", "Del_I", "L", "L_I", "R", "R_I", "L +1", "L -1", "L+1/4", "L-1/4", "L Opp", "Other"])
-		.valueAction_(47);
+		.valueAction_(49);
 	};
 
 
