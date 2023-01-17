@@ -191,7 +191,7 @@ And I encourage anyone (DSP developers or any user) to support and use this beau
 
 ## Licence
 
-© 2011-2022 Christophe Lengelé
+© 2011-2023 Christophe Lengelé
 
 ***Live 4 Life*** is an open source software: you can redistribute it and/or modify it under the terms of **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license** (CC BY-NC-SA 4.0). 
 
@@ -201,6 +201,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I do **not** want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play an improvisation in their dome.
+Moreover, I do **not** want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play improvisations in their dome.
 
 See the [License](/LICENCE.md) for more details.
