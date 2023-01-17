@@ -191,7 +191,7 @@ And I encourage anyone (DSP developers or any user) to support and use this beau
 
 ## Licence
 
-© 2011-2022 Christophe Lengelé
+© 2011-2023 Christophe Lengelé
 
 ***Live 4 Life*** is an open source software: you can redistribute it and/or modify it under the terms of **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license** (CC BY-NC-SA 4.0). 
 
