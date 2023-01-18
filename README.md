@@ -199,7 +199,7 @@ You may **not** use it for commercial purposes.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. 
 
-I wish it would be used in the spirit of *Free Party*. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
+I wish it would be used in the spirit of [*Free Party*](https://en.wikipedia.org/wiki/Free_party). Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
 Moreover, I do **not** want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play improvisations in their dome.
 
