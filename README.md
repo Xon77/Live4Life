@@ -145,8 +145,8 @@ If you would like to contribute, please get in touch with me in order to organis
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
-For my current postdoctoral internship at [UQÀM](https://eavm.uqam.ca) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/), I am looking for (audio)visual collaborations for the creation of spatial improvisations in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
-- video developers to create the visual from the sound data generated (Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, as long as the creation process and the code are published on Github and open to everyone.), 
+For my current postdoctoral internship at [UQÀM](https://eavm.uqam.ca) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/) from September 2022 until August 2024, I am looking for (audio)visual collaborations for the creation of spatial improvisations in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
+- video developers to create the visual from the sound data generated. Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, as long as the creation process and the code are published on Github and open to everyone. 
 - dancers for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video environment.
 
 The themes of these spatial improvisations will be about: loneliness, Bernard Parmegiani, free party and techno music. Feel free to contact me if you are interested.
@@ -195,12 +195,12 @@ And I encourage anyone (DSP developers or any user) to support and use this beau
 
 ***Live 4 Life*** is an open source software: you can redistribute it and/or modify it under the terms of **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license** (CC BY-NC-SA 4.0). 
 
-You may **not** use it for commercial purposes.
+**You may not use it for commercial purposes.**
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. 
 
-I wish it would be used in the spirit of [*Free Party*](https://en.wikipedia.org/wiki/Free_party). Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
+**I wish it would be used in the spirit of [*Free Party*](https://en.wikipedia.org/wiki/Free_party)**. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-Moreover, I do **not** want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca) and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play improvisations in their dome.
+**Moreover, I do not want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca)** and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play improvisations in their dome.
 
 See the [License](/LICENCE.md) for more details.
