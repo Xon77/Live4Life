@@ -9,7 +9,7 @@
 
 ~synthDefsBuild = 0; // 1 to rebuild synthDefs // automatic rebuild if no synthDefs in Application Support
 ~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
-~buffersLoading = "quick"; // "slow" if you have crashes during Buffer loading
+~buffersLoading = "slow"; // "quick"; // "slow" if you have crashes during Buffer loading
 
 ~recordMontage = 0; // 1, if you want to record GUI action
 ~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
