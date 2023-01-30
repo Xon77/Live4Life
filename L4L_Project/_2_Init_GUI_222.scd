@@ -3548,9 +3548,9 @@ Ndef(\sound).play
 
 	// ~dbSpec = \db.asSpec
 	// 12.dbamp
-	~dbSpec = ControlSpec(0.ampdb, 1.9952/*3.98107*/.ampdb, \db, units: " dB");
-	~dbSpec2 = ControlSpec(0.ampdb, 1/*3.98107*/.ampdb, \db, units: " dB");
-	~dbSpec2b = ControlSpec(0.ampdb, 1.9952/*3.98107*/.ampdb, \db, units: " dB"); // Pour booster les pistes trames
+	~dbSpec = ControlSpec(0.ampdb, /*1.9952*/ /*3.98107.ampdb*/ ~maxServerVolume, \db, units: " dB");
+	~dbSpec2 = ControlSpec(0.ampdb, /*3.98107*/ 1.ampdb, \db, units: " dB"); // Pour booster les pistes rythmiques
+	~dbSpec2b = ControlSpec(0.ampdb, /*1.9952*/ /*3.98107*/ ~maxTextureTracksVolume, \db, units: " dB"); // Pour booster les pistes trames
 	// ~globalBus.set(~dbSpec.unmap(0));
 	// ~volumeBus[0];
 
@@ -3563,7 +3563,7 @@ Ndef(\sound).play
 
 		~nbOfServers.do { |s|
 			~numEffects.do {|i| ~fxSynth[s][i].free; ~fxSynth2[s][i].free };
-			~nbOfControlBus.do {|i| ~controlBusSynth[s][i].clear; /*~controlBus[i].free;*/ }; // si Cmd. n'a pas déjà été déclenché -> libération des Nodeproxys Control qui libèrent les bus a ??? -> appremment oui
+			~nbOfControlBus.do {|i| ~controlBusSynth[s][i].clear; /*~controlBus[i].free;*/ }; // si Cmd. n'a pas déjà été déclenché -> libération des Nodeproxys Control qui libèrent les bus a. ??? -> apparemment oui
 			~groups[s].as(Set).do {|i| i.free }; // libération des groupes
 			~tracksList.do {|tr| ~ins[tr].clear; /*~volumeBus[s][tr].free; ~volumeBus2[s][tr].free;*/ }; ~inBus[s].free; // Libération des bus de volume et des NodeProxy de volume
 			// try sur les NodeProxy juste pour éviter l'erreur lors de la fermeture de la GUI si le patten n'a pas été lancé - mais ne marche pas
