@@ -728,7 +728,7 @@
 		// if (currentEnvironment[server] == ~server1, { ~serverVolume = 0 ! 2 });
 		if (~serverVolume.isNil, { ~serverVolume = 0 ! 2 });
 
-		~serverVolume[serverNb] = Volume(currentEnvironment[serverFXV], 0, ~numChannels, -90, 6, false /*true*/).lag_(7);
+		~serverVolume[serverNb] = Volume(currentEnvironment[serverFXV], 0, ~numChannels, -90, ~maxServerVolume, false /*true*/).lag_(7);
 
 		currentEnvironment[server].sync;
 
