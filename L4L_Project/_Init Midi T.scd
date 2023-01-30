@@ -154,13 +154,13 @@ MKtl('hid_0_cth_66').rebuild
 ~tBButtonE10 = ~midiTouchBar.elementAt(\nOn_6_081);*/
 
 
-~tBSlider4.action_({ |v| /*v.value.postln;*/ {~trackAllVolView.valueAction_(v.value*~maxMulVolControllers); }.defer }); // La valeur 90 en midi correspond à peu près au 0db
+~tBSlider4.action_({ |v| /*v.value.postln;*/ {~trackAllVolView.valueAction_(v.value/**~maxMulVolControllers*/); }.defer }); // La valeur 90 en midi correspond à peu près au 0db
 ~tBSlider3.action_({ |v| { ~trackFXVolView.valueAction_(ControlSpec(0.025, 0.6, 'lin', 0.001, 1).map(v.value)) /*~fadeTimeSynthFxView.valueAction_(ControlSpec(0.01, 30, 'lin', 0.01, 1).map(v.value))*/ }.defer });
 ~tBSlider2.action_({ |v| { ~nbOfServers.do { |i| ~mixAllFxView2[i].valueAction_(/*ControlSpec(-1, 1, 'lin', 0.01, -1).map(*/v.value/*)*/); }; }.defer });
 ~tBSlider1.action_({ |v| { ~ratMulView.valueAction_(ControlSpec(0.01, 1, 0, 0.01, 1).map(v.value)); /*v.value.postln*/ }.defer });
 // { { ~ratMulView.valueAction_(ControlSpec(0, 127, 4, 0.01, 10).map(v.value)); /* et juste pour le marquage rouge */ ~ratMulViewG[trackA].valueAction_(v.value) }.defer; }
 
-~tBSlider6.action_({ |v| /*v.value.postln;*/ {~trackAllVolView.valueAction_(v.value*~maxMulVolControllers); }.defer }); // La valeur 90 en midi correspond à peu près au 0db
+~tBSlider6.action_({ |v| /*v.value.postln;*/ {~trackAllVolView.valueAction_(v.value/**~maxMulVolControllers*/); }.defer }); // La valeur 90 en midi correspond à peu près au 0db
 ~tBSlider5.action_({ |v| { ~trackFXVolView.valueAction_(ControlSpec(0.025, 0.6, 'lin', 0.001, 1).map(v.value)) /*~fadeTimeSynthFxView.valueAction_(ControlSpec(0.01, 30, 'lin', 0.01, 1).map(v.value))*/ }.defer });
 
 ~tBButtonB.action_({ |v| ~trackAllVolControl1View.valueAction_(1); });

@@ -772,7 +772,7 @@
 				// SLIDER Global
 
 				~dbVolAKSpec = ControlSpec(0, 1, 0, 0.0001);
-				~aController.setSliderFunction(8, { |i,v| {~trackAllVolView.valueAction_(v/127* ~maxMulVolControllers /*127.0*/)/*(~dbVolAKSpec.unmap(v/(127.0+ 23.9/*32*/)))*/ }.defer /*[\slider,i,\value,v].postln*/ } );
+				~aController.setSliderFunction(8, { |i,v| {~trackAllVolView.valueAction_(v / 127.0 /** ~maxMulVolControllers*/ /*127.0*/)/*(~dbVolAKSpec.unmap(v/(127.0+ 23.9/*32*/)))*/ }.defer /*[\slider,i,\value,v].postln*/ } );
 				// 24 pour bloquer à  2.99 db // 32 pour bloquer à - 2.1 db
 
 				// Changement du 7ème slider de piste pour controler les FX en attenndant un autre controleur
