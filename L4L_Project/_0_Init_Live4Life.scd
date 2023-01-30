@@ -24,9 +24,10 @@
 ~mixAllFxDefault = 0; // Default value for mix of effects
 ~lagTimeAllFxDefault = 7 /*4*/; // Default value for parameter lag of effects
 ~fadeTimeSynthFxDefault = 6 /*5*/ /*3*/; // Default value for Xfade time of effects
+~maxServerVolume = 3; // /*6*/ /*3*/ /*-3*/ Maximum volume in decibel for servers
+~maxTextureTracksVolume = 0; /*6*/ /*1.9952.ampdb 6.dbamp*/ // Maximum volume in decibel for Texture Tracks (currently 1 to 3)
 ~fxMulVolume = 1.0; // For managing volumes when Xfading  effects in series or parallel - to tweak
 ~fxMul2Volume = 1.0; // Idem
-~maxMulVolControllers = 0.7945 /*7*/ /*0.57*/ /*957*/; // for max main volume ~trackAllVolView -> à 1 = + 6dB / 0.5957 = -3dB
 ~fxCPUCheck = 1; // 1 allows to avoid change of effects (see preset[\fxSynth]==1) when changing presets too quickly (below FX xfade time) (now not implemented on FX INOUT...)
 ~maxSynthTime = 30 /*60*/; // Max. Duration in seconds for synth events
 ~keyBoardPerfProtect = 0; // 1 avoids to trigger some shortcuts too dangerous or uncontrollable in performance
@@ -103,7 +104,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 ( // Only if you have controllers - Initialisation MIDI with some Quarks (Modality APC Mini & Twister) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-{ // MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache;
+{ MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache; // necessary to load Akai APC Mini ?
 	// ~uController = MKtl('csbm330', "evolution-ucontrol-uc33"); "_Init Midi U.scd".loadRelative; // Midi Channel 0
 	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B // Midi Channel 3
 	// File "keith-mcmillen-qunexus_port1_AB.desc de Modality" -> change Midi Channel from 0 to 3, if Leith-mcmillen-qunexus controller is used
