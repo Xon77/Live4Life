@@ -125,14 +125,14 @@ In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4
 
 5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [Controllers](/Controllers) for full performance control.
 
-A **[wiki](https://github.com/Xon77/Live4Life/wiki) (in construction)**, including tutorials and code examples to automate some utility functions will be added over time, as well as training workshops in immersive sound and spatial improvisation.
+A **[wiki (in construction)](https://github.com/Xon77/Live4Life/wiki)**, including tutorials and code examples to automate some utility functions will be added over time, as well as training workshops in immersive sound and spatial improvisation.
 
 
 ## References
 
 ***Live 4 Life*** has been presented several times during conferences ([JIM 2017](https://jim2017.sciencesconf.org/data/Lengele2017aa.pdf), [ICMC 2018](https://quod.lib.umich.edu/cgi/p/pod/dod-idx/live-4-life-a-spatial-performance-tool-focused-on-rhythm.pdf?c=icmc;idno=bbp2372.2018.057;format=pdf), [ICMC 2021](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)), concerts (ICMC 2018, [JIM 2019](https://www.youtube.com/watch?v=NfWXF6copEs)), festivals (Ultrasons from 2016 to 2021, [video of Akousma 2021](https://player.vimeo.com/video/747391295?autoplay=1#t=1h21m40s), [Cube Fest 2022](https://artscenter.vt.edu/performances/cube-fest-2022.html)), or in the  Journal of Music and Technology [Organised Sound](https://doi.org/10.1017/S135577182100008X) (April 2021).
 
-All the papers are also published on [Researchgate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my [doctoral thesis](https://www.researchgate.net/publication/360018268_L'improvisation_spatiale_generee_a_partir_de_motifs_polyrythmiques_et_de_sequences_de_parametres_en_boucle_via_l'outil_de_performance_Live_4_Life) (in french, sorry) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/), about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
+All the papers are also published on [ResearchGate](https://www.researchgate.net/profile/Christophe-Lengele) or [ORCID](https://orcid.org/my-orcid?orcid=0000-0002-9114-6632), as well as my [doctoral thesis](https://www.researchgate.net/publication/360018268_L'improvisation_spatiale_generee_a_partir_de_motifs_polyrythmiques_et_de_sequences_de_parametres_en_boucle_via_l'outil_de_performance_Live_4_Life) (in french, sorry) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/), about spatial improvisations based on polyrhythms and sequences of parameters in loop via this tool.
 
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
 
