@@ -104,7 +104,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 ( // Only if you have controllers - Initialisation MIDI with some Quarks (Modality APC Mini & Twister) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-{ MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache; // necessary to load Akai APC Mini ?
+{ MKtl.find(\midi); MKtl.postLoadedDescs; MKtlDesc.writeCache; // necessary to load Akai APC Mini if alone ?
 	// ~uController = MKtl('csbm330', "evolution-ucontrol-uc33"); "_Init Midi U.scd".loadRelative; // Midi Channel 0
 	// ~qController = MKtl('qnxs0', "keith-mcmillen-qunexus_port1_AB"); "_Init Midi Q2.scd".loadRelative; // Preset B // Midi Channel 3
 	// File "keith-mcmillen-qunexus_port1_AB.desc de Modality" -> change Midi Channel from 0 to 3, if Leith-mcmillen-qunexus controller is used
