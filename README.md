@@ -12,7 +12,7 @@ The **spatial performance tool** ***Live 4 Life*** aims to simplify the creation
 
 I have been developing in [**SuperCollider**](https://supercollider.github.io) since 2011, "to play the place and the music at the same time". Currently, it is the only project I use to create with sounds and space. Although I hope to develop the tool with other spatial controls and algorithms during the rest of my life, rhythm and synthesis are now prioritized over spatial development, which is a bit paused because of several reasons (mainly due to the pandemic and the difficulty to find residencies or perform spatial improvisations in concert halls or festivals without an appropriate allowance).
 
-What makes the difference with other spatialisation tools ?
+**What makes the difference with other spatialisation tools ?**
 
 1. It is not only a spatialisation tool, but **a whole sound creation system** to play with sequences of parameters (rhythm, sound and space), **integrating spatialisation at the heart of each sound synthesis**.
 2. Contrary to most tools with input/track-based spatialisation, it is **a layer- and event-based spatialisation,** where sequences of **spatialised sound particles or choruses** (copies or echoes of the same event with micro-delays or spectral/spatial variations) meet **a multichannel effect system**.
@@ -145,9 +145,9 @@ If you would like to contribute, please get in touch with me in order to organis
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
-For my current postdoctoral internship at [UQÀM](https://eavm.uqam.ca) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/) from September 2022 until August 2024, I am looking for (audio)visual collaborations for the creation of spatial improvisations in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
-- video developers to create the visual from the sound data generated. Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, as long as the creation process and the code are published on Github and open to everyone. 
-- dancers for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video / light environment.
+For my current postdoctoral internship at [UQÀM](https://eavm.uqam.ca) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/) from September 2022 until August 2024, **I am looking for (audio)visual collaborations for the creation of spatial improvisations** in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
+- **video developers** to create the visual from the sound data generated. Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, **as long as the creation process and the code are published on Github and open to everyone**. 
+- **dancers** for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video / light environment.
 
 The themes of these spatial improvisations will be about: loneliness, Bernard Parmegiani, free party and techno music. Feel free to contact me if you are interested.
 
@@ -163,7 +163,7 @@ The themes of these spatial improvisations will be about: loneliness, Bernard Pa
 [![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DLive4Life%26type%3Dpatrons&style=for-the-badge)](https://patreon.com/Live4Life)
 -->
 
-<!-- Introduire un un bouton Patreon
+<!-- Introduire un bouton Patreon
 https://shieldsio-patreon.vercel.app
 https://github.com/endel/shieldsio-patreon/blob/master/README.md
 -->
