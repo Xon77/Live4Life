@@ -358,8 +358,8 @@ if (f == 'ins', {
 		if (~visualizeLevels == "SpatioScope", {
 			// Version Quadriphonie
 			~spatioScopePlayer = SpatioScope([ -0.5 @ -0.5, 0.5 @ -0.5, 0.5 @ 0.5, -0.5 @ 0.5 ], server:~server1, parent:~spatioScopeWindow, bounds: Rect(0, 0, 250*sizeMul, 250*sizeMul));
-		}, { ~visualizeServerMeter.value(~server1, 0, 170);
-			if (~nbOfServers == 2, { ~levelsWindow2 = ~server2.meter.window.alwaysOnTop_(true).bounds = Rect(95, 0, 160, 220); }); // Affichage des niveaux
+		}, { if (~nbOfServers == 2, { ~visualizeServerMeter.value(~server2, 102, 170); }); // Affichage des niveaux
+			~visualizeServerMeter.value(~server1, 0, 170);
 		});
 		~linksChannel = 1; ~rightChannel = 2;
 	}
