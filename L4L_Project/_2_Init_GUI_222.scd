@@ -348,7 +348,7 @@ if (f == 'ins', {
 		// Version Stéréo
 		// ~spatioScopePlayer = SpatioScope([ -0.5 @ -0.5, 0.5 @ -0.5 ], parent:~spatioScopeWindow , bounds: Rect(0, 0, 250, 250));
 		if (~nbOfServers == 2, {
-			if (~numChannelsFX == 16, {~visualizeServerMeter.value(~server2, 0, 390)}, {~visualizeServerMeter.value(~server2, 140, 140)});
+			if (~numChannelsFX == 16, {~visualizeServerMeter.value(~server2, 0, 390)}, {~visualizeServerMeter.value(~server2, 70, 140)});
 		});
 		if (~numChannelsFX == 16, {~visualizeServerMeter.value(~server1, 0, 390)}, {~visualizeServerMeter.value(~server1, 0, 140)});
 		~linksChannel = 1; ~rightChannel = 2;
