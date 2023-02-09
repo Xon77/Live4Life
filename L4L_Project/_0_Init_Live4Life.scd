@@ -64,7 +64,7 @@
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context - Crash with ~initBuffersSynths.(\server1, 0); because some synths are not stored
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~presetsFileName = "MyPresetFile.txt";
+~presetsFileName = "PresetFile-2.txt";
 // ~presetsFileName2 = "MyPresetFile2.txt"; if you have 2 presets files
 
 // Ambisonic Spatialisation
