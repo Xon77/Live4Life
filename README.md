@@ -101,7 +101,7 @@ For Windows, I do not know. Let me know if you can.
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-4. Put the files of the folder [`L4L_Extensions`](/L4L_Extensions) in your SuperCollider Extensions folder if you do not already have them and recompile again.
+4. Put the files of the folder [`L4L_Extensions`](/L4L_Extensions) in your SuperCollider Extensions folder (if you do not already have these classes) and recompile again.
 
 
 ## Setup
