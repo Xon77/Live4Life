@@ -1617,7 +1617,8 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 
 
 	~folderRyGroupStruct = ["4", "5", "6", "7", "8", ""];
-	~folderRyGroupItemsLemur = ~folderRyGroupStruct.collect { |a| ~folderRyGroupItems.collect { |b| a + b } }.flatten;
+	// ~folderRyGroupItemsLemur = ~folderRyGroupStruct.collect { |a| ~folderRyGroupItems.collect { |b| a + b } }.flatten;
+	~folderRyGroupItemsLemur = ~folderRyGroupStruct.collect { |a| (~folderRyGroupItems[(0..16)]).collect { |b| a + b } }.flatten; // modifié car liste de regroupements trop longue -changé depuis Parmegiani
 
 	/*
 	~folderRyGroupStruct = ["4-", "5-", "6-", "7-", "8-"];
@@ -1654,13 +1655,14 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 	OSCdef(\FolderRyMenu, {|msg, time, addr, recvPort| try {
 		// try pour éviter la redondance quand rien n'est sélectionné
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
-		var a = (msg.indexOfEqual(1)-1);
-		var x = (a % 16); // avec Parme
+		var a = (msg.indexOfEqual(1)); // avec Parme
+		var x = (a % 16);
 		var y = (a.div(16)+3);
-		/*var x = (a % 16)+2;
-		var y = (a.div(16)%5)+3;*/
+		/* var a = (msg.indexOfEqual(1)-1);
+		var x = (a % 16)+2; // après Parme
+		var y = (a.div(16)%5)+3; */
 		var track = (y*2)+~seqCompGABIndex[y];
-		var prevRand = ~folderRyRand; y.postln;
+		var prevRand = ~folderRyRand; // y.postln;
 		{
 			~folderRyRand = x;
 			~folRandFunction.(track);
@@ -1673,8 +1675,10 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 	OSCdef(\FolderRyMenuAllX, {|msg, time, addr, recvPort| try {
 		// try pour éviter la redondance quand rien n'est sélectionné
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
-		var a = (msg.indexOfEqual(1)-1);
-		var x = (a % 16)+2;
+		var a = (msg.indexOfEqual(1)); // avec Parme
+		var x = (a % 17);
+		/* var a = (msg.indexOfEqual(1)-1); // après Parme
+		var x = (a % 16)+2; */
 		var prevRand = ~folderRyRand;
 		{
 			~folderRyRand = x;
@@ -1691,7 +1695,8 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 		var track = (a*2)+~seqCompGABIndex[a];
 		var prevRand = ~folderRyRand;
 		{
-			~folderRyRand = x /*0*/;
+			~folderRyRand = /*x*/ 0; // avec Parme
+			// ~folderRyRand = x /*0*/; // après Parme
 			~folRandFunction.(track);
 			~folderRyRand =prevRand;
 		}.defer;
@@ -1701,9 +1706,10 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 	OSCdef(\FolderRyMenuAAll, {|msg, time, addr, recvPort| try {
 		// try pour éviter la redondance quand rien n'est sélectionné
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
-		var prevRand = ~folderRyRand;
+		var prevRand = ~folderRyRand; // "test".postln;
 		{
-			~folderRyRand = x /*0*/;
+			~folderRyRand = /*x*/ 0; // avec Parme
+			// ~folderRyRand = x /*0*/; // après Parme
 			~rhythmTracksX2.do {|i| ~folRandFunction.(i) };
 			~folderRyRand =prevRand;
 		}.defer;

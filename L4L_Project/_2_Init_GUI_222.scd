@@ -25116,8 +25116,8 @@ u.drawFunc = { d.draw }
 		})
 	});
 
-	// ~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", "ntx" ] ++ ~kindOfFolders ); // Parme
-	~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", /*"ntx"*/ ] ++ ~kindOfFolders ); // Adaptation Parme / Dhomont
+	~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", "ntx" ] ++ ~kindOfFolders ); // Parme
+	// ~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", /*"ntx"*/ ] ++ ~kindOfFolders ); // Adaptation Parme / Dhomont
 	~folderRyRandView = PopUpMenu.new(~controlWindowSpaRy, Rect(162, 2, 44, 21))
 	.action_({|menu| ~folderRyRand = menu./*item*/value.asInteger })
 	.allowsReselection_(true)
