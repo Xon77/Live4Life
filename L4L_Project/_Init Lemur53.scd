@@ -1658,9 +1658,11 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 		var a = (msg.indexOfEqual(1)); // avec Parme
 		var x = (a % 16);
 		var y = (a.div(16)+3);
-		/* var a = (msg.indexOfEqual(1)-1);
-		var x = (a % 16)+2; // après Parme
+
+		/* var a = (msg.indexOfEqual(1)-1); // après Parme
+		var x = (a % 16)+2;
 		var y = (a.div(16)%5)+3; */
+
 		var track = (y*2)+~seqCompGABIndex[y];
 		var prevRand = ~folderRyRand; // y.postln;
 		{
@@ -1677,8 +1679,10 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
 		var a = (msg.indexOfEqual(1)); // avec Parme
 		var x = (a % 17);
+
 		/* var a = (msg.indexOfEqual(1)-1); // après Parme
 		var x = (a % 16)+2; */
+
 		var prevRand = ~folderRyRand;
 		{
 			~folderRyRand = x;
@@ -1742,9 +1746,9 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 	OSCdef(\FolderRyMenuLemur2, {|msg, time, addr, recvPort| try {
 		// try pour éviter la redondance quand rien n'est sélectionné
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
-		var a = (msg.indexOfEqual(1));
-		var x = (a % 16);
-		var y = (a.div(16)+3);
+		var a = (msg.indexOfEqual(1)); // avec Parme
+		var x = (a % 16); // avec Parme
+		var y = (a.div(16)+3); // avec Parme
 		var track = (y*2)+~seqCompGABIndex[y];
 		var prevRand = ~folderRyRand;
 		{
@@ -1758,8 +1762,8 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 	OSCdef(\FolderRyMenuAllXLemur2, {|msg, time, addr, recvPort| try {
 		// try pour éviter la redondance quand rien n'est sélectionné
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
-		var a = (msg.indexOfEqual(1));
-		var x = (a % 17);
+		var a = (msg.indexOfEqual(1)); // avec Parme
+		var x = (a % 17); // avec Parme
 		var prevRand = ~folderRyRand;
 		{
 			~folderRyRand = x;
@@ -1776,7 +1780,7 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 		var track = (a*2)+~seqCompGABIndex[a];
 		var prevRand = ~folderRyRand;
 		{
-			~folderRyRand = 0;
+			~folderRyRand = 0; // avec Parme
 			~folRandFunction.(track);
 			~folderRyRand =prevRand;
 		}.defer;
@@ -1788,7 +1792,7 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 		// ai essayé de mettre un Switch à la place du Pad, mais le dernier objet sélectionnné ne ferme pas le Switch
 		var prevRand = ~folderRyRand;
 		{
-			~folderRyRand = 0;
+			~folderRyRand = 0; // avec Parme
 			~rhythmTracksX2.do {|i| ~folRandFunction.(i) };
 			~folderRyRand =prevRand;
 		}.defer;
