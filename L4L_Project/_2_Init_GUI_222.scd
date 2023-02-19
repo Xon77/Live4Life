@@ -12416,7 +12416,7 @@ readView, readBackgroundColorView, posView
 
 		// Pour mettre à jour le pop up menu
 		if (~foldersStructure == 1, {
-			~bufFolderView.items_(~arrayOfFolderNames2 ++ ~kindOfFolders ++ ["ALL"]);
+			~bufFolderView.items_(~arrayOfFolderNames2 ++ ~kindOfFolders.collect{|item, i| (i+~arrayOfFolderNames2.size) +"-"+item} ++ ["ALL"]);
 			~arrayOfFolderNamesALL = ~arrayOfFolderNames ++ ~kindOfFolders ++ ["ALL"];
 		}, {
 			~bufFolderView.items_(~arrayOfFolderNames2 ++ ["ALL"]);
@@ -12451,7 +12451,7 @@ readView, readBackgroundColorView, posView
 
 			// Pour mettre à jour le pop up menu
 			if (~foldersStructure == 1, {
-				~bufFolderView.items_(~arrayOfFolderNames2 ++ ~kindOfFolders ++ ["ALL"]);
+				~bufFolderView.items_(~arrayOfFolderNames2 ++ ~kindOfFolders.collect{|item, i| (i+~arrayOfFolderNames2.size) +"-"+item} ++ ["ALL"]);
 				~arrayOfFolderNamesALL = ~arrayOfFolderNames ++ ~kindOfFolders ++ ["ALL"];
 			}, {
 				~bufFolderView.items_(~arrayOfFolderNames2 ++ ["ALL"]);
@@ -12747,7 +12747,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	~arrayOfFolderNames2 = ~arrayOfFolderNames.collect { |item, i| i+"-"+item};
 
 	if (~foldersStructure == 1, {
-		~bufFolderView.items_(~arrayOfFolderNames2 /*++'Insultes'++'InsultesOMax'*/ /*++ 'Kik & Hit'*/ ++ ~kindOfFolders ++ ["ALL"]);
+		~bufFolderView.items_(~arrayOfFolderNames2 /*++'Insultes'++'InsultesOMax'*/ /*++ 'Kik & Hit'*/ ++ ~kindOfFolders.collect{|item, i| (i+~arrayOfFolderNames2.size) +"-"+item} ++ ["ALL"]);
 		~arrayOfFolderNamesALL = ~arrayOfFolderNames ++ ~kindOfFolders ++ ["ALL"];
 	}, {
 		~bufFolderView.items_(~arrayOfFolderNames2 /*++'Insultes'++'InsultesOMax'*/ /*++ 'Kik & Hit'*/ ++ ["ALL"]);
@@ -22019,7 +22019,7 @@ u.drawFunc = { d.draw }
 
 
 	if (~foldersStructure == 1, {
-		~bufFolderViewG[tr].items_(~arrayOfFolderNames2 ++ ~kindOfFolders ++ ["ALL"]);
+		~bufFolderViewG[tr].items_(~arrayOfFolderNames2 ++ ~kindOfFolders.collect{|item, i| (i+~arrayOfFolderNames2.size) +"-"+item} ++ ["ALL"]);
 	}, {
 		~bufFolderViewG[tr].items_(~arrayOfFolderNames2 ++ ["ALL"]);
 	});
