@@ -146,7 +146,7 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 	// ~lemurTracksSeqNamesFunction.(~lemurAdress1, 4);
 
 
-	~lemurArrayOfFolderNames = ~arrayOfFolderNames2 /*++'Insultes'++'InsultesOMax'*/ /*++ 'Kik & Hit'*/ ++ ~kindOfFolders ++ ["ALL"];
+	~lemurArrayOfFolderNames = ~arrayOfFolderNames2 /*++'Insultes'++'InsultesOMax'*/ /*++ 'Kik & Hit'*/ ++ ~kindOfFolders.collect{|item, i| (i+~arrayOfFolderNames2.size) +"-"+item} ++ ["ALL"];
 
 	~lemurBufNamesFunction = { |lemurAdress|
 		~lemurArrayOfFolderNames.do { |i, id|
