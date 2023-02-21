@@ -582,7 +582,7 @@ if (f == 'ins', {
 		/*[ Point(-0.23293714059227, -0.86933324366016), Point(0.23293714059227, -0.86933324366016), Point(0.63639610306789, -0.63639610306789), Point(0.86933324366016, -0.23293714059227), Point(0.86933324366016, 0.23293714059227), Point(0.63639610306789, 0.63639610306789), Point(0.23293714059227, 0.86933324366016), Point(-0.23293714059227, 0.86933324366016), Point(-0.63639610306789, 0.63639610306789), Point(-0.86933324366016, 0.23293714059227), Point(-0.86933324366016, -0.23293714059227), Point(-0.63639610306789, -0.63639610306789), Point(-0.20086104634372, -0.61818673559185), Point(0.20086104634372, -0.61818673559185), Point(0.52586104634372, -0.38206041399011), Point(0.65, -1.5920408388916e-16), Point(0.52586104634372, 0.38206041399011), Point(0.20086104634372, 0.61818673559185), Point(-0.20086104634372, 0.61818673559185), Point(-0.52586104634372, 0.38206041399011), Point(-0.65, 2.3880612583373e-16), Point(-0.52586104634372, -0.38206041399011), Point(-0.15307337294604, -0.36955181300451), Point(0.15307337294604, -0.36955181300451), Point(0.36955181300451, -0.15307337294604), Point(0.36955181300451, 0.15307337294604), Point(0.15307337294604, 0.36955181300451), Point(-0.15307337294604, 0.36955181300451), Point(-0.36955181300451, 0.15307337294604), Point(-0.36955181300452, -0.15307337294604), Point(-0.15, 1.836970198721e-17), Point(0.15, -3.6739403974421e-17) ][/*~outsOrganization*/ [11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 22, 13, 14, 15, 16, 17, 18, 19, 20, 25, 26, 27, 28, 29, 30, 31, 32, 23, 24 ].order]*/
 	}
 
-		{~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"} {
+	{~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"} {
 		if (~visualizeLevels == "SpatioScope", {
 			// Version 32 Pistes - Dome avec 1 à gauche & attribution clockwise
 			// ~visualizeServerMeter.value(~server1, 0, 390)
@@ -6289,11 +6289,12 @@ Ndef(\sound).play
 					});
 					// if (~keyControl == 2, {~keyControlView.valueAction_(0) }, {~keyControlView.valueAction_(~keyControl+1) });
 				},
-				/*64, { // #@ + shift -> Changement  du paramètre ~controlBusTypeArgValue (Rat / Str / Cen)
-				if (mod == 131072 and: {~keyBoardPerfProtect == 0}, {
-				~controlBusTypeArgView.valueAction_( (~controlBusTypeArgValue +1).wrap(0,2) )
-				});
-				},*/
+				64, { // #@ + shift -> Changement  du paramètre ~controlBusTypeArgValue (Rat / Str / Cen)
+					if (mod == 131072 and: {~keyBoardPerfProtect == 0}, {
+						if (~controlBusSynth5FadeTime == 8, {~controlBusSynth5FadeTimeView.valueAction_(0) }, {~controlBusSynth5FadeTimeView.valueAction_(~controlBusSynth5FadeTime + 1)});
+						// ~controlBusTypeArgView.valueAction_( (~controlBusTypeArgValue +1).wrap(0,2) )
+					});
+				},
 				8226, { // #@ + alt -> Changement de type de la fonction de la vitesse de lecture (Rand / Ser / Par / Mul...)
 					// if (mod == 524288, {
 					~controlRandFuncView.valueAction_( (~controlRandFunc +1).wrap(0,3) )
@@ -6409,7 +6410,7 @@ Ndef(\sound).play
 						{~currentTab == 0}
 						{ if (~outCompChoose/*[~tracksValue][~seqsValue]*/ == 0, {~outCompChooseView.valueAction_(1)}, {~outCompChooseView.valueAction_(0)} ) }
 						{~currentTab == 3}
-						{ if (~seqABVisibleAllViewG[0].value == 0, {~seqABVisibleAllViewG[0].valueAction_(1)}, {~seqABVisibleAllViewG[0].valueAction_(0)} ) };
+						{ if (~seqABVisibleAllViewG.value == 0, {~seqABVisibleAllViewG.valueAction_(1)}, {~seqABVisibleAllViewG.valueAction_(0)} ) };
 					});
 				},
 
@@ -6420,7 +6421,7 @@ Ndef(\sound).play
 						{~currentTab == 0}
 						{if (~ratCompAllChoose/*[~tracksValue][~seqsValue]*/ == 0, {~ratCompAllChooseView.valueAction_(1); ~transCompView.valueAction_(1)}, {~ratCompAllChooseView.valueAction_(0); ~transCompView.valueAction_(1)}) }
 						{~currentTab == 3}
-						{if (~seqPlayingVisibleAllViewG[0].value == 0, {~seqPlayingVisibleAllViewG[0].valueAction_(1)}, {~seqPlayingVisibleAllViewG[0].valueAction_(0)})};
+						{if (~seqPlayingVisibleAllViewG.value == 0, {~seqPlayingVisibleAllViewG.valueAction_(1)}, {~seqPlayingVisibleAllViewG.valueAction_(0)})};
 					});
 				},
 				125, { // )° + alt -> ~visuelLocView.valueAction_(1);
@@ -7206,7 +7207,7 @@ Ndef(\sound).play
 				},
 				60, { // <> + shift -> Changement aléatoire dans certains types de dossiers sons (AR/AS) OU changement aléatoire de ~bufSequence (Eléments doux) si disponible
 					if (mod == 131072 and: {~folderStructureAValues.notNil}, {
-						var fol = if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != [0], {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].choose}, {~folderStructureAValues.choose});
+						var fol = if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != 0, {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].choose}, {~folderStructureAValues.choose});
 						~bufFolderViewG[~tracksValue].value_(fol); ~bufFolderView.valueAction_(fol);
 						~bufRangeView.doAction;
 						if (~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background == Color.red, {}, {~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background_(Color.red) });
@@ -7224,9 +7225,9 @@ Ndef(\sound).play
 						if (~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background == Color.red, {}, {~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background_(Color.red) });
 						// });
 					}
-					{mod == 131072 and: {~folderStructureRValues.notNil}} // W + shift -> Changement aléatoire dans certains types de dossiers sons OU changement aléatoire de ~bufSequence (Eléments violents) si disponible
+					{mod == 131072 and: {~folderStructureDValues.notNil}} // W + shift -> Changement aléatoire dans certains types de dossiers sons OU changement aléatoire de ~bufSequence (Eléments violents) si disponible
 					{
-						var fol = if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1] != [0], {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1].choose}, {~folderStructureRValues.choose});
+						var fol = if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1] != 0, {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1].choose}, {~folderStructureDValues.choose});
 						~bufFolderViewG[~tracksValue].value_(fol); ~bufFolderView.valueAction_(fol);
 						~bufRangeView.doAction;
 						if (~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background == Color.red, {}, {~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background_(Color.red) });
@@ -7257,29 +7258,29 @@ Ndef(\sound).play
 					~bufFolderView.valueAction_(~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].permute(if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].indexOfGreaterThan(~bufFolderView.value).isNil, {0}, {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].indexOfGreaterThan(~bufFolderView.value)}))[0]);~bufFolderView.value.postln; (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].indexOfGreaterThan(~bufFolderView.value)).postln;
 					)
 					(// Arranged
-						var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0];
-						var nth = seq.indexOfGreaterThan(~bufFolderView.value);
-						seq = seq.permute(if (nth.isNil, {0}, {nth}));
-						~bufFolderView.valueAction_(seq[0]); ~bufFolderView.value.postln; nth.postln;
+					var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0];
+					var nth = seq.indexOfGreaterThan(~bufFolderView.value);
+					seq = seq.permute(if (nth.isNil, {0}, {nth}));
+					~bufFolderView.valueAction_(seq[0]); ~bufFolderView.value.postln; nth.postln;
 					)
 					*/
 					{
-						var fol = if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != [0], {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].choose}, {(~bufFolderView.value - 1).wrap/*clip*/(0, ~bufFolderSize1)}); // wrap permet un navigation ininterrompue vs clip
+						var fol = if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != 0, {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].choose}, {(~bufFolderView.value - 1).wrap/*clip*/(0, ~bufFolderSize1)}); // wrap permet un navigation ininterrompue vs clip
 						~bufFolderViewG[~tracksValue].value_(fol); ~bufFolderView.valueAction_(fol);
 						// ~nbFolders = ~bufFolderView.items.size // pour accélérer le changement // benchmark à faire ?????????
 						~bufRangeView/*.valueAction_([0, ~bufRangeSpec[~tracksValue][~seqsValue].unmap(~bufFolderM[0][~tracksValue][~seqsValue].size-1)])*/.doAction; // Vraiment nécessaire
 						if (~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background == Color.red, {}, {~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background_(Color.red) });
 					}
-					{mod == 131072 and: {~folderStructureDValues.notNil}} // X + shift -> Changement aléatoire dans certains types de dossiers sons (DR/IP) OU changement en série de ~bufSequence (Eléments doux) si disponible
+					{mod == 131072 and: {~folderStructureIValues.notNil}} // X + shift -> Changement aléatoire dans certains types de dossiers sons (DR/IP) OU changement en série de ~bufSequence (Eléments doux) si disponible
 					{
 						var fol;
-						if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != [0], {
+						if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != 0, {
 							var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0];
 							var nth = seq.indexOfGreaterThan(~bufFolderView.value);
 							seq = seq.permute(if (nth.isNil, {0}, {nth}));
 							fol=seq[0];
 						}, {
-							fol = ~folderStructureDValues.choose;
+							fol = ~folderStructureIValues.choose;
 						});
 						~bufFolderViewG[~tracksValue].value_(fol); ~bufFolderView.valueAction_(fol);
 						~bufRangeView.doAction;
@@ -7303,16 +7304,16 @@ Ndef(\sound).play
 						~bufRangeView/*.valueAction_([0, ~bufRangeSpec[~tracksValue][~seqsValue].unmap(~bufFolderM[0][~tracksValue][~seqsValue].size-1)])*/.doAction;
 						if (~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background == Color.red, {}, {~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background_(Color.red) });
 					}
-					{mod == 131072 and: {~folderStructureIValues.notNil}} // C + shift -> Changement aléatoire das certains types de dossiers sons (PN/IT) OU changement en série de ~bufSequence (Eléments violents) si disponible
+					{mod == 131072 and: {~folderStructureRValues.notNil}} // C + shift -> Changement aléatoire das certains types de dossiers sons (PN/IT) OU changement en série de ~bufSequence (Eléments violents) si disponible
 					{
 						var fol;
-						if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1] != [0], {
+						if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1] != 0, {
 							var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1];
 							var nth = seq.indexOfGreaterThan(~bufFolderView.value);
 							seq = seq.permute(if (nth.isNil, {0}, {nth}));
 							fol=seq[0];
 						}, {
-							fol = ~folderStructureIValues.choose;
+							fol = ~folderStructureRValues.choose;
 						});
 						~bufFolderViewG[~tracksValue].value_(fol); ~bufFolderView.valueAction_(fol);
 						~bufRangeView.doAction;
