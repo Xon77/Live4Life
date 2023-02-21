@@ -74,7 +74,7 @@ For Windows, I do not know. Let me know if you can.
 
 ## Installation
 
-1. Install [SuperCollider 3.13](https://supercollider.github.io/downloads) (latest build) or above. 
+1. Install [SuperCollider 3.13](https://supercollider.github.io/downloads) or above. 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
 3. Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned below and recompile:
 
