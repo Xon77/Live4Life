@@ -7257,7 +7257,7 @@ Ndef(\sound).play
 					(// Raw
 					~bufFolderView.valueAction_(~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].permute(if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].indexOfGreaterThan(~bufFolderView.value).isNil, {0}, {~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].indexOfGreaterThan(~bufFolderView.value)}))[0]);~bufFolderView.value.postln; (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].indexOfGreaterThan(~bufFolderView.value)).postln;
 					)
-					(// Arranged
+					(// Arranged OLD
 					var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0];
 					var nth = seq.indexOfGreaterThan(~bufFolderView.value);
 					seq = seq.permute(if (nth.isNil, {0}, {nth}));
@@ -7275,10 +7275,8 @@ Ndef(\sound).play
 					{
 						var fol;
 						if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0] != 0, {
-							var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0];
-							var nth = seq.indexOfGreaterThan(~bufFolderView.value);
-							seq = seq.permute(if (nth.isNil, {0}, {nth}));
-							fol=seq[0];
+							~bufSequenceNb[0] = if (~bufSequenceNb[0] >= ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].size, {0}, {~bufSequenceNb[0]+1});
+							fol = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][0].permute(~bufSequenceNb[0])[0];
 						}, {
 							fol = ~folderStructureIValues.choose;
 						});
@@ -7308,10 +7306,8 @@ Ndef(\sound).play
 					{
 						var fol;
 						if (~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1] != 0, {
-							var seq = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1];
-							var nth = seq.indexOfGreaterThan(~bufFolderView.value);
-							seq = seq.permute(if (nth.isNil, {0}, {nth}));
-							fol=seq[0];
+							~bufSequenceNb[1] = if (~bufSequenceNb[1] >= ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1].size, {0}, {~bufSequenceNb[1]+1});
+							fol = ~bufSequence[~tracksValue][~seqSeq[~tracksValue]][1].permute(~bufSequenceNb[1])[0];
 						}, {
 							fol = ~folderStructureRValues.choose;
 						});
@@ -15012,7 +15008,8 @@ data.postln;*/
 
 
 
-~bufSequence = {{0 ! 2} ! ~nbOfSeqs} ! ~nbOfTracksX2;
+~bufSequence = {{0 ! 2} ! ~nbOfSeqs} ! ~nbOfTracksX2; // Pour sélectionner les meilleurs Buffers les plus appropriés d'une séquence
+~bufSequenceNb = 0 ! 2; // Pour l'index dans la séquence de Buffers
 
 // Function to update the main window of Composite Views
 (
