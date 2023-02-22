@@ -15010,6 +15010,7 @@ data.postln;*/
 
 ~bufSequence = {{0 ! 2} ! ~nbOfSeqs} ! ~nbOfTracksX2; // Pour sélectionner les meilleurs Buffers les plus appropriés d'une séquence
 ~bufSequenceNb = 0 ! 2; // Pour l'index dans la séquence de Buffers
+~presetNotes = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // Pour intégrer des notes des actions à réaliser sur un Preset spécifique
 
 // Function to update the main window of Composite Views
 (
@@ -15537,6 +15538,7 @@ data.postln;*/
 
 
 		if (~bufSequence[~tracksValue][~seqsValue] != [ 0, 0 ], { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "- BufSequence ->" + ~bufSequence[~tracksValue][~seqsValue]).postln; });
+		if (~presetNotes[~tracksValue][~seqsValue] != 0, { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "->" + ~presetNotes[~tracksValue][~seqsValue]).postln; });
 
 
 		// Multiples Miroir Chorus
@@ -16239,6 +16241,7 @@ if (File.fileSize(~presetspath) <= 21, {
 			\ampHarRoundView -> ~ampHarRoundValue[~tracksValue][~seqsValue],
 
 			\bufSequence -> ~bufSequence[~tracksValue][~seqsValue],
+			\presetNotes -> ~presetNotes[~tracksValue][~seqsValue],
 
 			/*
 			// Collection des données d'effets EZsliders
@@ -17066,9 +17069,13 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 	}*/);
 
 
+	// vraiment necessaire puisque déjà chargé au global -> oui au cas où les ~prestTracks ne soient pas chargés...
 	if (~presets[index][\bufSequence].notNil, {
 		~bufSequence[~tracksValue][~seqsValue] = ~presets[index][\bufSequence];
 		// (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "- BufSequence ->" + ~presets[index][\bufSequence]).postln
+	});
+	if (~presets[index][\presetNotes].notNil, {
+		~presetNotes[~tracksValue][~seqsValue] = ~presets[index][\presetNotes];
 	});
 
 
@@ -18492,8 +18499,9 @@ case
 	// Visualisation du preset
 	~presetSelection[track][seq] = index.asString;
 
-	// Pour charger les séquences de Buffers
+	// Pour charger les séquences de Buffers ou PresetNotes
 	if (~presets[index][\bufSequence].notNil, { ~bufSequence[track][seq] = ~presets[index][\bufSequence] });
+	if (~presets[index][\presetNotes].notNil, { ~presetNotes[track][seq] = ~presets[index][\presetNotes] });
 
 	// Données du mode des effets si E à la fin du preset
 	if (~presets[index][\fxSynth] == 1 and: {~presetsDontTriggerFX == 0},
