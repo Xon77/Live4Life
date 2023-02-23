@@ -22408,7 +22408,7 @@ u.drawFunc = { d.draw }
 	.stringColor_(Color.white)
 	.border_(~border)
 	.borderColor_(~borderColor)
-	.valueAction_(1);
+	.valueAction_(~proMulSpec.unmap(1));
 
 	if (~twister.isNil, {
 		~proMulViewG[tr].action_({ |view|
