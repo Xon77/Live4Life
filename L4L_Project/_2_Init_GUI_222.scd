@@ -15538,7 +15538,7 @@ data.postln;*/
 
 
 		if (~bufSequence[~tracksValue][~seqsValue] != [ 0, 0 ], { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "- BufSequence ->" + ~bufSequence[~tracksValue][~seqsValue]).postln; });
-		if (~presetNotes[~tracksValue][~seqsValue] != 0, { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "->" + ~presetNotes[~tracksValue][~seqsValue]).postln; });
+		if (~presetNotes[~tracksValue][~seqsValue] != 0, { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "->" + ~presetNotes[~tracksValue][~seqsValue]).postln; }); "".postln;
 
 
 		// Multiples Miroir Chorus
