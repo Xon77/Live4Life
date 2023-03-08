@@ -5730,19 +5730,19 @@ Ndef(\sound).play
 
 	~controlBusSynthFunc = [
 		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(0); } },
-		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(0.001); } },
+		// { |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(0.001); } },
 		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(0.01); } },
 		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(1); } },
-		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(2); } },
-		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(5); } },
+		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(3); } },
+		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(6); } },
 		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(10); } },
-		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(20); } },
+		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(15); } },
 		{ |s| ~nbOfControlBus.do { |i| ~controlBusSynth[s][i].fadeTime_(30); } },
 	];
 
 	~controlBusSynth5FadeTime = 0;
 	~controlBusSynth5FadeTimeView = RoundButton(/*~globalWindow*/~busControlComp, Rect(2, 22, 35, 18) /*Rect(39, 2, 35, 18)*/)
-	.states_([["0", Color.white, Color.blue], ["low", Color.white, Color.blue], ["0.01", Color.white, Color.blue], ["1", Color.black, Color.green], ["2", Color.black, Color.green], ["5", Color.black, Color.green], ["10", Color.black, Color.green], ["20", Color.black, Color.green], ["30", Color.black, Color.green]])
+	.states_([["0", Color.white, Color.blue], /*["low", Color.white, Color.blue],*/ ["0.01", Color.white, Color.blue], ["1", Color.black, Color.green], ["3", Color.black, Color.green], ["6", Color.black, Color.green], ["10", Color.black, Color.green], ["15", Color.black, Color.green], ["30", Color.black, Color.green]])
 	.font_(Font("Verdana",10, bold: true))
 	.action_({|i| ~controlBusSynth5FadeTime = i.value; ~controlBusSynthFunc[~controlBusSynth5FadeTime].value(0);});
 
@@ -6285,13 +6285,13 @@ Ndef(\sound).play
 					// Changement pour le temps d'interpolation des bus de contrôle
 					if (mod == 0, {
 						// if (~keyControl == 0, {~keyControlView.valueAction_(2) }, {~keyControlView.valueAction_(0) });
-						if (~controlBusSynth5FadeTime == 8, {~controlBusSynth5FadeTimeView.valueAction_(0)}, {~controlBusSynth5FadeTimeView.valueAction_(8)} );
+						if (~controlBusSynth5FadeTime == 7, {~controlBusSynth5FadeTimeView.valueAction_(0)}, {~controlBusSynth5FadeTimeView.valueAction_(7)} );
 					});
 					// if (~keyControl == 2, {~keyControlView.valueAction_(0) }, {~keyControlView.valueAction_(~keyControl+1) });
 				},
 				64, { // #@ + shift -> Changement  du paramètre ~controlBusTypeArgValue (Rat / Str / Cen)
 					if (mod == 131072 and: {~keyBoardPerfProtect == 0}, {
-						if (~controlBusSynth5FadeTime == 8, {~controlBusSynth5FadeTimeView.valueAction_(0) }, {~controlBusSynth5FadeTimeView.valueAction_(~controlBusSynth5FadeTime + 1)});
+						if (~controlBusSynth5FadeTime == 7, {~controlBusSynth5FadeTimeView.valueAction_(0) }, {~controlBusSynth5FadeTimeView.valueAction_(~controlBusSynth5FadeTime + 1)});
 						// ~controlBusTypeArgView.valueAction_( (~controlBusTypeArgValue +1).wrap(0,2) )
 					});
 				},
@@ -6761,7 +6761,7 @@ Ndef(\sound).play
 					{mod == 0} // Avec rien -> switch entre toutes les pistes atmosphériques du haut
 					{ var indicesOfTracks, indexOfTracks;
 						indicesOfTracks = ~playViewValue[0..5].indicesOfEqual(1);
-						if (indicesOfTracks.notNil, {
+						if (indicesOfTracks.notNil and: {indicesOfTracks.size !=1}, {
 							indexOfTracks = indicesOfTracks.indexOfGreaterThan(~tracksValue);
 							if (indexOfTracks.isNil, {~tracksView.valueAction_(indicesOfTracks[0])}, {~tracksView.valueAction_(indicesOfTracks[indexOfTracks])});
 							if (indicesOfTracks.includes(~secondLemurX2Track) and: {~lemurConnected2 == 1}, { indicesOfTracks.remove(~secondLemurX2Track) });
@@ -6995,7 +6995,7 @@ Ndef(\sound).play
 				76, { // Loop avec Ctrl + L
 					case
 					{mod == 262144}
-					{ if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, {~legLoopView.valueAction_(1); "Loop Activated".postln; }, {~legLoopView.valueAction_(0); "Loop Deactivated".postln; });
+					{ if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, {~legLoopView.valueAction_(1)}, {~legLoopView.valueAction_(0)});
 						if (~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background == Color.red, {}, {~presetSeqTextViewG[~tracksValue][~seqSeq[~tracksValue]].background_(Color.red) });
 					}
 				},
@@ -12112,6 +12112,8 @@ readView, readBackgroundColorView, posView
 	.font_(Font("Verdana",8))
 	.action_({|i| ~legLoop[~tracksValue][~seqSeq[~tracksValue]] = i.value;
 
+		if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, { "Loop Activated".postln; }, { "Loop Deactivated".postln; });
+
 		if (~lemurConnected1 == 1, {
 			if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, { // ~currentSeq = ~seqSeq[tr] dans le pattern  - non décalage
 				~lemurAdress1.sendMsg( *[ ["/ParC/Loop"] ++ ["@color"] ++ [~redLemurColor, ~redLemurColor]  ].flatten(1) );
@@ -14692,66 +14694,75 @@ envir[rangeView]*/
 // si changement du nb de séquences
 ~presetTrackGetFunction = { | index, nbOfCurSeqs, trackSwitch | var presetList;
 
-	// presetList = ~presets.keys.size.collect{ |i| ~presets.keys.asArray[i].asSymbol }; // obligé de convertir la liste de presets en symbol au lieu de String pour vérification si le preset existe dans la presetList
-	presetList = ~presets.keys.asArray.collect{ |i| i.asSymbol }; // obligé de convertir la liste de presets en symbol au lieu de String pour vérification si le preset existe dans la presetList
-	// ~presetList.includes(~presetsTracks['test'/*index*/][1][0/*x*/][0/*y*/]);
+	{
+		// presetList = ~presets.keys.size.collect{ |i| ~presets.keys.asArray[i].asSymbol }; // obligé de convertir la liste de presets en symbol au lieu de String pour vérification si le preset existe dans la presetList
+		presetList = ~presets.keys.asArray.collect{ |i| i.asSymbol }; // obligé de convertir la liste de presets en symbol au lieu de String pour vérification si le preset existe dans la presetList
+		// ~presetList.includes(~presetsTracks['test'/*index*/][1][0/*x*/][0/*y*/]);
 
-	~tracks.do { |x|
-		~tracksView.valueAction_(x);
-		~seqView.valueAction_(~seqSpec.unmap(~presetsTracks[index][0][x][0]));
-		~seqSeqView.valueAction_([ ~seqSeqSpec.unmap(~presetsTracks[index][0][x][1][0]), ~seqSeqSpec.unmap(~presetsTracks[index][0][x][1][1]+1) ]); // 1er RangeSlider
-		~presetSeqRangeView.valueAction_([ ~presetSeqRangeSpec.unmap(~presetsTracks[index][0][x][2][0]), ~presetSeqRangeSpec.unmap(~presetsTracks[index][0][x][2][1]+1) ]); // 2eme RangeSlider
-		~pFadeView.valueAction_(~pFadeSpec.unmap(~presetsTracks[index][0][x][3][0]));
-		~quantView.valueAction_(~quantSpec.unmap(~presetsTracks[index][0][x][3][1]));
+		~tracks.do { |x|
 
-		// obligation de rajouter ? et une valeur par défaut si nil sinon génération d'une erreur
-		nbOfCurSeqs.do { |i| /*~presetSeqNbSelectView[i].valueAction_(~presetsTracks[index][0][x][4][i] ? i);*/  ~presetSeqNbSelectDurViewG[x][i].valueAction_(~presetsTracks[index][0][x][4/*5*/][i] ? 1) };
-	};
+			~tracksView.valueAction_(x);
+			~seqView.valueAction_(~seqSpec.unmap(~presetsTracks[index][0][x][0]));
+			~seqSeqView.valueAction_([ ~seqSeqSpec.unmap(~presetsTracks[index][0][x][1][0]), ~seqSeqSpec.unmap(~presetsTracks[index][0][x][1][1]+1) ]); // 1er RangeSlider
+			~presetSeqRangeView.valueAction_([ ~presetSeqRangeSpec.unmap(~presetsTracks[index][0][x][2][0]), ~presetSeqRangeSpec.unmap(~presetsTracks[index][0][x][2][1]+1) ]); // 2eme RangeSlider
+			~pFadeView.valueAction_(~pFadeSpec.unmap(~presetsTracks[index][0][x][3][0]));
+			~quantView.valueAction_(~quantSpec.unmap(~presetsTracks[index][0][x][3][1]));
 
-	~tracks.do { |x|
-		~tracksView.valueAction_(x);
-		nbOfCurSeqs.do { |y|
+			nbOfCurSeqs.do { |y|
 
-			// Changement des séquences et attribution graphique des presets
-			/*~seqsView.valueAction_(y);
-			// if (~presetsTracks[index][1][x][y].asInteger != 0, {
-			if (presetList.includes(~presetsTracks[index][1][x][y].asSymbol), {
-			~presetSelectionView.valueAction_(~presetSelectionView.items.find([ ~presetsTracks[index][1][x][y] ]));
-			});*/
+				/*~presetSeqNbSelectView[i].valueAction_(~presetsTracks[index][0][x][4][i] ? i);*/ ~presetSeqNbSelectDurViewG[x][y].valueAction_(~presetsTracks[index][0][x][4/*5*/][y] ? 1);
 
-			// -> + rapide sans attribution graphique des presets
-			if (presetList.includes(~presetsTracks[index][1][x][y].asSymbol), { // Protection -> seulement si le preset existe dans la presetList (il a pu être supprimé)
-
-				// Avec if certains presets ne se chargent pas -> donc essai avec try ??? - à voir pourquoi ????
-				// try {~presetGetFunctionQuick.value(/*~presetList.choose.asSymbol.postln*/ ~presetsTracks[index][1][x][y].asSymbol, x, y)};
-
-				~presetGetFunctionQuick.value(/*~presetList.choose.asSymbol.postln*/ ~presetsTracks[index][1][x][y].asSymbol, x, y); // Apparemment OK
-
-				/*if (~presetsTracks[index][1][x][y].asInteger != 0, {
-				~presetGetFunctionQuick.value(/*~presetList.choose.asSymbol.postln*/ ~presetsTracks[index][1][x][y].asSymbol, x, y);
+				// Changement des séquences et attribution graphique des presets
+				/*~seqsView.valueAction_(y);
+				// if (~presetsTracks[index][1][x][y].asInteger != 0, {
+				if (presetList.includes(~presetsTracks[index][1][x][y].asSymbol), {
+				~presetSelectionView.valueAction_(~presetSelectionView.items.find([ ~presetsTracks[index][1][x][y] ]));
 				});*/
 
-				~presetSelection[x][y] = ~presetsTracks[index][1][x][y];
-				~presetSeqTextViewG[x][y].string_(~presetsTracks[index][1][x][y]);
+				// -> + rapide sans attribution graphique des presets
+				if (presetList.includes(~presetsTracks[index][1][x][y].asSymbol), { // Protection -> seulement si le preset existe dans la presetList (il a pu être supprimé)
 
-			});
+					// Avec if certains presets ne se chargent pas -> donc essai avec try ??? - à voir pourquoi ????
+					// try {~presetGetFunctionQuick.value(/*~presetList.choose.asSymbol.postln*/ ~presetsTracks[index][1][x][y].asSymbol, x, y)};
 
+					~presetGetFunctionQuick.value(/*~presetList.choose.asSymbol.postln*/ ~presetsTracks[index][1][x][y].asSymbol, x, y); // Apparemment OK
+
+					/*if (~presetsTracks[index][1][x][y].asInteger != 0, {
+					~presetGetFunctionQuick.value(/*~presetList.choose.asSymbol.postln*/ ~presetsTracks[index][1][x][y].asSymbol, x, y);
+					});*/
+
+					~presetSelection[x][y] = ~presetsTracks[index][1][x][y];
+					~presetSeqTextViewG[x][y].string_(~presetsTracks[index][1][x][y]);
+
+				});
+			};
 		};
-	};
 
-	~nbOfTracksX2.do { |i| /*~tracksView.valueAction_(i);*/ ~presetSeqRandList[i] = ~presetSelection[i].selectIndices({|item, i| item != 0}); };
+		~nbOfTracksX2.do { |i| /*~tracksView.valueAction_(i);*/ ~presetSeqRandList[i] = ~presetSelection[i].selectIndices({|item, i| item != 0}); };
 
-	// ~seqABVisibleAllViewG[0].valueAction_(1).valueAction_(0); // Ligne nécessaire pour remettre toutes les pistes sur A // provoque une erreur si Lemur connectée ???
+		// ~seqABVisibleAllViewG[0].valueAction_(1).valueAction_(0); // Ligne nécessaire pour remettre toutes les pistes sur A // provoque une erreur si Lemur connectée ???
 
-	// /*(0,2..14)*/ [ 2, 4, 6, 8, 10, 12, 14, 0 ].do { |i| ~tracksView.valueAction_(i) }; ~seqsView.valueAction_(0);
-	trackSwitch.do { |i| ~tracksView.valueAction_(i) }; ~seqsView.valueAction_(0);
+		// /*(0,2..14)*/ [ 2, 4, 6, 8, 10, 12, 14, 0 ].do { |i| ~tracksView.valueAction_(i) }; ~seqsView.valueAction_(0);
+		trackSwitch.do { |i| ~tracksView.valueAction_(i) }; ~seqsView.valueAction_(0);
 
-	if (~twister.notNil, {
-		~twister.knobs[8..15].do { |i, id|
-			if (id > 2, {i.ledColor_(Color.magenta)}, {i.ledColor_(Color.green)});
-		};
-		~twister.knobs[8+(~tracksValue/2).asInteger].ledColor_(Color.red);
-	});
+		if (~twister.notNil, {
+			~twister.knobs[8..15].do { |i, id|
+				if (id > 2, {i.ledColor_(Color.magenta)}, {i.ledColor_(Color.green)});
+			};
+			~twister.knobs[8+(~tracksValue/2).asInteger].ledColor_(Color.red);
+
+			~retriggerPresetAllTracksView.valueAction_(1);
+			1.wait;
+			~seqABVisibleAllViewG/*[0]*/.valueAction_(0).valueAction_(1);
+		});
+
+		1.wait;
+
+		~presetsDontTriggerFX = 0;
+		~aControllerConnected = ~aControllerConnectedValue; ~lemurConnected1 = ~lemurConnectedValue; ~lemurConnected2 = ~lemurConnectedValue2;
+		("Final Step 2 : TracksPresets loaded :" +~presetsTracksFileName).postln;
+
+	}.fork(AppClock);
 
 };
 
@@ -15119,8 +15130,8 @@ data.postln;*/
 		~bufView.step_(1/(((~bufMax[~tracksValue][~seqsValue])-(~bufMin[~tracksValue][~seqsValue]))));
 		~bufIndexView.step_(1/(~bufMax[~tracksValue][~seqsValue] - ~bufMin[~tracksValue][~seqsValue]));
 		~bufIndexView.string_("At : %".format((~bufSpec[~tracksValue][~seqsValue].map(~bufIndexView.value) * ~bufMul[~tracksValue][~seqsValue]).asInteger/*.round(1)*/)); // léger pb de rounding ?
-		~bufFolderView.value_(~bufFolderValue[~tracksValue][~seqsValue]);
-		// ~bufFolderView.valueAction_(~bufFolderValue[~tracksValue][~seqsValue]); // retiré car contenu de l'action mis ci-dessus pour optimisation
+		~bufFolderView.valueAction_(~bufFolderValue[~tracksValue][~seqsValue]);
+		// ~bufFolderView.valueAction_(~bufFolderValue[~tracksValue][~seqsValue]); // retiré car contenu de l'action mis ci-dessus pour optimisation / mais remis pour mettre à jour le ~bufFolderView quand des PresetTracks sont chargés lorsqu'aucun contôleur n'est branché
 
 		~offRoundView.valueAction_(~offRoundValue[~tracksValue][~seqsValue]);
 		~ratRoundView.valueAction_(~ratRoundValue[~tracksValue][~seqsValue]); ~rat2RoundView.valueAction_(~rat2RoundValue[~tracksValue][~seqsValue]);
@@ -15462,8 +15473,8 @@ data.postln;*/
 		~proBjor2View.step_(rtmSeqStep).valueAction_(~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]]/*[~seqsValue]*/.unmap(~proBjor2[~tracksValue][~seqSeq[~tracksValue]] /*[~seqsValue]*/)).doAction; // doAction pour mise à jour du Spec & action sur le global*/
 		// ~proBjorSpec[~tracksValue][~seqSeq[~tracksValue]].postln; ~proBjorSpec[~tracksValue][~seqsValue].postln;
 		// Auparavant [~seqSeq[~tracksValue]] à la place de [~seqsValue] - To check ???
-		~proBjorView/*.step_(rtmSeqStep)*/.value_(/*~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].unmap(~proBjor[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue])*/ ~proBjorGridsX[~tracksValue][~seqsValue]).doAction; // doAction pour mise à jour du Spec & action sur le global // Changement GUI 221
-		~proBjor2View/*.step_(rtmSeqStep)*/.value_(/*~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].unmap(~proBjor2[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue])*/ ~proBjorGridsY[~tracksValue][~seqsValue]).doAction; // doAction pour mise à jour du Spec & action sur le global // Changement GUI 221
+		~proBjorView/*.step_(rtmSeqStep)*/.value_(~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].unmap(~proBjor[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]) /*~proBjorGridsX[~tracksValue][~seqsValue]*/).doAction; // doAction pour mise à jour du Spec & action sur le global // Changement GUI 221
+		~proBjor2View/*.step_(rtmSeqStep)*/.value_(~proBjorSpec[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue].unmap(~proBjor2[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]) /*~proBjorGridsY[~tracksValue][~seqsValue]*/).doAction; // doAction pour mise à jour du Spec & action sur le global // Changement GUI 221
 		~proSelectView.value_(~proSelect[~tracksValue]/*[~seqSeq[~tracksValue]]*/[~seqsValue]).doAction; // doAction -> necessaire pour action sur le global // Changement GUI 221
 
 		~proBjor3View.value_(~proGridsBias[~tracksValue][~seqsValue]).doAction;
@@ -15537,8 +15548,8 @@ data.postln;*/
 		~lehmerReInit2View.valueAction_(~lehmerReInit2[~tracksValue][~seqsValue]);
 
 
-		if (~bufSequence[~tracksValue][~seqsValue] != [ 0, 0 ], { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "- BufSequence ->" + ~bufSequence[~tracksValue][~seqsValue]).postln; });
-		if (~presetNotes[~tracksValue][~seqsValue] != 0, { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "->" + ~presetNotes[~tracksValue][~seqsValue]).postln; }); "".postln;
+		if (~bufSequence[~tracksValue][~seqsValue] != [ 0, 0 ], { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "- BufSequence ->" + ~bufSequence[~tracksValue][~seqsValue]).warn; });
+		if (~presetNotes[~tracksValue][~seqsValue] != 0, { (((~tracksValue/2).floor.asInteger+1) + "/" + /*~presetSeqStart*/ (~posSeq2[~tracksValue]+1) + "->" + ~presetNotes[~tracksValue][~seqsValue]).postln; });
 
 
 		// Multiples Miroir Chorus
