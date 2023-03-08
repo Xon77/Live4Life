@@ -2278,7 +2278,7 @@ if (~lemurConnected1 == 1, { // 1 si Lemur connectée
 		// Pour mettre à jour les sliders du 1er tab du Lemur si le Lemur est lancée après la GUI
 		~rtmMulView.value_(~rtmMulSpec[~tracksValue][~seqsValue].unmap(/*1*/~rtmMul[~tracksValue][~seqsValue])).doAction; ~proMulView.value_(~proMulSpec.unmap(/*1*/~proMul[~tracksValue][~seqsValue])).doAction; ~legMulView.value_(~legMulSpec.unmap(/*1*/~legMul[~tracksValue][~seqsValue])).doAction;
 		~strMulView.value_(~strMulSpec.unmap(/*1*/~strMul[~tracksValue][~seqsValue])).doAction; ~cenMulView.value_(~cenMulSpec.unmap(/*1*/~cenMul[~tracksValue][~seqsValue])).doAction;
-		~proBjorView.value_(/*1*/~proBjor[~tracksValue][~seqsValue]).doAction; ~proBjor2View.value_(/*1*/~proBjor2[~tracksValue][~seqsValue]).doAction; ~bufFolderView.value_(~bufFolderValue[~tracksValue][~seqsValue]/*~defaultFolder*/.min(/*0*/ ~arrayOfFolderNames.size-1)).doAction;
+		~proBjorView.value_(/*1*//*~proBjor*/~proBjorGridsX[~tracksValue][~seqsValue]).doAction; ~proBjor2View.value_(/*1*//*~proBjor2*/~proBjorGridsY[~tracksValue][~seqsValue]).doAction; ~bufFolderView.value_(~bufFolderValue[~tracksValue][~seqsValue]/*~defaultFolder*/.min(/*0*/ ~arrayOfFolderNames.size-1)).doAction;
 		~seqsColorizeFunction.(~tracksValue,~seqsValue);
 
 
