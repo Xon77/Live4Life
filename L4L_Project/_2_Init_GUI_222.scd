@@ -11991,7 +11991,7 @@ readView, readBackgroundColorView, posView
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
 	.font_(Font("Verdana",10));
 
-	~circSpeedRangeSpec = ControlSpec(0.2, 100, 4 /*\exp*/, 0.1, 0.5);
+	~circSpeedRangeSpec = ControlSpec(0.2, 100, 4 /*\exp*/, 0.1, 0.2);
 	~circSpeedRangeMin = ~circSpeedRangeSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
 	~circSpeedRangeMax = 66 ! ~nbOfSeqs ! ~nbOfTracksX2;
 	~circSpeedRangeView = EZRanger.new(~spatParametersComp, 141@17, "C Sp", ~circSpeedRangeSpec /*\freq*/,
