@@ -12112,7 +12112,7 @@ readView, readBackgroundColorView, posView
 	.font_(Font("Verdana",8))
 	.action_({|i| ~legLoop[~tracksValue][~seqSeq[~tracksValue]] = i.value;
 
-		if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, { "Loop Activated".postln; }, { "Loop Deactivated".postln; });
+		if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, { "Loop Deactivated".postln; }, { "Loop Activated".postln; });
 
 		if (~lemurConnected1 == 1, {
 			if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, { // ~currentSeq = ~seqSeq[tr] dans le pattern  - non décalage
