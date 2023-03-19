@@ -15130,8 +15130,8 @@ data.postln;*/
 		~bufView.step_(1/(((~bufMax[~tracksValue][~seqsValue])-(~bufMin[~tracksValue][~seqsValue]))));
 		~bufIndexView.step_(1/(~bufMax[~tracksValue][~seqsValue] - ~bufMin[~tracksValue][~seqsValue]));
 		~bufIndexView.string_("At : %".format((~bufSpec[~tracksValue][~seqsValue].map(~bufIndexView.value) * ~bufMul[~tracksValue][~seqsValue]).asInteger/*.round(1)*/)); // léger pb de rounding ?
-		~bufFolderView.valueAction_(~bufFolderValue[~tracksValue][~seqsValue]);
-		// ~bufFolderView.valueAction_(~bufFolderValue[~tracksValue][~seqsValue]); // retiré car contenu de l'action mis ci-dessus pour optimisation / mais remis pour mettre à jour le ~bufFolderView quand des PresetTracks sont chargés lorsqu'aucun contôleur n'est branché
+		~bufFolderView.value_(~bufFolderValue[~tracksValue][~seqsValue]);
+		// ~bufFolderView.valueAction_(~bufFolderValue[~tracksValue][~seqsValue]); // retiré car contenu de l'action mis ci-dessus pour optimisation / mais remis pour mettre à jour le ~bufFolderView quand des PresetTracks sont chargés lorsqu'aucun contôleur n'est branché / puis retiré car met en rouge la sequence quand on change de piste
 
 		~offRoundView.valueAction_(~offRoundValue[~tracksValue][~seqsValue]);
 		~ratRoundView.valueAction_(~ratRoundValue[~tracksValue][~seqsValue]); ~rat2RoundView.valueAction_(~rat2RoundValue[~tracksValue][~seqsValue]);
