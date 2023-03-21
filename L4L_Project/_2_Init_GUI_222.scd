@@ -2792,7 +2792,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 		~outRSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~outRSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~outRRoundView.valueAction_(~rightChannel -1);
-		~outR[track][seq] = ~outRSpec[track][seq].unmap(~rightChannel)  ! seqDur; // pour mettre à jour le nb de valeurs dans le MultiSlider si besoin
+		~outR[track][seq] = ~outRSpec[track][seq].unmap(~rightChannel) ! seqDur; // pour mettre à jour le nb de valeurs dans le MultiSlider si besoin
 		~outRView.valueAction_(~outR[~tracksValue][~seqsValue]);
 
 		~outRSeqMode.valueAction_(1);
