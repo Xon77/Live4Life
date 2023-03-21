@@ -42,7 +42,7 @@
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-Performance"; // Stereo Mix and effects // This line chooses spatial configuration setup // Uncomment according your preferred setup
 // ~numChannelsConfig = "2-MultiChannelSequencer"; // To get 8 seperated stereo tracks e.g. towards a sequencer - 16 mono effect channels ?
-// ~numChannelsConfig = "4"; // Clockwise Quad
+~numChannelsConfig = "4"; // Clockwise Quad - XXXXXXXXX
 // ~numChannelsConfig = "5-Clock"; // Clockwise from Centre = 0
 // ~numChannelsConfig = "5-Centre"; // Clockwise from Links (except Centre = 3) - XXXXXXXXX
 // ~numChannelsConfig = "7"; // Clockwise from Centre
@@ -64,7 +64,7 @@
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context - Crash with ~initBuffersSynths.(\server1, 0); because some synths are not stored
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~presetsFileName = "PresetFile-2.txt";
+~presetsFileName = "PresetFile-4.txt"; // For Preset file in Quadrophony - "PresetFile-2.txt" for Stereo
 // ~presetsFileName2 = "MyPresetFile2.txt"; if you have 2 presets files
 
 // Ambisonic Spatialisation
