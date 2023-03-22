@@ -1,6 +1,6 @@
 // TrackPresetsAssociations (associé à un fichier de TrackPresets)
 
-~presetTracksVariations = IdentityDictionary.new;
+~presetTracksVariations = IdentityDictionary.new; // Need to be created before storing
 ~presetTracksVariations.keys;
 ~presetTracksVariations.values;
 ~presetsTracksVariations.asCompileString;
@@ -28,8 +28,8 @@ if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[1] = ~pres
 
 
 
-~savePresetTracksRanges.('A 1 - Test', [0,4]);
-~savePresetTracksRanges.('A 2 - Foret', [0,4]);
+~savePresetTracksRanges.('A 1 - Test', [0,2,4]);
+~savePresetTracksRanges.('A 2 - Test2', [0,2,4]);
 
 
 
