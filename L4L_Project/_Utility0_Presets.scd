@@ -1,3 +1,56 @@
+~presets.keys.size; // Nb de presets dans la ListView
+~presets.asCompileString; // Données de tous les presets - prend plusieurs secondes à se générer et incomplet car String trop long
+
+
+// Liste des Presets
+Post << ~presets.keys; // Liste de tous les noms de presets pour les séquences (dans le désordre)
+~presets.keys.size.do { |i| ~presets.keys.asArray[i].asString.postln }; // Liste de tous les noms de presets pour les séquences (dans le désordre)
+~presets.keys.size.do { |i| ~presetSelectionView.items[i + 0].postln}; // Liste de tous les noms de presets pour les séquences (trié) XXXXXXXXXXXXXXXXXXXXXXXXXXX
+~presetList.do { |it, in| (in +" -> " + it).postln }; // Liste de tous les noms de presets pour les séquences (trié) XXXXXXXXXXXXXXXXXXXXXXXXXXX
+~presetList.choose.asSymbol; // Choix aléatoire d'un nom de preset dans la Liste
+~presetList.size;
+~presets.cs;
+
+
+// Nom du Preset sélectionné
+~presetSelectionView.item.asSymbol; // Preset sélectionné dans la ListView
+~presetSelection[0][~seqSeq[0]].asSymbol; // Preset en cours de lecture de la 1ère piste
+~presetSelection[~tracksValue][~seqsValue].asSymbol; // Preset sélectionné de la piste et de la séquence sélectionnée XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+// Liste de paramètres du Preset sélectionné
+~presets[~presetSelectionView.item.asSymbol].cs; // Liste des paramètres du preset sélectionné dans la ListView
+~presets[~presetSelection[0][~seqSeq[0]].asSymbol]; // Liste des paramètres du preset en cours de lecture
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol].cs; // // Liste des paramètres du Preset sélectionné de la piste et de la séquence sélectionnée XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+// Accès à certaines données spécifiques
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\outLMin];
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\outLMax];
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\outLView];
+
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\rtmView].size;
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\delView]
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\spaView];
+~spaView.valueAction_(~presets[index][\spaView]);
+
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\fxSynth]
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\fxSynthNum]
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\fxSynthData]
+
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\bufFolderView]
+~presets[~presetSelection[~tracksValue][~seqsValue].asSymbol][\bufMax].min(~foldersSize[~presets[~presetSelectionView.item.asSymbol][\bufFolderView]]-1)
+
+
+// Attribution aléatoire de presets à des séquences SANS mise à jour graphique totale
+~presetGetFunction.(~presetList.choose.asSymbol.postln); // Mise à jour visuelle des valeurs dans l'interface graphique, mais pas du nom du preset dans les ~presetSeqTextView
+~presetGetFunctionQuick.value(~presetList.choose.asSymbol.postln, ~tracksValue, ~seqsValue); // Mise à jour des valeurs, mais pas dans l'interface graphique et ni du nom du preset dans les ~presetSeqTextView
+~updateALLView.value; // Mise à jour dans l'interface graphique à partir des données d'un preset déjà attribué, mais pas du nom du preset dans les ~presetSeqTextView
+
+
+
+
+
 ( // To change some values in all Presets
 {
 	~presets.do { |item, i|
