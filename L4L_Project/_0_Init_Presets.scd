@@ -166,7 +166,8 @@ OSCdef.freeAll; // Si "_init Lemur2" a déjà été lancé et que l'application 
 // TracksPreset Variations (associated to a trackspreset file, but not compulsory since it is based on the nb of the sequence and not the name) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 // & Initialisation du Lemur
 
-~presetTracksVariationsFileName = "L4LT_Jan2020_240_Ultrasons_Parme1_Vars1.txt";
+
+~presetTracksVariationsFileName = ~presetsTracksFileName.split($.)[0]+"_Vars1.txt";
 
 ~presetTracksVariationsPath = (PathName.new(thisProcess.nowExecutingPath/*~currentPath*/).pathOnly ++ ~presetTracksVariationsFileName);
 ~presetTracksVariationsFileW = ZArchive.read(~presetTracksVariationsPath);
@@ -174,7 +175,7 @@ OSCdef.freeAll; // Si "_init Lemur2" a déjà été lancé et que l'application 
 ~presetTracksVariationsFileW.close;
 
 // NEW format remplacant ~sequenceAssociationPageFormat et celui ci-dessus [track, track] [preset N°, preset N°]
-~sequenceAssociationTrackFormat = [ [0,4], [0,4], [0,4], [0,4], [0,4], [6,8,10,12,14], [6,8,10,12,14], [6,8,10,12,14], [6,8,10,12,14], [6,8,10,12,14] /*[9, 11, 13], [9, 11, 13], [9, 11, 13], [9, 11, 13], [9, 11, 13]*/ ]; // déjà initialisé dans la GUI ...
+~sequenceAssociationTrackFormat = [ [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4] /*[9, 11, 13], [9, 11, 13], [9, 11, 13], [9, 11, 13], [9, 11, 13]*/ ]; // déjà initialisé dans la GUI ...
 
 ~ryRatRange = 0.3; ~ryRatBase = 0.4; // ~ryRatRand = ~ryRatRange.rand2; if (~ryRatRand > 0, { ~ryRatRand = ~ryRatRand+~ryRatBase }, { ~ryRatRand = ~ryRatRand-~ryRatBase })
 
@@ -213,7 +214,7 @@ if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[4] = ~pres
 		// ~sequenceAssociationTrackFormat[id][0].size.do { |a, ad| ~presetSeqRandList[~sequenceAssociationTrackFormat[id][a]/*~tracksValue*/].choose ! ~presetSeqRandList[~sequenceAssociationTrackFormat[id][0]/*~tracksValue*/].size } ! 60;
 		{ [ ~presetSeqRandList[~sequenceAssociationTrackFormat[id][0]/*~tracksValue*/].choose, ~presetSeqRandList[~sequenceAssociationTrackFormat[id][1]/*~tracksValue*/].choose ] } ! 60;
 	},{ ~globalRandAssPresets[id] =
-		{ [ ~presetSeqRandList[~sequenceAssociationTrackFormat[id][0]/*~tracksValue*/].choose, ~presetSeqRandList[~sequenceAssociationTrackFormat[id][1]/*~tracksValue*/].choose , ~presetSeqRandList[~sequenceAssociationTrackFormat[id][2]/*~tracksValue*/].choose , ~presetSeqRandList[~sequenceAssociationTrackFormat[id][3]/*~tracksValue*/].choose , ~presetSeqRandList[~sequenceAssociationTrackFormat[id][4]/*~tracksValue*/].choose ] } ! 60;
+		{ [ ~presetSeqRandList[~sequenceAssociationTrackFormat[id][0]/*~tracksValue*/].choose, ~presetSeqRandList[~sequenceAssociationTrackFormat[id][1]/*~tracksValue*/].choose , ~presetSeqRandList[~sequenceAssociationTrackFormat[id][2]/*~tracksValue*/].choose /*, ~presetSeqRandList[~sequenceAssociationTrackFormat[id][3]/*~tracksValue*/].choose , ~presetSeqRandList[~sequenceAssociationTrackFormat[id][4]/*~tracksValue*/].choose*/ ] } ! 60;
 	});
 };
 
@@ -221,7 +222,7 @@ if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[4] = ~pres
 	~presetVarsAssociationRefresh.(i); // Update des BoxMatrix
 	// Update des TabbedView Names - Comment l'updater en moins de code plus efficacement ???
 	~tabbedPresetVars.add(~sequenceAssociationTrackFormat[i].asString.replace(" ", "") );
-	~tabbedPresetVarsPages[i].label_( [[0,4],[0,4],[0,4],[0,4],[0,4],5,6,7,8,9][i].asString.replace(" ", "") /*~sequenceAssociationTrackFormat[i].asString.replace(" ", "")*/ );
+	~tabbedPresetVarsPages[i].label_( [[0,2,4],[0,2,4],[0,2,4],[0,2,4],[0,2,4],5,6,7,8,9][i].asString.replace(" ", "") /*~sequenceAssociationTrackFormat[i].asString.replace(" ", "")*/ );
 };
 
 // ~presetVarsOpenView.valueAction_(1)/*.valueAction_(0)*/; // necessaire d'ouvrir et d'initialiser la fenêtre de Preset Associations pour pouvoir écrire dans le Lemur les ~lemurPresetNamesFunction -> déjà ouvert ....
