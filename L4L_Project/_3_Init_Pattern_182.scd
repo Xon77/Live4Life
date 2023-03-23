@@ -4797,7 +4797,7 @@ envir[key][track][seq] = value;
 		// faire qqch des évènements qui ne génèrent pas de son -> visualisation de potentiels avortés ?????????
 		// Pourquoi pas d'envoi de données quand utilisation d'un dossier test ?????????
 
-		~processingAddress = NetAddr("127.0.0.1", 12000); // A décommenter pour Processing  XXXXXXXX
+		// ~processingAddress = NetAddr("127.0.0.1", 12000); // A décommenter pour Processing  XXXXXXXX
 
 		if (~visualizeProcessing == 1 and: {~lastEvent[track][\type] == 'note'},
 			{
