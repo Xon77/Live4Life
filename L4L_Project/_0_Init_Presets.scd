@@ -175,15 +175,13 @@ OSCdef.freeAll; // Si "_init Lemur2" a déjà été lancé et que l'application 
 ~presetTracksVariationsFileW.close;
 
 // NEW format remplacant ~sequenceAssociationPageFormat et celui ci-dessus [track, track] [preset N°, preset N°]
-~sequenceAssociationTrackFormat = [ [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4] /*[9, 11, 13], [9, 11, 13], [9, 11, 13], [9, 11, 13], [9, 11, 13]*/ ]; // déjà initialisé dans la GUI ...
+~sequenceAssociationTrackFormat = [ [0,2,4], [0,2,4], [0,2,4], [0,2,4], [0,2,4], [8,10,12], [8,10,12], [8,10,12], [8,10,12], [0,2,4] ]; // déjà initialisé dans la GUI ...
 
 ~ryRatRange = 0.3; ~ryRatBase = 0.4; // ~ryRatRand = ~ryRatRange.rand2; if (~ryRatRand > 0, { ~ryRatRand = ~ryRatRand+~ryRatBase }, { ~ryRatRand = ~ryRatRand-~ryRatBase })
 
-/*~tabbedPresetVars.tabAt(5).unfocusedColor_(Color.yellow).labelColor_(Color.red);*/
-// ~tabbedPresetVars.tabAt(3).unfocusedColor_(Color.green).labelColor_(Color.magenta/*blue*/);
-// ~tabbedPresetVars.tabAt(4).unfocusedColor_(Color.green).labelColor_(Color.magenta/*blue*/);
+// Change the colors de Preset Association Tabs
 ~tabbedPresetVars.tabAt(5).unfocusedColor_(Color.yellow).labelColor_(Color.magenta/*red*/);
-~tabbedPresetVars.tabAt(6).unfocusedColor_(Color.yellow).labelColor_(Color.magenta/*red*/);
+~tabbedPresetVars.tabAt(6).unfocusedColor_(Color.yellow).labelColor_(Color.magenta/*blue*/);
 ~tabbedPresetVars.tabAt(7).unfocusedColor_(Color.yellow).labelColor_(Color.magenta/*red*/);
 ~tabbedPresetVars.tabAt(8).unfocusedColor_(Color.yellow).labelColor_(Color.magenta/*red*/);
 ~tabbedPresetVars.tabAt(9).unfocusedColor_(Color.red/*yellow*/).labelColor_(Color.magenta/*red*/);
@@ -195,8 +193,8 @@ if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[1] = ~pres
 // ~presetAssociationNames[3] = ~presetTracksVariations.keys.asArray.reject({ arg item, i; item.asString.beginsWith("R") }).sort{|x, y| x.asString.naturalCompare(y.asString) < 0}; // 3ère page
 // if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[4] = ~presetAssociationNames[0].copyRange(60,120) }); // 4eme page
 
-~presetAssociationNames[5] = ~presetTracksVariations.keys.asArray.select({ arg item, i; item.asString.beginsWith("R") }).sort{|x, y| x.asString.naturalCompare(y.asString) < 0}; // 3ère page
-if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[4] = ~presetAssociationNames[0].copyRange(60,120) }); // 4eme page
+~presetAssociationNames[5] = ~presetTracksVariations.keys.asArray.select({ arg item, i; item.asString.beginsWith("R") }).sort{|x, y| x.asString.naturalCompare(y.asString) < 0}; // 5ème page
+// if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[4] = ~presetAssociationNames[0].copyRange(60,120) }); // 6ème page
 
 // Réarrangement de la liste rythmique
 // ~presetAssociationNames[6] = [ 'Ry A 5 - Dou', 'Ry A 6 ];
