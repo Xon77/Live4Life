@@ -3565,7 +3565,7 @@ envir[key][track][seq] = value;
 				if (/*~sequenceType[track][~seqSeq[track]] != 1 or: { ~rtmPat[track][~seqSeq[track]] != 1 } or: {*/ ~rtmFix == 0 /*}*/,
 					{ /*"1".postln;*/ ev.durX * ~rtmMul[track][seq] },
 					// { /*"2".postln;*/ ~rtmSpec[track][seq].map( ev.durX ) * ~rtmMul[track][seq] }
-					{ /*"2".postln;*/ if (track > 5, { ( ~rtmSpec[track][seq].map( ev.durX ) * ~rtmMul[track][seq] * ( if (~twisterIndex1.notNil, { ~rtmRyValue.value }, { 1 })) ).max(0.016) }, // avec une protection sur la durée minimale pour le ryhtme
+					{ /*"2".postln;*/ if (track > 5, { ( ~rtmSpec[track][seq].map( ev.durX ) * ~rtmMul[track][seq] * ( if (~twisterIndex1.notNil, { ~rtmRyValue.value * 2 }, { 1 })) ).max(0.016) }, // avec une protection sur la durée minimale pour le ryhtme
 						{ ~rtmSpec[track][seq].map( ev.durX ) * ~rtmMul[track][seq] } ) }
 				)
 			})) /*.trace(prefix: "dur -> ")*/,
