@@ -262,8 +262,8 @@
 		~twister.knobs[3].knobCV = ~cenValues[0];
 
 		// if (~rtmMulRyInit.isNil, { ~rtmMulRyInit = 1 ! (~rhythmTracks*2).size }); // à initialiser au départ -> plus necessaire car intervention directe dans le pattern et non dans la GUI
-		~rtmRyValue = NumericControlValue(spec:[0.1, 1]);
-		~rtmRyValue.value = 1;
+		~rtmRyValue = NumericControlValue(spec:[0.01, 1]);
+		~rtmRyValue.value = 0.5;
 		~twister.knobs[4].ledColor_(Color.magenta);
 		~twister.knobs[4].knobCV = ~rtmRyValue;
 		/*~rtmRyValue.signal(\value).connectToUnique({ // ~rtmRyValue.value.postln;
@@ -272,7 +272,7 @@
 
 		~rtmMulRyInitButton = OnOffControlValue();
 		~twister.knobs[4].buttonCV = ~rtmMulRyInitButton;
-		~rtmMulRyInitButton.signal(\on).connectToUnique({ if (~rtmRyValue.value != 1, {~rtmRyValue.value_(1)},{~rtmRyValue.value_(0)}) });
+		~rtmMulRyInitButton.signal(\on).connectToUnique({ if (~rtmRyValue.value != 0.5, {~rtmRyValue.value_(0.5)},{~rtmRyValue.value_(0)}) });
 		// ~rtmMulRyInitButton.signal(\on).connectToUnique({ if (~rtmRyValue.value != 1, {~rtmRyValue.value_(1)},{~rtmRyValue.value_(0)}) });
 		/*
 		~rhythmTracksX2.do { |i, id| var prev = ~triggerAllSeqs[i]; ~triggerAllSeqs[i] = 1; ~rtmMulViewG[i].valueAction_( ~rtmMulSpec[i][~seqsValue].unmap(~rtmMulRyInit[id] * 0.15) ); ~triggerAllSeqs[i] = 0; }; // 0.112 mini
