@@ -31,6 +31,10 @@ if (~presetTracksVariations.keys.size > 60, { ~presetAssociationNames[1] = ~pres
 ~savePresetTracksRanges.('A 1 - Test', [0,2,4]);
 ~savePresetTracksRanges.('A 2 - Test2', [0,2,4]);
 
+~savePresetTracksRanges.('R 1 - Test1', [8,10,12]);
+~savePresetTracksRanges.('R 2 - Test2', [8,10,12]);
+~savePresetTracksRanges.('R 3 - Test2', [8,10,12]);
+
 
 
 
