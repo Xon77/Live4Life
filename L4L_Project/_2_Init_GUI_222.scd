@@ -24362,6 +24362,8 @@ u.drawFunc = { d.draw }
 		if (  ~presetTracksVariations.notNil, { ~presetAssociationNames[0] = ~presetTracksVariations.keys.asArray.sort; } );
 	});
 
+	~rhythmTrack1 = 8; ~rhythmTrack2 = 10; ~rhythmTrack3 = 12; ~rhythmTrack4 = 14;
+
 
 	(
 		~presetVarsWindow = Window("Preset Associations", border:false).setTopLeftBounds(Rect(1516, 587, 400, 540))/*.alpha_(0.8)*/.alwaysOnTop_(true);
@@ -24589,89 +24591,89 @@ u.drawFunc = { d.draw }
 					})
 				}
 				{ p == 0 }
-				{ ~randRhythmSel1AssociationFunction.(9) }
+				{ ~randRhythmSel1AssociationFunction.(~rhythmTrack1) }
 				{ p == 1 }
-				{ ~randRhythmSelMulAssociationFunction.(9,2) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack1,2) }
 				{ p == 2 }
-				{ ~randRhythmSelMulAssociationFunction.(9,5) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack1,5) }
 				{ p == 3 }
-				{ ~randRhythmDur1AssociationFunction.(9) }
+				{ ~randRhythmDur1AssociationFunction.(~rhythmTrack1) }
 				{ p == 4 }
-				{ ~randRhythmDurAssociationFunction.(9,3) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack1,3) }
 				{ p == 5 }
-				{ ~randRhythmDurAssociationFunction.(9,6) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack1,6) }
 				{ p == 6 }
-				{ ~randRhythmOrderAssociationFunction.(9) }
+				{ ~randRhythmOrderAssociationFunction.(~rhythmTrack1) }
 				{ p == 7 }
-				{ ~randRhythmReOrderAssociationFunction.(9) }
+				{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack1) }
 				{ p == 8 }
-				{ ~randRhythmAssociationFunctionClear.([9,11,13]) }
+				{ ~randRhythmAssociationFunctionClear.([~rhythmTrack1,~rhythmTrack2,~rhythmTrack3]) }
 				{ p == 10 }
-				{ ~randRhythmSel1AssociationFunction.(11) }
+				{ ~randRhythmSel1AssociationFunction.(~rhythmTrack2) }
 				{ p == 11 }
-				{ ~randRhythmSelMulAssociationFunction.(11,2) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack2,2) }
 				{ p == 12 }
-				{ ~randRhythmSelMulAssociationFunction.(11,5) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack2,5) }
 				{ p == 13 }
-				{ ~randRhythmDur1AssociationFunction.(11) }
+				{ ~randRhythmDur1AssociationFunction.(~rhythmTrack2) }
 				{ p == 14 }
-				{ ~randRhythmDurAssociationFunction.(11,3) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack2,3) }
 				{ p == 15 }
-				{ ~randRhythmDurAssociationFunction.(11,6) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack2,6) }
 				{ p == 16 }
-				{ ~randRhythmOrderAssociationFunction.(11) }
+				{ ~randRhythmOrderAssociationFunction.(~rhythmTrack2) }
 				{ p == 17 }
-				{ ~randRhythmReOrderAssociationFunction.(11) }
+				{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack2) }
 				{ p == 20 }
-				{ ~randRhythmSel1AssociationFunction.(13) }
+				{ ~randRhythmSel1AssociationFunction.(~rhythmTrack3) }
 				{ p == 21 }
-				{ ~randRhythmSelMulAssociationFunction.(13,2) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack3,2) }
 				{ p == 22 }
-				{ ~randRhythmSelMulAssociationFunction.(13,5) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack3,5) }
 				{ p == 23 }
-				{ ~randRhythmDur1AssociationFunction.(13) }
+				{ ~randRhythmDur1AssociationFunction.(~rhythmTrack3) }
 				{ p == 24 }
-				{ ~randRhythmDurAssociationFunction.(13,3) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack3,3) }
 				{ p == 25 }
-				{ ~randRhythmDurAssociationFunction.(13,6) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack3,6) }
 				{ p == 26 }
-				{ ~randRhythmOrderAssociationFunction.(13) }
+				{ ~randRhythmOrderAssociationFunction.(~rhythmTrack3) }
 				{ p == 27 }
-				{ ~randRhythmReOrderAssociationFunction.(13) }
+				{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack3) }
 				{ p == 30 }
-				{ ~randRhythmSel1AssociationFunction.(15) }
+				{ ~randRhythmSel1AssociationFunction.(~rhythmTrack4) }
 				{ p == 31 }
-				{ ~randRhythmSelMulAssociationFunction.(15,2) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack4,2) }
 				{ p == 32 }
-				{ ~randRhythmSelMulAssociationFunction.(15,5) }
+				{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack4,5) }
 				{ p == 33 }
-				{ ~randRhythmDur1AssociationFunction.(15) }
+				{ ~randRhythmDur1AssociationFunction.(~rhythmTrack4) }
 				{ p == 34 }
-				{ ~randRhythmDurAssociationFunction.(15,3) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack4,3) }
 				{ p == 35 }
-				{ ~randRhythmDurAssociationFunction.(15,6) }
+				{ ~randRhythmDurAssociationFunction.(~rhythmTrack4,6) }
 				{ p == 36 }
-				{ ~randRhythmOrderAssociationFunction.(15) }
+				{ ~randRhythmOrderAssociationFunction.(~rhythmTrack4) }
 				{ p == 37 }
-				{ ~randRhythmReOrderAssociationFunction.(15) }
+				{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack4) }
 				{ p == 40 }
-				{ [9,11,13].do { |a| ~randRhythmSel1AssociationFunction.(a) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmSel1AssociationFunction.(a) } }
 				{ p == 41 }
-				{ [9,11,13].do { |a| ~randRhythmSelMulAssociationFunction.(a,2) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmSelMulAssociationFunction.(a,2) } }
 				{ p == 42 }
-				{ [9,11,13].do { |a| ~randRhythmSelMulAssociationFunction.(a,5) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmSelMulAssociationFunction.(a,5) } }
 				{ p == 43 }
-				{ [9,11,13].do { |a| ~randRhythmDur1AssociationFunction.(a) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmDur1AssociationFunction.(a) } }
 				{ p == 44 }
-				{ [9,11,13].do { |a| ~randRhythmDurAssociationFunction.(a,3) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmDurAssociationFunction.(a,3) } }
 				{ p == 45 }
-				{ [9,11,13].do { |a| ~randRhythmDurAssociationFunction.(a,6) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmDurAssociationFunction.(a,6) } }
 				{ p == 46 }
-				{ [9,11,13].do { |a| ~randRhythmOrderAssociationFunction.(a) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmOrderAssociationFunction.(a) } }
 				{ p == 47 }
-				{ [9,11,13].do { |a| ~randRhythmReOrderAssociationFunction.(a) } }
+				{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmReOrderAssociationFunction.(a) } }
 				{ p == 50 }
-				{ ~randRhythmAssociationFunctionClear.([9,11,13]) };
+				{ ~randRhythmAssociationFunctionClear.([~rhythmTrack1,~rhythmTrack2,~rhythmTrack3]) };
 
 				~presetVarsMatrices[~tabbedPresetVarsPage].at(y@x).playing_(true); ~presetVarsMatrices[~tabbedPresetVarsPage].addStyle(~presetVarsMatrices[~tabbedPresetVarsPage].at(y@x), 'playing'); ~presetVarsMatrices[~tabbedPresetVarsPage].refresh;
 
@@ -24753,87 +24755,87 @@ u.drawFunc = { d.draw }
 							if (i == 9 and: { [0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,20,21,22,23,24,25,26,27,30,31,32,33,34,35,37,36,37,40,41,42,43,44,45,46,47,50].includes(nb) }, {
 								case
 								{ nb == 0 }
-								{ b.title = "R 5 B\nOne"; b.pattern = 0 }
+								{ b.title = "R 5 \nOne"; b.pattern = 0 }
 								{ nb == 1 }
-								{ b.title = "R 5 B\nSel 2 - 4"; b.pattern = 1 }
+								{ b.title = "R 5 \nSel 2 - 4"; b.pattern = 1 }
 								{ nb == 2 }
-								{ b.title = "R 5 B\nSel 2 - 7"; b.pattern = 2 }
+								{ b.title = "R 5 \nSel 2 - 7"; b.pattern = 2 }
 								{ nb == 3 }
-								{ b.title = "R 5 B\nDur 1"; b.pattern = 3 }
+								{ b.title = "R 5 \nDur 1"; b.pattern = 3 }
 								{ nb == 4 }
-								{ b.title = "R 5 B\nDur 1 - 3"; b.pattern = 4 }
+								{ b.title = "R 5 \nDur 1 - 3"; b.pattern = 4 }
 								{ nb == 5 }
-								{ b.title = "R 5 B\nDur 1 - 6"; b.pattern = 5 }
+								{ b.title = "R 5 \nDur 1 - 6"; b.pattern = 5 }
 								{ nb == 6 }
-								{ b.title = "R 5 B\nRand Order"; b.pattern = 6 }
+								{ b.title = "R 5 \nRand Order"; b.pattern = 6 }
 								{ nb == 7 }
-								{ b.title = "R 5 B\nReorder"; b.pattern = 7 }
+								{ b.title = "R 5 \nReorder"; b.pattern = 7 }
 								{ nb == 8 }
 								{ b.title = "Clear All\nDurations"; b.pattern = 8 }
 								{ nb == 10 }
-								{ b.title = "R 6 B\nOne"; b.pattern = 10 }
+								{ b.title = "R 6 \nOne"; b.pattern = 10 }
 								{ nb == 11 }
-								{ b.title = "R 6 B\nSel 2 - 4"; b.pattern = 11 }
+								{ b.title = "R 6 \nSel 2 - 4"; b.pattern = 11 }
 								{ nb == 12 }
-								{ b.title = "R 6 B\nSel 2 - 7"; b.pattern = 12 }
+								{ b.title = "R 6 \nSel 2 - 7"; b.pattern = 12 }
 								{ nb == 13 }
-								{ b.title = "R 6 B\nDur 1"; b.pattern = 13 }
+								{ b.title = "R 6 \nDur 1"; b.pattern = 13 }
 								{ nb == 14 }
-								{ b.title = "R 6 B\nDur 1 - 3"; b.pattern = 14 }
+								{ b.title = "R 6 \nDur 1 - 3"; b.pattern = 14 }
 								{ nb == 15 }
-								{ b.title = "R 6 B\nDur 1 - 6"; b.pattern = 15 }
+								{ b.title = "R 6 \nDur 1 - 6"; b.pattern = 15 }
 								{ nb == 16 }
-								{ b.title = "R 6 B\nRand Order"; b.pattern = 16 }
+								{ b.title = "R 6 \nRand Order"; b.pattern = 16 }
 								{ nb == 17 }
-								{ b.title = "R 6 B\nReorder"; b.pattern = 17 }
+								{ b.title = "R 6 \nReorder"; b.pattern = 17 }
 								{ nb == 20 }
-								{ b.title = "R 7 B\nOne"; b.pattern = 20 }
+								{ b.title = "R 7 \nOne"; b.pattern = 20 }
 								{ nb == 21 }
-								{ b.title = "R 7 B\nSel 2 - 4"; b.pattern = 21 }
+								{ b.title = "R 7 \nSel 2 - 4"; b.pattern = 21 }
 								{ nb == 22 }
-								{ b.title = "R 7 B\nSel 2 - 7"; b.pattern = 22 }
+								{ b.title = "R 7 \nSel 2 - 7"; b.pattern = 22 }
 								{ nb == 23 }
-								{ b.title = "R 7 B\nDur 1"; b.pattern = 23 }
+								{ b.title = "R 7 \nDur 1"; b.pattern = 23 }
 								{ nb == 24 }
-								{ b.title = "R 7 B\nDur 1 - 3"; b.pattern = 24 }
+								{ b.title = "R 7 \nDur 1 - 3"; b.pattern = 24 }
 								{ nb == 25 }
-								{ b.title = "R 7 B\nDur 1 - 6"; b.pattern = 25 }
+								{ b.title = "R 7 \nDur 1 - 6"; b.pattern = 25 }
 								{ nb == 26 }
-								{ b.title = "R 7 B\nRand Order"; b.pattern = 26 }
+								{ b.title = "R 7 \nRand Order"; b.pattern = 26 }
 								{ nb == 27 }
-								{ b.title = "R 7 B\nReOrder"; b.pattern = 27 }
+								{ b.title = "R 7 \nReOrder"; b.pattern = 27 }
 								{ nb == 30 }
-								{ b.title = "R 8 B\nOne"; b.pattern = 30 }
+								{ b.title = "R 8 \nOne"; b.pattern = 30 }
 								{ nb == 31 }
-								{ b.title = "R 8 B\nSel 2 - 4"; b.pattern = 31 }
+								{ b.title = "R 8 \nSel 2 - 4"; b.pattern = 31 }
 								{ nb == 32 }
-								{ b.title = "R 8 B\nSel 2 - 7"; b.pattern = 32 }
+								{ b.title = "R 8 \nSel 2 - 7"; b.pattern = 32 }
 								{ nb == 33 }
-								{ b.title = "R 8 B\nDur 1"; b.pattern = 33 }
+								{ b.title = "R 8 \nDur 1"; b.pattern = 33 }
 								{ nb == 34 }
-								{ b.title = "R 8 B\nDur 1 - 3"; b.pattern = 34 }
+								{ b.title = "R 8 \nDur 1 - 3"; b.pattern = 34 }
 								{ nb == 35 }
-								{ b.title = "R 8 B\nDur 1 - 6"; b.pattern = 35 }
+								{ b.title = "R 8 \nDur 1 - 6"; b.pattern = 35 }
 								{ nb == 36 }
-								{ b.title = "R 8 B\nRand Order"; b.pattern = 36 }
+								{ b.title = "R 8 \nRand Order"; b.pattern = 36 }
 								{ nb == 37 }
-								{ b.title = "R 8 B\nReOrder"; b.pattern = 37 }
+								{ b.title = "R 8 \nReOrder"; b.pattern = 37 }
 								{ nb == 40 }
-								{ b.title = "R All B\nOne"; b.pattern = 40 }
+								{ b.title = "R All \nOne"; b.pattern = 40 }
 								{ nb == 41 }
-								{ b.title = "R All B\nSel 2 - 4"; b.pattern = 41 }
+								{ b.title = "R All \nSel 2 - 4"; b.pattern = 41 }
 								{ nb == 42 }
-								{ b.title = "R All B\nSel 2 - 7"; b.pattern = 42 }
+								{ b.title = "R All \nSel 2 - 7"; b.pattern = 42 }
 								{ nb == 43 }
-								{ b.title = "R All B\nDur 1"; b.pattern = 43 }
+								{ b.title = "R All \nDur 1"; b.pattern = 43 }
 								{ nb == 44 }
-								{ b.title = "R All B\nDur 1 - 3"; b.pattern = 44 }
+								{ b.title = "R All \nDur 1 - 3"; b.pattern = 44 }
 								{ nb == 45 }
-								{ b.title = "R All B\nDur 1 - 6"; b.pattern = 45 }
+								{ b.title = "R All \nDur 1 - 6"; b.pattern = 45 }
 								{ nb == 46 }
-								{ b.title = "R All B\nRand Order"; b.pattern = 46 }
+								{ b.title = "R All \nRand Order"; b.pattern = 46 }
 								{ nb == 47 }
-								{ b.title = "R All B\nReorder"; b.pattern = 47 }
+								{ b.title = "R All \nReorder"; b.pattern = 47 }
 								{ nb == 50 }
 								{ b.title = "Clear All\nDurations"; b.pattern = 50 }
 							},{
@@ -24886,89 +24888,89 @@ u.drawFunc = { d.draw }
 						});
 					}
 					{ box.pattern == 0 }
-					{ ~randRhythmSel1AssociationFunction.(9); }
+					{ ~randRhythmSel1AssociationFunction.(~rhythmTrack1); }
 					{ box.pattern == 1 }
-					{ ~randRhythmSelMulAssociationFunction.(9,2) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack1,2) }
 					{ box.pattern == 2 }
-					{ ~randRhythmSelMulAssociationFunction.(9,5) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack1,5) }
 					{ box.pattern == 3 }
-					{ ~randRhythmDur1AssociationFunction.(9) }
+					{ ~randRhythmDur1AssociationFunction.(~rhythmTrack1) }
 					{ box.pattern == 4 }
-					{ ~randRhythmDurAssociationFunction.(9,3) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack1,3) }
 					{ box.pattern == 5 }
-					{ ~randRhythmDurAssociationFunction.(9,6) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack1,6) }
 					{ box.pattern == 6 }
-					{ ~randRhythmOrderAssociationFunction.(9) }
+					{ ~randRhythmOrderAssociationFunction.(~rhythmTrack1) }
 					{ box.pattern == 7 }
-					{ ~randRhythmReOrderAssociationFunction.(9) }
+					{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack1) }
 					{ box.pattern == 8 }
-					{ ~randRhythmAssociationFunctionClear.([9,11,13]) }
+					{ ~randRhythmAssociationFunctionClear.([~rhythmTrack1,~rhythmTrack2,~rhythmTrack3]) }
 					{ box.pattern == 10 }
-					{ ~randRhythmSel1AssociationFunction.(11) }
+					{ ~randRhythmSel1AssociationFunction.(~rhythmTrack2) }
 					{ box.pattern == 11 }
-					{ ~randRhythmSelMulAssociationFunction.(11,2) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack2,2) }
 					{ box.pattern == 12 }
-					{ ~randRhythmSelMulAssociationFunction.(11,5) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack2,5) }
 					{ box.pattern == 13 }
-					{ ~randRhythmDur1AssociationFunction.(11) }
+					{ ~randRhythmDur1AssociationFunction.(~rhythmTrack2) }
 					{ box.pattern == 14 }
-					{ ~randRhythmDurAssociationFunction.(11,3) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack2,3) }
 					{ box.pattern == 15 }
-					{ ~randRhythmDurAssociationFunction.(11,6) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack2,6) }
 					{ box.pattern == 16 }
-					{ ~randRhythmOrderAssociationFunction.(11) }
+					{ ~randRhythmOrderAssociationFunction.(~rhythmTrack2) }
 					{ box.pattern == 17 }
-					{ ~randRhythmReOrderAssociationFunction.(11) }
+					{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack2) }
 					{ box.pattern == 20 }
-					{ ~randRhythmSel1AssociationFunction.(13) }
+					{ ~randRhythmSel1AssociationFunction.(~rhythmTrack3) }
 					{ box.pattern == 21 }
-					{ ~randRhythmSelMulAssociationFunction.(13,2) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack3,2) }
 					{ box.pattern == 22 }
-					{ ~randRhythmSelMulAssociationFunction.(13,5) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack3,5) }
 					{ box.pattern == 23 }
-					{ ~randRhythmDur1AssociationFunction.(13) }
+					{ ~randRhythmDur1AssociationFunction.(~rhythmTrack3) }
 					{ box.pattern == 24 }
-					{ ~randRhythmDurAssociationFunction.(13,3) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack3,3) }
 					{ box.pattern == 25 }
-					{ ~randRhythmDurAssociationFunction.(13,6) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack3,6) }
 					{ box.pattern == 26 }
-					{ ~randRhythmOrderAssociationFunction.(13) }
+					{ ~randRhythmOrderAssociationFunction.(~rhythmTrack3) }
 					{ box.pattern == 27 }
-					{ ~randRhythmReOrderAssociationFunction.(13) }
+					{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack3) }
 					{ box.pattern == 30 }
-					{ ~randRhythmSel1AssociationFunction.(15) }
+					{ ~randRhythmSel1AssociationFunction.(~rhythmTrack4) }
 					{ box.pattern == 31 }
-					{ ~randRhythmSelMulAssociationFunction.(15,2) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack4,2) }
 					{ box.pattern == 32 }
-					{ ~randRhythmSelMulAssociationFunction.(15,5) }
+					{ ~randRhythmSelMulAssociationFunction.(~rhythmTrack4,5) }
 					{ box.pattern == 33 }
-					{ ~randRhythmDur1AssociationFunction.(15) }
+					{ ~randRhythmDur1AssociationFunction.(~rhythmTrack4) }
 					{ box.pattern == 34 }
-					{ ~randRhythmDurAssociationFunction.(15,3) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack4,3) }
 					{ box.pattern == 35 }
-					{ ~randRhythmDurAssociationFunction.(15,6) }
+					{ ~randRhythmDurAssociationFunction.(~rhythmTrack4,6) }
 					{ box.pattern == 36 }
-					{ ~randRhythmOrderAssociationFunction.(15) }
+					{ ~randRhythmOrderAssociationFunction.(~rhythmTrack4) }
 					{ box.pattern == 37 }
-					{ ~randRhythmReOrderAssociationFunction.(15) }
+					{ ~randRhythmReOrderAssociationFunction.(~rhythmTrack4) }
 					{ box.pattern == 40 }
-					{ [9,11,13].do { |a| ~randRhythmSel1AssociationFunction.(a) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmSel1AssociationFunction.(a) } }
 					{ box.pattern == 41 }
-					{ [9,11,13].do { |a| ~randRhythmSelMulAssociationFunction.(a,2) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmSelMulAssociationFunction.(a,2) } }
 					{ box.pattern == 42 }
-					{ [9,11,13].do { |a| ~randRhythmSelMulAssociationFunction.(a,5) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmSelMulAssociationFunction.(a,5) } }
 					{ box.pattern == 43 }
-					{ [9,11,13].do { |a| ~randRhythmDur1AssociationFunction.(a) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmDur1AssociationFunction.(a) } }
 					{ box.pattern == 44 }
-					{ [9,11,13].do { |a| ~randRhythmDurAssociationFunction.(a,3) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmDurAssociationFunction.(a,3) } }
 					{ box.pattern == 45 }
-					{ [9,11,13].do { |a| ~randRhythmDurAssociationFunction.(a,6) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmDurAssociationFunction.(a,6) } }
 					{ box.pattern == 46 }
-					{ [9,11,13].do { |a| ~randRhythmOrderAssociationFunction.(a) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmOrderAssociationFunction.(a) } }
 					{ box.pattern == 47 }
-					{ [9,11,13].do { |a| ~randRhythmReOrderAssociationFunction.(a) } }
+					{ [~rhythmTrack1,~rhythmTrack2,~rhythmTrack3].do { |a| ~randRhythmReOrderAssociationFunction.(a) } }
 					{ box.pattern == 50 }
-					{ ~randRhythmAssociationFunctionClear.([9,11,13]) };
+					{ ~randRhythmAssociationFunctionClear.([~rhythmTrack1,~rhythmTrack2,~rhythmTrack3]) };
 
 					// ~loadPresetTracksRanges.(\tabbedPresetVarsPage, 'R1');
 					box.playing = true;
