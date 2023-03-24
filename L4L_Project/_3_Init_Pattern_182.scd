@@ -1571,6 +1571,7 @@ envir[key][track][seq] = value;
 			\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
 			\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
 			\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
+			\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }), // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
 
 			\circWidth, Pfunc({ ~circSpread[track][~seqSeq[track]] })
 
@@ -1618,6 +1619,7 @@ envir[key][track][seq] = value;
 			\freqMin, Pfunc({ ~sdFreqRangeMin[track][~seqSeq[track]] }),
 			\freqMax, Pfunc({ ~sdFreqRangeMax[track][~seqSeq[track]] }),
 			\freqCurve, Pfunc({ ~spaLagCurve[track][~seqSeq[track]] }),
+			\spaLagTime, Pfunc({ ~spaLagTime[track][~seqSeq[track]] }), // juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
 
 			\spread, Pfunc({ ~vbapSpread[track][~seqSeq[track]] }),
 			\x2Off, Pfunc({ ~vbapX2Off[track][~seqSeq[track]] }),
