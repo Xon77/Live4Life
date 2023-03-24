@@ -1783,7 +1783,7 @@ OffsetOut.ar(outR, src1[1]);",
 							// Panning d'intensité avec délai
 							"src1 = Pan2.ar(src1, pan) * env;
 OffsetOut.ar(outL, src1[0]);
-OffsetOut.ar(outR, DelayN.ar(src1[1], 0.2, delayTime));",
+OffsetOut.ar(outR, DelayN.ar(src1[1], 1, delayTime));",
 							// Panning d'intensité Lines
 							/*"src1 = Pan2.ar(src1, Line.kr(panL, panR, spadur));
 							OffsetOut.ar(outL, src1[0]);
@@ -2133,7 +2133,7 @@ OffsetOut.ar(outR, src1[1]);",
 							// Panning d'intensité avec délai
 							"src1 = Pan2.ar(src1, pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env;
 OffsetOut.ar(outL, src1[0]);
-OffsetOut.ar(outR, DelayN.ar(src1[1], 0.2, delayTime));",
+OffsetOut.ar(outR, DelayN.ar(src1[1], 1, delayTime));",
 							// Panning d'intensité Lines
 							/*"src1 = Pan2.ar(src1, Line.kr(panL, panR, spadur) * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ]));
 							OffsetOut.ar(outL, src1[0]);
@@ -2385,7 +2385,7 @@ OffsetOut.ar(outR, src[1]);",
 							// Panning d'intensité avec délai
 							"src = Balance2.ar(src[0], src[1], pan) * env;
 OffsetOut.ar(outL, src[0]);
-OffsetOut.ar(outR, DelayN.ar(src[1], 0.2, delayTime));",
+OffsetOut.ar(outR, DelayN.ar(src[1], 1, delayTime));",
 							// Panning d'intensité Lines
 							/*"src = Balance2.ar(src[0], src[1], Line.kr(panL, panR, spadur));
 							OffsetOut.ar(outL, src[0]);
@@ -2686,7 +2686,7 @@ OffsetOut.ar(outR, src[1]);",
 							// Panning d'intensité avec délai
 							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env;
 OffsetOut.ar(outL, src[0]);
-OffsetOut.ar(outR, DelayN.ar(src[1], 0.2, delayTime));",
+OffsetOut.ar(outR, DelayN.ar(src[1], 1, delayTime));",
 							// Panning d'intensité Lines
 							/*"src = Balance2.ar(src[0], src[1], Line.kr(panL, panR, spadur) * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ]));
 							OffsetOut.ar(outL, src[0]);
