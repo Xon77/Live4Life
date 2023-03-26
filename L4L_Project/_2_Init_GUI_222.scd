@@ -19482,7 +19482,7 @@ case
 	// Montage
 	~nbEventsTrigComp = CompositeView(~globalWindow, Rect(274, 2, 93, 41)).background = Color.black /*~sliderHilightNoColor*/ /*Color.magenta*/;
 
-	~nbEventsTrigSpec = ControlSpec(2, 100, 2, 1, 3);
+	~nbEventsTrigSpec = ControlSpec(1, 100, 'lin', 1, 3);
 	~nbEventsTrig = ~nbEventsTrigSpec.default /*! ~nbOfSeqs */ ! ~nbOfTracksX2;
 	~nbEventView = EZNumber.new(/*~patComp*/ ~nbEventsTrigComp, Rect(2, 1, 22, 20), nil, ~nbEventsTrigSpec,
 		{ |ez| ~nbOfTracksX2.do { |i| ~nbEventsTrig[/*~tracksValue*/ i ] = ez.value }}, unitWidth:0, initVal:~nbEventsTrigSpec.default, numberWidth:24, labelWidth:0, layout: \horz)
@@ -19512,7 +19512,7 @@ case
 				var seq = ~presetSeqStart[~tracksValue]; /*~seqsValue*/
 
 				onset = (~gblTempo.seconds - ~lastTime);
-				("Onset ->" + onset).postln;
+				("Time since last event ->" + onset.round(0.001) + "sec.").postln;
 
 				if (~harTrig[~tracksValue][seq] == 1, {
 					~lastTrigEvent/*[track]*/ = {0 ! (~spaHarSeq[~tracksValue][seq].size +1)} ! nbEvents;
@@ -24051,7 +24051,7 @@ u.drawFunc = { d.draw }
 		if (~trajectoryWindowStatus == 1, {
 			~trajectoryWindow = Window.new("TrajectoryView", Rect(380+~windowWidth-1920, 128+~windowHeight-1200+(~windowUpperMargin*4), 1480, 740)).alwaysOnTop_(true);
 			~trajectoryCompositeView = CompositeView(~trajectoryWindow, Rect(5, 5, 800, 700));
-			~trajectoryView = WFSPathGUI.new(~trajectoryCompositeView);
+			~trajectoryView = WFSPathGUI2.new(~trajectoryCompositeView);
 			~trajectoryView.openGeneratorView2(~trajectoryWindow, Rect(850, 25, 200, 200) );
 			// ~trajectoryView.generatorView.view.findWindow.close
 
@@ -25176,6 +25176,7 @@ u.drawFunc = { d.draw }
 
 	~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", "ntx" ] ++ ~kindOfFolders ); // Parme
 	// ~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", /*"ntx"*/ ] ++ ~kindOfFolders ); // Adaptation Parme / Dhomont
+
 	~folderRyRandView = PopUpMenu.new(~controlWindowSpaRy, Rect(162, 2, 44, 21))
 	.action_({|menu| ~folderRyRand = menu./*item*/value.asInteger })
 	.allowsReselection_(true)
