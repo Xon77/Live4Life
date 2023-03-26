@@ -17,7 +17,7 @@
     along with GameOfLife WFSCollider.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-WFSPathGUI {
+WFSPathGUI2 {
 
 	classvar <>current;
 
@@ -245,9 +245,9 @@ WFSPathGUI {
 
 
 + WFSPath2 {
-	gui { |parent, bounds| ^WFSPathGUI( parent, bounds, this ) }
+	gui { |parent, bounds| ^WFSPathGUI2( parent, bounds, this ) }
 }
 
 + WFSPathURL {
-	gui { |parent, bounds| ^WFSPathGUI( parent, bounds, this.wfsPath ) }
+	gui { |parent, bounds| ^WFSPathGUI2( parent, bounds, this.wfsPath ) }
 }
