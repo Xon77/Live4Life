@@ -50,11 +50,11 @@ I have been developing in [**SuperCollider**](https://supercollider.github.io) s
 
 ## Usage
 
-:warning: Please note that:
+Please note that:
 
 * currently, the code can be incorrectly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
 
-* it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.
+* :warning: **it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple graphic user interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
@@ -65,11 +65,11 @@ I have been developing in [**SuperCollider**](https://supercollider.github.io) s
 
 ### Platform support
 
-***Live 4 Life*** has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".
+***Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
 
-It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200 or a little bit higher. The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
+**It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200 or a little bit higher.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-For Windows, I do not know. Let me know if you can.
+**For Windows, I do not know. Let me know if you can.**
 
 
 ## Installation
