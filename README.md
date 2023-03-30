@@ -76,10 +76,10 @@ Please note that:
 
 1. Install [SuperCollider 3.13](https://supercollider.github.io/downloads) or above. 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.
-3. Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned below and recompile:
+3. Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned below (go in the menu Language / Quarks, click on the button Check for updates and select the quarks) and recompile:
 
 	- [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
-	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
+	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. **Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices.** This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
 	- [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
 	- [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
 	- [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue),
