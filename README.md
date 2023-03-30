@@ -110,12 +110,12 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 In order to launch the tool, simply follow the steps of the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd) in the folder [`L4L_Project`](/L4L_Project) in order to:
 
-1. [define and evaluate default configuration parameters](L4L_Project/_0_Init_Live4Life.scd#L1-L102). You mainly have to choose the [absolute path of your sound folder](L4L_Project/_0_Init_Live4Life.scd#L39) and your [spatial configuration and distribution of loudspeakers](L4L_Project/_0_Init_Live4Life.scd#L42-L64) (stereo, quad, circles of 5, 7, 8 loudspeakers, or domes of 16, 24, 32 loudspeakers) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd) if not available.
+1. [define and evaluate default configuration parameters](L4L_Project/_0_Init_Live4Life.scd#L1-L102). You mainly have to **choose the [absolute path of your sound folder](L4L_Project/_0_Init_Live4Life.scd#L39)** and your [spatial configuration and distribution of loudspeakers](L4L_Project/_0_Init_Live4Life.scd#L42-L64) (stereo, quad, circles of 5, 7, 8 loudspeakers, or domes of 16, 24, 32 loudspeakers) or define it by code with `~numChannelsConfig` in the file [`_1_Init_BuffersSynths_130.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd) if not available.
 
 2. [evaluate a function](L4L_Project/_0_Init_Live4Life.scd#L126) and [load one](L4L_Project/_0_Init_Live4Life.scd#L130) or [two servers](L4L_Project/_0_Init_Live4Life.scd#L134):
 
-	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms. (For each new specific spatial configuration, two folders of synthDefs are created the first time in SuperCollider user support directory; the next times, scsyndef files will be more quickly loaded. 
-:warning: If you get an error — which might happen more or less given your computer and spatial setup — the first time when you create the folder of synthDefs, delete the folders for each of the 2 servers created, reboot the server and start from step 1 again.)
+	1. initialising a collection of thousands of synthDefs, with a few dozen synthesis types for each envelope type and for each spatial algorithm and a library of trajectories for some algorithms. **(For each new specific spatial configuration, two folders of synthDefs are created the first time in SuperCollider user support directory; the next times, scsyndef files will be more quickly loaded. 
+:warning: If you get an error — which might happen more or less given your computer and spatial setup — the first time when you create the folder of synthDefs, delete the folders for each of the 2 servers created, reboot the server and start from step 1 again.)**
 
 	2. initialising a collection of thousands of mono and stereo buffers of max. 2 GB, hierarchically organised by category in dozens of folders (:warning: To play easily with sound files, prepare one folder gathering a collection of subfolders labelled e.g. like: `DL 1Kick`, `DM 2Snare`, `DH 3Hat`, `EL Earth`, `EM Water` `EH Fire`, `IL Bass`, `IM Gong`, `IH Piano` ..., containing dozens of sound files. The first two letters allow to gather together the categories of folders for each of the letter, e.g. the first letter `D` for Drums, `E` for sounds of the elements, `I` for instruments, and the second letter `L`, `M`, or `H` for e.g. a specific color or register. To speed up setup and creation process, I have prepared in this [**folder to download a collection of sounds**](https://github.com/Xon77/L4LSoundsDataBase/tree/main/SoundFolder) — to expand and improve — including drum machine sounds specifically sorted for this tool. This process may take a few minutes depending on the size of the sound library and your computer.),
 
@@ -149,7 +149,7 @@ For my current postdoctoral internship at [UQÀM](https://eavm.uqam.ca) funded b
 - **video developers** to create the visual from the sound data generated. Technically, the audiovisual object mapping could be developed through open source tools, such as Processing (basic patch soon to be released), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, **as long as the creation process and the code are published on Github and open to everyone**. 
 - **dancers** for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video / light environment. I am particularly interested in mixing traditional dances like **Gigue from Québec** with contemporary forms.
 
-The themes of these spatial improvisations will be about: **loneliness and love, Bernard Parmegiani and Francis Dhomont, free party and techno music**. Feel free to contact me if you are interested.
+The themes of these spatial improvisations will be about: **loneliness and love, Bernard Parmegiani and Francis Dhomont, free party, (hardcore) techno music and tradition**. Feel free to contact me if you are interested.
 
 <mark> You can also support thanks to donations via [**Ko-fi**](https://ko-fi.com/live4life) or get specific support and courses via [**Patreon**](https://www.patreon.com/live4life)</mark>. :grin:
 
@@ -195,12 +195,12 @@ And I encourage anyone (DSP developers or any user) to support and use this beau
 
 ***Live 4 Life*** is an open source software: you can redistribute it and/or modify it under the terms of **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license** (CC BY-NC-SA 4.0). 
 
-**You may not use it for commercial purposes.**
+:warning: **You may not use it for commercial purposes.**
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY. 
 
 **I wish it would be used in the spirit of [*Free Party*](https://en.wikipedia.org/wiki/Free_party)**. Unfortunately, *Free* does not mean free in this commercial world, but invites to contribute to the costs and labor according to one's ability to give. I do not want this tool to be used, by any means, for personal profit.
 
-**Moreover, I do not want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca)** and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play improvisations in their dome.
+:warning: **Moreover, I do not want that this tool to be used by or in [Société des Arts Technologiques](https://sat.qc.ca)** and its Metalab without my consent, since this organisation never helped me in diffusing my spatial creations in their dome despite my proposals. This restriction will be withdrawn only if I have the opportunity to play improvisations in their dome.
 
 See the [License](/LICENCE.md) for more details.
