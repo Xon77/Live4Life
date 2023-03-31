@@ -74,6 +74,8 @@ Please note that:
 
 ## Installation
 
+Follow the steps below one after another:
+
 1. Install [SuperCollider 3.13](https://supercollider.github.io/downloads) or above. 
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder (go in the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it).
 3. Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing-a-quark) mentioned below (go in the menu `Language -> Quarks`, click on the button `Check for updates` and select the quarks) and recompile:
