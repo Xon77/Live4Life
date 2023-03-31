@@ -15,7 +15,9 @@
 // ~cutSynthView.valueAction_(1); // already by default // if 0, stops synths with DetectSilence if over 0.1 sec. of silence detected, e.g. when the track volume is at 0 // if 1 does not stop synths
 // ~keyControlView.valueAction_(1); // already by default // Keyboard Mapping (Montage (sound editing) = 0 / Spatialisation = 1 / Playback speeds = 2)
 ~trigAllView.valueAction_(3); // Selects where the action on playback speeds is // Track = 0 (only acts on current Track) / Other = 1 (acts on other tracks than current Track) / ALL = 2 (acts on all tracks / Tex13 = 3 (acts on texture tracks from 1 to 3)
-~controlBusSynth5FadeTimeView.valueAction_(0); // already by default // Glissando times for playback sppeds // 7 for 30 secons
+~controlBusSynth5FadeTimeView.valueAction_(0); // already by default // Glissando times for playback sppeds // 7 for 30 seconds
+~visuelSliderView.valueAction_(0); // 0 to have a better visual for parameter playback feedback in the Sequence View, but more CPU consuming // 1 is better when performing since the Sequence View is less used (GUI beauty is optional, the focus is on CPU for sound).
+~curSeqTrigView.valueAction_(1); // 1 to immediately update visually the sequence when changing a sequence (better when you build synthDefs or trig events one by one) // 0 is better when performing and playing sequences in loop, because you sometimes want the end of the previous sequence before it changes to the new one.
 
 if (~serverFX == 1, { // ~serverFX = 1 indicates that FX are on an independent servers // old strategy
 	~cpuStopView.valueAction_(3); ~aliveThreadPeriodView.valueAction_(3);
