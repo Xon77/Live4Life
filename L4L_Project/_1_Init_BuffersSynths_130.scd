@@ -816,7 +816,7 @@
 					if ((Platform.userAppSupportDir ++ "/Extensions/plugins").isFolder, {
 						Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
 					},{
-						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
 					});
 				);
 			});
@@ -834,7 +834,7 @@
 					if ((Platform.userAppSupportDir ++ "/Extensions/plugins").isFolder, {
 						Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
 					},{
-						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
 					});
 				);
 			});
