@@ -805,25 +805,37 @@
 			// ~qitchBuffer = 0 ! 2;
 			if (~sampleRate == 44100, {
 				~qitchBuffer[0] = Buffer.read(currentEnvironment[server],
-					// "/Users/Xon/sc3-plugins/build/build_osx/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
-					Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav" // L'alias ne marche pas, mais OK avec le Symbolic Link
+					if ((Platform.userAppSupportDir ++ "/Extensions/plugins").isFolder, {
+						Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+					},{
+						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+					});
 				);
 			}, {
 				~qitchBuffer[0] = Buffer.read(currentEnvironment[server],
-					// "/Users/Xon/sc3-plugins/build/build_osx/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
-					Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav" // L'alias ne marche pas, mais OK avec le Symbolic Link
+					if ((Platform.userAppSupportDir ++ "/Extensions/plugins").isFolder, {
+						Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
+					},{
+						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+					});
 				);
 			});
 		},{
 			if (~sampleRate == 44100, {
 				~qitchBuffer[1] = Buffer.read(currentEnvironment[server],
-					// "/Users/Xon/sc3-plugins/build/build_osx/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
-					Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav" // L'alias ne marche pas, mais OK avec le Symbolic Link
+					if ((Platform.userAppSupportDir ++ "/Extensions/plugins").isFolder, {
+						Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+					},{
+						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+					});
 				);
 			}, {
 				~qitchBuffer[1] = Buffer.read(currentEnvironment[server],
-					// "/Users/Xon/sc3-plugins/build/build_osx/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
-					Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav" // L'alias ne marche pas, mais OK avec le Symbolic Link
+					if ((Platform.userAppSupportDir ++ "/Extensions/plugins").isFolder, {
+						Platform.userAppSupportDir ++ "/Extensions/plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR48000.wav"
+					},{
+						Platform.userAppSupportDir ++ "/Extensions/SC3plugins/PitchDetection/extraqitchfiles/QspeckernN2048SR44100.wav"
+					});
 				);
 			});
 		});
