@@ -54,7 +54,7 @@ Please note that:
 
 * currently, the code can be incorrectly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
 
-* :warning: **it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.** In the meantime, if you have a smaller screen resolution, increase your screen resolution to the maximum or those suggested above in your computer preferences and set the variable `~mainWindowScroll` at true in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L20).
+* :warning: **it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.** In the meantime, if you have a smaller screen resolution, increase your screen resolution to the maximum or those suggested above in your computer preferences and set the variable `~mainWindowScroll` at true in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L20) to be able to scroll through the window.
 
 * although the code is available here, the interface and the setup are relatively complex, as this tool is not meant to be a simple Graphic User Interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
