@@ -96,7 +96,7 @@ Follow the steps below one after another:
 	- [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
 	- [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
 	- [TabbedView2_QT](https://github.com/jmuxfeldt/TabbedView2_QT) (for GUI),
-	- [Twister](https://github.com/scztt/Twister.quark) (you have to install it, even if you don't have a MIDI Fighter Twister controller; since it is currently not available in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
+	- [Twister](https://github.com/scztt/Twister.quark) (you have to install it, even if you don't have a [MIDI Fighter Twister controller](https://www.midifighter.com/#Twister); since it is currently not available in the Quarks directory, you can install it via `Quarks.install("https://github.com/scztt/Twister.quark")`.),
 	- [Unit-Lib](https://github.com/GameOfLife/Unit-Lib) (for the 2D trajectory editor),
 	- [WFSCollider-Class-Library](https://github.com/GameOfLife/WFSCollider-Class-Library) (for the 2D trajectory editor),
 	- [WarpExt](https://github.com/supercollider-quarks/WarpExt) (for warp synths),
