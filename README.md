@@ -67,7 +67,7 @@ Please note that:
 
 ***Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
 
-**It has also been tested on Linux and works considering that you have a minimum resolution of 1920×1200 or a little bit higher.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
+**It has also been tested on Linux and works, but to be able to easily use the, you need to have a minimum resolution of 1920×1200 (see warning above for screen recommendations).** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
 **For Windows, I do not know. Let me know if you can.**
 
