@@ -127,7 +127,7 @@ In order to launch the tool, follow and evaluate the steps of the file [`_0_Init
 
 5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [Controllers](/Controllers) for full performance control.
 
-A **[wiki (in construction)](https://github.com/Xon77/Live4Life/wiki)**, including tutorials and code examples to automate some utility functions and [load presets to have an improvisation session](https://github.com/Xon77/Live4Life/wiki/Build-an-improvisation) will be completed and detailed over time, as well as training workshops in immersive sound and spatial improvisation ([the first ones at CIRMMT in Montréal](https://www.cirmmt.org/en/events/workshops/research/spatial-sound-live4life?set_language=en)).
+A **[wiki (in construction)](https://github.com/Xon77/Live4Life/wiki)**, including tutorials and code examples to automate some utility functions and [load presets to have an improvisation session](https://github.com/Xon77/Live4Life/wiki/Build-an-improvisation) will be completed and detailed over time. Training workshops in immersive sound and spatial improvisation with open source softwares will be organised ([the first ones at CIRMMT in Montréal](https://www.cirmmt.org/en/events/workshops/research/spatial-sound-live4life?set_language=en)).
 
 
 ## References
