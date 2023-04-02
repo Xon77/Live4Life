@@ -12376,7 +12376,7 @@ readView, readBackgroundColorView, posView
 					Env([0.001, ~durplotamp], [~durplotenv], \exp)
 				].plot(bounds:Rect(316,300,1200,1100))
 			},{
-				if ( Window.allWindows.notNil, { if (Window.allWindows.size > 6, {Window.allWindows[Window.allWindows.size-1].close;}) });
+				if ( Window.allWindows.notNil, { Window.allWindows[Window.allWindows.size-1].close; });
 		})
 	});
 
