@@ -143,12 +143,36 @@ Post << ~soundm['7 Special'].sort{|x, y| x[0].asString.split($/)[9].split($.)[0]
 	}
 ];
 
-if (~server2.notNil, {
-	~sortingClassicFunc[0].value(0); ~sortingClassicFunc[0].value(1); // 0 -> OSX / 1 -> SC
-	// ~soundm['RE CigalesTam'][0].asString.split($/)[~soundsFilesPos-2] // -> Users
-},{
-	~sortingClassicFunc[0].value(0);
-});
+
+Platform.case(
+	\osx, {
+		if (~server2.notNil, {
+			~sortingClassicFunc[0].value(0); ~sortingClassicFunc[0].value(1); // 0 -> OSX / 1 -> SC
+			// ~soundm['RE CigalesTam'][0].asString.split($/)[~soundsFilesPos-2] // -> Users
+		},{
+			~sortingClassicFunc[0].value(0);
+		});
+
+	},
+    \linux,     {
+		if (~server2.notNil, {
+			~sortingClassicFunc[0].value(0); ~sortingClassicFunc[0].value(1); // 0 -> OSX / 1 -> SC
+		},{
+			~sortingClassicFunc[0].value(0);
+		});
+
+	},
+    \windows,   { // car la méthode naturalCompareWithSpaces pose apparemment problème
+		if (~server2.notNil, {
+			~sortingClassicFunc[1].value(0); ~sortingClassicFunc[1].value(1); // 0 -> OSX / 1 -> SC
+		},{
+			~sortingClassicFunc[1].value(0);
+		});
+
+	}
+);
+
+
 
 
 
