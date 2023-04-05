@@ -54,7 +54,7 @@ Post << ~presets.keys; // Liste de tous les noms de presets pour les séquences 
 (
 // To change some values in all Presets, except the preset which is currently selected.
 // For the current preset, you have to change it directly with the GUI and save it with the store Button.
-// In this case, the lines, which are decommented, ...
+// In this case, the lines, which are decommented, change your spatial configuration for all presets to 32 loudspeakers and randomise modules OUT L & OUT R
 {
 	~presets.do { |item, i|
 
@@ -126,4 +126,4 @@ Post << ~presets.keys; // Liste de tous les noms de presets pour les séquences 
 // Evaluate this last line to save Presets file with the new values XXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~savePresetFileView.valueAction_(0); ~savePresetFileView.valueAction_(1); ~savePresetFileView.valueAction_(0);
 
-// And to see the modified presets, You need to relaod the GUI with...
+// And to see the modified presets, You need to relaod the GUI with "_2_Init_GUI_222.scd".loadRelative; in the file "_0°Init_Live4Life.scd"
