@@ -84,8 +84,8 @@
 				~serverOptions.memSize_(2.pow(21)); // (2.pow(21)) - 2GB alloué - vraiment nécessaire ???????????????????????????
 			},
 			\windows,   { /*"Windows".postln*/
-				~serverOptions.numWireBufs_(2.pow(10)); // To check if it can be higher
-				~serverOptions.maxNodes_(8192*500); // default 1024 // To check if it can be higher
+				~serverOptions.numWireBufs_(2.pow(10)); // To check if it can be higher ?
+				~serverOptions.maxNodes_(8192*500); // default 1024 // To check if it can be higher ?
 				~serverOptions.memSize_(2.pow(20)); // To check if it can be higher ?
 			}
 		);
