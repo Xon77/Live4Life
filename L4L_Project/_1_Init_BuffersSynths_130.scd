@@ -14426,6 +14426,8 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 				// Supression des espaces au début et à la fin et des strings Alias dans le nom des dossiers
 				~arrayOfFolderNames = ~arrayOfFolderNamesWS.collect { |i| i.replace(" alias","")};
 
+				~soundsFolder = ~soundsFolder.withTrailingSlash; // Appends a path separator if one is not already present // necessary for Windows & Linux, since dragging the folder into the IDE does not add a path separator, like on OSX
+
 				// Pour prendre en compte les noms de dossiers alias
 				// Si un nom de dossier alias a le même nom qu'un autre dossier, le nom de dossier alias est pris en compte
 				~arrayOfFolderPaths = ~arrayOfFolderNames.collect { |item, i| PathName(~soundsFolder /*++ "/"*/ ++ ~arrayOfFolderNamesWS[i]) };
@@ -14433,6 +14435,16 @@ src1 = PMOsc.ar(cFreq, mFreq, pmIndex, offset /*((offset * 5).exp) -1*/, 0.08) *
 
 				// ~foldersSize = ~arrayOfFolderNames.collect {|i| ~soundm[i.asSymbol].size }; // Pour protection quand preset enregistré avec une taille de fichier différente
 
+
+				Platform.case( // For Windows since the method unixCmdGetStdOut is not recogised and ~arrayOfFolderNames & ~arrayOfFolderPaths are not generated
+					\windows, { // \osx \linux \windows
+						~arrayOfFolderPaths = PathName.new(~soundsFolder).folders;
+						~arrayOfFolderNames = ~arrayOfFolderPaths.collect({ arg item;
+							item.folderName;
+						}); // "Test Windows".postln;
+						~arrayOfFolderPaths = ~arrayOfFolderNames.collect { |item, i| PathName(~soundsFolder /*++ "/"*/ ++ ~arrayOfFolderNames[i]) }; // necessary to get ~arrayOfFolderPaths withoutTrailingSlash at the end like the line 14431 ?????????
+					}
+				);
 
 
 				( // Création d'un dico pour les sous-dossiers inclus dans le dossier Sounds - Dictionary
