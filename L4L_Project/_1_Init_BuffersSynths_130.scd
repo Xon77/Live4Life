@@ -73,9 +73,21 @@
 
 
 		Platform.case(
-			\osx,       { /*"OSX".postln*/ ~serverOptions.numWireBufs_( 2.pow(13) /*8192*12000*/ /*2.pow(26)*/ ); }, // try 4096 / 2.pow(12) or 1024 / 2.pow(10) if still you generate errors // 2.pow(26) apparently makes crash the server whereas 8192*12000 was ok before...
-			\linux,     { /*"Linux".postln*/ ~serverOptions.numWireBufs_(2.pow(10)); }, // numWireBufs to limit to 800 or 1024 if you generate errors like grey count ????
-			\windows,   { /*"Windows".postln*/ ~serverOptions.numWireBufs_(2.pow(12)); } //
+			\osx,       { /*"OSX".postln*/
+				~serverOptions.numWireBufs_( 2.pow(13) /*8192*12000*/ /*2.pow(26)*/ ); // try 4096 / 2.pow(12) or 1024 / 2.pow(10) if still you generate errors // 2.pow(26) apparently makes crash the server whereas 8192*12000 was ok before...
+				~serverOptions.maxNodes_(8192*5000); // default 1024
+				~serverOptions.memSize_(2.pow(21)); // (2.pow(21)) - 2GB alloué - vraiment nécessaire ???????????????????????????
+			},
+			\linux,     { /*"Linux".postln*/
+				~serverOptions.numWireBufs_(2.pow(10)); // numWireBufs to limit to 800 or 1024 if you generate errors like grey count ????
+				~serverOptions.maxNodes_(8192*5000); // default 1024
+				~serverOptions.memSize_(2.pow(21)); // (2.pow(21)) - 2GB alloué - vraiment nécessaire ???????????????????????????
+			},
+			\windows,   { /*"Windows".postln*/
+				~serverOptions.numWireBufs_(2.pow(10)); // To check if it can be higher
+				~serverOptions.maxNodes_(8192*500); // default 1024 // To check if it can be higher
+				~serverOptions.memSize_(2.pow(20)); // To check if it can be higher ?
+			}
 		);
 		// ~serverOptions.numWireBufs_(8192*12000); // 5000 auparavant - default 64 The maximum number of buffers that are allocated to interconnect unit generators -> This sets the limit of complexity of SynthDefs that can be loaded at runtime. This value will be automatically increased if a more complex def is loaded at startup, but it cannot be increased thereafter without rebooting.
 		/*
@@ -86,12 +98,12 @@
 		*/
 
 
-		~serverOptions.maxNodes_(8192*5000); // default 1024
+		// ~serverOptions.maxNodes_(8192*5000); // default 1024
 
 		// This memory is used to allocate synths and any memory that unit generators themselves allocate (for instance in the case of delay ugens which do not use buffers, such as CombN), and is separate from the memory used for buffers. Setting this too low is a common cause of 'exception in real time: alloc failed' errors.
 		// ~serverOptions.memSize_(2.pow(18)) // 262.144 // insuffisant et provoque des bursts du Server quand on change de presets ou buffers rapidement
 		// ~serverOptions.memSize_(65536 * 4); // 262.144 - necessary for Greyhole & JPVerb
-		~serverOptions.memSize_(2.pow(21)); // (2.pow(21)) - 2GB alloué - vraiment nécessaire ???????????????????????????
+		// ~serverOptions.memSize_(2.pow(21)); // (2.pow(21)) - 2GB alloué - vraiment nécessaire ???????????????????????????
 		// (1024*1900) 1.945.600 // to get the nb of MB // -> 1.6GB // default 8192 kilobytes (8 M) of real time memory allocated to the server // crash à 2GB ?????????
 		// Yes - the memory is definitely grabbed on server boot and unavailable to other apps.
 		// it's reserverd in the sense that it would immediately be made accessible by the operating system in case of being needed.
