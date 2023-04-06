@@ -65,7 +65,7 @@ Please note that:
 
 ***Live 4 Life* plays on all platforms.**
 
-***Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
+**It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
 **It is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
 
 :warning: **To be able to easily use the GUI, you need to have a minimum resolution of 1920×1200.
