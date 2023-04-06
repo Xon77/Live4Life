@@ -63,15 +63,17 @@ Please note that:
 
 ### Platform support
 
-:warning: ***Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
-**it is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
+***Live 4 Life*** play on all platforms.
 
-**To be able to easily use the GUI, you need to have a minimum resolution of 1920×1200.
+***Live 4 Life* has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
+**It is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
+
+:warning: **To be able to easily use the GUI, you need to have a minimum resolution of 1920×1200.
 In the meantime, if you have a smaller screen resolution, increase your screen resolution to the maximum or those suggested above in your computer preferences and set the variable `~mainWindowScroll` at true in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L20) to be able to scroll through the window.**
 
-**For Linux, it has worked before at some time, but currently I do not know.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
+**For Linux, it plays.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-**For Windows, It works, only if you set the variable `~foldersStructure` at 0 in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7).** This option ([explained in the wiki](https://github.com/Xon77/Live4Life/wiki/Organising-a-database-of-sound-files)), which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows. Use also an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on the SuperCollider forum [scsynth.org](https://scsynth.org).
+**For Windows, it plays, only if you set the variable `~foldersStructure` at 0 in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7).** This option ([explained in the wiki](https://github.com/Xon77/Live4Life/wiki/Organising-a-database-of-sound-files)), which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows. Use also an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on the SuperCollider forum [scsynth.org](https://scsynth.org).
 
 
 ## Installation
