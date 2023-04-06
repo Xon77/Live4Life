@@ -67,9 +67,9 @@ WFSPathGUI2 {
 
 		editView.duplicateAction_({ |ev|
 			if( ev.object.isKindOf( WFSPathURL ) ) {
-				WFSPathGUI( object: ev.object.wfsPath.deepCopy )
+				WFSPathGUI2( object: ev.object.wfsPath.deepCopy )
 			} {
-				WFSPathGUI( object: ev.object.deepCopy )
+				WFSPathGUI2( object: ev.object.deepCopy )
 			};
 		});
 
@@ -176,9 +176,9 @@ WFSPathGUI2 {
 
 			generatorView.duplicateAction_({ |ev|
 				if( ev.object.isKindOf( WFSPathURL ) ) {
-					WFSPathGUI( object: ev.object.wfsPath.deepCopy )
+					WFSPathGUI2( object: ev.object.wfsPath.deepCopy )
 				} {
-					WFSPathGUI( object: ev.object.deepCopy )
+					WFSPathGUI2( object: ev.object.deepCopy )
 				};
 			});
 
