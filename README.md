@@ -91,7 +91,7 @@ Follow the steps below one after another:
 	- ([KMeans](https://github.com/supercollider-quarks/KMeans)),
 	- [PopUpTreeMenu](https://github.com/redFrik/PopUpTreeMenu) (for GUI),
 	- ([redSampler](https://github.com/redFrik/redSampler): not necessary; I only use it to play specific sound files.),
-	- [SC-Grids](https://github.com/capital-G/sc-grids) (to play with a topographic drum sequencer from the Eurorack module [Grids](https://mutable-instruments.net/modules/grids/manual/) ported first in C++ by [Mutable Instruments](https://github.com/pichenettes) and then to SuperCollider by [Dennis Scheiba](https://github.com/capital-G). You can install it via `Quarks.install("https://github.com/capital-G/sc-grids")`, since it is currently not available in the Quarks directory.),
+	- [SC-Grids](https://github.com/capital-G/sc-grids) (to play with a topographic drum sequencer from the Eurorack module [Grids](https://mutable-instruments.net/modules/grids/manual/) ported first in C++ by [Mutable Instruments](https://github.com/pichenettes) and then to SuperCollider by [Dennis Scheiba](https://github.com/capital-G); since it is currently not available in the Quarks directory, you can install it via `Quarks.install("https://github.com/capital-G/sc-grids")`.),
 	- [SpeakersCorner](https://github.com/supercollider-quarks/SpeakersCorner) (for GUI),
 	- [TabbedView](https://github.com/jmuxfeldt/TabbedView) (deprecated, but necessary for GUI [wslib](https://github.com/supercollider-quarks/wslib)'s MasterEQ),
 	- [TabbedView2](https://github.com/jmuxfeldt/TabbedView2) (for GUI),
