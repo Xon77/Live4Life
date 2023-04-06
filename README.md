@@ -71,7 +71,7 @@ In the meantime, if you have a smaller screen resolution, increase your screen r
 
 **For Linux, it has worked before at some time, but currently I do not know.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-**For Windows, It seems to work, only if you set the variable `~foldersStructure` at 0 in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7).** This option, which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows. Use also an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on scsynth.org.
+**For Windows, It works, only if you set the variable `~foldersStructure` at 0 in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7).** This option, which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows. Use also an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on scsynth.org.
 
 
 ## Installation
