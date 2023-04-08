@@ -163,12 +163,12 @@ Platform.case(
 
 	},
     \windows,   { // car la méthode naturalCompareWithSpaces pose apparemment problème
-		if (~server2.notNil, {
+		/*if (~server2.notNil, {
 			~sortingClassicFunc[1].value(0); ~sortingClassicFunc[1].value(1); // 0 -> OSX / 1 -> SC
 		},{
 			~sortingClassicFunc[1].value(0);
-		});
-
+		});*/
+		~foldersStructure = 0; // En attendant de régler le problème de la structure des dossiers sur Windows
 	}
 );
 
