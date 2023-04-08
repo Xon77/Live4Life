@@ -63,7 +63,7 @@ Please note that:
 
 ### Platform support
 
-***Live 4 Life* plays on all platforms.**
+***Live 4 Life* plays on all platforms**, but currently only optimised for macOS.
 
 **It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
 **It is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
@@ -73,7 +73,7 @@ In the meantime, if you have a smaller screen resolution, increase your screen r
 
 **For Linux, it plays.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
-**For Windows, it plays, only if you set the variable `~foldersStructure` at 0 in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7).** This option ([explained in the wiki](https://github.com/Xon77/Live4Life/wiki/Organising-a-database-of-sound-files)), which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows. Use also an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on the SuperCollider forum [scsynth.org](https://scsynth.org).
+**For Windows, it can play, under some conditions. The driver of your sound card should be added e.g. at this line in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd#L64) with the following code: `~serverOptions.device_("Your device");`.** To obtain a list of available audio devices, evaluate this code: `ServerOptions.devices;` Use also an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on the SuperCollider forum [scsynth.org](https://scsynth.org). Moreover, the `~foldersStructure` variable in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7) has been deactivated. This option ([explained in the wiki](https://github.com/Xon77/Live4Life/wiki/Organising-a-database-of-sound-files)), which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows.
 
 
 ## Installation
