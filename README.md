@@ -4,7 +4,7 @@
 | [**Overview**](#overview) | [**Usage**](#usage) | [**Installation**](#installation) | [**Setup**](#setup) | [**References**](#references) | [**Contribute**](#contribute) | [**Acknowledgements**](#acknowledgements) | [**Licence**](#licence) |
 
 
-## Overview ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https://github.com/Xon77/Live4Life)
+## Overview
 
 PLEASE READ CAREFULLY THE [**USAGE**](#usage), INCLUDING PLATFORM SUPPORT, AND THE [**LICENCE**](#licence) BEFORE DOWNLOADING, INSTALLING OR USING THIS TOOL!
 
@@ -61,7 +61,7 @@ Please note that:
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume and change sliders and parameters slowly if you do not know the effect or what (kind of parameter) you are changing.
 
 
-### Platform support
+### Platform support (https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white)
 
 ***Live 4 Life* plays on all platforms, but currently only optimised for macOS.**
 
