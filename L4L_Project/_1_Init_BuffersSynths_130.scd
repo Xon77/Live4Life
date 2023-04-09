@@ -87,6 +87,8 @@
 				~serverOptions.numWireBufs_(2.pow(10)); // To check if it can be higher ?
 				~serverOptions.maxNodes_(8192*500); // default 1024 // To check if it can be higher ?
 				~serverOptions.memSize_(2.pow(20)); // To check if it can be higher ?
+				~serverOptions.inDevice_(~windowsInDevice);
+				~serverOptions.outDevice_(~windowsOutDevice);
 			}
 		);
 		// ~serverOptions.numWireBufs_(8192*12000); // 5000 auparavant - default 64 The maximum number of buffers that are allocated to interconnect unit generators -> This sets the limit of complexity of SynthDefs that can be loaded at runtime. This value will be automatically increased if a more complex def is loaded at startup, but it cannot be increased thereafter without rebooting.
