@@ -63,7 +63,7 @@ Please note that:
 
 ### Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/-OSX-black?logo=apple) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/-Linux-grey?logo=linux) &nbsp;&nbsp; ![Windows](https://img.shields.io/badge/-Windows-blue?logo=windows)
 
-***Live 4 Life* plays on all platforms, but currently only optimised for macOS.**
+***Live 4 Life* plays on all platforms, but is currently only optimised for macOS.**
 
 **It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
 **It is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
@@ -75,6 +75,7 @@ In the meantime, if you have a smaller screen resolution, increase your screen r
 
 :warning: **For Windows, it plays under some conditions. The names of the driver of your sound input and output devices should be replaced at both lines in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L94-L95).** To obtain a list of available input and output audio devices, evaluate both lines of code: `ServerOptions.inDevices;` and `ServerOptions.inDevices;`. Use an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on the SuperCollider forum [scsynth.org](https://scsynth.org). Moreover, the `~foldersStructure` variable in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7) has been deactivated. This option ([explained in the wiki](https://github.com/Xon77/Live4Life/wiki/Organising-a-database-of-sound-files)), which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows.
 
+:warning: **If you attend one of the spatial workshops I organise, it is recommended to have beforehand realised the first 3 steps of the installation process below and [downloaded a structured sound folder](https://github.com/Xon77/L4LSoundsDataBase/archive/refs/heads/main.zip)!**
 
 ## Installation
 
