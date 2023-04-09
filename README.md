@@ -61,7 +61,7 @@ Please note that:
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume and change sliders and parameters slowly if you do not know the effect or what (kind of parameter) you are changing.
 
 
-### Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/-OSX-black?logo=apple) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/-Linux-grey?logo=linux) [Windows](https://img.shields.io/badge/-Windows-blue?logo=windows)
+### Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/-OSX-black?logo=apple) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/-Linux-grey?logo=linux) &nbsp;&nbsp; ![Windows](https://img.shields.io/badge/-Windows-blue?logo=windows)
 
 ***Live 4 Life* plays on all platforms, but currently only optimised for macOS.**
 
