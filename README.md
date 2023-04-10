@@ -4,7 +4,7 @@
 | [**Overview**](#overview) | [**Usage**](#usage) | [**Installation**](#installation) | [**Setup**](#setup) | [**References**](#references) | [**Contribute**](#contribute) | [**Acknowledgements**](#acknowledgements) | [**Licence**](#licence) |
 
 
-## Overview
+## Overview ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url = https://github.com/Xon77/Live4Life)
 
 PLEASE READ CAREFULLY THE [**USAGE**](#usage), INCLUDING PLATFORM SUPPORT, AND THE [**LICENCE**](#licence) BEFORE DOWNLOADING, INSTALLING OR USING THIS TOOL!
 
