@@ -75,9 +75,9 @@ In the meantime, if you have a smaller screen resolution, increase your screen r
 
 :warning: **For Windows, it plays under some conditions. The names of the driver of your sound input and output devices should be replaced at both lines in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L94-L95).** To obtain a list of available input and output audio devices, evaluate both lines of code: `ServerOptions.inDevices;` and `ServerOptions.inDevices;`. Use an appropriate driver like ASIO, ReaRoute, DirectSound or WASAPI, but not MME. See this [post](https://scsynth.org/t/audio-noise-distortion-issues/2731) on the SuperCollider forum [scsynth.org](https://scsynth.org). Moreover, the `~foldersStructure` variable in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L7) has been deactivated. This option ([explained in the wiki](https://github.com/Xon77/Live4Life/wiki/Organising-a-database-of-sound-files)), which allows to create virtual folders by gathering the first two letters of a sound folder, is currently not available for Windows.
 
-## Installation
-
 :warning: **If you attend one of the spatial workshops I organise, it is recommended to have beforehand realised the first 3 steps of the installation process below and [downloaded a prepared sound folder](https://github.com/Xon77/L4LSoundsDataBase/archive/refs/heads/main.zip)!**
+
+## Installation
 
 Follow the steps below one after another:
 
