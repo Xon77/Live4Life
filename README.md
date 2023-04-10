@@ -132,7 +132,7 @@ In order to launch the tool, open the file [`_0_Init_Live4Life.scd`](/L4L_Projec
 
 5. You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [Controllers](/Controllers) for full performance control.
 
-A **[wiki (in construction)](https://github.com/Xon77/Live4Life/wiki)**, including tutorials and code examples to automate some utility functions and [load presets to have an improvisation session](https://github.com/Xon77/Live4Life/wiki/Build-an-improvisation) will be completed and detailed over time.
+A **[wiki (in construction)](https://github.com/Xon77/Live4Life/wiki)**, including personal thoughts, tutorials and code examples about this project, e.g. to automate some utility functions and [load presets to have an improvisation session](https://github.com/Xon77/Live4Life/wiki/Build-an-improvisation) will be completed and detailed over time.
 
 
 ## References
