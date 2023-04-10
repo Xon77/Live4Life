@@ -77,8 +77,6 @@ In the meantime, if you have a smaller screen resolution, increase your screen r
 
 :warning: **If you attend one of the spatial workshops I organise, it is recommended to have beforehand realised the first 3 steps of the installation process below and [downloaded a prepared sound folder](https://github.com/Xon77/L4LSoundsDataBase/archive/refs/heads/main.zip)!**
 
-***
-
 ## Installation
 
 Follow the steps below one after another:
