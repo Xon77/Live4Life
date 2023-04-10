@@ -52,13 +52,13 @@ I have been developing in [**SuperCollider**](https://supercollider.github.io) s
 
 Please note that:
 
-* currently, the code can be incorrectly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
-
 * :warning: **although the code is available here, the interface and the setup are relatively complex**, as this tool includes a lot of extensions and that it is not meant to be a simple Graphic User Interface (GUI) for a casual, untrained user of SuperCollider, but focused to allow the creation of a lot of combinations tailored to my creative dreams to map sound with space of speakers.
 
 * due to the fact I almost began learning SuperCollider with this experimental project and that I am not a professional developer, the code is relatively raw with lots of old comments and I have developed over time my own coding strategies, which might be old, bad or unoptimised, and which are not recommended by some great developers in SuperCollider. Even though there may be some bugs or errors, particularly during the setup process (causing to reboot), the tool generally works well for me with my workflow during performances. But I cannot guarantee it will work for you the way you want.
 
 * changing drastically effect parameters can produce very loud sounds. So, monitor the volume and change sliders and parameters slowly if you do not know the effect or what (kind of parameter) you are changing.
+
+* currently, the code can be incorrectly highlighted in Github due to a [bug](https://github.com/supercollider/language-supercollider/issues/4), but it is ok in SuperCollider.
 
 
 ## Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) &nbsp;&nbsp; ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
