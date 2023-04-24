@@ -14763,6 +14763,7 @@ t.quit;
 
 	// Redéfinir le nombre de canaux nécessaires pour le serveur des phrases
 	currentEnvironment[server].options.numOutputBusChannels = ~numChannels;
+	currentEnvironment[server].options.maxSynthDefs_(10000);
 
 	case
 
