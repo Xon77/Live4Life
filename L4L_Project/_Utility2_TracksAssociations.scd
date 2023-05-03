@@ -3,7 +3,7 @@
 ~presetTracksVariations = IdentityDictionary.new; // Need to be created before storing
 ~presetTracksVariations.keys;
 ~presetTracksVariations.values;
-~presetsTracksVariations.asCompileString;
+~presetTracksVariations.asCompileString;
 ~presetTracksVariations.removeAt('R1');
 
 
