@@ -74,7 +74,7 @@
 
 		Platform.case(
 			\osx,       { /*"OSX".postln*/
-				~serverOptions.numWireBufs_( 2.pow(13) /*8192*12000*/ /*2.pow(26)*/ ); // try 4096 / 2.pow(12) or 1024 / 2.pow(10) if still you generate errors // 2.pow(26) apparently makes crash the server whereas 8192*12000 was ok before...
+				~serverOptions.numWireBufs_( 2.pow(13).asInteger /*8192*12000*/ /*2.pow(26)*/ ); // try 4096 / 2.pow(12) or 1024 / 2.pow(10) if still you generate errors // 2.pow(26) apparently makes crash the server whereas 8192*12000 was ok before...
 				~serverOptions.maxNodes_(8192*5000); // default 1024
 				~serverOptions.memSize_(2.pow(21)); // (2.pow(21)) - 2GB alloué - vraiment nécessaire ???????????????????????????
 			},
@@ -14776,8 +14776,8 @@ t.quit;
 	{~numChannelsConfig ==  "32-Dome-12-10-8-2-Motu" or: { ~numChannelsConfig == "32-Dome-12-10-8-2" } }
 	{currentEnvironment[server].options.numOutputBusChannels = 34;} // 32 HP, mais aussi Subs en 33 / 34
 
-	{~numChannelsConfig ==  "32-Dome-UQAM-11-11-9-1" }
-	{currentEnvironment[server].options.numOutputBusChannels = 32;};
+	/*{~numChannelsConfig ==  "32-Dome-UQAM-11-11-9-1" } // Pas necessaire car le nombre de HP ne change pas
+	{currentEnvironment[server].options.numOutputBusChannels = 32;}*/ ;
 
 	// vraiment nécessaire puisque lancé à l'initialisation ???
 	// SynthDef.synthDefDir = "/Users/xon/Library/Application Support/SuperCollider/synthdefs/";
