@@ -3286,6 +3286,123 @@ OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6,7]), src[0]);
 OffsetOut.ar(\\outsR.ar([8,9,10,11,12,13,14,15]), src[1]);",
 						] );
 
+					}
+
+
+					{~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"}
+
+					{
+
+						~acousItems = [
+							"A1_1_Q", "A1_1b_Q", "A1_2_Q", "A1_2b_Q", "A1_3_Q", "A1_3b_Q", "A1_4_Q", "A1_4b_Q",
+							"A2_5_S", "A2_5b_S", "A2_6_M", "A2_6b_M", "A2_7_H", "A2_7b_H",
+							"A3_8_D", "A2_8b_D", "A3_9_D", "A3_9b_D", "A3_10_D", "A3_10b_D", "A3_11_D", "A3_11b_D",
+							"A4_12_T", "A4_12b_T"
+						];
+
+						~bigStereoOuts = [
+							[[0, 11, 22], [1, 13, 23]], // "A1_1_Q",
+							[[0, 1, 11], [13, 22, 23]], // "A1_1b_Q",
+							[[3, 14, 24], [4, 15, 25]], // "A1_2_Q",
+							[[14, 3, 4], [24, 25, 14]], // "A1_2b_Q",
+							[[5, 17, 26], [7, 18, 28]], // "A1_3_Q",
+							[[5, 7, 17], [18, 26, 28]], // "A1_3b_Q",
+							[[8, 20, 29], [9, 21, 30]], // "A1_4_Q",
+							[[8, 9, 20], [21, 29, 30]], // "A1_4b_Q", // Possibilité d'ajouter les quarts en décalage pour être seulement dans un quart du cercle
+
+							[[7, 8, 9, 10, 0], [1, 2, 3, 4, 5]], // "A2_5_S",
+							[[9, 10, 0, 1, 2], [3, 4, 5, 7, 8]], // "A2_5b_S",
+							[[18, 19, 20, 21, 11], [13, 14, 15, 16, 17]], // "A2_6_M",
+							[[20, 21, 11, 13, 14], [15, 16, 17, 18, 19]], // "A2_6b_M",
+							[[28, 29, 30, 22, 31], [23, 24, 25, 26, 27]], // "A2_7_H",
+							[[30, 22, 23, 24, 31], [25, 26, 27, 28, 29]], // "A2_7b_H",
+
+							[[0, 11, 22, 9, 21, 30, 10], [1, 2, 3, 13, 14, 23, 24]], // "A3_8_D",
+							[[9, 21, 10, 0, 1, 2, 3], [21, 13, 14, 30, 22, 23, 24]], // "A3_8b_D",
+							[[15, 25, 4, 16, 26, 5, 17], [7, 18, 28, 19, 8, 20, 29]], // "A3_9_D",
+							[[4, 5, 7, 8, 15, 16, 17], [ 18, 19, 20, 25, 26, 28, 29]], // "A3_9b_D",
+							[[7, 8, 18, 19, 20, 28, 29], [9, 10, 0, 11, 21, 22, 30]], // "A3_10_D",
+							[[7, 8, 9, 10, 0, 18, 19], [20, 21, 11, 22, 28, 29, 30]], // "A3_10b_D",
+							[[1, 2, 3, 13, 14, 23, 24], [4, 5, 15, 16, 17, 25, 26]], // "A3_11_D",
+							[[1, 2, 3, 4, 5, 13, 14], [15, 16, 17, 23, 24, 25, 26]], // "A3_11b_D",
+
+							[[7, 8, 9, 10, 0, 18, 19, 20, 21, 11, 28, 29, 30, 22], [1, 2, 3, 4, 5, 13, 14, 15, 16, 17, 23, 24, 25, 26]], // "A4_12_T",
+							[[9, 10, 0, 1, 2, 3, 21, 11, 13, 14, 23, 24, 30, 22], [4, 5, 7, 8, 15, 16, 17, 18, 19, 20, 25, 26, 28, 29]] // "A4_12b_T",
+
+						];
+
+						// ~bigStereoOutsSizes = [28, 10, 10, 2];
+						// ~bigStereoOuts.collect { |i| i[0].size }
+						// ~bigStereoOutsSizes2 = [28, 38, 48];
+						// [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 7, 7 ]
+						~bigStereoOutsSizes2 = [8, 14, 22];
+						// [ 3, 3, 3, 3, 3, 3, 3, 3, 5, 5, 5, 5, 5, 5, 7, 7, 7, 7, 7, 7, 7, 7, 14, 14 ]
+
+
+						~allSpas[0].addAll ( ["_Acous1", "_Acous2", "_Acous3", "_Acous4"] );
+
+						~allSpas[1].addAll ( [
+							"src1 = Pan2.ar(src1, pan) * env * 0.6;
+OffsetOut.ar(\\outsL.ar([0,1,2]), src1[0]);
+OffsetOut.ar(\\outsR.ar([3,4,5]), src1[1]);",
+							"src1 = Pan2.ar(src1, pan) * env * 0.5;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src1[0]);
+OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src1[1]);",
+							"src1 = Pan2.ar(src1, pan) * env * 0.4;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6]), src1[0]);
+OffsetOut.ar(\\outsR.ar([7,8,9,10,11,12,13]), src1[1]);",
+							"src1 = Pan2.ar(src1, pan) * env * 0.3;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6,7,8,9,10,11,12,13]), src1[0]);
+OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src1[1]);",
+						] );
+						// Pour la gestion des volumes
+						// 14.reciprocal.sqrt // 0.70710678118655 // 0.57735026918963 // 0.5 // 0.37796447300923
+
+						~allSpas[2].addAll ( [
+							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.6;
+OffsetOut.ar(\\outsL.ar([0,1,2]), src1[0]);
+OffsetOut.ar(\\outsR.ar([3,4,5]), src1[1]);",
+							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.5;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src1[0]);
+OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src1[1]);",
+							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.4;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6]), src1[0]);
+OffsetOut.ar(\\outsR.ar([7,8,9,10,11,12,13]), src1[1]);",
+							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.3;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6,7,8,9,10,11,12,13]), src1[0]);
+OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src1[1]);",
+						] );
+
+						~allSpas[3].addAll ( [
+							"src = Balance2.ar(src[0], src[1], pan) * env * 0.6;
+OffsetOut.ar(\\outsL.ar([0,1,2]), src[0]);
+OffsetOut.ar(\\outsR.ar([3,4,5]), src[1]);",
+							"src = Balance2.ar(src[0], src[1], pan) * env * 0.5;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src[0]);
+OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src[1]);",
+							"src = Balance2.ar(src[0], src[1], pan) * env * 0.4;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6]), src[0]);
+OffsetOut.ar(\\outsR.ar([7,8,9,10,11,12,13]), src[1]);",
+							"src = Balance2.ar(src[0], src[1], pan) * env * 0.3;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6,7,8,9,10,11,12,13]), src[0]);
+OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src[1]);",
+						] );
+
+						~allSpas[4].addAll ( [
+							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env  * 0.6;
+OffsetOut.ar(\\outsL.ar([0,1,2]), src[0]);
+OffsetOut.ar(\\outsR.ar([3,4,5]), src[1]);",
+							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.5;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src[0]);
+OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src[1]);",
+							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.4;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6]), src[0]);
+OffsetOut.ar(\\outsR.ar([7,8,9,10,11,12,13]), src[1]);",
+							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.3;
+OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6,7,8,9,10,11,12,13]), src[0]);
+OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src[1]);",
+						] );
+
 					};
 
 
@@ -3382,7 +3499,7 @@ OffsetOut.ar(\\outsR.ar([8,9,10,11,12,13,14,15]), src[1]);",
 
 
 			case
-			{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"} or: {~numChannelsConfig == "24-UsineC-3Octo"} or: {~numChannelsConfig == "16-UsineC-2Octo"}}
+			{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"} or: {~numChannelsConfig == "24-UsineC-3Octo"} or: {~numChannelsConfig == "16-UsineC-2Octo"} or: {~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"}}
 			{
 				~spaSynthArgs.addAll ([
 					"pan= 0", // Acous 1
