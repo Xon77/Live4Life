@@ -10905,7 +10905,7 @@ pair for phase modulation, which sounds similar to FM
 		if (~acousItems.isNil, {
 			envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I"]).valueAction_(4); // Initialisation à Pwhite
 		},{
-			envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "R +1", "R  -1", "Mi  1", "R +2",  "R  -2", "Mi  2", "R +2b", "R  -2b", "Mi  2b"]).valueAction_(4); // Initialisation à Pwhite
+			envir[patSelView].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "R +1", "R  -1", "R +2", "R +2b", "R  -2", "R  -2b", "Mi  1", "Mi  2", "Mi  2b"]).valueAction_(4); // Initialisation à Pwhite
 		});
 	}
 	{ [\leg, \pan, \buf, \off, \del].includes(data) }
@@ -11543,7 +11543,7 @@ readView, readBackgroundColorView, posView
 	},{
 
 		case
-		{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"} or: {~numChannelsConfig == "24-UsineC-3Octo"} or: {~numChannelsConfig == "16-UsineC-2Octo"}}
+		{~numChannelsConfig == "16-Dome-8-6-2-Clock" or: {~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"} or: {~numChannelsConfig == "24-UsineC-3Octo"} or: {~numChannelsConfig == "16-UsineC-2Octo"} or: {~numChannelsConfig == "32-Dome-UQAM-11-11-9-1"}}
 
 		{
 			~acousFunction = { ~allSpasGUIFinal = ~allSpasGUIFinal.addAll ( ~acousItems ) };
