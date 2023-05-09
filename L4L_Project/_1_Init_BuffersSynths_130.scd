@@ -3345,7 +3345,7 @@ OffsetOut.ar(\\outsR.ar([8,9,10,11,12,13,14,15]), src[1]);",
 							"src1 = Pan2.ar(src1, pan) * env * 0.6;
 OffsetOut.ar(\\outsL.ar([0,1,2]), src1[0]);
 OffsetOut.ar(\\outsR.ar([3,4,5]), src1[1]);",
-							"src1 = Pan2.ar(src1, pan) * env * 0.5;
+							"src1 = Pan2.ar(src1, pan) * env * 0.47;
 OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src1[0]);
 OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src1[1]);",
 							"src1 = Pan2.ar(src1, pan) * env * 0.4;
@@ -3356,13 +3356,13 @@ OffsetOut.ar(\\outsL.ar([0,1,2,3,4,5,6,7,8,9,10,11,12,13]), src1[0]);
 OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src1[1]);",
 						] );
 						// Pour la gestion des volumes
-						// 14.reciprocal.sqrt // 0.70710678118655 // 0.57735026918963 // 0.5 // 0.37796447300923
+						// 3.reciprocal.sqrt // 0.70710678118655 // 0.57735026918963 // 0.5 // 0.37796447300923
 
 						~allSpas[2].addAll ( [
 							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.6;
 OffsetOut.ar(\\outsL.ar([0,1,2]), src1[0]);
 OffsetOut.ar(\\outsR.ar([3,4,5]), src1[1]);",
-							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.5;
+							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.47;
 OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src1[0]);
 OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src1[1]);",
 							"src1 = Pan2.ar(src1, pan * Select.ar(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.4;
@@ -3377,7 +3377,7 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src1[1]);"
 							"src = Balance2.ar(src[0], src[1], pan) * env * 0.6;
 OffsetOut.ar(\\outsL.ar([0,1,2]), src[0]);
 OffsetOut.ar(\\outsR.ar([3,4,5]), src[1]);",
-							"src = Balance2.ar(src[0], src[1], pan) * env * 0.5;
+							"src = Balance2.ar(src[0], src[1], pan) * env * 0.47;
 OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src[0]);
 OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src[1]);",
 							"src = Balance2.ar(src[0], src[1], pan) * env * 0.4;
@@ -3392,7 +3392,7 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27]), src[1]);",
 							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env  * 0.6;
 OffsetOut.ar(\\outsL.ar([0,1,2]), src[0]);
 OffsetOut.ar(\\outsR.ar([3,4,5]), src[1]);",
-							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.5;
+							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.47;
 OffsetOut.ar(\\outsL.ar([0,1,2,3,4]), src[0]);
 OffsetOut.ar(\\outsR.ar([5,6,7,8,9]), src[1]);",
 							"src = Balance2.ar(src[0], src[1], pan * Select.kr(pamp.ceil, [DC.ar(1), SinOsc.ar(panrate, 0, pamp) ])) * env * 0.4;
