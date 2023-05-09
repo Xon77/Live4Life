@@ -3789,43 +3789,43 @@ envir[key][track][seq] = value;
 				{~multiStereo[track/*/2*/][seq] == 0}
 				{ [(~spaSpecStereo[track][seq].map(ev.prepspaU * ~spaMul[track][seq])).asInteger] } // .asInteger necessaire pour avoir un entier sinon erreur plus loin avec \panL et la fonction { |i| if (i.odd, {1}, {-1} ) }
 
-				{~spaPatSel[track][seq] < 15 /*~controlBus0*/  or:  { ~spaPat[track][seq] == 0 }}
+				{~spaPatSel[track][seq] < 17 /*~controlBus0*/  or:  { ~spaPat[track][seq] == 0 }}
 				{ [(~spaSpec[track][seq].map(ev.prepspaU * ~spaMul[track][seq])).asInteger] }
 
 				// préférable de doubler le nombre de conditions avec une variable qui réinitialise les données à chaque changement XXXXXX
-				{~spaPatSel[track][seq] == 15 /*~controlBus0*/  and:  { ~spaPat[track][seq] == 1 }} // Range +1
+				{~spaPatSel[track][seq] == 17 /*~controlBus0*/  and:  { ~spaPat[track][seq] == 1 }} // Range +1
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, { prevSpa = ~lastEvent[track][\prepspaA] });
 					if (ev[\type] == 'note', { [(prevSpa+1).wrap(~spaMin[track][seq], ~spaMax[track][seq])] }, { [(prevSpa).wrap(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
-				{~spaPatSel[track][seq] == 16 and:  { ~spaPat[track][seq] == 1 }} // Range -1
+				{~spaPatSel[track][seq] == 18 and:  { ~spaPat[track][seq] == 1 }} // Range -1
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, { prevSpa = ~lastEvent[track][\prepspaA] });
 					if (ev[\type] == 'note', { [(prevSpa-1).wrap(~spaMin[track][seq], ~spaMax[track][seq])] }, { [(prevSpa).wrap(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
-				{~spaPatSel[track][seq] == 17 and:  { ~spaPat[track][seq] == 1 }} // Range +2 // necessaire de relancer le bouton Pat pour que cela soit effectif et réinitialisé
+				{~spaPatSel[track][seq] == 19 and:  { ~spaPat[track][seq] == 1 }} // Range +2 // necessaire de relancer le bouton Pat pour que cela soit effectif et réinitialisé
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, { prevSpa = ~lastEvent[track][\prepspaA] });
 					if (ev[\type] == 'note', { [(prevSpa+2).wrap(~spaMin[track][seq], ~spaMax[track][seq])] }, { [(prevSpa).wrap(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
-				{~spaPatSel[track][seq] == 18 and:  { ~spaPat[track][seq] == 1 }} // Range +2b // necessaire de relancer le bouton Pat pour que cela soit effectif et réinitialisé
+				{~spaPatSel[track][seq] == 20 and:  { ~spaPat[track][seq] == 1 }} // Range +2b // necessaire de relancer le bouton Pat pour que cela soit effectif et réinitialisé
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq]+1 }, { prevSpa = ~lastEvent[track][\prepspaA]/*.max(~spaMin[track][seq]+1)*/ });
 					if (ev[\type] == 'note', { [(prevSpa+2).wrap(~spaMin[track][seq]+1, ~spaMax[track][seq]/*+1*/)] }, { [(prevSpa).wrap(~spaMin[track][seq]+1, ~spaMax[track][seq]/*+1*/)] } ) }
 
-				{~spaPatSel[track][seq] == 19 and:  { ~spaPat[track][seq] == 1 }} // Range -2a
+				{~spaPatSel[track][seq] == 21 and:  { ~spaPat[track][seq] == 1 }} // Range -2a
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, { prevSpa = ~lastEvent[track][\prepspaA] });
 					if (ev[\type] == 'note', { [(prevSpa-2).wrap(~spaMin[track][seq], ~spaMax[track][seq])] }, { [(prevSpa).wrap(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
-				{~spaPatSel[track][seq] == 20 and:  { ~spaPat[track][seq] == 1 }} // Range -2b
+				{~spaPatSel[track][seq] == 22 and:  { ~spaPat[track][seq] == 1 }} // Range -2b
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq]+1 }, { prevSpa = ~lastEvent[track][\prepspaA]/*.max(~spaMin[track][seq]+1)*/ });
 					if (ev[\type] == 'note', { [(prevSpa-2).wrap(~spaMin[track][seq]+1, ~spaMax[track][seq]/*+1*/)] }, { [(prevSpa).wrap(~spaMin[track][seq], ~spaMax[track][seq]/*+1*/)] } ) }
 
-				{~spaPatSel[track][seq] == 21 and:  { ~spaPat[track][seq] == 1 }} // Mir 1
+				{~spaPatSel[track][seq] == 23 and:  { ~spaPat[track][seq] == 1 }} // Mir 1
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, {  /*~lastEvent[track][\prepspaA]*/ });
 					if (ev[\type] == 'note', {~prevNb2[track] = ~prevNb2[track]+1; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq])] }, {~prevNb2[track] = ~prevNb2[track]; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
-				{~spaPatSel[track][seq] == 22 and:  { ~spaPat[track][seq] == 1 }} // Mir 2a
+				{~spaPatSel[track][seq] == 24 and:  { ~spaPat[track][seq] == 1 }} // Mir 2a
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, {  /*~lastEvent[track][\prepspaA]*/ });
 					if (ev[\type] == 'note', {~prevNb2[track] = ~prevNb2[track]+2; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq])] }, {~prevNb2[track] = ~prevNb2[track]; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
-				{~spaPatSel[track][seq] == 23 and:  { ~spaPat[track][seq] == 1 }} // Mir 2b
+				{~spaPatSel[track][seq] == 25 and:  { ~spaPat[track][seq] == 1 }} // Mir 2b
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, {  /*~lastEvent[track][\prepspaA]*/ });
 					if (ev[\type] == 'note', {~prevNb2[track] = ~prevNb2[track]+2; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq]+1, ~spaMax[track][seq])] }, {~prevNb2[track] = ~prevNb2[track]; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq])] } ) }
 
