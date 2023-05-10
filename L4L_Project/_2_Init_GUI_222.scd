@@ -5768,7 +5768,7 @@ Ndef(\sound).play
 	~controlBusSynth5FadeTimeView = RoundButton(/*~globalWindow*/~busControlComp, Rect(2, 22, 35, 18) /*Rect(39, 2, 35, 18)*/)
 	.states_([["0", Color.white, Color.blue], /*["low", Color.white, Color.blue],*/ ["0.01", Color.white, Color.blue], ["1", Color.black, Color.green], ["3", Color.black, Color.green], ["6", Color.black, Color.green], ["10", Color.black, Color.green], ["15", Color.black, Color.green], ["30", Color.black, Color.green]])
 	.font_(Font("Verdana",10, bold: true))
-	.action_({|i| ~controlBusSynth5FadeTime = i.value; ~controlBusSynthFunc[~controlBusSynth5FadeTime].value(0);});
+	.action_({|i| ~controlBusSynth5FadeTime = i.value; ~nbOfServers.do { |s| ~controlBusSynthFunc[~controlBusSynth5FadeTime].value(s); } });
 
 	~controlBusTypeArgView = RoundButton(/*~globalWindow*/~busControlComp, Rect(40, 2, 35, 18) /*Rect(76, 2, 35, 18)*/)
 	.states_([["Rat", Color.white, Color.blue], ["Str", Color.white, Color.red], ["Cen", Color.white, Color.red]])
