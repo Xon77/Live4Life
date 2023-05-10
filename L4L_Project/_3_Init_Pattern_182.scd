@@ -3823,7 +3823,7 @@ envir[key][track][seq] = value;
 
 				{~spaPatSel[track][seq] == 24 and:  { ~spaPat[track][seq] == 1 }} // Mir 2a
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq] }, {  /*~lastEvent[track][\prepspaA]*/ });
-					if (ev[\type] == 'note', {~prevNb2[track] = ~prevNb2[track]+2; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq]-1)] }, {~prevNb2[track] = ~prevNb2[track]; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq]-1)] } ) }
+					if (ev[\type] == 'note', {~prevNb2[track] = ~prevNb2[track]+2; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq]/*-1*/)] }, {~prevNb2[track] = ~prevNb2[track]; prevSpa = ~prevNb2[track]; [(prevSpa).fold(~spaMin[track][seq], ~spaMax[track][seq]/*-1*/)] } ) }
 
 				{~spaPatSel[track][seq] == 25 and:  { ~spaPat[track][seq] == 1 }} // Mir 2b
 				{ if ( ~lastEvent[track] == 0, { prevSpa = ~spaMin[track][seq]+1 }, {  /*~lastEvent[track][\prepspaA]*/ });
