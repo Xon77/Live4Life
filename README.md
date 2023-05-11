@@ -145,6 +145,8 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 
 The [first training workshops in immersive sound and spatial improvisation (in quadraphony) with this open source project](https://www.cirmmt.org/en/events/workshops/research/spatial-sound-live4life?set_language=en) were organised at [CIRMMT](https://www.cirmmt.org/en/welcome-to-cirmmt?set_language=en) in Montréal in March and April 2023. Next spatial workshops will be organized on May 13th of May at Hexagram in Montréal (please fill [the following form](https://bit.ly/3NMlkJ0) if you want to participate), as well as at [ISEA (International Symposium on Electronic Arts)](https://isea2023.isea-international.org/en/symposium-program) in Paris (please fill [the following form](https://bit.ly/3B3AMIU) if you want to participate).
 
+The first performative participative installation with a 32-loudspeaker dome will be organized at Hexagram in Montréal on [May 12th](https://bit.ly/3VHaIx2) and [14th](https://bit.ly/3HMo0ST).
+
 
 ## Contribute
 
