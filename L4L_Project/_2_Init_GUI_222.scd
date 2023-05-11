@@ -25845,7 +25845,7 @@ u.drawFunc = { d.draw }
 	};
 
 
-	~presetVarsSpaTimeRandSpec = ControlSpec(/*0,125*/ 0.5, 7.5, \lin, 0.125); // 0.125*60
+	~presetVarsSpaTimeRandSpec = ControlSpec(0.125 /*0.5*/, 7.5, \lin, 0.125); // 0.125*60
 	~presetVarsSpaTimeRandSlider = SmoothSlider(~controlWindowSpaRy, Rect(4, 58+26, 70, 22))
 	.action_({ |view| ~presetVarsSpaTimeRand = ~presetVarsSpaTimeRandSpec.map(view.value);
 		view.string = ~presetVarsSpaTimeRand.asString +"s";
@@ -25857,7 +25857,7 @@ u.drawFunc = { d.draw }
 	.border_(~border)
 	.borderColor_(~borderColor)
 	.step_(1/60)
-	.valueAction_(0.09);
+	.valueAction_(0.05);
 
 
 	~multiStereoPanDefView = RoundButton(~controlWindowSpaRy, Rect(148, 27, 34, 26))
