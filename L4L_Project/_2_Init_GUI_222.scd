@@ -5746,6 +5746,12 @@ Ndef(\sound).play
 	.action_({|i| ~keyControl = i.value})
 	.valueAction_(2);
 
+	~speakerRangeView = RoundButton(~globalWindow, Rect(54, 2, 50, 18))
+	.states_([ ["SpRange", Color.white, Color.red], ["SpRange", Color.black, Color.green] ])
+	.font_(Font("Verdana",10, bold: true))
+	.action_({|i| ~speakerRange = i.value})
+	.valueAction_(1);
+
 	~fxServerSwitchView = RoundButton(~globalWindow, Rect(106, 2, 50, 18))
 	.states_([["FX S 1", Color.white, Color.blue], ["FX S 2", Color.red, Color.yellow], ["FX ALL", Color.yellow, Color.red] /*, ["KeyR", Color.white, Color.grey]*/ ])
 	.font_(Font("Verdana",10, bold: true))
