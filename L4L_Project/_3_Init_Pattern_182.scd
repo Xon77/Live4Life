@@ -4486,24 +4486,29 @@ envir[key][track][seq] = value;
 				{~outLPatSel[track][seq] == ~controlBus0 and: { ~outLPat[track][seq] == 1 }} // Seq +1
 				{ if ( ~lastEvent[track] == 0, { prevOutL = 1 }, { prevOutL = ~lastEvent[track][\prepoutL2] }); /*prevOutL = ~lastEvent[track][\prepoutL2] ? 1*/ /*prevOutL.postln;*/
 					// if (ev[\type] == 'note', { (prevOutL).mod(~numChannels)+1 }, { (prevOutL).mod(~numChannels) } )
-					if (ev[\type] == 'note', { (prevOutL+1).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }, { prevOutL } )
+					if (ev[\type] == 'note', {
+						if ( ~speakerRange == 0, { (prevOutL).mod(~numChannels)+1
+						},{
+							(prevOutL+1).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq])
+						})
+					}, { prevOutL } )
 				}
 				// {if (~multiStereo[track][seq] == 0, {~outLRound[track/2][seq]}, {~outL[track][seq].size.do{|i| ~outList.wrapAt(i) } })} // autre méthode de faire Seq +1 mais pour fonctionner routine nécessaire ou alors utlisation de ~prevNb qui est toujours incrémenté de 1 - voire plus bas miroir - mais pas terrible car nécessaire d'ajouter une variable d'environnement - à optimiser - mais l'intérêt vs une routine est qu'il peut être arrêté à tout moment ?????????
 
 				{~outLPatSel[track][seq] == ~controlBus1 and: { ~outLPat[track][seq] == 1 }} // Seq -1
 				{ /*prevOutL = ~lastEvent[track][\prepoutL2] ? 0;*/ if ( ~lastEvent[track] == 0, { prevOutL = 1 }, {prevOutL = ~lastEvent[track][\prepoutL2] });
-					if (ev[\type] == 'note', { (prevOutL-1).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }, { prevOutL } ) }
+					if (ev[\type] == 'note', { if ( ~speakerRange == 0, { (prevOutL-1).asInteger.wrap(1,~numChannels) },{ (prevOutL-1).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }) },{ prevOutL } ) }
 
 				{~outLPatSel[track][seq] == ~controlBus2 and: { ~outLPat[track][seq] == 1 }} // Seq +2
 				{ /*prevOutL = ~lastEvent[track][\prepoutL2] ? 0;*/ if ( ~lastEvent[track] == 0, { prevOutL = 1 }, {prevOutL = ~lastEvent[track][\prepoutL2] });
-					if (ev[\type] == 'note', { (prevOutL+2).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }, { prevOutL } ) }
+					if (ev[\type] == 'note', { if ( ~speakerRange == 0, { (prevOutL+2).asInteger.wrap(1,~numChannels) },{ (prevOutL+2).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }) }, { prevOutL } ) }
 
 				{~outLPatSel[track][seq] == ~controlBus3 and: { ~outLPat[track][seq] == 1 }} // Seq -2
 				{ /*prevOutL = ~lastEvent[track][\prepoutL2] ? 0;*/ if ( ~lastEvent[track] == 0, { prevOutL = 1 }, {prevOutL = ~lastEvent[track][\prepoutL2] });
-					if (ev[\type] == 'note', { (prevOutL-2).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }, { prevOutL } ) }
+					if (ev[\type] == 'note', { if ( ~speakerRange == 0, { (prevOutL-2).asInteger.wrap(1,~numChannels) },{ (prevOutL-2).asInteger.wrap(~outLMin[track][seq],~outLMax[track][seq]) }) }, { prevOutL } ) }
 
 				{~outLPatSel[track][seq] == ~controlBus4 and: { ~outLPat[track][seq] == 1 }} // Seq +1 & -1 (en miroir)
-				{ ~outList = (~outLMin[track][seq]..~outLMax[track][seq]);
+				{ if ( ~speakerRange == 0, { ~outList = (1..~numChannels) },{ ~outList = (~outLMin[track][seq]..~outLMax[track][seq]) });
 					if (ev[\type] == 'note', { ~prevNb[track] = ~prevNb[track]+1 }, { ~prevNb[track] = ~prevNb[track] } ); /*~prevNb[track].postln;*/ ~outList.foldAt(~prevNb[track]) }
 			})) /*.trace(prefix: "prepOutL2 -> ")*/,
 
@@ -4539,15 +4544,15 @@ envir[key][track][seq] = value;
 				{~outRPatSel[track][seq] < ~controlBus0  or:  { ~outRPat[track][seq] == 0 }}
 				{ ~outsOrganization[~outRSpec[track][seq].map(ev.prepoutRX)] }
 				{~outRPatSel[track][seq] == ~controlBus0 and: { ~outRPat[track][seq] == 1 }} // +1
-				{ (ev[\prepoutL2]+1).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }
+				{ if ( ~speakerRange == 0, { ev[\prepoutL2].mod(~numChannels)+1 },{ (ev[\prepoutL2]+1).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }) }
 				{~outRPatSel[track][seq] == ~controlBus1 and: { ~outRPat[track][seq] == 1 }} // -1
-				{ (ev[\prepoutL2]-1).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }
+				{ if ( ~speakerRange == 0, { (ev[\prepoutL2]-1).asInteger.wrap(1,~numChannels) },{ (ev[\prepoutL2]-1).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }) }
 				{~outRPatSel[track][seq] == ~controlBus2 and: { ~outRPat[track][seq] == 1 }} // +1/4
-				{ (ev[\prepoutL2]+~unQuart).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }
+				{ if ( ~speakerRange == 0, { (ev[\prepoutL2]+~unQuart).asInteger.wrap(1,~numChannels) },{ (ev[\prepoutL2]+~unQuart).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }) }
 				{~outRPatSel[track][seq] == ~controlBus3 and: { ~outRPat[track][seq] == 1 }} // -1/4
-				{ (ev[\prepoutL2]-~unQuart).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }
+				{ if ( ~speakerRange == 0, { (ev[\prepoutL2]-~unQuart).asInteger.wrap(1,~numChannels) },{ (ev[\prepoutL2]-~unQuart).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }) }
 				{~outRPatSel[track][seq] == ~controlBus4 and: { ~outRPat[track][seq] == 1 }} // opposé
-				{ (ev[\prepoutL2]+~oppo).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }
+				{ if ( ~speakerRange == 0, { (ev[\prepoutL2]+~oppo).asInteger.wrap(1,~numChannels) },{ (ev[\prepoutL2]+~oppo).asInteger.wrap(~outRMin[track][seq],~outRMax[track][seq]) }) }
 				{~outRPatSel[track][seq] == ~controlBus5 and: { ~outRPat[track][seq] == 1 }} // différent de OutL
 				{ outList = ~outList.copy; outList.remove(ev[\prepoutL2].asInteger); outList.choose }
 			})) /*.trace(prefix: "prepOutR2 -> ")*/,
