@@ -57,14 +57,14 @@
 // ~numChannelsConfig = "16-UsineC-2Octo"; // 2 circles of 8 speakers + Subs
 // ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
 // ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
-~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
+// ~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
 // ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context - Crash with ~initBuffersSynths.(\server1, 0); because some synths are not stored
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~presetsFileName = "PresetFile-32-UQAM.txt"; // For Preset file in Quadrophony - "PresetFile-2.txt" for Stereo - "PresetFile-32-UQAM.txt"
+~presetsFileName = "PresetFile-4.txt"; // For Preset file in Quadrophony - "PresetFile-2.txt" for Stereo - "PresetFile-32-UQAM.txt"
 // ~presetsFileName2 = "MyPresetFile2.txt"; if you have 2 presets files
 
 // Ambisonic Spatialisation
