@@ -108,7 +108,7 @@ Follow the steps below one after another:
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-4. Put the files of the folder [`L4L_Extensions`](/L4L_Extensions) in your `Extensions` folder (if you do not already have these classes) and recompile again. To get this folder and begin the setup of the tool, download [the latest release](https://github.com/Xon77/Live4Life/releases).
+4. Put the files of the folder [`L4L_Extensions`](/L4L_Extensions) in your `Extensions` folder (if you do not already have these classes) and recompile again. **To get this folder and begin the setup of the tool, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
 
 
 ## Setup
