@@ -63,7 +63,7 @@ Please note that:
 
 ## Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) &nbsp;&nbsp; ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-***Live 4 Life* plays on all platforms, but is currently only optimised for macOS.**
+***Live 4 Life* plays on all platforms, but is currently only optimised for macOS.** I have remarked that the buffer loading is very slow on Windows and Linux, requiring more patience.
 
 **It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
 **It is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
