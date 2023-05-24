@@ -143,6 +143,10 @@
 		// Config multicanale pour version stéréo si besoin des pistes séparées dans un séquenceur
 		~numChannels = ~numChannelsConfig.split($-)[0].asInteger;
 
+		currentEnvironment[server]/*[\server1]*/.recChannels = ~numChannels; // Pour que le nombre de pistes de l'enregistrement corresponde au nombre de canaux de sorties
+
+
+
 		if (~numChannelsConfig == "2-MultiChannelSequencer", {
 			~serverOptions.numOutputBusChannels = 16; ~numChannelsFX = 16
 		}, {
