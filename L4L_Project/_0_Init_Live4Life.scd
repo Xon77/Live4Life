@@ -174,7 +174,21 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 
 // Prepare the recordings for each of both servers on your Desktop - Change the path accordingly, particularly your username
-currentEnvironment[\server1].prepareForRecord("/Users/xon/Desktop/Record Server1.wav"); currentEnvironment[\server2].prepareForRecord("/Users/xon/Desktop/Record Server2.wav");
+(
+~recordingFileName = "Record"; // Change accordingly your recording file name
+~recordingPath = "/Users/xon/Desktop"; // Change accordingly your recording path
+// If you want to record in the SuperCollider specific recording folder, put instead of the string this code in your recording path: thisProcess.platform.recordingsDir
+
+~recordingDate = Date.getDate; ~recordingDate = ~recordingDate.stamp;
+~recordingPathFile1 = ~recordingPath ++ "/" ++ ~recordingFileName ++ "_" ++ ~recordingDate ++ "-S1" ++ ".wav";
+if (File.exists(~recordingPathFile1), { ~recordingPathFile1 = ~recordingPath ++ "/" ++ ~recordingFileName ++ "_" ++ ~recordingDate ++ "-S1" ++ ".wav"; });
+currentEnvironment[\server1].prepareForRecord(~recordingPathFile1); ~recordingPathFile1.postln;
+if (~server2.notNil, {
+	~recordingPathFile2 = ~recordingPath ++ "/" ++ ~recordingFileName ++ "_" ++ ~recordingDate ++ "-S2" ++ ".wav";
+	if (File.exists(~recordingPathFile2), { ~recordingPathFile2 = ~recordingPath ++ "/" ++ ~recordingFileName ++ "_" ++ ~recordingDate ++ "-S2" ++ ".wav"; });
+	currentEnvironment[\server2].prepareForRecord(~recordingPathFile2);
+});
+)
 
 // Start the recordings
 Server.default = currentEnvironment[\server1]; currentEnvironment[\server1].record; Server.default = currentEnvironment[\server2]; currentEnvironment[\server2].record;
