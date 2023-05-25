@@ -173,7 +173,7 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 
 
 
-// Prepare the recordings for each of both servers on your Desktop - Change the path accordingly, particularly your username
+// Prepare the recordings for each of both servers on your Desktop - Change the recording file name and path accordingly
 (
 ~recordingFileName = "Record"; // Change accordingly your recording file name
 ~recordingPath = "/Users/xon/Desktop"; // Change accordingly your recording path
