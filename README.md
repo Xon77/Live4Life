@@ -84,7 +84,9 @@ Follow the steps below one after another:
 1. Install [SuperCollider 3.13](https://supercollider.github.io/downloads) or above. 
 
 For beginners in SuperCollider, FYI to evaluate a code in parentheses, particularly in the setup process, you have to be inside the parentheses and press Control (on Windows) / Command (on Mac) + Return (for more details go to the menu `Language`). To evaluate a line of code, you have to be on the specific line and press either also Control (on Windows) / Command (on Mac) or easier shift + Return.
+
 2. Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it).
+
 3. Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below (You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select the quarks) and recompile:
 
 	- [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
