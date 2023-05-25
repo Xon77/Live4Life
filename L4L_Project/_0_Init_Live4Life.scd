@@ -134,7 +134,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 // 2nd Server
 ~loadServer.(\server2, \Local2, 1, 57112); // Server name -> ~server2
-~initBuffersSynths.(\server2, 1); // Error and probable crash from the second server if the computer is not plugged into an AC power source
+~initBuffersSynths.(\server2, 1); // I observed in the past errors and probable crash from the second server if the computer is not plugged into an AC power source
 
 // Another model with 2 main and 2 FX servers with Jack - currently abandonned
 // ~loadServer.(\server1, \Local1, 0, 57110, \serverFX1, \LocalFX1, 57111); // Server names -> [~server1, ~serverFX1] // limited to 32 output channels via Jack ?
@@ -170,6 +170,17 @@ if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\se
 ~listingSoundFolders = ("du -m -L" + ~soundsFolder +" | sort -nr").unixCmdGetStdOut; // lists the size of sound folders
 ("open" + ~soundsFolder).unixCmdGetStdOut; // opens the sound folder in Finder
 ("open" + PathName(thisProcess.nowExecutingPath).pathOnly).unixCmdGetStdOut; // opens the folder to execute the files and presets in Finder
+
+
+
+// Prepare the recordings for each of both servers on your Desktop - Change the path accordingly, particularly your username
+currentEnvironment[\server1].prepareForRecord("/Users/xon/Desktop/Record Server1.wav"); currentEnvironment[\server2].prepareForRecord("/Users/xon/Desktop/Record Server2.wav");
+
+// Start the recordings
+Server.default = currentEnvironment[\server1]; currentEnvironment[\server1].record; Server.default = currentEnvironment[\server2]; currentEnvironment[\server2].record;
+
+// Stop the recordings
+currentEnvironment[\server1].stopRecording; currentEnvironment[\server2].stopRecording; Server.default = currentEnvironment[\server1];
 
 
 
