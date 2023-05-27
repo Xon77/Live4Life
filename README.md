@@ -152,7 +152,7 @@ Several performances are available either on [YouTube](https://www.youtube.com/c
 Several training workshops in immersive sound and spatial improvisation with this open source project were organized in 2023:
 - at [CIRMMT](https://www.cirmmt.org/en/welcome-to-cirmmt?set_language=en) in Montréal [in March and April](https://www.cirmmt.org/en/events/workshops/research/spatial-sound-live4life?set_language=en) in quadriphony,
 - at [Hexagram](https://hexagram.ca) in Montréal on May 13 on a 32-loudspeaker dome, as well as the first performative participative installation  on [May 12](https://bit.ly/3VHaIx2) and [14](https://bit.ly/3HMo0ST),
-- at [ISEA (International Symposium on Electronic Arts)](https://hexagram.ca/fr/hexagram-isea-2023/) in Paris in quadriphony, as well as the presentation of an article (to be published) on the motivations and future of the tool.
+- at [ISEA (International Symposium on Electronic Arts)](https://hexagram.ca/fr/hexagram-isea-2023/) in Paris in May in quadriphony, as well as the presentation of an article (to be published) on the motivations and future of the tool.
 
 
 ## Contribute
