@@ -5,3 +5,12 @@
 [submodule "L4L_Quarks/atk-sc3"]
 	path = L4L_Quarks/atk-sc3
 	url = https://github.com/ambisonictoolkit/atk-sc3
+[submodule "L4L_Quarks/Automation"]
+	path = L4L_Quarks/Automation
+	url = https://github.com/neeels/Automation
+[submodule "L4L_Quarks/Bjorklund"]
+	path = L4L_Quarks/Bjorklund
+	url = https://github.com/supercollider-quarks/Bjorklund
+[submodule "L4L_Quarks/Connection"]
+	path = L4L_Quarks/Connection
+	url = https://github.com/scztt/Connection.quark
