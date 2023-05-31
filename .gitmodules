@@ -14,3 +14,27 @@
 [submodule "L4L_Quarks/Connection"]
 	path = L4L_Quarks/Connection
 	url = https://github.com/scztt/Connection.quark
+[submodule "L4L_Quarks/Collapse"]
+	path = L4L_Quarks/Collapse
+	url = https://github.com/scztt/Collapse.quark
+[submodule "L4L_Quarks/crucialviews"]
+	path = L4L_Quarks/crucialviews
+	url = https://github.com/crucialfelix/crucialviews
+[submodule "L4L_Quarks/Ctk"]
+	path = L4L_Quarks/Ctk
+	url = https://github.com/supercollider-quarks/Ctk
+[submodule "L4L_Quarks/ExtraWindows"]
+	path = L4L_Quarks/ExtraWindows
+	url = https://github.com/khoin/ExtraWindows
+[submodule "L4L_Quarks/FileLog"]
+	path = L4L_Quarks/FileLog
+	url = https://github.com/supercollider-quarks/FileLog
+[submodule "L4L_Quarks/FPLib"]
+	path = L4L_Quarks/FPLib
+	url = https://github.com/miguel-negrao/FPLib
+[submodule "L4L_Quarks/FreeAfter"]
+	path = L4L_Quarks/FreeAfter
+	url = https://github.com/scztt/FreeAfter.quark
+[submodule "L4L_Quarks/Hilbert"]
+	path = L4L_Quarks/Hilbert
+	url = https://gitlab.com/dxarts/projects/Hilbert.quark
