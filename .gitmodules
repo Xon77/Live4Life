@@ -38,3 +38,81 @@
 [submodule "L4L_Quarks/Hilbert"]
 	path = L4L_Quarks/Hilbert
 	url = https://gitlab.com/dxarts/projects/Hilbert.quark
+[submodule "L4L_Quarks/JITLibExtensions"]
+	path = L4L_Quarks/JITLibExtensions
+	url = https://github.com/supercollider-quarks/JITLibExtensions
+[submodule "L4L_Quarks/KMeans"]
+	path = L4L_Quarks/KMeans
+	url = https://github.com/supercollider-quarks/KMeans
+[submodule "L4L_Quarks/MathLib"]
+	path = L4L_Quarks/MathLib
+	url = https://github.com/supercollider-quarks/MathLib
+[submodule "L4L_Quarks/MatrixArray"]
+	path = L4L_Quarks/MatrixArray
+	url = https://gitlab.com/dxarts/projects/matrixarray.quark
+[submodule "L4L_Quarks/MIDIWatcher"]
+	path = L4L_Quarks/MIDIWatcher
+	url = https://github.com/scztt/MIDIWatcher.quark
+[submodule "L4L_Quarks/Modality-toolkit"]
+	path = L4L_Quarks/Modality-toolkit
+	url = https://github.com/ModalityTeam/Modality-toolkit
+[submodule "L4L_Quarks/NetLib"]
+	path = L4L_Quarks/NetLib
+	url = https://github.com/supercollider-quarks/NetLib
+[submodule "L4L_Quarks/PointView"]
+	path = L4L_Quarks/PointView
+	url = https://gitlab.com/dxarts/projects/PointView.quark
+[submodule "L4L_Quarks/PopUpTreeMenu"]
+	path = L4L_Quarks/PopUpTreeMenu
+	url = https://github.com/redFrik/PopUpTreeMenu
+[submodule "L4L_Quarks/sc-grids"]
+	path = L4L_Quarks/sc-grids
+	url = https://github.com/capital-G/sc-grids
+[submodule "L4L_Quarks/SignalBox"]
+	path = L4L_Quarks/SignalBox
+	url = https://gitlab.com/dxarts/projects/SignalBox.quark
+[submodule "L4L_Quarks/Singleton"]
+	path = L4L_Quarks/Singleton
+	url = https://github.com/scztt/Singleton.quark
+[submodule "L4L_Quarks/SpeakersCorner"]
+	path = L4L_Quarks/SpeakersCorner
+	url = https://github.com/supercollider-quarks/SpeakersCorner
+[submodule "L4L_Quarks/SphericalDesign"]
+	path = L4L_Quarks/SphericalDesign
+	url = https://gitlab.com/dxarts/projects/SphericalDesign.quark
+[submodule "L4L_Quarks/TabbedView"]
+	path = L4L_Quarks/TabbedView
+	url = https://github.com/jmuxfeldt/TabbedView
+[submodule "L4L_Quarks/TabbedView2"]
+	path = L4L_Quarks/TabbedView2
+	url = https://github.com/jmuxfeldt/TabbedView2
+[submodule "L4L_Quarks/TabbedView2_QT"]
+	path = L4L_Quarks/TabbedView2_QT
+	url = https://github.com/jmuxfeldt/TabbedView2_QT
+[submodule "L4L_Quarks/Twister"]
+	path = L4L_Quarks/Twister
+	url = https://github.com/scztt/Twister.quark
+[submodule "L4L_Quarks/Unit-Lib"]
+	path = L4L_Quarks/Unit-Lib
+	url = https://github.com/GameOfLife/Unit-Lib
+[submodule "L4L_Quarks/VectorSpace"]
+	path = L4L_Quarks/VectorSpace
+	url = https://github.com/supercollider-quarks/VectorSpace
+[submodule "L4L_Quarks/WarpExt"]
+	path = L4L_Quarks/WarpExt
+	url = https://github.com/supercollider-quarks/WarpExt
+[submodule "L4L_Quarks/WFSCollider-Class-Library"]
+	path = L4L_Quarks/WFSCollider-Class-Library
+	url = https://github.com/GameOfLife/WFSCollider-Class-Library
+[submodule "L4L_Quarks/WindowHandleView"]
+	path = L4L_Quarks/WindowHandleView
+	url = https://github.com/scztt/WindowHandleView.quark
+[submodule "L4L_Quarks/wslib"]
+	path = L4L_Quarks/wslib
+	url = https://github.com/supercollider-quarks/wslib
+[submodule "L4L_Quarks/XML"]
+	path = L4L_Quarks/XML
+	url = https://github.com/supercollider-quarks/XML
+[submodule "L4L_Quarks/ZArchive"]
+	path = L4L_Quarks/ZArchive
+	url = https://github.com/crucialfelix/ZArchive
