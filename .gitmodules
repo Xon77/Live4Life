@@ -2,3 +2,6 @@
 [submodule "L4L_Quarks/adclib"]
 	path = L4L_Quarks/adclib
 	url = https://github.com/supercollider-quarks/adclib
+[submodule "L4L_Quarks/atk-sc3"]
+	path = L4L_Quarks/atk-sc3
+	url = https://github.com/ambisonictoolkit/atk-sc3
