@@ -1,1 +1,4 @@
 
+[submodule "L4L_Quarks/adclib"]
+	path = L4L_Quarks/adclib
+	url = https://github.com/supercollider-quarks/adclib
