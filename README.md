@@ -118,7 +118,7 @@ Follow the steps below one after another:
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-5. **Put the folder [`L4L_Extensions`](/L4L_Extensions), which is within this project folder, into your `Extensions` folder** (if you do not already have these classes) and recompile again.
+5. **Put the folder [`L4L_Extensions`](/L4L_Extensions)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) and recompile again.
 
 
 ## Setup
