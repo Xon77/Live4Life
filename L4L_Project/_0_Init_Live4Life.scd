@@ -91,8 +91,8 @@ For large-scale concert presentation, the authors advise auditioning values of k
 
 ~automationInitRecTime = 0; // Allows to automate the GUI if 1 // ~automationLoad.(); // Quark Automation GUI
 
-~windowsInDevice = "NameOfYourInputDevice"; // ServerOptions.inDevices; // Select and evaluate the code before to get a list of input devices and replace "NameOfYourInputDevice"
-~windowsOutDevice = "NameOfYourOutputDevice"; // ServerOptions.outDevices; // Select and evaluate the code before to get a list of output devices and replace "NameOfYourOutputDevice"
+~windowsInDevice = "Windows WASAPI : Microphone Array (Realtek High Definition Audio)"; // ServerOptions.inDevices.collect({|m| m.postln}); // Select and evaluate the code before to get a list of input devices and replace it in the text within strings "Windows WASAPI..."
+~windowsOutDevice = "Windows WASAPI : Speaker/HP (Realtek High Definition Audio)"; // ServerOptions.outDevices.collect({|m| m.postln}); // Select and evaluate the code before to get a list of output devices and replace it in the text within strings "Windows WASAPI..."
 ~setSampleRate = false /*true*/ /*false*/; // False chooses the default sample rate.
 ~sampleRate = 48000 /*44100*/; // Concat complains: sample rate not 44100, you have 48000
 ~hardwareBufferSize = 128 /*512*/ /*256*/; // 512 by default -> 128 to get less audio input latency and to avoid long clicks when the server is overloaded
