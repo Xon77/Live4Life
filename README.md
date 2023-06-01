@@ -91,9 +91,9 @@ Follow the steps below one after another:
 
 4. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below** and recompile:
 
-	A. Normal slow install: You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select all the quarks below by clicking on the box with the cross.
+	1. Normal slow install: You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select all the quarks below by clicking on the box with the cross.
 
-	B. Quick raw install:
+	2. Quick raw install:
 
 - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
 - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. **Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices.** This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
