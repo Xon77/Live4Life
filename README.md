@@ -89,14 +89,14 @@ Follow the steps below one after another:
 
 3. **To get this project folder and begin the setup of the tool for the following steps, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
 
-4. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below**, which are extensions of the SuperCollider language, with one of both methods below, and recompile, by going o the menu `Language -> Recompile Class Library`:
+4. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below**, which are extensions of the SuperCollider language, with one of both methods below, and recompile, by going into the menu `Language -> Recompile Class Library`:
 
 	1. Normal slow install: You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select all the quarks below by clicking on the box with the cross.
 
 	2. Quick raw install: If you do not succeed to [install git](http://git-scm.com/) and the Quarks mentioned below with the normal way above, especially on Windows, unzip the file `release.zip` within this project folder you have just downloaded, then put the folder `L4L_Quarks`, which is within the `release` folder, into your `Extensions` folder. 
 
 - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
-- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. **Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices.** This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
+- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. :warning: **Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices.** This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
 - [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
 - [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
 - [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue),
@@ -118,7 +118,7 @@ Follow the steps below one after another:
 - [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-5. **Put the folder [`L4L_Extensions`](/L4L_Extensions), which is in this project folder, into your `Extensions` folder** (if you do not already have these classes) and recompile again.
+5. **Put the folder [`L4L_Extensions`](/L4L_Extensions), which is within this project folder, into your `Extensions` folder** (if you do not already have these classes) and recompile again.
 
 
 ## Setup
