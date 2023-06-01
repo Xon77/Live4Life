@@ -87,9 +87,13 @@ Follow the steps below one after another:
 
 2. **Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it).
 
-3. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below** and recompile:
+3. **To get this folder of this project and begin the setup of the tool for the following steps, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
 
-(You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select all the quarks below by clicking on the box with the cross.)
+4. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below** and recompile:
+
+	A. Normal slow install: You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select all the quarks below by clicking on the box with the cross.
+
+	B. Quick raw install:
 
 - [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
 - [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. **Install also [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), i.e. Kernels and Matrices.** This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
@@ -114,7 +118,7 @@ Follow the steps below one after another:
 - [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 - [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-4. **Put the files of the folder [`L4L_Extensions`](/L4L_Extensions) in your `Extensions` folder** (if you do not already have these classes) and recompile again. **To get this folder and begin the setup of the tool, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
+5. **Put the files of the folder [`L4L_Extensions`](/L4L_Extensions) in your `Extensions` folder** (if you do not already have these classes) and recompile again.
 
 
 ## Setup
@@ -157,7 +161,7 @@ Several training workshops in immersive sound and spatial improvisation with thi
 
 ## Contribute
 
-I have a lot of features I would like to improve and develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as HOA (currently only FOA).
+I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [some mutable instruments eurorack modules](https://github.com/v7b1/mi-UGens/tree/v0.0.1) or [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as HOA (currently only FOA).
 
 If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance.
 
