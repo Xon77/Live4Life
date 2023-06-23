@@ -140,6 +140,16 @@ Post << ~soundm['7 Special'].sort{|x, y| x[0].asString.split($/)[9].split($.)[0]
 		if (~foldersStructure == 1, { ~foldersStructureFunction.(server) });
 
 		"Buffers order Reorganization".postln;
+	}, { |server|
+		// tri classique des Buffers selon Windows
+		~soundsFolderDict.keys.do {|f|
+			~soundm[server][f].sort{|x, y| x[0].asString.split($\\)[~soundsFilesPos]/*.split($.)[0]*/ < y[0].asString.split($\\)[~soundsFilesPos]/*.split($.)[0]*/};
+		};
+		~soundmAllSoundFiles = ~arrayOfFolderNames.collect { |item, i| ~soundm[server][~arrayOfFolderNames[i].asSymbol]}.flatten;
+
+		if (~foldersStructure == 1, { ~foldersStructureFunction.(server) });
+
+		"Buffers order Reorganization".postln;
 	}
 ];
 
@@ -163,12 +173,11 @@ Platform.case(
 
 	},
     \windows,   { // car la méthode naturalCompareWithSpaces pose apparemment problème
-		/*if (~server2.notNil, {
-			~sortingClassicFunc[1].value(0); ~sortingClassicFunc[1].value(1); // 0 -> OSX / 1 -> SC
+		if (~server2.notNil, {
+			~sortingClassicFunc[2].value(0); ~sortingClassicFunc[2].value(1); // 0 -> OSX / 1 -> SC / 2 -> Windows
 		},{
-			~sortingClassicFunc[1].value(0);
-		});*/
-		~foldersStructure = 0; // En attendant de régler le problème de la structure des dossiers sur Windows
+			~sortingClassicFunc[2].value(0);
+		});
 	}
 );
 
