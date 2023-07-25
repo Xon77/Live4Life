@@ -11,6 +11,8 @@
 ~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
 ~buffersLoading = "quick"; // "quick" // "slow" if you have crashes during Buffer loading
 
+~autoScaleGUI = 1; // 1 to scale GUI according to screen resolution, otherwise 0 for Manual Scaling by multiplying the GUI with ~mulsize below
+~mulsize = 1; ~xSizeMul = ~mulsize; ~ySizeMul = ~mulsize; ~fontSizeMul = ~mulsize; // determines ~mulsize or specific multiplication of x / y and Font size
 ~recordMontage = 0; // 1, if you want to record GUI action
 ~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
 ~mainServer1Window = 0; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see below how to start SuperDirt if you also want to use TidalCycles on main Server s
@@ -64,8 +66,8 @@
 // ~numChannelsConfig = "128-CentreClock"; // Test - Clockwise from Centre - not tested in real context - Crash with ~initBuffersSynths.(\server1, 0); because some synths are not stored
 
 // Sequence Preset file name XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~presetsFileName = "PresetFile-4.txt"; // For Preset file in Quadrophony - "PresetFile-2.txt" for Stereo - "PresetFile-32-UQAM.txt"
-// ~presetsFileName2 = "MyPresetFile2.txt"; if you have 2 presets files
+~presetsFileName = "PresetFile-4.txt"; // For Preset file in Quadrophony - or e.g. "PresetFile-2.txt" for Stereo - "PresetFile-32-UQAM.txt"
+// ~presetsFileName2 = "PresetFile2-4.txt"; if you have 2 presets files
 
 // Ambisonic Spatialisation
 // Keep ~ambATKConfig at "binaural" if you have a headphone, or "stereo" if you have 2 speakers, otherwise ~ambATKConfig is "multiChannel" if more than 2 channels
@@ -143,7 +145,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_222.scd".loadRelative;
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_223.scd".loadRelative;
 
 // Lemur Connection
 ~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "169.254.160.30", 8000);

@@ -21,7 +21,21 @@ if (~server2.notNil, {~nbOfServers = 2}, {~nbOfServers = 1} );
 
 
 
+// Répétition du code dans Init Buffer Synths au cas où la résolution ait été modifié entre temps
+~windowHeight = Window.screenBounds.height/*.asInteger*/; // ~windowHeight = Window.availableBounds.height/*.asInteger*/;
+~windowWidth = Window.screenBounds.width/*.asInteger*/;
+if (Platform.architecture == \x86_64, {~windowTopMargin = 0; ~windowUpperMargin = 6}, {~windowTopMargin = 26; ~windowUpperMargin = 0}); // ~windowUpperMargin devrait être associé non pas à la hauteur, mais au système -> Mac 10.14, mais il s'avérait que j'utilisais une hauteur de 1200 pour cette configuration
 
+
+
+if (~autoScaleGUI == 1, {
+	~mulsize = min(~windowWidth/1920, ~windowHeight/1200);
+	~xSizeMul = ~mulsize; ~ySizeMul = ~mulsize; ~fontSizeMul = ~mulsize;
+	if (~mulsize < 1, {
+		~mulsize = min(~windowWidth/1920, ~windowHeight/(1200+(20*~mulsize.reciprocal))); // +20 pour l'automationWindow et l'agrandissement du Server Info on IDE - a surtout un impact sur les anciennes résolutions graphiques sur Mac OS 10.14
+	});
+});
+~xSizeMul = ~mulsize; ~ySizeMul = ~mulsize; ~fontSizeMul = ~mulsize;
 
 
 
@@ -367,10 +381,10 @@ if (f == 'ins', {
 ~visualizeSpatioScope = { | sizeMul = 1 |
 
 	if (~visualizeLevels == "SpatioScope" and: { ~numChannelsConfig != "2" }, {
-		~spatioScopeWindow = Window("Spatioscope").setTopLeftBounds( Rect(0, 960, 10+(250*sizeMul), 20+(250*sizeMul))).alwaysOnTop_(true).front;
+		~spatioScopeWindow = Window("Spatioscope", Rect(0, 0 /*960*/, 10+(250*sizeMul), 20+(250*sizeMul))).alwaysOnTop_(true).front;
 		~controlWindowTopLeft = 260;
 	}, {
-		~controlWindowTopLeft = /*280*/ 297 + ~windowHeight - 1200 + ~windowUpperMargin;
+		~controlWindowTopLeft = /*280*/ /*(297 + ~windowHeight - 1200 + ~windowUpperMargin)*/ 230-~windowUpperMargin;
 	});
 
 	// à créer le 7 sorties et rien pour le 2 sorties
@@ -441,7 +455,7 @@ if (f == 'ins', {
 		}, {
 			// ~visualizeServerMeter.value(~server1, 0, 240)
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
 					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 10, 20, 7); // auparavant Classe ServerMeterView1 sans les 2 derniers meterWidth & gapWidth
 				},{
@@ -493,7 +507,7 @@ if (f == 'ins', {
 		},{
 			// ~visualizeServerMeter.value(~server1, 0, 390)
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
 					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 18, 14, 1); // auparavant Classe ServerMeterView2 sans les 2 derniers meterWidth & gapWidth
 				},{
@@ -523,7 +537,7 @@ if (f == 'ins', {
 		},{
 			// ~visualizeServerMeter.value(~server1, 0, 390)
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
 					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 20, 14, 1); // auparavant Classe ServerMeterView2 sans les 2 derniers meterWidth & gapWidth
 				},{
@@ -554,7 +568,7 @@ if (f == 'ins', {
 		},{*/
 		// ~visualizeServerMeter.value(~server1, 0, 390)
 		(
-			~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+			~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 			if (~serverFX == 0, {
 				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 27, 12, -1); // auparavant Classe ServerMeterView5 sans les 2 derniers meterWidth & gapWidth
 			},{
@@ -585,7 +599,7 @@ if (f == 'ins', {
 			});
 		},{
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 310, 197)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 310, 197), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
 					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 34, 11, -2); // auparavant Classe ServerMeterView3 sans les 2 derniers meterWidth & gapWidth
 				},{
@@ -626,7 +640,7 @@ if (f == 'ins', {
 			});
 		},{
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 310, 197)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 310, 197), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				if (~serverFX == 0, {
 					~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 32, 10, -1); // auparavant Classe ServerMeterView6 sans les 2 derniers meterWidth & gapWidth
 				},{
@@ -661,7 +675,7 @@ if (f == 'ins', {
 		},{
 
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -15@0, 0, 64, 9, -4); // auparavant Classe ServerMeterView4 sans les 2 derniers meterWidth & gapWidth
 				if (~nbOfServers == 2, {
 					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -15@95, 0, 64, 9, -4);
@@ -681,7 +695,7 @@ if (f == 'ins', {
 		},{
 
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -10@0, 0, 96, 9, -4); // auparavant Classe ServerMeterView4 sans les 2 derniers meterWidth & gapWidth
 				if (~nbOfServers == 2, {
 					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -10@95, 0, 96, 9, -4);
@@ -701,7 +715,7 @@ if (f == 'ins', {
 		},{
 
 			(
-				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194)).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
+				~levelsWindow = Window.new("Server Levels",  Rect(0, 0, /*303*/ 315, 194), scroll:true).background_(Color.grey(0.6)).alwaysOnTop_(true).front; // 315
 				~serverLevels1 = ServerMeterViewCL.new(~server1, ~levelsWindow, -10@0, 0, 128, 9, -4); // auparavant Classe ServerMeterView4 sans les 2 derniers meterWidth & gapWidth
 				if (~nbOfServers == 2, {
 					~serverLevels2 = ServerMeterViewCL.new(~server2, ~levelsWindow, -10@95, 0, 128, 9, -4);
@@ -825,66 +839,66 @@ if (~server2.notNil, {
 
 // Déclaration Position GUI - 5 Containers verticaux
 // hauteur = 212 * 5;
-~multiSliderHeight5 = 116;
+~multiSliderHeight5 = 116*~ySizeMul;
 
-~viewPos5 = Rect(2, 2+16, 333, 116);
-~posViewPos5 = Rect(7, 2, 333, 16);
-~readViewPos5 = Rect(2, 2, 333, 16);
+~viewPos5 = Rect(2*~xSizeMul, (2+16)*~ySizeMul, 333*~xSizeMul, 116*~ySizeMul);
+~posViewPos5 = Rect(7*~xSizeMul, 2*~ySizeMul, 333*~xSizeMul, 16*~ySizeMul);
+~readViewPos5 = Rect(2*~xSizeMul, 2*~ySizeMul, 333*~xSizeMul, 16*~ySizeMul);
 
-~rangeViewPos5 = Rect(337, 2+16, 30, 100);
-~rangeModePos5 = Rect(337, 102+16, 30, 16);
-~mulViewPos5 = Rect(367, 2+16, 30, 116);
+~rangeViewPos5 = Rect(337*~xSizeMul, (2+16)*~ySizeMul, 30*~xSizeMul, 100*~ySizeMul);
+~rangeModePos5 = Rect(337*~xSizeMul, (102+16)*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul);
+~mulViewPos5 = Rect(367*~xSizeMul, (2+16)*~ySizeMul, 30*~xSizeMul, 116*~ySizeMul);
 
-~seqViewPos5 = Rect(2, 138+16, 333, 22);
-~indexViewPos5 = Rect(2, 160+16, 333, 16);
+~seqViewPos5 = Rect(2*~xSizeMul, (138+16)*~ySizeMul, 333*~xSizeMul, 22*~ySizeMul);
+~indexViewPos5 = Rect(2*~xSizeMul, (160+16)*~ySizeMul, 333*~xSizeMul, 16*~ySizeMul);
 
-~roundViewPos5 = Rect(2, 120+16, 100, 16);
-~randViewPos5 = Rect(104, 120+16, 35, 16);
-~seqAllViewPos5 = Rect(141, 120+16, 35, 16);
-~seqModePos5 = Rect(178, 120+16, 35, 16);
+~roundViewPos5 = Rect(2*~xSizeMul, (120+16)*~ySizeMul, 100*~xSizeMul, 16*~ySizeMul);
+~randViewPos5 = Rect(104*~xSizeMul, (120+16)*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul);
+~seqAllViewPos5 = Rect(141*~xSizeMul, (120+16)*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul);
+~seqModePos5 = Rect(178*~xSizeMul, (120+16)*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul);
 
-~copyAViewPos5 = Rect(215, 120+16, 22, 16);
-~pasteAViewPos5 = Rect(237, 120+16, 22, 16);
-~pasteMViewPos5 = Rect(259, 120+16, 22, 16);
-~defaultViewPos5 = Rect(281, 120+16, 22, 16);
+~copyAViewPos5 = Rect(215*~xSizeMul, (120+16)*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul);
+~pasteAViewPos5 = Rect(237*~xSizeMul, (120+16)*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul);
+~pasteMViewPos5 = Rect(259*~xSizeMul, (120+16)*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul);
+~defaultViewPos5 = Rect(281*~xSizeMul, (120+16)*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul);
 
-~rangePresetViewPos5 = Rect(304, 120+16, 54, 16);
-~mulPresetViewPos5 = Rect(358, 120+16, 40, 16);
+~rangePresetViewPos5 = Rect(304*~xSizeMul, (120+16)*~ySizeMul, 54*~xSizeMul, 16*~ySizeMul);
+~mulPresetViewPos5 = Rect(358*~xSizeMul, (120+16)*~ySizeMul, 40*~xSizeMul, 16*~ySizeMul);
 
-~displayPos5 = Rect(2, 178+16, 300, 19);
+~displayPos5 = Rect(2*~xSizeMul, (178+16)*~ySizeMul, 300*~xSizeMul, 19*~ySizeMul);
 
-~dirViewPos5 = Rect(302, 180+16, 16, 16);
-~patViewPos5 = Rect(320, 180+16, 24, 16);
-~patSelViewPos5 = Rect(346, 180+16, 52, 16);
+~dirViewPos5 = Rect(302*~xSizeMul, (180+16)*~ySizeMul, 16*~xSizeMul, 16*~ySizeMul);
+~patViewPos5 = Rect(320*~xSizeMul, (180+16)*~ySizeMul, 24*~xSizeMul, 16*~ySizeMul);
+~patSelViewPos5 = Rect(346*~xSizeMul, (180+16)*~ySizeMul, 52*~xSizeMul, 16*~ySizeMul);
 
-~miniSlider1Pos5 = Rect(338, 156, 60, 18);
-~miniSlider2Pos5 = Rect(338, 174, 60, 18);
+~miniSlider1Pos5 = Rect(338*~xSizeMul, 156*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul);
+~miniSlider2Pos5 = Rect(338*~xSizeMul, 174*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul);
 
-~nameModPos = Rect(145, 18, 50, 20); // Position of Names of Modules
-~nameModPos2 = Rect(155, 18, 70, 20); // Position of Names of Modules for RAT...
+~nameModPos = Rect(145*~xSizeMul, 18*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul); // Position of Names of Modules
+~nameModPos2 = Rect(155*~xSizeMul, 18*~ySizeMul, 70*~xSizeMul, 20*~ySizeMul); // Position of Names of Modules for RAT...
 
 
 
 // View Harmonisation Multiple
-~viewHarPos5 = Rect(2, 2, 303, 116);
+~viewHarPos5 = Rect(2*~xSizeMul, 2*~ySizeMul, 303*~xSizeMul, 116*~ySizeMul);
 
-~rangeViewHarPos5 = Rect(307, 2, 30, 100);
-~rangeModeHarPos5 = Rect(307, 102, 30, 16);
-~mulViewHarPos5 = Rect(367, 2, 30, 116);
+~rangeViewHarPos5 = Rect(307*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 100*~ySizeMul);
+~rangeModeHarPos5 = Rect(307*~xSizeMul, 102*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul);
+~mulViewHarPos5 = Rect(367*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 116*~ySizeMul);
 
-~seqViewHarPos5 = Rect(2, 138, 303, 22);
+~seqViewHarPos5 = Rect(2*~xSizeMul, 138*~ySizeMul, 303*~xSizeMul, 22*~ySizeMul);
 
-~roundViewHarPos5 = Rect(2, 120, 100, 16);
-~randViewHarPos5 = Rect(104, 120, 35, 16);
-~seqAllViewHarPos5 = Rect(141, 120, 35, 16);
-~seqModeHarPos5 = Rect(178, 120, 35, 16);
-~defaultViewHarPos5 = Rect(246, 120, 22, 16);
+~roundViewHarPos5 = Rect(2*~xSizeMul, 120*~ySizeMul, 100*~xSizeMul, 16*~ySizeMul);
+~randViewHarPos5 = Rect(104*~xSizeMul, 120*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul);
+~seqAllViewHarPos5 = Rect(141*~xSizeMul, 120*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul);
+~seqModeHarPos5 = Rect(178*~xSizeMul, 120*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul);
+~defaultViewHarPos5 = Rect(246*~xSizeMul, 120*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul);
 
-~rangePresetViewHarPos5 = Rect(269, 120, 69, 16);
+~rangePresetViewHarPos5 = Rect(269*~xSizeMul, 120*~ySizeMul, 69*~xSizeMul, 16*~ySizeMul);
 
-~displayHarPos5 = Rect(2, 162, 300, 30);
+~displayHarPos5 = Rect(2*~xSizeMul, 162*~ySizeMul, 300*~xSizeMul, 30*~ySizeMul);
 
-~nameModHarPos = Rect(135, 2, 50, 20); // Position of Names of Modules
+~nameModHarPos = Rect(135*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul); // Position of Names of Modules
 // ~nameModHarPos2 = Rect(155, 2, 70, 20); // Position of Names of Modules for RAT...
 
 
@@ -950,8 +964,8 @@ if (~server2.notNil, {
 
 
 ~multiSliderIndex = false;
-~readViewThumbSize = 15; // Minimum Size of knob of ReadView Slider
-~rtmThumbSizeValue = max(333 / 4, ~readViewThumbSize) ! ~nbOfSeqs ! ~nbOfTracksX2; // Pour modif du ThumbSize du ReadViewSlider dans le Tab Global
+~readViewThumbSize = 15*~xSizeMul; // Minimum Size of knob of ReadView Slider
+~rtmThumbSizeValue = max((333 / 4)*~xSizeMul, ~readViewThumbSize) ! ~nbOfSeqs ! ~nbOfTracksX2; // Pour modif du ThumbSize du ReadViewSlider dans le Tab Global
 
 
 
@@ -1119,7 +1133,7 @@ c = RoundButton( w, 120@18 ).label_( "normal again" );
 
 		envir[seqSpec][tr][seq] = ControlSpec(0, envir[dataDur][tr][seq].size, \lin, 1, 1);
 		envir[seqVSpec][tr][seq] = ControlSpec(0, envir[dataDur][tr][seq].size-1, \lin, 1, 1);
-		envir[readView].thumbSize_(max(~readViewThumbSize, 333 / envir[dataDur][tr][seq].size));
+		envir[readView].thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / envir[dataDur][tr][seq].size));
 		envir[seqView].step_(1/(dur))
 		.minRange_(1/(dur))
 		.valueAction_(envir[seqView].value) // Léger bug visuel quand le nb de valeurs dans le multislider change et est inférieur -> OK maintenant
@@ -1312,8 +1326,8 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~rtmSeqSpec[track][seq] = ControlSpec(0, ~dur[track][seq].size, \lin, 1, 1);
 		~rtmSeqVSpec[track][seq] = ControlSpec(0, ~dur[track][seq].size-1, \lin, 1, 1);
-		~rtmReadView.thumbSize_(max(~readViewThumbSize, 333 / ~dur[track][seq].size));
-		~rtmThumbSizeValue[track][seq] = (max(~readViewThumbSize, 333 / ~dur[track][seq].size)); // Pour ThumbSize du Tab global
+		~rtmReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / ~dur[track][seq].size));
+		~rtmThumbSizeValue[track][seq] = (max(~readViewThumbSize, (333*~xSizeMul) / ~dur[track][seq].size)); // Pour ThumbSize du Tab global
 		~rtmSeqView.step_(1/dur)
 		.minRange_(1/dur)
 		// .valueAction_([0,~dur[track][seq].size]-1) // pour englober toute la séquence, -> rupture quand rand
@@ -1431,7 +1445,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~proSeqSpec[track][seq] = ControlSpec(0, ~dur[track][seq].size, \lin, 1, 1);
 		~proSeqVSpec[track][seq] = ControlSpec(0, ~dur[track][seq].size-1, \lin, 1, 1);
-		~proReadView.thumbSize_(max(~readViewThumbSize, 333 / ~dur[track][seq].size));
+		~proReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / ~dur[track][seq].size));
 		~proSeqView.step_(1/dur)
 		.minRange_(1/dur)
 		// .valueAction_([0,~pro[track][seq].size]-1) // pour englober toute la séquence, -> rupture quand rand
@@ -1504,7 +1518,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~proSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~proSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~proReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~proReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~proSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~proSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		~pro[track][seq] = /*~proSpec[track][seq].unmap(1)*/ 1 ! seqDur; // pour mettre à jour le nb de valeurs dans le MultiSlider si besoin
@@ -1594,7 +1608,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~synSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~synSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~synReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~synReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~synSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~synSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		~syn[track][seq] = /*~synSpec[track][seq].unmap(0)*/ 0 ! seqDur; // pour mettre à jour le nb de valeurs dans le MultiSlider si besoin
@@ -1669,7 +1683,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~spaSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~spaSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~spaReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~spaReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~spaSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~spaSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~spaRoundView.valueAction_(0);
@@ -1745,7 +1759,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~legSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~legSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~legReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~legReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~legSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~legSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		~leg[track][seq] = /*~legSpec[track][seq].unmap(1)*/ 0.5 ! seqDur; // pour mettre à jour le nb de valeurs dans le MultiSlider si besoin
@@ -1817,7 +1831,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~envSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~envSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~envReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~envReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~envSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~envSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~envRoundView.valueAction_(0);
@@ -1904,7 +1918,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~bufSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~bufSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~bufReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~bufReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~bufSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~bufSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		~buf[track][seq] = /*~bufSpec[track][seq].unmap(0)*/ 0 ! seqDur; // pour mettre à jour le nb de valeurs dans le MultiSlider si besoin
@@ -1979,7 +1993,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~offSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~offSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~offReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~offReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~offSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~offSeqView.valueAction_([0, 1]);
 		// ~offView.valueAction_(~offSpec[track][seq].unmap(0) ! ~off[track][seq].size);
@@ -2056,7 +2070,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~ratSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~ratSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~ratReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~ratReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~ratSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~ratSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~ratView.valueAction_(~ratSpec[track][seq].unmap(1) ! ~rat[track][seq].size);
@@ -2134,7 +2148,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~rat2SeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~rat2SeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~rat2ReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~rat2ReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~rat2SeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~rat2SeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~rat2View.valueAction_(~rat2Spec[track][seq].unmap(1) ! ~rat2[track][seq].size);
@@ -2212,7 +2226,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~ampSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~ampSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~ampReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~ampReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~ampSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~ampSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~ampView.valueAction_(~ampSpec[track][seq].unmap(0.8) ! ~amp[track][seq].size);
@@ -2290,7 +2304,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~strSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~strSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~strReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~strReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~strSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~strSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~strView.valueAction_(~strSpec[track][seq].unmap(1) ! ~str[track][seq].size);
@@ -2368,7 +2382,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~str2SeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~str2SeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~str2ReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~str2ReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~str2SeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~str2SeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~str2View.valueAction_(~str2Spec[track][seq].unmap(1) ! ~str2[track][seq].size);
@@ -2444,7 +2458,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~cenSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~cenSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~cenReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~cenReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~cenSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~cenSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~cenView.valueAction_(~cenSpec[track][seq].unmap(30) ! ~cen[track][seq].size);
@@ -2521,7 +2535,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~cen2SeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~cen2SeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~cen2ReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~cen2ReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~cen2SeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~cen2SeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~cen2View.valueAction_(~cen2Spec[track][seq].unmap(30) ! ~cen2[track][seq].size);
@@ -2597,7 +2611,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~panSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~panSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~panReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~panReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~panSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~panSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~panView.valueAction_(~panSpec[track][seq].unmap(0) ! ~pan[track][seq].size);
@@ -2675,7 +2689,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~delSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~delSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~delReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~delReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~delSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~delSeqView.valueAction_([0, 1]);
 		// ~delView.valueAction_(~delSpec[track][seq].unmap(0) ! ~del[track][seq].size);
@@ -2748,7 +2762,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~outLSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~outLSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~outLReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~outLReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~outLSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~outLSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~outLRoundView.valueAction_(~linksChannel -1);
@@ -2821,7 +2835,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~outRSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~outRSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~outRReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~outRReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~outRSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~outRSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~outRRoundView.valueAction_(~rightChannel -1);
@@ -2894,7 +2908,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~fxLSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~fxLSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~fxLReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~fxLReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~fxLSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~fxLSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~fxLRoundView.valueAction_(0);
@@ -2967,7 +2981,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 
 		~fxRSeqSpec[track][seq] = ControlSpec(0, seqDur, \lin, 1, 1);
 		~fxRSeqVSpec[track][seq] = ControlSpec(0, seqDur-1, \lin, 1, 1);
-		~fxRReadView.thumbSize_(max(~readViewThumbSize, 333 / seqDur));
+		~fxRReadView.thumbSize_(max(~readViewThumbSize, (333*~xSizeMul) / seqDur));
 		~fxRSeqView.step_(1/seqDur).minRange_(1/seqDur).doAction;
 		~fxRSeqView.valueAction_([0, 1]); // pour englober toute la séquence
 		// ~fxRRoundView.valueAction_(0);
@@ -3158,7 +3172,7 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 // w.view.decorator = FlowLayout(w.view.bounds); // Pourquoi obligé de le retirer sinon le 2ème CompositeView se met forcément en dessous du 1er ???
 // w.view.background_(Color.gray.alpha_(0.4)); // ne peut être mis dans le EZKnob car sinon pris en compte de SCCompoisteView et problème avec les valueAction ???????
 // w.view.decorator.gap=2@2; // ???
-~globalWindow = Window("Live for Life -- (A)Rhythmics in Space -- Space Loop Atomizer"/*, border: false*/, scroll: ~mainWindowScroll).setTopLeftBounds( Rect( /*328*/ 328+~windowWidth-1920, 0, 1605, 1130)).background_(Color(0.5, 0.5, 0.5)).front;
+~globalWindow = Window("Live for Life -- (A)Rhythmics in Space -- Space Loop Atomizer"/*, border: false*/, scroll: ~mainWindowScroll).setTopLeftBounds( Rect( /*328*/ /*(328+~windowWidth-1920)*~xSizeMul*/ ~windowWidth-(1605*~xSizeMul), 0, 1605*~xSizeMul, 1128*~ySizeMul)).background_(Color(0.5, 0.5, 0.5)).front;
 
 // Fermeture de toutes les fenêtres et arrêt des patterns & de la routine d'update graphique si fermeture de la fenêtre principale
 // ~globalWindow.onClose = {Pdef.all.size.do {|i| Pdef.all[~patterns[i]].stop }; ~fxSynth.size.do{|i| ~fxSynth[i].free; ~fxSynth2[i].free }; ~visuel.stop; m.close; v.close; ~controlWindow.close};
@@ -3169,13 +3183,14 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 // OLD TabbedView
 // ~tabbedView = TabbedView(w,Rect(2, 14, 1600, 1110), ["Sequence", "Code"]).tabHeight_(30).tabWidth_(80).labelColors_([Color.blue]).unfocusedColors_([Color.white]).backgrounds_([Color(0.8, 0.8, 0.8)]).tabCurve_(10);
 
-~tabbedView = TabbedView2(~globalWindow, Rect(2, 23, 1600, 1110))
+~tabbedView = TabbedView2(~globalWindow, Rect(2*~xSizeMul, 23*~ySizeMul, 1600*~xSizeMul, 1110*~ySizeMul))
 .lockPosition_(true)
 .lockEdges_(true)
 .backgrounds_([Color(0.8, 0.8, 0.8)])
 .unfocusedColors_([Color.white])
 .labelColors_([Color.blue])
-.tabHeight_(22).tabWidth_(if (~server2.isNil, {25}, {25})).tabCurve_(8);
+.tabHeight_(22*~ySizeMul).tabWidth_(if (~server2.isNil, {25*~xSizeMul}, {25*~xSizeMul})).tabCurve_(8)
+.font_(Font("Verdana",12*~fontSizeMul, bold: true));
 
 ~changeSeqMetaControls = { |tr, seq|
 	~pFadeView.valueAction_(~pFadeSpec.unmap(~pFade[tr]));
@@ -3239,8 +3254,8 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 };
 
 
-~seqComp5MaxVisibleOrigin = 4600;
-~seqCompG1MaxVisibleOrigin = 4380;
+~seqComp5MaxVisibleOrigin = 4600*~ySizeMul;
+~seqCompG1MaxVisibleOrigin = 4380*~ySizeMul;
 
 
 ~tabGUI = ~tabbedView.add("S" /*, scroll:true*/).focusAction = { ~currentTab = 0;
@@ -3269,29 +3284,32 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 ~tabEQ = ~tabbedView.add("X"/*, scroll:true*/)/*.tabWidth_(24)*/.focusAction={~currentTab = 2};
 ~tabAMB = ~tabbedView.add("A" /*, scroll:true*/)/*.tabWidth_(24)*/.focusAction={~currentTab = 5};
 
-~tabbedFX = TabbedView2(~tabFX, Rect(0, 0, 1600, 1082 /*1110*/))
+~tabbedFX = TabbedView2(~tabFX, Rect(0, 0, 1600*~xSizeMul, 1082*~ySizeMul /*1110*/))
 .lockPosition_(true)
 .lockEdges_(true)
 .backgrounds_([Color(0.8, 0.8, 0.8)])
 .unfocusedColors_([Color.white])
 .labelColors_([Color.blue])
-.tabHeight_(15).tabWidth_(77).tabPosition_(\top)/*.tabCurve_(8)*/;
+.tabHeight_(15*~ySizeMul).tabWidth_(77*~xSizeMul).tabPosition_(\top)/*.tabCurve_(8)*/
+.font_(Font("Verdana",11*~fontSizeMul, bold: false));
 
-~tabbedEQ = TabbedView2(~tabEQ, Rect(0, 0, 1600, 1082 /*1110*/))
+~tabbedEQ = TabbedView2(~tabEQ, Rect(0, 0, 1600*~xSizeMul, 1082*~ySizeMul /*1110*/))
 .lockPosition_(true)
 .lockEdges_(true)
 .backgrounds_([Color(0.8, 0.8, 0.8)])
 .unfocusedColors_([Color.white])
 .labelColors_([Color.blue])
-.tabHeight_(15).tabWidth_(77).tabPosition_(\top)/*.tabCurve_(8)*/;
+.tabHeight_(15*~ySizeMul).tabWidth_(77*~xSizeMul).tabPosition_(\top)/*.tabCurve_(8)*/
+.font_(Font("Verdana",11*~fontSizeMul, bold: false));
 
-~tabbedAMB = TabbedView2(~tabAMB, Rect(0, 0, 1600, 1110))
+~tabbedAMB = TabbedView2(~tabAMB, Rect(0, 0, 1600*~xSizeMul, 1110*~ySizeMul))
 .lockPosition_(true)
 .lockEdges_(true)
 .backgrounds_([Color(0.8, 0.8, 0.8)])
 .unfocusedColors_([Color.white])
 .labelColors_([Color.blue])
-.tabHeight_(15).tabWidth_(77).tabPosition_(\top)/*.tabCurve_(8)*/;
+.tabHeight_(15*~ySizeMul).tabWidth_(77*~xSizeMul).tabPosition_(\top)/*.tabCurve_(8)*/
+.font_(Font("Verdana",11*~fontSizeMul, bold: false));
 
 ~tabFx = 0 ! 2;
 ~tabEq = 0 ! 2;
@@ -3314,46 +3332,46 @@ if (~server2.notNil, {
 
 
 
-~patComp = CompositeView(~tabGUI, Rect(2, 227, 399, 238+26)).background = ~patCompColor;
+~patComp = CompositeView(~tabGUI, Rect(2*~xSizeMul, 227*~ySizeMul, 399*~xSizeMul, (238+26)*~ySizeMul)).background = ~patCompColor;
 
-~rtmComp = CompositeView(~tabGUI, Rect(2, 465+26, 399, 183-26)).background = ~rtmCompColor;
-~rtmCompb = CompositeView(~tabGUI, Rect(2, 465+26, 399, 183-26));
+~rtmComp = CompositeView(~tabGUI, Rect(2*~xSizeMul, (465+26)*~ySizeMul, 399*~xSizeMul, (183-26)*~ySizeMul)).background = ~rtmCompColor;
+~rtmCompb = CompositeView(~tabGUI, Rect(2*~xSizeMul, (465+26)*~ySizeMul, 399*~xSizeMul, (183-26)*~ySizeMul));
 ~rtmStackComp = StackLayout(~rtmComp, ~rtmCompb).mode_(\stackOne);
-~rtmStackCompL = CompositeView(~tabGUI, Rect(2, 465+26, 399, 183-26)).background_(~patCompColor/*~rtmCompColor*/).layout_(~rtmStackComp);
+~rtmStackCompL = CompositeView(~tabGUI, Rect(2*~xSizeMul, (465+26)*~ySizeMul, 399*~xSizeMul, (183-26)*~ySizeMul)).background_(~patCompColor/*~rtmCompColor*/).layout_(~rtmStackComp);
 
-~rtmCompChooseView = RoundButton(~tabGUI, Rect(352, 441, 40, 20))
+~rtmCompChooseView = RoundButton(~tabGUI, Rect(352*~xSizeMul, 441*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul))
 .states_([["\RTM", Color.white, Color.blue], ["\GEN", Color.white, Color.red]])
-.font_(Font("Verdana",10))
+.font_(Font("Verdana",10*~fontSizeMul))
 .action_({|i| ~rtmCompChoose = i.value; ~rtmStackComp.index = ~rtmCompChoose })
 .value_(1).doAction;
 
-~rtmComp2 = CompositeView(~tabGUI, Rect(2, 648, 399, 216)).background = ~rtmCompColor;
-~proComp = CompositeView(~tabGUI, Rect(2, 864, 399, 216)).background = ~rtmCompColor;
-~synComp = CompositeView(~tabGUI, Rect(401, 0, 399, 216)).background = ~compColor1;
-~spaComp = CompositeView(~tabGUI, Rect(800, 0, 399, 216)).background = ~panCompColor;
-~legComp = CompositeView(~tabGUI, Rect(401, 216, 399, 216)).background = ~compColor1;
-~envComp = CompositeView(~tabGUI, Rect(800, 216, 399, 216)).background = ~compColor2;
-~ampComp = CompositeView(~tabGUI, Rect(800, 432, 399, 216)).background = ~compColor2;
-~bufComp = CompositeView(~tabGUI, Rect(401, 432, 399, 216)).background = ~compColor1;
-~offComp = CompositeView(~tabGUI, Rect(800, 648, 399, 216)).background = ~compColor2;
-~spa2Comp = CompositeView(~tabGUI, Rect(1199, 0, 399, 216)).background = ~panCompColor;
-~panComp = CompositeView(~tabGUI, Rect(1199, 216, 399, 216)).background = ~panCompColor;
-~delComp = CompositeView(~tabGUI, Rect(1199, 216+216, 399, 216)).background = ~panCompColor;
+~rtmComp2 = CompositeView(~tabGUI, Rect(2*~xSizeMul, 648*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~rtmCompColor;
+~proComp = CompositeView(~tabGUI, Rect(2*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~rtmCompColor;
+~synComp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 0, 399*~xSizeMul, 216*~ySizeMul)).background = ~compColor1;
+~spaComp = CompositeView(~tabGUI, Rect(800*~xSizeMul, 0, 399*~xSizeMul, 216*~ySizeMul)).background = ~panCompColor;
+~legComp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 216*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~compColor1;
+~envComp = CompositeView(~tabGUI, Rect(800*~xSizeMul, 216*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~compColor2;
+~ampComp = CompositeView(~tabGUI, Rect(800*~xSizeMul, 432*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~compColor2;
+~bufComp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 432*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~compColor1;
+~offComp = CompositeView(~tabGUI, Rect(800*~xSizeMul, 648*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~compColor2;
+~spa2Comp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, 0, 399*~xSizeMul, 216*~ySizeMul)).background = ~panCompColor;
+~panComp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, 216*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~panCompColor;
+~delComp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (216+216)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background = ~panCompColor;
 
-~ratComp = CompositeView(~tabGUI, Rect(401, 648, 399, 216))/*.background = ~compColor1*/;
-~rat2Comp = CompositeView(~tabGUI, Rect(401, 648, 399, 216))/*.background = ~compColor1*/;
+~ratComp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 648*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~compColor1*/;
+~rat2Comp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 648*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~compColor1*/;
 ~ratStackComp = StackLayout(~ratComp, ~rat2Comp).mode_(\stackOne);
-~ratStackCompL = CompositeView(~tabGUI, Rect(401, 648, 399, 216)).background_(~compColor1).layout_(~ratStackComp);
+~ratStackCompL = CompositeView(~tabGUI, Rect(401*~xSizeMul, 648*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(~compColor1).layout_(~ratStackComp);
 
-~ratCompChooseView = RoundButton(~tabGUI, Rect(738, 650, 30, 16))
+~ratCompChooseView = RoundButton(~tabGUI, Rect(738*~xSizeMul, 649*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 .states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~ratCompChoose = i.value; ~ratStackComp.index = ~ratCompChoose })
 .value_(0).doAction; // Pourquoi .valueAction_(0); ne marche pas alors que .valueAction_(1); & nécessité de rajouter .doAction; car n'est activé que lorque l'état change par rapport au pécédent XXXXXXXXX
 
-~ratSynthView = RoundButton(~tabGUI, Rect(768, 650, 30, 16))
+~ratSynthView = RoundButton(~tabGUI, Rect(768*~xSizeMul, 649*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 .states_([["\Gliss", Color.white, Color.red], ["\Gliss", Color.black, Color.green]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~ratSynth[~tracksValue][~seqSeq[~tracksValue]] = i.value;
 
 	if (~lemurConnected1 == 1, {
@@ -3368,32 +3386,32 @@ if (~server2.notNil, {
 .valueAction_(0);
 
 
-~strComp = CompositeView(~tabGUI, Rect(401, 864, 399, 216))/*.background = ~strCompColor*/;
-~str2Comp = CompositeView(~tabGUI, Rect(401, 864, 399, 216))/*.background = ~strCompColor*/;
+~strComp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~strCompColor*/;
+~str2Comp = CompositeView(~tabGUI, Rect(401*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~strCompColor*/;
 ~strStackComp = StackLayout(~strComp, ~str2Comp).mode_(\stackOne);
-~strStackCompL = CompositeView(~tabGUI, Rect(401, 864, 399, 216)).background_(~strCompColor).layout_(~strStackComp);
+~strStackCompL = CompositeView(~tabGUI, Rect(401*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(~strCompColor).layout_(~strStackComp);
 
-~strCompChooseView = RoundButton(~tabGUI, Rect(738, 866, 30, 16))
+~strCompChooseView = RoundButton(~tabGUI, Rect(738*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 .states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~strCompChoose = i.value; ~strStackComp.index = ~strCompChoose })
 .value_(0).doAction;
 
 
-~cenComp = CompositeView(~tabGUI, Rect(800, 864, 399, 216))/*.background = ~strCompColor*/;
-~cen2Comp = CompositeView(~tabGUI, Rect(800, 864, 399, 216))/*.background = ~strCompColor*/;
+~cenComp = CompositeView(~tabGUI, Rect(800*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~strCompColor*/;
+~cen2Comp = CompositeView(~tabGUI, Rect(800*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~strCompColor*/;
 ~cenStackComp = StackLayout(~cenComp, ~cen2Comp).mode_(\stackOne);
-~cenStackCompL = CompositeView(~tabGUI, Rect(800, 864, 399, 216)).background_(~strCompColor).layout_(~cenStackComp);
+~cenStackCompL = CompositeView(~tabGUI, Rect(800*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(~strCompColor).layout_(~cenStackComp);
 
-~cenCompChooseView = RoundButton(~tabGUI, Rect(1137, 866, 30, 16))
+~cenCompChooseView = RoundButton(~tabGUI, Rect(1137*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 .states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~cenCompChoose = i.value; ~cenStackComp.index = ~cenCompChoose })
 .value_(0).doAction;
 
-~transCompView = RoundButton(~tabGUI, Rect(1167, 866, 30, 16))
+~transCompView = RoundButton(~tabGUI, Rect(1167*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 .states_([["\Trans", Color.white, Color.red], ["\Trans", Color.black, Color.green]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~transComp[~tracksValue][~seqsValue] = i.value;
 	~ratStackComp.mode = ~transComp[~tracksValue][~seqsValue]; ~strStackComp.mode = ~transComp[~tracksValue][~seqsValue]; ~cenStackComp.mode = ~transComp[~tracksValue][~seqsValue];
 	if (~transComp[~tracksValue][~seqsValue] == 1, {
@@ -3404,9 +3422,9 @@ if (~server2.notNil, {
 })
 .valueAction_(0);
 
-~ratCompAllChooseView = RoundButton(~tabGUI, Rect(768, 866, 30, 16))
+~ratCompAllChooseView = RoundButton(~tabGUI, Rect(768*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 .states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~ratCompAllChoose = i.value; ~ratCompChooseView.valueAction_(~ratCompAllChoose); ~strCompChooseView.valueAction_( ~ratCompAllChoose); ~cenCompChooseView.valueAction_(~ratCompAllChoose) })
 .value_(0).doAction;
 
@@ -3418,30 +3436,30 @@ Color(0.32549019607843, 0.32549019607843, 0.32549019607843, 0.3)
 
 
 // Position du CompositeView à la place de OutL Rect(1199, 216, 399, 216)
-~outLComp = CompositeView(~tabGUI, Rect(1199, 432+216, 399, 216))/*.background = ~panCompColor*/;
-~outRComp = CompositeView(~tabGUI, Rect(1199, 432+216, 399, 216))/*.background = ~panCompColor*/;
+~outLComp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (432+215)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~panCompColor*/;
+~outRComp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (432+215)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~panCompColor*/;
 
 ~outStackComp = StackLayout(~outLComp, ~outRComp).mode_(\stackOne);
-~outStackCompL = CompositeView(~tabGUI, Rect(1199, 432+216, 399, 216)).background_(/*~fxCompColor*/ ~panCompColor).layout_(~outStackComp);
+~outStackCompL = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (432+215)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(/*~fxCompColor*/ ~panCompColor).layout_(~outStackComp);
 
 ~outStackComp.mode = 1; // Pour transparence
 
 ~outRevCompChoose = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-~outRevCompChooseView = RoundButton(~tabGUI, Rect(1536, 650, 60, 16))
+~outRevCompChooseView = RoundButton(~tabGUI, Rect(1536*~xSizeMul, 649*~ySizeMul, 60*~xSizeMul, 16*~ySizeMul))
 .states_([["\LR Norm", Color.white, Color.blue], ["\LR Rev", Color.white, Color.red]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~outRevCompChoose[~tracksValue][~seqsValue] = i.value; });
 
 
 // Position du CompositeView tout en bas Rect(1199, 864, 399, 216)
-~fxLComp = CompositeView(~tabGUI, Rect(1199, 648+216, 399, 216))/*.background = ~fxCompColor*/;
-~fxRComp = CompositeView(~tabGUI, Rect(1199, 648+216, 399, 216))/*.background = ~fxCompColor*/;
+~fxLComp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (648+216)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~fxCompColor*/;
+~fxRComp = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (648+216)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul))/*.background = ~fxCompColor*/;
 ~fxStackComp = StackLayout(~fxLComp, ~fxRComp).mode_(\stackOne);
-~fxStackCompL = CompositeView(~tabGUI, Rect(1199, 648+216, 399, 216)).background_(/*~fxCompColor*/ ~panCompColor).layout_(~fxStackComp);
+~fxStackCompL = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (648+216)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(/*~fxCompColor*/ ~panCompColor).layout_(~fxStackComp);
 
-~outCompChooseView = RoundButton(~tabGUI, Rect(1536, 650+216, 60, 16))
+~outCompChooseView = RoundButton(~tabGUI, Rect(1536*~xSizeMul, (650+215)*~ySizeMul, 60*~xSizeMul, 16*~ySizeMul))
 .states_([["\Links", Color.white, Color.blue], ["\Right", Color.white, Color.red]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~outCompChoose = i.value; ~outStackComp.index = ~outCompChoose; ~fxStackComp.index = ~outCompChoose })
 .value_(0).doAction;
 
@@ -3524,9 +3542,11 @@ Ndef(\sound).play
 	~lineControl = 0 ! ~nbOfTracks;
 	~sineControlView = 0 ! ~nbOfTracks; // in Contol window
 	~sineControl = 0 ! ~nbOfTracks;
+	~outsConfigControlViewView = 0 ! ~nbOfTracks; // in Contol window
 	~outsConfigControlView = 0 ! ~nbOfTracks; // in Contol window
 	// ~outsConfigControlValue = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // aucun intérêt ???
 	~multiStereoControlView = 0 ! ~nbOfTracks; // in Contol window
+	~fxSelControlViewView = 0 ! ~nbOfTracks; // in Contol window
 	~fxSelControlView = 0 ! ~nbOfTracks; // in Contol window
 	~fxSelControlValue = 0 ! ~nbOfTracks;
 
@@ -3588,7 +3608,8 @@ Ndef(\sound).play
 	// ~volumeBus[0];
 
 
-	~controlWindow = Window("Control Panel").setTopLeftBounds(Rect(0, ~controlWindowTopLeft, 315, 630))/*.alpha_(0.8)*/.alwaysOnTop_(true).front;
+	// ~controlWindow = Window("Control Panel").setTopLeftBounds(Rect(0, ~controlWindowTopLeft*~ySizeMul, 315*~xSizeMul, 630*~ySizeMul))/*.alpha_(0.8)*/.alwaysOnTop_(true).front;
+	~controlWindow = Window("Control Panel", Rect(0, ~controlWindowTopLeft, 315*~xSizeMul, 630*~ySizeMul))/*.alpha_(0.8)*/.alwaysOnTop_(true).front;
 
 	~controlWindow.onClose = {
 
@@ -3630,16 +3651,16 @@ Ndef(\sound).play
 	};
 
 
-	~controlWindowVolume = CompositeView(~controlWindow, Rect(0, 5, 315, 55)).background = Color.grey(0.6);
-	~controlWindowDefault = CompositeView(~controlWindow, Rect(0, 39+26, 315, 24)).background = Color.grey(0.6);
-	~controlWindowTracks = CompositeView(~controlWindow, Rect(0, 94, 315, 260)).background = Color.grey(0.6);
-	~controlWindowTrig = CompositeView(~controlWindow, Rect(0, 500, 315, 124)).background = Color.grey(0.6);
+	~controlWindowVolume = CompositeView(~controlWindow, Rect(0, 5*~ySizeMul, 315*~xSizeMul, 55*~ySizeMul)).background = Color.grey(0.6);
+	~controlWindowDefault = CompositeView(~controlWindow, Rect(0, (39+26)*~ySizeMul, 315*~xSizeMul, 24*~ySizeMul)).background = Color.grey(0.6);
+	~controlWindowTracks = CompositeView(~controlWindow, Rect(0, 94*~ySizeMul, 315*~xSizeMul, 260*~ySizeMul)).background = Color.grey(0.6);
+	~controlWindowTrig = CompositeView(~controlWindow, Rect(0, 500*~ySizeMul, 315*~xSizeMul, 124*~ySizeMul)).background = Color.grey(0.6);
 	// ~controlWindowGlobal ~controlWindowSpaRy // plus bas
 
 
 	// Message d'erreur lorsque fermeture du Control Panel et que la Routine fonctionnent encore car ~tracksView.value dans la routine n'existe plus ???
 	// Comment éviter le message d'erreur ??? en modifiant le ~tracksView.value par une variable ???
-	~tracksView = ListView(~controlWindowTracks, Rect(5, 15, 40, 242)).hiliteColor_(Color.red).font_(Font("Verdana",12));
+	~tracksView = ListView(~controlWindowTracks, Rect(5*~xSizeMul, 15*~ySizeMul, 40*~xSizeMul, 242*~ySizeMul)).hiliteColor_(Color.red).font_(Font("Verdana",12*~fontSizeMul));
 	// Constitution d'une liste pour les Tracks du type -> ["T1 A", "T1 B", "T2 A", "T2 B", "T3 A", "T3 B", "T4 A", "T4 B"...]
 	~tracksViewItemsA = ([~tracksList.collect {|i| (i+1) +" A"}, ~tracksList.collect {|i| (i+1) +" B"}].flop.flatten(1)); // Pourquoi .flat ne fonctionne pas ?
 	~tracksViewItemsB = ([~tracksList.collect {|i| (i+1)+"A"}, ~tracksList.collect {|i| (i+1)+"B"}].flop.flatten(1)); // un espace en plus ... pour une raison particulière ?
@@ -3962,7 +3983,7 @@ Ndef(\sound).play
 	*/
 
 
-	~seqsView = ListView(~patComp, Rect(366, 24, 30, 185)/*~controlWindowTracks, Rect(280, 17, 32, 242)*/).stringColor_(Color.white).hiliteColor_(Color.red).font_(Font("Verdana",10));
+	~seqsView = ListView(~patComp, Rect(366*~xSizeMul, 24*~ySizeMul, 30*~xSizeMul, 185*~ySizeMul)/*~controlWindowTracks, Rect(280, 17, 32, 242)*/).stringColor_(Color.white).hiliteColor_(Color.red).font_(Font("Verdana",(10*~fontSizeMul).asInteger));
 	~seqsView.background = Color.grey(0.3);
 	// Constitution d'une liste pour les Sequences du type -> ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"...]
 	~seqsView.items = ~seqs.collect {|i| /*"S"+*/ (i+1)};
@@ -4040,9 +4061,9 @@ Ndef(\sound).play
 
 	~tracks.do {|tr|
 
-		~xqControlView[tr] = RoundButton(~controlWindowTracks, Rect(90, 17+(tr*15), 30, 15))
+		~xqControlView[tr] = RoundButton(~controlWindowTracks, Rect(90*~xSizeMul, (17+(tr*15))*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 		.states_([["wiXQ", Color.black, Color.yellow /*Color.new255(255, 165, 0)*/ /*Color.green*/], ["noXQ", Color.white, Color.red]])
-		.font_(Font("Verdana", 7))
+		.font_(Font("Verdana", 7*~fontSizeMul))
 		.action_({|i| ~xqViewValue[tr] = i.value;
 			// pour faire un update automatique du XQ Play du CompositeView - plus nécessaire
 			// ~xqView.value_(~xqViewValue[~tracksValue]);
@@ -4050,10 +4071,10 @@ Ndef(\sound).play
 			~xqViewG[tr].value_(~xqViewValue[tr]);
 		});
 
-		~playControlView[tr] = RoundButton(~controlWindowTracks, Rect(45, 17+(tr*15), 45, 15))
+		~playControlView[tr] = RoundButton(~controlWindowTracks, Rect(45*~xSizeMul, (17+(tr*15))*~ySizeMul, 45*~xSizeMul, 15*~ySizeMul))
 		.states_([["Play", Color.black, Color.white], ["Playing", Color.black, Color.green]])
 		// .states_([["Play", Color.black, Color.green], ["Playing", Color.white, Color.red]])
-		.font_(Font("Verdana",8, bold: true))
+		.font_(Font("Verdana",8*~fontSizeMul, bold: true))
 		.action_({|i| var playMSwitch, tra; if (~playMono[tr] == 0, { playMSwitch =  \play.envirGet }, { playMSwitch =  \playM.envirGet } );
 
 			~playViewValue[tr] = i.value;
@@ -4187,9 +4208,9 @@ Ndef(\sound).play
 		});
 
 
-		~play2ControlView[tr] = RoundButton(~controlWindowTracks, Rect(120, 17+(tr*15), 30, 15))
+		~play2ControlView[tr] = RoundButton(~controlWindowTracks, Rect(120*~xSizeMul, (17+(tr*15))*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 		.states_([["Res", Color.black, ~popUpMenuBackgroundColor/*Color.gray*/]])
-		.font_(Font("Verdana",7))
+		.font_(Font("Verdana",7*~fontSizeMul))
 		.action_({|i|
 			if (Pdef(~patterns2[tr]).isPlaying == false, {Pdef(~patterns2[tr]).resume;
 				if ((tr.even && ~playViewValue[tr +1] == 0) || (tr.odd && ~playViewValue[tr -1] == 0), {
@@ -4247,9 +4268,9 @@ Ndef(\sound).play
 	~tracksList.do { |tr|
 
 		// OK fait -> modifié le range de la spatialisation (0 à 4) pour ne pas prendre en compte Circ1 & Circ2 & l'ambisonique qui ne rendent pas la version stéréo
-		~multiStereoControlView[tr] = RoundButton(~controlWindowTracks, Rect(150, 32+(tr*30), 60, 15))
+		~multiStereoControlView[tr] = RoundButton(~controlWindowTracks, Rect(150*~xSizeMul, (32+(tr*30))*~ySizeMul, 60*~xSizeMul, 15*~ySizeMul))
 		.states_([["Stereo", Color.white, Color.blue], ["Multi", Color.white, Color.green(0.4)] /*["Multi", Color.black, Color.yellow]*/])
-		.font_(Font("Verdana", 8 /*, bold: true*/))
+		.font_(Font("Verdana", 8*~fontSizeMul /*, bold: true*/))
 		.action_({ |i|
 
 			// Pour l'instant toutes les séquences des 2 pistes ont la même valeur
@@ -4272,7 +4293,9 @@ Ndef(\sound).play
 		.visible_(0); // Pourquoi obligé de les rendre invisible alors que effectué normalement par la suite
 
 
-		~outsConfigControlView[tr] = PopUpMenu.new(~controlWindowTracks, Rect(210, 32+(tr*30), 70, 15))
+		~outsConfigControlViewView[tr] = View(~controlWindowTracks, Rect(210*~xSizeMul, (32+(tr*30))*~ySizeMul, 70*~xSizeMul, 15*~ySizeMul));
+
+		~outsConfigControlView[tr] = PopUpMenu.new(~outsConfigControlViewView[tr], Rect(0, 0, 100*~xSizeMul, 15*~ySizeMul))
 		.action_({ |menu|
 			// ~outLRound[tr][~seqsValue] = (menu.item.split($-)[0].asInteger); ~outRRound[tr][~seqsValue] = (menu.item.split($-)[1].asInteger); ~outsConfigControlValue[tr][~seqsValue] = menu.value;
 			// Pour l'instant toutes les séquences ont la même valeur
@@ -4284,7 +4307,7 @@ Ndef(\sound).play
 		.stringColor_(~popUpMenuStringColor)
 		/*.background_(Color.yellow)
 		.stringColor_(Color.black)*/
-		.font_(Font("Verdana",8))
+		.font_(Font("Verdana",8*~fontSizeMul))
 		.visible_(0); // Pourquoi obligé de les rendre invisible alors que effectué normalement par la suite
 
 
@@ -4305,7 +4328,7 @@ Ndef(\sound).play
 
 
 
-		~trackVolView[tr] = SmoothSlider(~controlWindowTracks, Rect(150, 17+(tr*30), 90, 15))
+		~trackVolView[tr] = SmoothSlider(~controlWindowTracks, Rect(150*~xSizeMul, (17+(tr*30))*~ySizeMul, 90*~xSizeMul, 15*~ySizeMul))
 		.action_({ |view| var last;
 
 			if (tr.inclusivelyBetween(0,2), { // Hack pour booster les pistes rythmiques en multipliant le volume de pistes trames x 2
@@ -4327,7 +4350,7 @@ Ndef(\sound).play
 			// ~volumeBus[0][tr].set(~trackVol[tr]*2); ~volumeBus2[0][tr].set(~trackVol[tr]*2);
 			});*/
 		})
-		.font_(Font("Verdana", 9))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.hilightColor_(~sliderHilightColor)
 		.stringColor_(Color.white)
@@ -4339,21 +4362,23 @@ Ndef(\sound).play
 
 		// ~dbSpec2.map(0.5)
 
-		~fxSelControlView[tr] = PopUpMenu.new(~controlWindowTracks, Rect(240, 17+(tr*30), 40, 15))
+		~fxSelControlViewView[tr] = View(~controlWindowTracks, Rect(240*~xSizeMul, (17+(tr*30))*~ySizeMul, 40*~xSizeMul, 15*~ySizeMul));
+
+		~fxSelControlView[tr] = PopUpMenu.new(~fxSelControlViewView[tr], Rect(0, 0, 70*~xSizeMul, 15*~ySizeMul))
 		.action_({|menu| ~fxSelControlValue[tr] = menu.value;
 			if (~fxSelControlValue[tr] > 0, { menu.background_(Color.red(0.7)); menu.stringColor_(Color.white) }, { menu.background_(~popUpMenuBackgroundColor); menu.stringColor_(Color.black) } );
 		})
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(Color.black)
-		.font_(Font("Verdana",8))
+		.font_(Font("Verdana",8*~fontSizeMul))
 		.items_(["Sq", "0", "1", "2", "3", "4", "5"]);
 
 
 		~fadeTimeSynthEQChan = 1; // Les ~eqChaSynth avaient un fadetime relié à ~fadeTimeSynthFx // Mise en place d'un fadeTime propre aux EQs plus rapide // ~fadeTimeSynthEQChan
 		~eqChaSpec = ControlSpec(-24, 24, \lin, 0.1, 0);
 
-		~eqChaLoView[tr] = Knob(~controlWindowTracks, Rect(280, 17+(tr*30), 16, 16)).mode_(\horiz).centered_(true).color_([Color.red, Color.white, Color.grey, Color.white])
+		~eqChaLoView[tr] = Knob(~controlWindowTracks, Rect(280*~xSizeMul, (17+(tr*30))*~ySizeMul, 16*~xSizeMul, 16*~ySizeMul)).mode_(\horiz).centered_(true).color_([Color.red, Color.white, Color.grey, Color.white])
 		.action_({ |v|
 			var sv; if (~server2.isNil or: {tr < ~serverTrackSwitch}, {sv = 0}, {sv = 1} );
 			~eqChaLo[tr] = ~eqChaSpec.map(v.value); ~eqChannelUnitLib[sv][tr].set( \lowShelf, \db, ~eqChaLo[tr]);
@@ -4361,7 +4386,7 @@ Ndef(\sound).play
 		})
 		.valueAction_(0.5);
 
-		~eqChaMiView[tr] = Knob(~controlWindowTracks, Rect(296, 17+(tr*30), 16, 16)).mode_(\horiz).centered_(true).color_([Color.red(0.6), Color.white, Color.grey, Color.white])
+		~eqChaMiView[tr] = Knob(~controlWindowTracks, Rect(296*~xSizeMul, (17+(tr*30))*~ySizeMul, 16*~xSizeMul, 16*~ySizeMul)).mode_(\horiz).centered_(true).color_([Color.red(0.6), Color.white, Color.grey, Color.white])
 		.action_({ |v|
 			var sv; if (~server2.isNil or: {tr < ~serverTrackSwitch}, {sv = 0}, {sv = 1} );
 			~eqChaMi[tr] = ~eqChaSpec.map(v.value); ~eqChannelUnitLib[sv][tr].set( \peak, \db, ~eqChaMi[tr]);
@@ -4369,7 +4394,7 @@ Ndef(\sound).play
 		})
 		.valueAction_(0.5);
 
-		~eqChaHiView[tr] = Knob(~controlWindowTracks, Rect(280, 32+(tr*30), 16, 16)).mode_(\horiz).centered_(true).color_([Color.blue, Color.white, Color.grey, Color.white])
+		~eqChaHiView[tr] = Knob(~controlWindowTracks, Rect(280*~xSizeMul, (32+(tr*30))*~ySizeMul, 16*~xSizeMul, 16*~ySizeMul)).mode_(\horiz).centered_(true).color_([Color.blue, Color.white, Color.grey, Color.white])
 		.action_({ |v|
 			var sv; if (~server2.isNil or: {tr < ~serverTrackSwitch}, {sv = 0}, {sv = 1} );
 			~eqChaHi[tr] = ~eqChaSpec.map(v.value); ~eqChannelUnitLib[sv][tr].set( \hiShelf, \db, ~eqChaHi[tr]);
@@ -4378,9 +4403,9 @@ Ndef(\sound).play
 		.valueAction_(0.5);
 		// envir[readView].palette = envir[readView].palette.button_(Color.yellow);
 
-		~eqChaActivateView[tr] = RoundButton(~controlWindowTracks, Rect(296, 32+(tr*30), 15, 15))
+		~eqChaActivateView[tr] = RoundButton(~controlWindowTracks, Rect(296*~xSizeMul, (32+(tr*30))*~ySizeMul, 15*~xSizeMul, 15*~ySizeMul))
 		.states_([[/*"Off"*/ (tr+1).asString, Color.white, Color.red], [/*"On"*/(tr+1).asString, Color.black, Color.green]])
-		.font_(Font("Verdana", 9))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.action_({|i|
 			var sv; if (~server2.isNil or: {tr < ~serverTrackSwitch}, {sv = 0}, {sv = 1} );
 			~eqChaActivate[tr] = i.value;
@@ -4397,8 +4422,8 @@ Ndef(\sound).play
 		});
 
 
-		~freqVolView[tr] = NumberBox(~controlWindowTracks, Rect(150, 32+(tr*30), 40, 15))
-		.font_(Font("Verdana", 9))
+		~freqVolView[tr] = NumberBox(~controlWindowTracks, Rect(150*~xSizeMul, (32+(tr*30))*~ySizeMul, 40*~xSizeMul, 15*~ySizeMul))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.clipLo_(0.01)
 		.clipHi_(600)
 		.decimals_(2)
@@ -4406,15 +4431,15 @@ Ndef(\sound).play
 		.action_({|i| ~freqVol[tr]  = i.value; if (~sineControl[tr] == 1, { ~ins[tr].fadeTime = ~insSineFadeTime; ~ins[tr].source = {SinOsc.kr(~freqVol[tr], 0, ~ampVol[tr], 0.7)} }); })
 		.valueAction_(0.2);
 
-		~durVolView[tr] = NumberBox(~controlWindowTracks, Rect(150, 32+(tr*30), 40, 15))
-		.font_(Font("Verdana", 9))
+		~durVolView[tr] = NumberBox(~controlWindowTracks, Rect(150*~xSizeMul, (32+(tr*30))*~ySizeMul, 40*~xSizeMul, 15*~ySizeMul))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.clipLo_(1)
 		.clipHi_(60)
 		.action_({|i| ~durVol[tr]  = i.value })
 		.valueAction_(1);
 
-		~ampVolView[tr] = NumberBox(~controlWindowTracks, Rect(190, 32+(tr*30), 25, 15))
-		.font_(Font("Verdana", 9))
+		~ampVolView[tr] = NumberBox(~controlWindowTracks, Rect(190*~xSizeMul, (32+(tr*30))*~ySizeMul, 25*~xSizeMul, 15*~ySizeMul))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.clipLo_(0)
 		.clipHi_(0.5)
 		.decimals_(1)
@@ -4423,8 +4448,8 @@ Ndef(\sound).play
 		.action_({|i| ~ampVol[tr] = i.value;  })
 		.valueAction_(0.5);
 
-		~toVolView[tr] = NumberBox(~controlWindowTracks, Rect(190, 32+(tr*30), 25, 15))
-		.font_(Font("Verdana", 9))
+		~toVolView[tr] = NumberBox(~controlWindowTracks, Rect(190*~xSizeMul, (32+(tr*30))*~ySizeMul, 25*~xSizeMul, 15*~ySizeMul))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.clipLo_(0)
 		.clipHi_(1.0)
 		.decimals_(1)
@@ -4471,9 +4496,9 @@ Ndef(\sound).play
 		}};
 
 		// Apparition de messages d'erreur sur le round car recoit nil ???
-		~sineControlView[tr] = Button(~controlWindowTracks, Rect(215, 32+(tr*30), 25, 15))
+		~sineControlView[tr] = Button(~controlWindowTracks, Rect(215*~xSizeMul, (32+(tr*30))*~ySizeMul, 25*~xSizeMul, 15*~ySizeMul))
 		.states_([["Sine", Color.white, Color.blue], ["Sine", Color.red, Color.yellow]])
-		.font_(Font("Verdana", 7))
+		.font_(Font("Verdana", 7*~fontSizeMul))
 		.action_({ |i| var sv, svName;
 			~sineControl[tr] = i.value;
 			if (~server2.isNil or: {tr < ~serverTrackSwitch}, {sv = 0; svName = ~server1}, {sv = 1; svName = ~server2} );
@@ -4513,9 +4538,9 @@ Ndef(\sound).play
 		});
 
 
-		~lineControlView[tr] = Button(~controlWindowTracks, Rect(215, 32+(tr*30), 25, 15))
+		~lineControlView[tr] = Button(~controlWindowTracks, Rect(215*~xSizeMul, (32+(tr*30))*~ySizeMul, 25*~xSizeMul, 15*~ySizeMul))
 		.states_([["Line", Color.white, Color.blue], ["Line", Color.red, Color.yellow]])
-		.font_(Font("Verdana", 7))
+		.font_(Font("Verdana", 7*~fontSizeMul))
 		.action_({|i| var task, sv;
 			~lineControl[tr] = i.value;
 			if (~server2.isNil or: {tr < ~serverTrackSwitch}, {sv = 0}, {sv = 1} );
@@ -4551,9 +4576,9 @@ Ndef(\sound).play
 	};
 
 
-	~switchTracksAllControlView = RoundButton(~controlWindowTracks, Rect(4, 0, 40, 15))
+	~switchTracksAllControlView = RoundButton(~controlWindowTracks, Rect(4*~xSizeMul, 0, 40*~xSizeMul, 15*~ySizeMul))
 	.states_([["Tracks", Color.white, Color.blue]])
-	.font_(Font("Verdana",8, bold: true))
+	.font_(Font("Verdana",8*~fontSizeMul, bold: true))
 	.action_({ |i| var indicesOfTracks, indexOfTracks; // Pour switcher entre les pistes en train de jouer
 		indicesOfTracks = ~playViewValue.indicesOfEqual(1);
 
@@ -4572,9 +4597,9 @@ Ndef(\sound).play
 
 
 	~playAllControlPrev = ~playViewValue.copy;
-	~playAllControlView = RoundButton(~controlWindowTracks, Rect(45, 2, 45, 15))
+	~playAllControlView = RoundButton(~controlWindowTracks, Rect(45*~xSizeMul, 2*~ySizeMul, 45*~xSizeMul, 15*~ySizeMul))
 	.states_([["Stop All", Color.red, Color.white]])
-	.font_(Font("Verdana",8, bold: true))
+	.font_(Font("Verdana",8*~fontSizeMul, bold: true))
 	.action_({
 		if ( ~playViewValue.sum > 0, { ~playAllControlPrev = ~playViewValue.copy;
 			~tracks.do {|tr| if (~playViewValue[tr] == 1, { ~playControlView[tr].valueAction_(0); ~playViewG[tr].value_(0) } ) };
@@ -4583,21 +4608,23 @@ Ndef(\sound).play
 		});
 	});
 
-	~xqAllControlView = RoundButton(~controlWindowTracks, Rect(90, 2, 30, 15))
+	~xqAllControlView = RoundButton(~controlWindowTracks, Rect(90*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 	.states_([["wiXQ", Color.black, Color.yellow /*Color.new255(255, 165, 0)*/ /*Color.green*/], ["No XQ", Color.white, Color.red]])
-	.font_(Font("Verdana", 7 /*, bold: true*/ ))
+	.font_(Font("Verdana", 7*~fontSizeMul /*, bold: true*/ ))
 	.action_({|i| ~tracks.do {|tr| ~xqControlView[tr].value_(i.value); ~xqViewValue[tr] = i.value;
 		~xqViewG[tr].value_(~xqViewValue[tr]); // Action sur le global
 	};
 	});
 
-	~playMonoAllView = RoundButton(~controlWindowTracks, Rect(120, 2, 30, 15))
+	~playMonoAllView = RoundButton(~controlWindowTracks, Rect(120*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 	.states_([["Mono", Color.red, Color.white]])
-	.font_(Font("Verdana", 7, bold: true))
+	.font_(Font("Verdana", 7*~fontSizeMul, bold: true))
 	.action_({|i| if (~playMono[~tracksValue] == 0, {~playMono[~tracksValue] = 1}, {~playMono[~tracksValue] = 0}); ~playMono.postln;
 	});
 
-	~fxSelAllControlView = PopUpMenu.new(~controlWindowTracks, Rect(240, 2, 40, 15))
+	~fxSelAllControlViewView = View(~controlWindowTracks, Rect(240*~xSizeMul, 2*~ySizeMul, 40*~xSizeMul, 15*~ySizeMul));
+
+	~fxSelAllControlView = PopUpMenu.new(~fxSelAllControlViewView, Rect(0, 0, 70*~xSizeMul, 15*~ySizeMul))
 	.action_({|menu|
 		~nbOfTracks.do {|tr| ~fxSelControlView[tr].value_(menu.value); ~fxSelControlValue[tr] = menu.value;
 			if (~fxSelControlValue[0] > 0, { menu.background_(Color.red(0.7)); menu.stringColor_(Color.white); ~fxSelControlView[tr].background_(Color.red(0.7)); ~fxSelControlView[tr].stringColor_(Color.white) }, { menu.background_(~popUpMenuBackgroundColor); menu.stringColor_(Color.black); ~fxSelControlView[tr].background_(~popUpMenuBackgroundColor); ~fxSelControlView[tr].stringColor_(Color.black) } );
@@ -4606,17 +4633,17 @@ Ndef(\sound).play
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(Color.black)
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.items_(["Sq", "0", "1", "2", "3", "4", "5"]);
 
-	~eqChaAll1ActivateView = RoundButton(~controlWindowTracks, Rect(280, 2, 15, 15))
+	~eqChaAll1ActivateView = RoundButton(~controlWindowTracks, Rect(280*~xSizeMul, 2*~ySizeMul, 15*~xSizeMul, 15*~ySizeMul))
 	.states_([["Off", Color.white, Color.red], ["On", Color.black, Color.green]])
-	.font_(Font("Verdana", 7))
+	.font_(Font("Verdana", 7*~fontSizeMul))
 	.action_({|v| (0..3).do { |i| ~eqChaActivateView[i].valueAction_(v.value) } });
 
-	~eqChaAll2ActivateView = RoundButton(~controlWindowTracks, Rect(296, 2, 15, 15))
+	~eqChaAll2ActivateView = RoundButton(~controlWindowTracks, Rect(296*~xSizeMul, 2*~ySizeMul, 15*~xSizeMul, 15*~ySizeMul))
 	.states_([["Off", Color.white, Color.red], ["On", Color.black, Color.green]])
-	.font_(Font("Verdana", 7))
+	.font_(Font("Verdana", 7*~fontSizeMul))
 	.action_({|v| (4..7).do { |i| ~eqChaActivateView[i].valueAction_(v.value) } });
 
 
@@ -4630,12 +4657,12 @@ Ndef(\sound).play
 
 	// controlWindowVolume
 
-	~trackInVolView = SmoothSlider(~controlWindowVolume, Rect(5, 2, 100, 25))
+	~trackInVolView = SmoothSlider(~controlWindowVolume, Rect(5*~xSizeMul, 2*~ySizeMul, 100*~xSizeMul, 25*~ySizeMul))
 	.action_({ |i| ~inVolume = i.value;
 		~nbOfServers.do { |s| ~inBus[s].set(~inVolume); }; /*~inBus.line(~inVolume, 1);*/
 		i.string = ("In Vol : %").format(i.value.round(0.01))
 	})
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -4645,7 +4672,7 @@ Ndef(\sound).play
 	.valueAction_(1)
 	.doAction;
 
-	~trackFXVolView = SmoothSlider(~controlWindowVolume, Rect(105, 2, 120, 25))
+	~trackFXVolView = SmoothSlider(~controlWindowVolume, Rect(105*~xSizeMul, 2*~ySizeMul, 120*~xSizeMul, 25*~ySizeMul))
 	.action_({ |i| ~fxVolume = i.value;
 		i.string = ("FX Vol : %").format(i.value.round(0.01));
 
@@ -4683,7 +4710,7 @@ Ndef(\sound).play
 		if (~fxVolume.round(0.01) < 0.07, { i.background_(Color.red) }, { i.background_(~sliderBackgroundColor) } );
 
 	})
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -4801,15 +4828,15 @@ Ndef(\sound).play
 		})
 	});
 
-	~timeView = StaticText(~controlWindowVolume, Rect(230, 2, 45, 22))
-	.font_(Font("Verdana", 12, bold: true))
+	~timeView = StaticText(~controlWindowVolume, Rect(230*~xSizeMul, 2*~ySizeMul, 45*~xSizeMul, 22*~ySizeMul))
+	.font_(Font("Verdana", 12*~fontSizeMul, bold: true))
 	.align_(\center)
 	.acceptsMouse_(0)
 	.stringColor_(Color.black);
 
-	~timeControlView = RoundButton(~controlWindowVolume, Rect(280, 2, 30, 20))
+	~timeControlView = RoundButton(~controlWindowVolume, Rect(280*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Cl", Color.white, Color.red], ["Cl", Color.black, Color.green]])
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.action_({|i|
 		if (~automationActive == 1, {
 			if (i.value == 1, {
@@ -4844,7 +4871,7 @@ Ndef(\sound).play
 		if (~serverVolume[0].notNil, {~serverVolume[0].reset});
 	});
 
-	~trackAllVolView = SmoothSlider(~controlWindowVolume, Rect(5, 28, 220, 25))
+	~trackAllVolView = SmoothSlider(~controlWindowVolume, Rect(5*~xSizeMul, 28*~ySizeMul, 220*~xSizeMul, 25*~ySizeMul))
 	.action_({ |i| ~globalVolume = ~dbSpec.map(i.value);
 		if (~server2.notNil, {
 			~serverVolume[0].volume = ~globalVolume;
@@ -4863,7 +4890,7 @@ Ndef(\sound).play
 			~lemurAdress2.sendMsg("/VolC/Vol_GM/value", ~globalVolume);
 		});
 	})
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -4873,9 +4900,9 @@ Ndef(\sound).play
 	.valueAction_(~dbSpec.unmap(0))
 	.doAction;
 
-	~trackAllVolControl1View = RoundButton(~controlWindowVolume, Rect(228, 28, 40, 25))
+	~trackAllVolControl1View = RoundButton(~controlWindowVolume, Rect(228*~xSizeMul, 28*~ySizeMul, 40*~xSizeMul, 25*~ySizeMul))
 	.states_([["0", Color.white, Color.red]])
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.action_({|i| ~trackAllVolView.value_(0).string = ("Global Volume : -inf db"); /*~globalBus.line(0, 0.05);*/
 		if (~server2.notNil, {
 			~serverVolume[0].volume = -90;
@@ -4885,9 +4912,9 @@ Ndef(\sound).play
 		});
 	});
 
-	~trackAllVolControl2View = RoundButton(~controlWindowVolume, Rect(270, 28, 40, 25))
+	~trackAllVolControl2View = RoundButton(~controlWindowVolume, Rect(270*~xSizeMul, 28*~ySizeMul, 40*~xSizeMul, 25*~ySizeMul))
 	.states_([["1", Color.black, Color.green]])
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.action_({|i| ~trackAllVolView.value_(~dbSpec.unmap(0)).string = ("Global Volume : 0 db"); /*~globalBus.line(1, 0.05);*/
 		if (~server2.notNil, {
 			~serverVolume[0].volume = 0;
@@ -4911,9 +4938,9 @@ Ndef(\sound).play
 
 
 
-	~visibleControlView = RoundButton(~controlWindowTracks, Rect(150, 2, 30, 15))
+	~visibleControlView = RoundButton(~controlWindowTracks, Rect(150*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 	.states_([["V1", Color.white, Color.blue], ["V2", Color.white, Color.blue], ["V0", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~visibleControlValue = i.value;
 		case
 		{~visibleControlValue == 0} {
@@ -4937,16 +4964,16 @@ Ndef(\sound).play
 	})
 	.valueAction_(2);
 
-	~eqChaDefAllView = RoundButton(~controlWindowTracks, Rect(180, 2, 30, 15))
+	~eqChaDefAllView = RoundButton(~controlWindowTracks, Rect(180*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 	.states_([["Eq D", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| // L'autre donnée de l'array n'est pas utilisée - pas besoin d'array, mais besoin d' ajouter une fonction légèrement modifiée en conséquence
 		~fxTabCompDefEQCha1View[0].valueAction_(1); ~fxTabCompDefEQCha2View[0].valueAction_(1); ~fxTabCompDefEQCha3View[0].valueAction_(1); ~fxTabCompDefEQCha4View[0].valueAction_(1); ~fxTabCompDefEQCha5View[0].valueAction_(1); ~fxTabCompDefEQCha6View[0].valueAction_(1); ~fxTabCompDefEQCha7View[0].valueAction_(1); ~fxTabCompDefEQCha8View[0].valueAction_(1);
 	});
 
-	~eqChaRandAllView = RoundButton(~controlWindowTracks, Rect(210, 2, 30, 15))
+	~eqChaRandAllView = RoundButton(~controlWindowTracks, Rect(210*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 15*~ySizeMul))
 	.states_([["Eq R", Color.white, Color.red]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~fxTabCompRand1EQCha1View[0].valueAction_(1); ~fxTabCompRand1EQCha2View[0].valueAction_(1); ~fxTabCompRand1EQCha3View[0].valueAction_(1); ~fxTabCompRand1EQCha4View[0].valueAction_(1); ~fxTabCompRand1EQCha5View[0].valueAction_(1); ~fxTabCompRand1EQCha6View[0].valueAction_(1); ~fxTabCompRand1EQCha7View[0].valueAction_(1); ~fxTabCompRand1EQCha8View[0].valueAction_(1); });
 
 
@@ -4964,12 +4991,12 @@ Ndef(\sound).play
 
 	// controlWindowTrig
 
-	~busControlComp = CompositeView(~globalWindow, Rect(162, 2, 107, 41)).background = Color.white /*~sliderHilightNoColor*/ /*Color.magenta*/;
+	~busControlComp = CompositeView(~globalWindow, Rect(162*~xSizeMul, 2*~ySizeMul, 107*~xSizeMul, 41*~ySizeMul)).background = Color.white /*~sliderHilightNoColor*/ /*Color.magenta*/;
 
 	~trigAll = 0; // Pourquoi le valueAction ne renvoie pas la valeur et besoin d'assigner ~trigAll ???
-	~trigAllView = RoundButton(/*~controlWindowTrig*/~busControlComp, Rect(2, 2, 35, 18))
+	~trigAllView = RoundButton(/*~controlWindowTrig*/~busControlComp, Rect(2*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Track", Color.white, Color.blue], ["Other", Color.black, Color.yellow], ["ALL", Color.white, Color.red], ["Tex13", Color.red, Color.white]])
-	.font_(Font("Verdana", 9, bold: true))
+	.font_(Font("Verdana", 9*~fontSizeMul, bold: true))
 	.action_({|i| ~trigAll = i.value;
 	});
 	~trigAllView.valueAction_(3);
@@ -4978,15 +5005,15 @@ Ndef(\sound).play
 
 	// See Server Command Reference
 
-	~clearPostWindowView = RoundButton(~controlWindowTrig, Rect(262, 2, 48, 20))
+	~clearPostWindowView = RoundButton(~controlWindowTrig, Rect(262*~xSizeMul, 2*~ySizeMul, 48*~xSizeMul, 20*~ySizeMul))
 	.states_([["ClearPW", Color.blue, Color.white]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| 30.do({"\n".post});
 	});
 
-	~queryABusView = RoundButton(~controlWindowTrig, Rect(262, 27, 48, 20))
+	~queryABusView = RoundButton(~controlWindowTrig, Rect(262*~xSizeMul, 27*~ySizeMul, 48*~xSizeMul, 20*~ySizeMul))
 	.states_([["QueryB5", Color.blue, Color.white]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i|
 		~nbOfServers.do { |s| ~controlBusSynth[s][5].group.dumpTree; /*~controlBus[0][5].get;*/ ~controlBus[s][5].get({|val| ("Server"+s+"->"+val).postln;}); };
 	});
@@ -5033,9 +5060,9 @@ Ndef(\sound).play
 
 
 
-	~trigRate1View = RoundButton(~controlWindowTrig, Rect(5, 2, 45, 20))
+	~trigRate1View = RoundButton(~controlWindowTrig, Rect(5*~xSizeMul, 2*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Rat 1", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({ |i|
 		case
 		{~trigAll == 0}
@@ -5084,15 +5111,15 @@ Ndef(\sound).play
 	.valueAction_(~rateSpec.unmap(0.2))
 	.doAction;*/
 
-	~rate1View = NumberBox(~controlWindowTrig, Rect(52, 2, 36, 20))
+	~rate1View = NumberBox(~controlWindowTrig, Rect(52*~xSizeMul, 2*~ySizeMul, 36*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~rate1 = view.value })
 	.clipLo_(0.1).clipHi_(200).minDecimals_(0).maxDecimals_(1)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.valueAction_(0.2);
 
-	~trigRate2View = RoundButton(~controlWindowTrig, Rect(90, 2, 45, 20))
+	~trigRate2View = RoundButton(~controlWindowTrig, Rect(90*~xSizeMul, 2*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Rat 2", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({ |i|
 		case
 		{~trigAll == 0}
@@ -5126,15 +5153,15 @@ Ndef(\sound).play
 	.valueAction_(~rateSpec.unmap(5))
 	.doAction;*/
 
-	~rate2View = NumberBox(~controlWindowTrig, Rect(137, 2, 36, 20))
+	~rate2View = NumberBox(~controlWindowTrig, Rect(137*~xSizeMul, 2*~ySizeMul, 36*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~rate1 = view.value })
 	.clipLo_(0.01).clipHi_(200).minDecimals_(0).maxDecimals_(1)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.valueAction_(5);
 
-	~trigRate3View = RoundButton(~controlWindowTrig, Rect(175, 2, 45, 20))
+	~trigRate3View = RoundButton(~controlWindowTrig, Rect(175*~xSizeMul, 2*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Rat 3", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({ |i|
 		case
 		{~trigAll == 0}
@@ -5168,10 +5195,10 @@ Ndef(\sound).play
 	.valueAction_(~rateSpec.unmap(50))
 	.doAction;*/
 
-	~rate3View = NumberBox(~controlWindowTrig, Rect(222, 2, 36, 20))
+	~rate3View = NumberBox(~controlWindowTrig, Rect(222*~xSizeMul, 2*~ySizeMul, 36*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~rate1 = view.value })
 	.clipLo_(0.01).clipHi_(200).minDecimals_(0).maxDecimals_(1)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.valueAction_(50);
 
 
@@ -5182,9 +5209,9 @@ Ndef(\sound).play
 
 	// un controle linéaire de l'amplitude pas très adapté -> à modifier ???
 
-	~trigCut1View = RoundButton(~controlWindowTrig, Rect(5, 27, 45, 20))
+	~trigCut1View = RoundButton(~controlWindowTrig, Rect(5*~xSizeMul, 27*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Cut 1", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i|
 		// if (~trigCutPrevent == 0, {
 		// { ("Try to Wait" + (~cut1+~silenceTime+0.1) ++ "s - end of Vol Cut").warn; ~trigCutPrevent = 1; (~cut1+~silenceTime+0.1).wait; "End of Vol Cut - OK to retrigger".inform; ~trigCutPrevent = 0; }.fork;
@@ -5287,16 +5314,16 @@ Ndef(\sound).play
 	.valueAction_(~cutSpec.unmap(0.5))
 	.doAction;*/
 
-	~cut1View = NumberBox(~controlWindowTrig, Rect(52, 27, 36, 20))
+	~cut1View = NumberBox(~controlWindowTrig, Rect(52*~xSizeMul, 27*~ySizeMul, 36*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~cut1 = view.value })
 	.clipLo_(0.01).clipHi_(10).minDecimals_(0).maxDecimals_(2)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.valueAction_(0.1);
 
 
-	~trigCut2View = RoundButton(~controlWindowTrig, Rect(90, 27, 45, 20))
+	~trigCut2View = RoundButton(~controlWindowTrig, Rect(90*~xSizeMul, 27*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Cut 2", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i|
 		if (~trigCutPrevent == 0, {
 			{ ("Try to Wait" + (~cut2+~silenceTime+0.1) ++ "s - end of Vol Cut").warn; ~trigCutPrevent = 1; (~cut2+~silenceTime+0.1).wait; "End of Vol Cut - OK to retrigger".inform; ~trigCutPrevent = 0; }.fork;
@@ -5311,16 +5338,16 @@ Ndef(\sound).play
 		})
 	});
 
-	~cut2View = NumberBox(~controlWindowTrig, Rect(137, 27, 36, 20))
+	~cut2View = NumberBox(~controlWindowTrig, Rect(137*~xSizeMul, 27*~ySizeMul, 36*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~cut2 = view.value })
 	.clipLo_(0.1).clipHi_(10).minDecimals_(0).maxDecimals_(1)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.valueAction_(4);
 
 
-	~trigCut3View = RoundButton(~controlWindowTrig, Rect(175, 27, 45, 20))
+	~trigCut3View = RoundButton(~controlWindowTrig, Rect(175*~xSizeMul, 27*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Cut 3", Color.white, Color.blue]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i|
 		if (~trigCutPrevent == 0, {
 			{ ("Try to Wait" + (~cut3+~silenceTime+0.1) ++ "s - end of Vol Cut").warn; ~trigCutPrevent = 1; (~cut3+~silenceTime+0.1).wait; "End of Vol Cut - OK to retrigger".inform; ~trigCutPrevent = 0; }.fork;
@@ -5334,10 +5361,10 @@ Ndef(\sound).play
 		});
 	});
 
-	~cut3View = NumberBox(~controlWindowTrig, Rect(222, 27, 36, 20))
+	~cut3View = NumberBox(~controlWindowTrig, Rect(222*~xSizeMul, 27*~ySizeMul, 36*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~cut3 = view.value })
 	.clipLo_(0.1).clipHi_(10).minDecimals_(0).maxDecimals_(1)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.valueAction_(7);
 
 
@@ -5367,37 +5394,37 @@ Ndef(\sound).play
 
 
 
-	~trigBusRatView = RoundButton(~controlWindowTrig, Rect(5, 52, 40, 20))
+	~trigBusRatView = RoundButton(~controlWindowTrig, Rect(5*~xSizeMul, 52*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul))
 	.states_([["RAT B", Color.white, Color.red],["RAT B", Color.black, Color.green]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~trigBusRat = i.value;
 	})
 	.valueAction_(0);
 
-	~trigBusStrView = RoundButton(~controlWindowTrig, Rect(47, 52, 40, 20))
+	~trigBusStrView = RoundButton(~controlWindowTrig, Rect(47*~xSizeMul, 52*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul))
 	.states_([["STR B", Color.white, Color.red],["STR B", Color.black, Color.green]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~trigBusStr = i.value;
 	})
 	.valueAction_(0);
 
-	~trigBusCenView = RoundButton(~controlWindowTrig, Rect(89, 52, 40, 20))
+	~trigBusCenView = RoundButton(~controlWindowTrig, Rect(89*~xSizeMul, 52*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul))
 	.states_([["CEN B", Color.white, Color.red],["CEN B", Color.black, Color.green]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~trigBusCen = i.value;
 	})
 	.valueAction_(0);
 
-	~trigBusAmpView = RoundButton(~controlWindowTrig, Rect(131, 52, 40, 20))
+	~trigBusAmpView = RoundButton(~controlWindowTrig, Rect(131*~xSizeMul, 52*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul))
 	.states_([["AMP B", Color.white, Color.red],["AMP B", Color.black, Color.green]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~trigBusAmp = i.value;
 	})
 	.valueAction_(0);
 
-	~trigBusAllView = RoundButton(~controlWindowTrig, Rect(173, 52, 40, 20))
+	~trigBusAllView = RoundButton(~controlWindowTrig, Rect(173*~xSizeMul, 52*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul))
 	.states_([["ALL RB", Color.white, Color.red],["ALL B", Color.black, Color.green]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~trigBusRAll = i.value;
 		~trigBusRatView.valueAction_(~trigBusRAll); ~trigBusStrView.valueAction_(~trigBusRAll); ~trigBusCenView.valueAction_(~trigBusRAll);
 	})
@@ -5427,25 +5454,25 @@ Ndef(\sound).play
 
 	// controlWindowDefault
 
-	~retriggerPresetAllTracksView = RoundButton(~controlWindowDefault, Rect(67, 2, 30, 20))
+	~retriggerPresetAllTracksView = RoundButton(~controlWindowDefault, Rect(67*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Pre", Color.black, Color.yellow]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({
 		{ "WAIT RESETTING ALL PRESETS !".postln;
 			/*~tracks*/ ((~tracksList*2) + ~seqCompGABIndex).do { |a| ~retriggerPresetPreViewG[a].valueAction_(1);
 				0.05.wait }; "OK GO !".postln; }.fork(AppClock);
 	});
 
-	~triggerAllSeqsAllTracksView = RoundButton(~controlWindowDefault, Rect(228, 2, 35, 20))
+	~triggerAllSeqsAllTracksView = RoundButton(~controlWindowDefault, Rect(228*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 	.states_([ ["1", Color.white, Color.blue], ["Sel", Color.white, Color.magenta], /*["Cur Pre", Color.black, Color.yellow]*/])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |i| ~triggerAllSeqsAllTracks = i.value;
 		~tracks /*~playViewValue.indicesOfEqual(1)*/ .do { |a| ~triggerAllSeqsViewG[a].valueAction_(~triggerAllSeqsAllTracks) }
 	}).value_(0);
 
-	~retriggerSelAllTracksView = RoundButton(~controlWindowDefault, Rect(266, 2, 45, 20))
+	~retriggerSelAllTracksView = RoundButton(~controlWindowDefault, Rect(266*~xSizeMul, 2*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul))
 	.states_([["Sel Pl", Color.black, Color.new255(255, 165, 0) /*Color.white, Color.red*/]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ var p = ~playViewValue.indicesOfEqual(1);
 		if (p.notNil, {
 			{ "WAIT RESETTING PRESETS OF PLAYING TRACKS !".postln;
@@ -5460,9 +5487,9 @@ Ndef(\sound).play
 
 
 	// OK fait -> modifié le range de la spatialisation (0 à 5) pour ne pas prendre en compte Circ1 & Circ2 & l'ambisonique qui ne rendent pas la version stéréo
-	~multiStereoView = RoundButton(~controlWindowDefault, Rect(98, 2, 46, 20))
+	~multiStereoView = RoundButton(~controlWindowDefault, Rect(98*~xSizeMul, 2*~ySizeMul, 46*~xSizeMul, 20*~ySizeMul))
 	.states_([["Stereo", Color.white, Color.blue], ["Multi", Color.white, Color.green(0.4)] /*["Multi", Color.black, Color.yellow]*/])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({ |a| ~multiStereoA = a.value;
 		~tracksList.do { |i| ~multiStereoControlView[i].valueAction_(~multiStereoA)};
 		~multiStereoRyView.valueAction_(~multiStereoA);
@@ -5484,14 +5511,16 @@ Ndef(\sound).play
 	// ~multiStereoView.value_(0).doAction; // Erreur à cause des éléments comme ~multiStereoRyView ou ~multiStereoRandRyRout2View
 
 
-	~outsConfigView = PopUpMenu.new(~controlWindowDefault, Rect(146, 2, 80, 20))
+	~outsConfigViewView = View(~controlWindowDefault, Rect(146*~xSizeMul, 2*~ySizeMul, 80*~xSizeMul, 20*~ySizeMul));
+
+	~outsConfigView = PopUpMenu.new(~outsConfigViewView, Rect(0, 0, 110*~xSizeMul, 20*~ySizeMul))
 	.action_({|menu|
 		~tracksList.do { |i| ~outsConfigControlView[i].valueAction_(menu.value)};
 	})
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(Color.black)
-	.font_(Font("Verdana",9));
+	.font_(Font("Verdana",9*~fontSizeMul));
 
 	case
 
@@ -5749,21 +5778,21 @@ Ndef(\sound).play
 
 {
 
-	~keyControlView = RoundButton(~globalWindow, Rect(2, 2, 50, 18))
+	~keyControlView = RoundButton(~globalWindow, Rect(2*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 	.states_([["KeyN", Color.black, Color.green], ["KeyS", Color.white, Color.magenta], ["KeyR", Color.white, Color.red] /*, ["KeyR", Color.white, Color.grey]*/ ])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({|i| ~keyControl = i.value})
 	.valueAction_(2);
 
-	~speakerRangeView = RoundButton(~globalWindow, Rect(54, 2, 50, 18))
+	~speakerRangeView = RoundButton(~globalWindow, Rect(54*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 	.states_([ ["SpRange", Color.white, Color.red], ["SpRange", Color.black, Color.green] ])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({|i| ~speakerRange = i.value})
 	.valueAction_(1);
 
-	~fxServerSwitchView = RoundButton(~globalWindow, Rect(106, 2, 50, 18))
+	~fxServerSwitchView = RoundButton(~globalWindow, Rect(106*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 	.states_([["FX S 1", Color.white, Color.blue], ["FX S 2", Color.red, Color.yellow], ["FX ALL", Color.yellow, Color.red] /*, ["KeyR", Color.white, Color.grey]*/ ])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({|i| ~fxServerSwitch = i.value})
 	.valueAction_(2);
 
@@ -5780,14 +5809,14 @@ Ndef(\sound).play
 	];
 
 	~controlBusSynth5FadeTime = 0;
-	~controlBusSynth5FadeTimeView = RoundButton(/*~globalWindow*/~busControlComp, Rect(2, 22, 35, 18) /*Rect(39, 2, 35, 18)*/)
+	~controlBusSynth5FadeTimeView = RoundButton(/*~globalWindow*/~busControlComp, Rect(2*~xSizeMul, 22*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul) /*Rect(39, 2, 35, 18)*/)
 	.states_([["0", Color.white, Color.blue], /*["low", Color.white, Color.blue],*/ ["0.01", Color.white, Color.blue], ["1", Color.black, Color.green], ["3", Color.black, Color.green], ["6", Color.black, Color.green], ["10", Color.black, Color.green], ["15", Color.black, Color.green], ["30", Color.black, Color.green]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({|i| ~controlBusSynth5FadeTime = i.value; ~nbOfServers.do { |s| ~controlBusSynthFunc[~controlBusSynth5FadeTime].value(s); } });
 
-	~controlBusTypeArgView = RoundButton(/*~globalWindow*/~busControlComp, Rect(40, 2, 35, 18) /*Rect(76, 2, 35, 18)*/)
+	~controlBusTypeArgView = RoundButton(/*~globalWindow*/~busControlComp, Rect(40*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul) /*Rect(76, 2, 35, 18)*/)
 	.states_([["Rat", Color.white, Color.blue], ["Str", Color.white, Color.red], ["Cen", Color.white, Color.red]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({|i| ~controlBusTypeArgValue = i.value;
 		case
 		{~controlBusTypeArgValue == 0}
@@ -5799,18 +5828,20 @@ Ndef(\sound).play
 	})
 	.valueAction_(0).doAction; // Pour effectuer l'action lorsque l'état ne change pas
 
-	~controlRandFuncView = PopUpMenu.new(/*~globalWindow*/~busControlComp, Rect(40, 22, 48, 18) /*Rect(113, 2, 48, 18)*/)
+	~controlRandFuncViewView = View(~busControlComp, Rect(40*~xSizeMul, 22*~ySizeMul, 36*~xSizeMul, 18*~ySizeMul));
+
+	~controlRandFuncView = PopUpMenu.new(/*~globalWindow*/~controlRandFuncViewView, Rect(0, 0, 70*~xSizeMul, 18*~ySizeMul) /*Rect(113, 2, 48, 18)*/)
 	.action_({ |menu| ~controlRandFunc = menu./*item*/value.asInteger })
 	.allowsReselection_(true)
 	.background_(Color.red(0.7) /*Color.blue*/)
 	.stringColor_(Color.yellow)
-	.font_(Font("Verdana",10, bold: true));
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true));
 	~controlRandFuncView.items_(["1 R", "2 S", "3 P", "4 M"])
 	.valueAction_(0).doAction;
 
-	~controlBusTypeSignView = RoundButton(/*~globalWindow*/~busControlComp, Rect(80, 2, 25, 18) /*Rect(163, 2, 25, 18)*/)
+	~controlBusTypeSignView = RoundButton(/*~globalWindow*/~busControlComp, Rect(80*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul) /*Rect(163, 2, 25, 18)*/)
 	.states_([["+", Color.black, Color.green], ["-", Color.white, Color.red] /*, ["KeyR", Color.white, Color.grey]*/ ])
-	.font_(Font("Verdana",12, bold: true))
+	.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 	.action_({|i| ~controlBusTypeSign = i.value})
 	.valueAction_(0).doAction;
 
@@ -7675,18 +7706,18 @@ Ndef(\sound).play
 							// ~currentControlBusSynthPreset = NdefPreset(Ndef(\a));
 							// ~currentControlBusSynthPreset1 = NodeProxyPreset(~controlBusSynth[5]);
 
-							~currentControlBusSynthGUIContainer = Window("NdefGui").setTopLeftBounds(/*Rect(0, 70, 390, 180)*/ Rect(320, 504, 396, 570)).onClose_({~controlBusSynthGUIContainerCheck = 0; SkipJack.all.as(Array).do { |i| if (i.name == "_anon_", { i.stop /*i.name.postln*/}) } }).alwaysOnTop_(true).front;
+							~currentControlBusSynthGUIContainer = Window("NdefGui").setTopLeftBounds(/*Rect(0, 70, 390, 180)*/ Rect(320*~xSizeMul, 504*~ySizeMul, 396*~xSizeMul, 570*~ySizeMul)).onClose_({~controlBusSynthGUIContainerCheck = 0; SkipJack.all.as(Array).do { |i| if (i.name == "_anon_", { i.stop /*i.name.postln*/}) } }).alwaysOnTop_(true).front;
 							// ~currentControlBusSynthGUIContainer.addFlowLayout;
-							~currentControlBusSynthGUIPreset = ProxyPresetGui(~currentControlBusSynthPreset1, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2, 2, 420, 30));
+							~currentControlBusSynthGUIPreset = ProxyPresetGui(~currentControlBusSynthPreset1, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2*~xSizeMul, 2*~ySizeMul, 420*~xSizeMul, 30*~ySizeMul));
 							// // Mais déclenchement de 2 SkipJack quand NdefGUI lancé avec L enfoncé ??? - 1 stoppé avec : makeSkip: false ?????????
-							~currentControlBusSynthGUI = NdefGui.new(~controlBusSynth[0][5], numItems: 28, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2, 62, 384, 120), makeSkip: true, options: /*NdefGui.control*/ [ \name, \pausR, \sendR, \poll, \ed, \scope ]);
+							~currentControlBusSynthGUI = NdefGui.new(~controlBusSynth[0][5], numItems: 28, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2*~xSizeMul, 62*~ySizeMul, 384*~xSizeMul, 120*~ySizeMul), makeSkip: true, options: /*NdefGui.control*/ [ \name, \pausR, \sendR, \poll, \ed, \scope ]);
 
 							// pass in functions to add your own elements, such as:
 							// \zoink -> { |ndgui| Button(ndgui.zone, 60@20).states_([["zoink"]]).action_({ ndgui.object.zoink }) };
 
-							~currentControlBusSynthRandView = RoundButton(~currentControlBusSynthGUIContainer, Rect(260, 62, 40, 18))
+							~currentControlBusSynthRandView = RoundButton(~currentControlBusSynthGUIContainer, Rect(260*~xSizeMul, 62*~ySizeMul, 40*~xSizeMul, 18*~ySizeMul))
 							.states_([["\Rand", Color.black, Color.green]])
-							.font_(Font("Verdana",9))
+							.font_(Font("Verdana",9*~fontSizeMul))
 							.action_({|i|
 								// ~currentControlBusSynthPreset.setRand(~currentControlBusSynthRand/*, except: */);
 								// Comme except ne marche pas - pour ne pas faire de random sur le limiter ? -> mais pas de limiter en kr
@@ -7799,15 +7830,15 @@ Ndef(\sound).play
 							// ~currentControlBusSynthPreset = NdefPreset(Ndef(\a));
 							// ~currentControlBusSynthPreset2 = NodeProxyPreset(~controlBusSynth[5]);
 
-							~currentControlBusSynthGUIContainer = Window("NdefGui").setTopLeftBounds(/*Rect(0, 70, 390, 180)*/ Rect(320, 504, 396, 208)).onClose_({~controlBusSynthGUIContainerCheck = 0; SkipJack.all.as(Array).do { |i| if (i.name == "_anon_", { i.stop /*i.name.postln*/}) } }).alwaysOnTop_(true).front;
+							~currentControlBusSynthGUIContainer = Window("NdefGui").setTopLeftBounds(/*Rect(0, 70, 390, 180)*/ Rect(320*~xSizeMul, 504*~ySizeMul, 396*~xSizeMul, 208*~ySizeMul)).onClose_({~controlBusSynthGUIContainerCheck = 0; SkipJack.all.as(Array).do { |i| if (i.name == "_anon_", { i.stop /*i.name.postln*/}) } }).alwaysOnTop_(true).front;
 							// ~currentControlBusSynthGUIContainer.addFlowLayout;
-							~currentControlBusSynthGUIPreset = ProxyPresetGui(~currentControlBusSynthPreset2, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2, 2, 420, 30));
+							~currentControlBusSynthGUIPreset = ProxyPresetGui(~currentControlBusSynthPreset2, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2*~xSizeMul, 2*~ySizeMul, 420*~xSizeMul, 30*~ySizeMul));
 							// // Mais déclenchement de 2 SkipJack quand NdefGUI lancé avec L enfoncé ??? - 1 stoppé avec : makeSkip: false ?????????
-							~currentControlBusSynthGUI = NdefGui.new(~controlBusSynth[0][5], numItems: /*7*/ 28, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2, 62, 384, 130), makeSkip: true, options: /*NdefGui.control*/ [ \name, \pausR, \sendR, \poll, \ed, \scope ]);
+							~currentControlBusSynthGUI = NdefGui.new(~controlBusSynth[0][5], numItems: /*7*/ 28, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2*~xSizeMul, 62*~ySizeMul, 384*~xSizeMul, 130*~ySizeMul), makeSkip: true, options: /*NdefGui.control*/ [ \name, \pausR, \sendR, \poll, \ed, \scope ]);
 
-							~currentControlBusSynthRandView = RoundButton(~currentControlBusSynthGUIContainer, Rect(260, 62, 40, 18))
+							~currentControlBusSynthRandView = RoundButton(~currentControlBusSynthGUIContainer, Rect(260*~xSizeMul, 62*~ySizeMul, 40*~xSizeMul, 18*~ySizeMul))
 							.states_([["\Rand", Color.black, Color.green]])
-							.font_(Font("Verdana",9))
+							.font_(Font("Verdana",9*~fontSizeMul))
 							.action_({|i|
 								// ~currentControlBusSynthPreset.setRand(~currentControlBusSynthRand/*, except: */);
 								// Comme except ne marche pas - pour ne pas faire de random sur le limiter ? -> mais pas de limiter en kr
@@ -7841,7 +7872,7 @@ Ndef(\sound).play
 							SinOsc.kr(SinOsc.kr(freqM)*mulM + addM, 0, ampM) }; // FM
 							*/
 
-							~currentControlBusSynthGUIContainer.setTopLeftBounds(Rect(320, 526, 396, 208));
+							~currentControlBusSynthGUIContainer.setTopLeftBounds(Rect(320*~xSizeMul, 526*~ySizeMul, 396*~xSizeMul, 208*~ySizeMul));
 							~currentControlBusSynthGUIPreset.object_(~currentControlBusSynthPreset2);
 
 							~currentControlBusSynthRandView.action_({|i|
@@ -7974,15 +8005,15 @@ Ndef(\sound).play
 							// ~currentControlBusSynthPreset = NdefPreset(Ndef(\a));
 							// ~currentControlBusSynthPreset3 = NodeProxyPreset(~controlBusSynth[5]);
 
-							~currentControlBusSynthGUIContainer = Window("NdefGui").setTopLeftBounds(/*Rect(0, 70, 390, 180)*/ Rect(320, 504, 396, 370)).onClose_({~controlBusSynthGUIContainerCheck = 0; SkipJack.all.as(Array).do { |i| if (i.name == "_anon_", { i.stop /*i.name.postln*/}) } }).alwaysOnTop_(true).front;
+							~currentControlBusSynthGUIContainer = Window("NdefGui").setTopLeftBounds(/*Rect(0, 70, 390, 180)*/ Rect(320*~xSizeMul, 504*~ySizeMul, 396*~xSizeMul, 370*~ySizeMul)).onClose_({~controlBusSynthGUIContainerCheck = 0; SkipJack.all.as(Array).do { |i| if (i.name == "_anon_", { i.stop /*i.name.postln*/}) } }).alwaysOnTop_(true).front;
 							// ~currentControlBusSynthGUIContainer.addFlowLayout;
-							~currentControlBusSynthGUIPreset = ProxyPresetGui(~currentControlBusSynthPreset3, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2, 2, 420, 30));
+							~currentControlBusSynthGUIPreset = ProxyPresetGui(~currentControlBusSynthPreset3, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2*~xSizeMul, 2*~ySizeMul, 420*~xSizeMul, 30*~ySizeMul));
 							// // Mais déclenchement de 2 SkipJack quand NdefGUI lancé avec L enfoncé ??? - 1 stoppé avec : makeSkip: false ?????????
-							~currentControlBusSynthGUI = NdefGui.new(~controlBusSynth[0][5], numItems: /*16*/ 28, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2, 62, 384, 120), makeSkip: true, options: /*NdefGui.control*/ [ \name, \pausR, \sendR, \poll, \ed, \scope ]);
+							~currentControlBusSynthGUI = NdefGui.new(~controlBusSynth[0][5], numItems: /*16*/ 28, parent: ~currentControlBusSynthGUIContainer, bounds: Rect(2*~xSizeMul, 62*~ySizeMul, 384*~xSizeMul, 120*~ySizeMul), makeSkip: true, options: /*NdefGui.control*/ [ \name, \pausR, \sendR, \poll, \ed, \scope ]);
 
-							~currentControlBusSynthRandView = RoundButton(~currentControlBusSynthGUIContainer, Rect(260, 62, 40, 18))
+							~currentControlBusSynthRandView = RoundButton(~currentControlBusSynthGUIContainer, Rect(260*~xSizeMul, 62*~ySizeMul, 40*~xSizeMul, 18*~ySizeMul))
 							.states_([["\Rand", Color.black, Color.green]])
-							.font_(Font("Verdana",9))
+							.font_(Font("Verdana",9*~fontSizeMul))
 							.action_({|i|
 								// ~currentControlBusSynthPreset.setRand(~currentControlBusSynthRand/*, except: */);
 								// Comme except ne marche pas - pour ne pas faire de random sur le limiter ? -> mais pas de limiter en kr
@@ -8333,7 +8364,7 @@ pair for phase modulation, which sounds similar to FM
 	~nbTotalBeatsSpec = ControlSpec(1, 64, \lin, 1, 4);
 
 
-	~nbTotalBeatsView = SmoothSlider(~patComp, Rect(2, 239, 320, 22))
+	~nbTotalBeatsView = SmoothSlider(~patComp, Rect(2*~xSizeMul, 239*~ySizeMul, 320*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view|
 		// Actualisation aussi faite du ~toTempoView dans le Global Visual Feedback
 		/*(8.collect({|i| ~nbBeat[~tracksValue][~seqsValue][i]})).sum;*/
@@ -8346,7 +8377,7 @@ pair for phase modulation, which sounds similar to FM
 			view.string = ("% Beats - % Ev in %s - ABPM: %").format(~nbTotalBeats[~tracksValue][~seqsValue] * ~rtmMul[~tracksValue][~seqsValue], ~nbEvents[~tracksValue][~seqsValue], (~nbTotalBeats[~tracksValue][~seqsValue] / ~toTempo * ~rtmMul[~tracksValue][~seqsValue]).round(0.01), ( ~nbEvents[~tracksValue][~seqsValue] / ~nbTotalBeats[~tracksValue][~seqsValue] * ~toTempo * 60 * ~rtmMul[~tracksValue][~seqsValue].reciprocal).round(0.01));
 		});
 	})
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(Color.magenta)
 	.stringColor_(Color.white)
 	.border_(~border)
@@ -8355,9 +8386,9 @@ pair for phase modulation, which sounds similar to FM
 	.step_(1/64)
 	.doAction;
 
-	~durSelectionDefaultView = RoundButton(~patComp, Rect(325, 240, 30, 20))
+	~durSelectionDefaultView = RoundButton(~patComp, Rect(325*~xSizeMul, 240*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Def", Color.white, Color.blue]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({
 
 		// if (~patFlag == 0, {
@@ -8386,9 +8417,9 @@ pair for phase modulation, which sounds similar to FM
 	});
 
 	// ~rtmFix = 1 ! ~nbOfTracksX2;
-	~rtmFixView = RoundButton(~patComp, Rect(360, 240, 35, 20))
+	~rtmFixView = RoundButton(~patComp, Rect(360*~xSizeMul, 240*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 	.states_([["RFix", Color.white, Color.red], ["RVar", Color.black, Color.green]])
-	.font_(Font("Verdana",10,true))
+	.font_(Font("Verdana",10*~fontSizeMul,true))
 	.action_({ |i| ~rtmFix = i.value;
 	})
 	.valueAction_(1);
@@ -8588,7 +8619,7 @@ pair for phase modulation, which sounds similar to FM
 
 
 	// Tenter de le mettre dans le coin -> mais amélioration du PopUpMenu nécessaire
-	~configBeatsView = PopUpMenu.new(~rtmComp, Rect(2, 2, 160, 20) /*Rect(336, 170, 62, 38)*/)
+	~configBeatsView = PopUpMenu.new(~rtmComp, Rect(2*~xSizeMul, 2*~ySizeMul, 160*~xSizeMul, 20*~ySizeMul) /*Rect(336, 170, 62, 38)*/)
 	.action_({ |menu| ~configBeatsValue[~tracksValue][~seqsValue] = ~configBeatsView.value;
 		if (~patFlag == 0, {
 			~configBeatsViewFunc[menu.value].value/*(~tracksValue, ~seqsValue)*/;
@@ -8599,7 +8630,7 @@ pair for phase modulation, which sounds similar to FM
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(Color.black)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 	~configBeatsView.items_([
 		"Const 4 Ev - Sum 4",
 		"Const 4 Ev - Sum 6",
@@ -8644,9 +8675,9 @@ pair for phase modulation, which sounds similar to FM
 	])/*.valueAction_(0) // nécessaire de le mettre à la fin du module RTM1 au moins*/;
 
 	// Utiliser la fonction prévue pour ~defaultA XXXXXX
-	~defaultAllButtonView = RoundButton(~rtmComp, Rect(170, 2, 30, 20))
+	~defaultAllButtonView = RoundButton(~rtmComp, Rect(170*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Init", Color.white, Color.blue]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({ var durseq, durseq2;
 
 		var previousfxActOnWhich = ~fxActOnWhich; // Pour éviter que le fxL agisse sur le droit
@@ -8744,11 +8775,11 @@ pair for phase modulation, which sounds similar to FM
 
 	6.collect({|nb|
 
-		~pBeatTextView = StaticText(~rtmComp, Rect(2, 22+(nb*14), 30, 20))
+		~pBeatTextView = StaticText(~rtmComp, Rect(2*~xSizeMul, (22+(nb*14))*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.stringColor_(Color.white)
 		.string_((nb+1)+"%:");
 
-		~pBeatView[nb] = RoundNumberBox(~rtmComp, Rect(28, 24+(nb*14), 30, 16))
+		~pBeatView[nb] = RoundNumberBox(~rtmComp, Rect(28*~xSizeMul, (24+(nb*14))*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 		.clipLo_(0).clipHi_(100).align_( \right )
 		.formatFunc_({ |view| view.asString.preExtend(3, $ ); }) // fixed width string
 		.normalColor_(Color.blue)
@@ -8780,11 +8811,11 @@ pair for phase modulation, which sounds similar to FM
 			res;
 		};
 
-		~nbBeatTextView = StaticText(~rtmComp, Rect(63, 22+(nb*14), 25, 20))
+		~nbBeatTextView = StaticText(~rtmComp, Rect(63*~xSizeMul, (22+(nb*14))*~ySizeMul, 25*~xSizeMul, 20*~ySizeMul))
 		.stringColor_(Color.white)
 		.string_("Nb:");
 
-		~nbBeatView[nb] = RoundNumberBox(~rtmComp, Rect(84, 24+(nb*14), 40, 16))
+		~nbBeatView[nb] = RoundNumberBox(~rtmComp, Rect(84*~xSizeMul, (24+(nb*14))*~ySizeMul, 40*~xSizeMul, 16*~ySizeMul))
 		.clipLo_(1).clipHi_(1000).align_( \right )
 		.valueAction_(1)
 		.formatFunc_({ |view| view.asString.preExtend(4, $ ); }) // fixed width string
@@ -8817,11 +8848,11 @@ pair for phase modulation, which sounds similar to FM
 			res;
 		};
 
-		~sumBeatTextView = StaticText(~rtmComp, Rect(129, 22+(nb*14), 35, 20))
+		~sumBeatTextView = StaticText(~rtmComp, Rect(129*~xSizeMul, (22+(nb*14))*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 		.stringColor_(Color.white)
 		.string_("Sum:");
 
-		~sumBeatView[nb] = RoundNumberBox(~rtmComp, Rect(159, 24+(nb*14), 40, 16))
+		~sumBeatView[nb] = RoundNumberBox(~rtmComp, Rect(159*~xSizeMul, (24+(nb*14))*~ySizeMul, 40*~xSizeMul, 16*~ySizeMul))
 		.clipLo_(1).clipHi_(1000).align_( \right )
 		.valueAction_(1)
 		.formatFunc_({ |view| view.asString.preExtend(4, $ ); }) // fixed width string
@@ -8848,11 +8879,11 @@ pair for phase modulation, which sounds similar to FM
 			res;
 		};
 
-		~minSumBeatTextView = StaticText(~rtmComp, Rect(204, 22+(nb*14), 30, 20))
+		~minSumBeatTextView = StaticText(~rtmComp, Rect(204*~xSizeMul, (22+(nb*14))*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.stringColor_(Color.white)
 		.string_("Min:");
 
-		~minSumBeatView[nb] = RoundNumberBox(~rtmComp, Rect(229, 24+(nb*14), 30, 16))
+		~minSumBeatView[nb] = RoundNumberBox(~rtmComp, Rect(229*~xSizeMul, (24+(nb*14))*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 		.clipLo_(0).clipHi_(10).align_( \right )
 		.formatFunc_({ |view| view.asString.preExtend(2, $  ); }) // fixed width string
 		.action_({|view| ~minSumBeat[~tracksValue][~seqsValue][nb] = view.value.asInteger; })
@@ -8879,8 +8910,8 @@ pair for phase modulation, which sounds similar to FM
 			res;
 		};
 
-		~selectBeatView[nb] = PopUpTreeMenu.new(~rtmComp, Rect(264, 2+(nb*18), 133, 18))
-		.font_(Font("Verdana",10))
+		~selectBeatView[nb] = PopUpTreeMenu.new(~rtmComp, Rect(264*~xSizeMul, (2+(nb*18))*~ySizeMul, 133*~xSizeMul, 18*~ySizeMul))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.background_(~popUpMenuBackgroundColor)
 		.hiliteColor_(Color.red(0.75))
 		.stringColor_(~popUpMenuStringColor)
@@ -9019,12 +9050,12 @@ pair for phase modulation, which sounds similar to FM
 
 
 	// Remplacement du EZText / TextField par TextView (multilignes & lance l'exécution pour changer ~dur[track][seq] mais pas ~dura[track][seq])
-	~displayRhythmView = TextView(~rtmComp, Rect(2, 113, 394, 40))
+	~displayRhythmView = TextView(~rtmComp, Rect(2*~xSizeMul, 113*~ySizeMul, 394*~xSizeMul, 40*~ySizeMul))
 	// .autohidesScrollers_(true)
 	.hasVerticalScroller_(false)
 	.hasHorizontalScroller_(false)
 	.enterInterpretsSelection_(1)
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.string_(/*~rtmView.valueAction_( [ 4, [ [ 1, [ 1, 1, 1, 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ] ] ] .convertRhythm.linlin(0, 2 , 0, 1));*/
 		"~rhythmChange[ 0 ][ 0 ] =  [ 4, [ [ 1, [ 1, 1, 1, 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ], [ 0, [ 1 ] ] ] ] ; ~rtmRangeView.valueAction_(~rtmRangeSpec[ 0 ][ 0 ].unmap([0,  ~rhythmChange[ 0 ][ 0 ].convertRhythm.maxItem * 2])); ~rtmView.valueAction_( ~rhythmChange[ 0 ][ 0 ].convertRhythm.linlin(0, ~rtmMax[ 0 ][ 0 ], 0, 1));"
 	);
@@ -9075,9 +9106,9 @@ pair for phase modulation, which sounds similar to FM
 
 
 
-	~randAllView = RoundButton(~rtmCompb, Rect(5, 5, 50, 20))
+	~randAllView = RoundButton(~rtmCompb, Rect(5*~xSizeMul, 5*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["R A", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({ var durseq, durseq2;
 
 		var previousfxActOnWhich = ~fxActOnWhich; // Pour éviter que le fxL agisse sur le droit
@@ -9161,9 +9192,9 @@ pair for phase modulation, which sounds similar to FM
 	});
 
 	// obligé de mettre le rand avant le Default afin que le nombre de sliders soit updaté ? autre manière de faire car peut provoquer des erreurs ???
-	~randInitView = RoundButton(~rtmCompb, Rect(5, 29, 50, 20))
+	~randInitView = RoundButton(~rtmCompb, Rect(5*~xSizeMul, 29*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["RI A", Color.white, Color.magenta]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({ var durseq, durseq2;
 
 		var previousfxActOnWhich = ~fxActOnWhich; // Pour éviter que le fxL agisse sur le droit
@@ -9260,9 +9291,9 @@ pair for phase modulation, which sounds similar to FM
 
 	});
 
-	~randSomeView = RoundButton(~rtmCompb, Rect(60, 5, 50, 20))
+	~randSomeView = RoundButton(~rtmCompb, Rect(60*~xSizeMul, 5*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["R BRS", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({
 		if (~patFlag == 0, {
 			~buffer.value(~tracksValue, ~seqsValue);
@@ -9277,9 +9308,9 @@ pair for phase modulation, which sounds similar to FM
 		}});
 	});
 
-	~randSomeView2 = RoundButton(~rtmCompb, Rect(60, 29, 25, 20))
+	~randSomeView2 = RoundButton(~rtmCompb, Rect(60*~xSizeMul, 29*~ySizeMul, 25*~xSizeMul, 20*~ySizeMul))
 	.states_([["RAL", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({
 		if (~patFlag == 0, {
 			~amplitude.value(~tracksValue, ~seqsValue);
@@ -9290,9 +9321,9 @@ pair for phase modulation, which sounds similar to FM
 		}});
 	});
 
-	~randSomeView3 = RoundButton(~rtmCompb, Rect(87, 29, 25, 20))
+	~randSomeView3 = RoundButton(~rtmCompb, Rect(87*~xSizeMul, 29*~ySizeMul, 25*~xSizeMul, 20*~ySizeMul))
 	.states_([["RO", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({
 		if (~patFlag == 0, {
 			~offset.value(~tracksValue, ~seqsValue);
@@ -9301,9 +9332,9 @@ pair for phase modulation, which sounds similar to FM
 		}});
 	});
 
-	~randOutView = RoundButton(~rtmCompb, Rect(115, 5, 50, 20))
+	~randOutView = RoundButton(~rtmCompb, Rect(115*~xSizeMul, 5*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["R POuts", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({
 		if (~patFlag == 0, {
 			~outingL.value(~tracksValue, ~seqsValue);
@@ -9316,9 +9347,9 @@ pair for phase modulation, which sounds similar to FM
 		}});
 	});
 
-	~randFxView = RoundButton(~rtmCompb, Rect(115, 29, 50, 20))
+	~randFxView = RoundButton(~rtmCompb, Rect(115*~xSizeMul, 29*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["R Fxs", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({
 		if (~patFlag == 0, {
 			~efxL.value(~tracksValue, ~seqsValue);
@@ -9329,9 +9360,9 @@ pair for phase modulation, which sounds similar to FM
 		}});
 	});
 
-	~randNoFxView = RoundButton(~rtmCompb, Rect(170, 29, 50, 20))
+	~randNoFxView = RoundButton(~rtmCompb, Rect(170*~xSizeMul, 29*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["NO Fxs", Color.white, Color.blue]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({
 		if (~patFlag == 0, {
 			~fxLView.valueAction_(0 ! ~dur[~tracksValue][~seqsValue].size);
@@ -9343,21 +9374,21 @@ pair for phase modulation, which sounds similar to FM
 	});
 
 
-	~copyAView = RoundButton(~rtmCompb, Rect(170, 5, 25, 20))
+	~copyAView = RoundButton(~rtmCompb, Rect(170*~xSizeMul, 5*~ySizeMul, 25*~xSizeMul, 20*~ySizeMul))
 	.states_([["CA", Color.red, Color.white]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({~copyA.value(~tracksValue, ~seqsValue);
 	});
 
-	~pasteAView = RoundButton(~rtmCompb, Rect(196, 5, 25, 20))
+	~pasteAView = RoundButton(~rtmCompb, Rect(196*~xSizeMul, 5*~ySizeMul, 25*~xSizeMul, 20*~ySizeMul))
 	.states_([["PA", Color.red, Color.white]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({~pasteA.value(~tracksValue, ~seqsValue);
 	});
 
-	~patFlagView = RoundButton(~rtmCompb, Rect(227, 5, 30, 20))
+	~patFlagView = RoundButton(~rtmCompb, Rect(227*~xSizeMul, 5*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["\SEQ", Color.black, Color.white], ["\ALL", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~patFlag = i.value})
 	.value_(0).doAction;
 
@@ -9365,9 +9396,9 @@ pair for phase modulation, which sounds similar to FM
 
 	if (~presetsFileName2.isNil, {
 
-		~savePresetFileView = RoundButton(~rtmCompb, Rect(262, 5, 50, 20))
+		~savePresetFileView = RoundButton(~rtmCompb, Rect(262*~xSizeMul, 5*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 		.states_([["SaveF", Color.black, Color.white], ["NSave", Color.white, Color.red]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ |i| ~savePresetFile = i.value;
 			if (~savePresetFile == 0, {~presetStoringButtonView.valueAction_(1);
 				/* Pour trier les données d'une String selon l'ordre croissant des premiers chiffres
@@ -9395,9 +9426,9 @@ pair for phase modulation, which sounds similar to FM
 
 	},{
 
-		~savePresetFileView = RoundButton(~rtmCompb, Rect(262, 5, 50, 20))
+		~savePresetFileView = RoundButton(~rtmCompb, Rect(262*~xSizeMul, 5*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 		.states_([["SaveF", Color.black, Color.white], ["NSave", Color.white, Color.red]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ |i| ~savePresetFile = i.value;
 			if (~savePresetFile == 0, {~presetStoringButtonView.valueAction_(1);
 				~presetsTypeList2 = ~presetList2.collect({ |i| i.split($|)[3].split($ )[1] }).addAll(["ALL", "AsD", "AsF"]).as(Set).as(Array).sort;
@@ -9415,16 +9446,16 @@ pair for phase modulation, which sounds similar to FM
 
 
 	~followPreset = 0;
-	~followPresetView = RoundButton(~rtmCompb, Rect(226/*262*/, 29, 75, 20))
+	~followPresetView = RoundButton(~rtmCompb, Rect(226*~xSizeMul /*262*/, 29*~ySizeMul, 75*~xSizeMul, 20*~ySizeMul))
 	.states_([["NoFollow", Color.white, Color.red], ["Follow Seq+1", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({ |i| ~followPreset = i.value;
 		if (~followPreset == 1, { ~presetsDontTriggerFXView.valueAction_(1); },{ ~presetsDontTriggerFXView.valueAction_(0); });
 	});
 
-	~followRetriggerPresetView = RoundButton(~rtmCompb, Rect(305, 29, 70, 20))
+	~followRetriggerPresetView = RoundButton(~rtmCompb, Rect(305*~xSizeMul, 29*~ySizeMul, 70*~xSizeMul, 20*~ySizeMul))
 	.states_([["Retrig Seq+1", Color.white, Color.red]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({ |i| var prev, prevFX; prev = ~followPreset; prevFX = ~presetsDontTriggerFX; ~followPreset = 0; ~presetsDontTriggerFX = 1;
 		~seqsView.valueAction_(~seqsValue+1); ~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([~seqsValue, ~seqsValue+1]));
 		if (~currentTab == 0, {
@@ -9489,13 +9520,13 @@ pair for phase modulation, which sounds similar to FM
 	multiView, data, dataSpec, multiViewFilled, multiViewDrawLines, multiViewValueThumbSize, multiViewBackground, multiViewFillColor, multiViewStrokeColor,
 	seqView, seqStart, seqStop, seqDur, seqSpec, seqSpec2, seqVSpec, seqVSpec2,
 	indexView, index,
-	rangeView, min, max, rangeSpec, rangeViewMinRange, rangeSliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-	mulView, mul, mulSpec, mulSliderColor, mulPresetView, mulPresetViewItems, mulPresetViewDefault,
-	roundView, roundViewPos, round, roundValue, roundViewItems, roundViewDefault,
+	rangeView, min, max, rangeSpec, rangeViewMinRange, rangeSliderColor, rangePresetViewView, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
+	mulView, mul, mulSpec, mulSliderColor, mulPresetViewView, mulPresetView, mulPresetViewItems, mulPresetViewDefault,
+	roundViewView, roundView, roundViewPos, round, roundValue, roundViewItems, roundViewDefault,
 	randView, randFunc,
 	seqAllView, rangeMode, seqMode,
 	copyAView, copyA, pasteAView, pasteA, pasteMView, pasteM, defaultView, default,
-	dirView, dir, patView, pat, patSelView, patSel, block,
+	dirView, dir, patView, pat, patSelViewView, patSelView, patSel, block,
 	showView, showViewPos, showViewAlign, showViewColor, showViewString,
 	readView, readBackgroundColorView, posView
 	|
@@ -9508,14 +9539,14 @@ pair for phase modulation, which sounds similar to FM
 	\ratView, \rat, \ratSpec, false, true, 10, ~compColor1, ~multiCompColor1, Color.white,
 	\ratSeqView, \ratSeqStart, \ratSeqStop, \seqDurRat, \ratSeqSpec, \ratSeqSpec2, \ratSeqVSpec, \ratSeqVSpec2,
 	\ratIndexView, \ratIndex,
-	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-	\ratRangeView, \ratMin, \ratMax, \ratRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ratRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
-	\ratMulView, \ratMul, \ratMulSpec, ~sliderHilightColor, \ratMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-	\ratRoundView, ~roundViewPos5, \ratRound, \ratRoundValue, ["@ 0.01 EXP", "@ 0.1 EXP", "@ 0.125 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetViewView, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
+	\ratRangeView, \ratMin, \ratMax, \ratRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ratRangePresetViewView, \ratRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
+	\ratMulView, \ratMul, \ratMulSpec, ~sliderHilightColor, \ratMulPresetViewView, \ratMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+	\ratRoundViewView, \ratRoundView, ~roundViewPos5, \ratRound, \ratRoundValue, ["@ 0.01 EXP", "@ 0.1 EXP", "@ 0.125 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 	\ratRandView, \rate,
 	\ratSeqAllView, \ratRangeMode, \ratSeqMode,
 	\ratCopyAView, \ratCopyA, \ratPasteAView, \ratPasteA, \ratPasteMView, \ratPasteM, \ratDefaultView, \ratDefault,
-	\ratDirView, \ratDir, \ratPatView, \ratPat, \ratPatSelView, \ratPatSel, \ratBlock,
+	\ratDirView, \ratDir, \ratPatView, \ratPat, \ratPatSelViewView, \ratPatSelView, \ratPatSel, \ratBlock,
 	\ratShowView, ~nameModPos2, \left, Color.yellow, "RAT",
 	\ratReadView, Color.grey(0.6), \ratPosView
 	);
@@ -9795,7 +9826,7 @@ pair for phase modulation, which sounds similar to FM
 	.hasVerticalScroller_(false)
 	.hasHorizontalScroller_(false)
 	.enterInterpretsSelection_(1)
-	.font_(Font("arial",10));
+	.font_(Font("arial",10*~fontSizeMul));
 
 
 
@@ -9912,7 +9943,7 @@ pair for phase modulation, which sounds similar to FM
 					~outRView.indexThumbSize_(/*~outRView.bounds.width*/ 333 / ~seqDurOutR[~tracksValue][~seqsValue]);
 					~outRSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutR[~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 					~outRSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutR[~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-					~outRReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurOutR[~tracksValue][~seqsValue]));
+					~outRReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurOutR[~tracksValue][~seqsValue])*~xSizeMul));
 				});
 			});
 
@@ -9936,7 +9967,7 @@ pair for phase modulation, which sounds similar to FM
 					~fxRView.indexThumbSize_(/*~fxRView.bounds.width*/ 333 / ~seqDurFxR[~tracksValue][~seqsValue]);
 					~fxRSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxR[~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 					~fxRSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxR[~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-					~fxRReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurFxR[~tracksValue][~seqsValue]));
+					~fxRReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurFxR[~tracksValue][~seqsValue])*~xSizeMul));
 				});
 			});
 
@@ -9948,7 +9979,7 @@ pair for phase modulation, which sounds similar to FM
 	// SeqView
 
 	envir[seqView] = SmoothRangeSlider(envir[comp], ~seqViewPos5)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
@@ -9999,7 +10030,7 @@ pair for phase modulation, which sounds similar to FM
 				envir[multiView].indexThumbSize_(envir[multiView].bounds.width / envir[seqDur][~tracksValue][~seqsValue]);
 				envir[seqSpec2][~tracksValue][~seqsValue] = ControlSpec(0, envir[seqDur][~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 				envir[seqVSpec2][~tracksValue][~seqsValue] = ControlSpec(0, envir[seqDur][~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-				envir[readView].thumbSize_(max(~readViewThumbSize, 333 / envir[seqDur][~tracksValue][~seqsValue]));
+				envir[readView].thumbSize_(max(~readViewThumbSize, (333 / envir[seqDur][~tracksValue][~seqsValue])*~xSizeMul));
 			});
 		})
 	}
@@ -10031,7 +10062,7 @@ pair for phase modulation, which sounds similar to FM
 				envir[multiView].indexThumbSize_(envir[multiView].bounds.width / envir[seqDur][~tracksValue][~seqsValue]);
 				envir[seqSpec2][~tracksValue][~seqsValue] = ControlSpec(0, envir[seqDur][~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 				envir[seqVSpec2][~tracksValue][~seqsValue] = ControlSpec(0, envir[seqDur][~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-				envir[readView].thumbSize_(max(~readViewThumbSize, 333 / envir[seqDur][~tracksValue][~seqsValue]));
+				envir[readView].thumbSize_(max(~readViewThumbSize, (333 / envir[seqDur][~tracksValue][~seqsValue])*~xSizeMul));
 
 				if (~outActOnWhich == 1, {
 					~outRView.valueAction_(~outR[~tracksValue][~seqsValue][(0..max(0,~outRSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
@@ -10039,7 +10070,7 @@ pair for phase modulation, which sounds similar to FM
 					~outRView.indexThumbSize_(~outRView.bounds.width / ~seqDurOutR[~tracksValue][~seqsValue]);
 					~outRSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutR[~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 					~outRSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutR[~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-					~outRReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurOutR[~tracksValue][~seqsValue]));
+					~outRReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurOutR[~tracksValue][~seqsValue])*~xSizeMul));
 				})
 			});
 
@@ -10063,7 +10094,7 @@ pair for phase modulation, which sounds similar to FM
 				envir[multiView].indexThumbSize_(envir[multiView].bounds.width / envir[seqDur][~tracksValue][~seqsValue]);
 				envir[seqSpec2][~tracksValue][~seqsValue] = ControlSpec(0, envir[seqDur][~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 				envir[seqVSpec2][~tracksValue][~seqsValue] = ControlSpec(0, envir[seqDur][~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-				envir[readView].thumbSize_(max(~readViewThumbSize, 333 / envir[seqDur][~tracksValue][~seqsValue]));
+				envir[readView].thumbSize_(max(~readViewThumbSize, (333 / envir[seqDur][~tracksValue][~seqsValue])*~xSizeMul));
 
 				if (~fxActOnWhich == 1, {
 					~fxRView.valueAction_(~fxR[~tracksValue][~seqsValue][(0..max(0,~fxRSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
@@ -10071,7 +10102,7 @@ pair for phase modulation, which sounds similar to FM
 					~fxRView.indexThumbSize_(~fxRView.bounds.width / ~seqDurFxR[~tracksValue][~seqsValue]);
 					~fxRSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxR[~tracksValue][~seqsValue], \lin, 1); // Pour le Text ReadView
 					~fxRSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxR[~tracksValue][~seqsValue]-1, \lin, 1); // Pour le Slider ReadView
-					~fxRReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurFxR[~tracksValue][~seqsValue]));
+					~fxRReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurFxR[~tracksValue][~seqsValue])*~xSizeMul));
 				})
 			});
 
@@ -10083,7 +10114,7 @@ pair for phase modulation, which sounds similar to FM
 	// IndexView
 
 	envir[indexView] = SmoothSlider(envir[comp], ~indexViewPos5)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
@@ -10167,7 +10198,7 @@ pair for phase modulation, which sounds similar to FM
 	// RangeView
 
 	envir[rangeView] = SmoothRangeSlider(envir[comp], ~rangeViewPos5)
-	.font_(Font("Verdana", 8))
+	.font_(Font("Verdana", 8*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(rangeSliderColor)
 	.stringColor_(Color.white)
@@ -10473,7 +10504,7 @@ pair for phase modulation, which sounds similar to FM
 	// si changement du Mul, pas de changement du step & du round du Multislider -> donc round et step décalés, multipliés
 	// seulement répercussion sur le string du RangeView (avec rounding des valeurs au delà de 100 pour faciliter l'affichage visuel pou Rat)
 	envir[mulView] = SmoothSlider(envir[comp], ~mulViewPos5)
-	.font_(Font("Verdana", 8))
+	.font_(Font("Verdana", 8*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(mulSliderColor)
 	.stringColor_(Color.white)
@@ -10600,25 +10631,29 @@ pair for phase modulation, which sounds similar to FM
 	// Il serait possible de prendre en compte le nombre de pistes qui jouent (en ajoutant  la multiplication ~playViewValue.sum.max(1) et leur rapidité
 	// & faire la calcul de ~rtmMulSpec plus souvent dès que l'on rajoute des pistes ou accélère -> Non dès qu'on bouge rtmMul... un peu trop intense ?
 
+	envir[mulPresetViewView] = View(envir[comp], ~mulPresetViewPos5);
+
+	envir[mulPresetView] = PopUpMenu.new(envir[mulPresetViewView], Rect(0, 0, 65*~xSizeMul, 16*~ySizeMul));
+
 	if (\dur != data, {
 
-		envir[mulPresetView] = PopUpMenu.new(envir[comp], ~mulPresetViewPos5)
+		envir[mulPresetView]
 		.action_({ |menu| envir[mulView].valueAction_(envir[mulSpec].unmap(menu.item.asFloat)) })
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(~popUpMenuStringColor)
-		.font_(Font("Verdana",8));
+		.font_(Font("Verdana",8*~fontSizeMul));
 		envir[mulPresetView].items_(mulPresetViewItems)
 		.valueAction_(mulPresetViewDefault);
 
 	},{
 
-		envir[mulPresetView] = PopUpMenu.new(envir[comp], ~mulPresetViewPos5)
+		envir[mulPresetView]
 		.action_({ |menu| envir[mulView].valueAction_(envir[mulSpec][~tracksValue][~seqsValue].unmap(menu.item.asFloat)) })
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(~popUpMenuStringColor)
-		.font_(Font("Verdana",8));
+		.font_(Font("Verdana",8*~fontSizeMul));
 		envir[mulPresetView].items_(mulPresetViewItems)
 		.valueAction_(mulPresetViewDefault);
 
@@ -10630,11 +10665,13 @@ pair for phase modulation, which sounds similar to FM
 
 	if (\buf != data, {
 
-		envir[roundView] = PopUpMenu.new(envir[comp], roundViewPos)
+		envir[roundViewView] = View(envir[comp], roundViewPos);
+
+		envir[roundView] = PopUpMenu.new(envir[roundViewView], Rect(0, 0, 140*~xSizeMul, 16*~ySizeMul))
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(~popUpMenuStringColor)
-		.font_(Font("Verdana",8));
+		.font_(Font("Verdana",8*~fontSizeMul));
 
 		case { [\rat, \str, \cen, \rat2, \str2, \cen2, \leg].includes(data) }
 		{
@@ -10754,11 +10791,13 @@ pair for phase modulation, which sounds similar to FM
 
 		// RangePresetView
 
-		envir[rangePresetView] = PopUpMenu.new(envir[comp], ~rangePresetViewPos5)
+		envir[rangePresetViewView] = View(envir[comp], ~rangePresetViewPos5);
+
+		envir[rangePresetView] = PopUpMenu.new(envir[rangePresetViewView], Rect(0, 0, 90*~xSizeMul, 16*~ySizeMul))
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(~popUpMenuStringColor)
-		.font_(Font("Verdana",8))
+		.font_(Font("Verdana",8*~fontSizeMul))
 		.items_(rangePresetViewItems);
 
 
@@ -10788,13 +10827,13 @@ pair for phase modulation, which sounds similar to FM
 
 
 	if (\buf == data, {
-		envir[randView] = RoundButton(envir[comp], Rect(104+22, 136, 35, 16) /*~randViewPos5*/);
-		envir[seqAllView] = RoundButton(envir[comp], Rect(141+22, 136, 35, 16) /*~seqAllViewPos5*/);
-		envir[seqMode] = RoundButton(envir[comp], Rect(178+22, 136, 35, 16) /*~seqModePos5*/);
-		envir[copyAView] = RoundButton(envir[comp], Rect(215+22, 136, 22, 16) /*~copyAViewPos5*/);
-		envir[pasteAView] = RoundButton(envir[comp], Rect(237+22, 136, 22, 16) /*~pasteAViewPos5*/);
-		envir[pasteMView] = RoundButton(envir[comp], Rect(259+22, 136, 22, 16) /*~pasteMViewPos5*/);
-		envir[defaultView] = RoundButton(envir[comp], Rect(281+22, 136, 24, 16) /*~defaultViewPos5*/)
+		envir[randView] = RoundButton(envir[comp], Rect((104+22)*~xSizeMul, 136*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul) /*~randViewPos5*/);
+		envir[seqAllView] = RoundButton(envir[comp], Rect((141+22)*~xSizeMul, 136*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul) /*~seqAllViewPos5*/);
+		envir[seqMode] = RoundButton(envir[comp], Rect((178+22)*~xSizeMul, 136*~ySizeMul, 35*~xSizeMul, 16*~ySizeMul) /*~seqModePos5*/);
+		envir[copyAView] = RoundButton(envir[comp], Rect((215+22)*~xSizeMul, 136*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul) /*~copyAViewPos5*/);
+		envir[pasteAView] = RoundButton(envir[comp], Rect((237+22)*~xSizeMul, 136*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul) /*~pasteAViewPos5*/);
+		envir[pasteMView] = RoundButton(envir[comp], Rect((259+22)*~xSizeMul, 136*~ySizeMul, 22*~xSizeMul, 16*~ySizeMul) /*~pasteMViewPos5*/);
+		envir[defaultView] = RoundButton(envir[comp], Rect((281+22)*~xSizeMul, 136*~ySizeMul, 24*~xSizeMul, 16*~ySizeMul) /*~defaultViewPos5*/)
 	},{
 		envir[randView] = RoundButton(envir[comp], ~randViewPos5);
 		envir[seqAllView] = RoundButton(envir[comp], ~seqAllViewPos5);
@@ -10809,7 +10848,7 @@ pair for phase modulation, which sounds similar to FM
 
 	envir[randView]
 	.states_([["Rand", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({if (~patFlag == 0, {
 		envir[randFunc].value(~tracksValue, ~seqsValue)}, {
 		~seqs.do {|i|
@@ -10821,42 +10860,42 @@ pair for phase modulation, which sounds similar to FM
 
 	envir[seqAllView]
 	.states_([["All Seq", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({envir[seqView].valueAction_([0, 1]);
 	});
 
 	envir[rangeMode] = RoundButton(envir[comp], ~rangeModePos5)
 	.states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor] /*["\Drag", Color.white, Color.blue], ["\Jump", Color.black, Color.green]*/])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| envir[rangeView].mode_(~modes[i.value])});
 
 	envir[seqMode]
 	.states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor] /*["\Drag", Color.white, Color.blue], ["\Jump", Color.black, Color.green]*/])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| envir[seqView].mode_(~modes[i.value])})
 	.valueAction_(1);
 
 	envir[copyAView]
 	.states_([["CA", Color.red, Color.white]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({envir[copyA].value(~tracksValue, ~seqsValue);
 	});
 
 	envir[pasteAView]
 	.states_([["PA", Color.red, Color.white]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({envir[pasteA].value(~tracksValue, ~seqsValue);
 	});
 
 	envir[pasteMView]
 	.states_([["PM", Color.black, Color.white]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({envir[pasteM].value(~tracksValue, ~seqsValue);
 	});
 
 	envir[defaultView]
 	.states_([["Def", Color.white, Color.blue]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({if (~patFlag == 0, {
 		envir[default].value(~tracksValue, ~seqsValue)}, {
 		~seqs.do {|i| envir[default].value(~tracksValue, i)}});
@@ -10864,7 +10903,7 @@ pair for phase modulation, which sounds similar to FM
 
 	envir[dirView] = RoundButton(envir[comp], ~dirViewPos5)
 	.states_([["\>", Color.black, ~popUpMenuBackgroundColor], ["\<", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| envir[dir][~tracksValue][~seqsValue] = i.value;
 		envir[block][~tracksValue] = 1;
 		if (~patFlag == 1, {~seqs.do {|sequence| envir[dir][~tracksValue][sequence] = i.value} });
@@ -10874,11 +10913,11 @@ pair for phase modulation, which sounds similar to FM
 
 	if (\outR != data,
 		{envir[patView] = RoundButton(envir[comp], ~patViewPos5)
-		},{envir[patView] = RoundButton(~tabGUI, Rect(1536+36, 805, 24, 16))
+		},{envir[patView] = RoundButton(~tabGUI, Rect((1536+36)*~xSizeMul, 805*~ySizeMul, 24*~xSizeMul, 16*~ySizeMul))
 	});
 
 	envir[patView].states_([["Cyc", Color.black, ~popUpMenuBackgroundColor], ["Pat", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| envir[pat][~tracksValue][~seqsValue] = i.value;
 		envir[block][~tracksValue] = 1;
 		if (envir[pat][~tracksValue][~seqsValue] == 1, {envir[patSelView].background_(Color.red(0.7)).stringColor_(Color.white)}, {envir[patSelView].background_(~popUpMenuBackgroundColor).stringColor_(~popUpMenuStringColor)} );
@@ -10890,15 +10929,19 @@ pair for phase modulation, which sounds similar to FM
 	// PatSelView
 
 	if (\outR != data,
-		{envir[patSelView] = PopUpMenu.new(envir[comp], ~patSelViewPos5)
-		},{envir[patSelView] = PopUpMenu.new(~tabGUI, Rect(1545, 610+216, 52, 16))
+		{
+			envir[patSelViewView] = View(envir[comp], ~patSelViewPos5);
+			envir[patSelView] = PopUpMenu.new(envir[patSelViewView], Rect(0, 0, 80*~xSizeMul, 16*~ySizeMul))
+		},{
+			envir[patSelViewView] = View(~tabGUI, Rect(1544*~xSizeMul, (610+216)*~ySizeMul, 52*~xSizeMul, 16*~ySizeMul));
+			envir[patSelView] = PopUpMenu.new(envir[patSelViewView], Rect(0, 0, 80*~xSizeMul, 16*~ySizeMul))
 	});
 
 	envir[patSelView]
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|menu| envir[patSel][~tracksValue][~seqsValue] = menu.value;
 		envir[block][~tracksValue] = 1;
 		if (~patFlag == 1, {~seqs.do {|sequence| envir[patSel][~tracksValue][sequence] = menu.value }});
@@ -11004,7 +11047,7 @@ pair for phase modulation, which sounds similar to FM
 	// ShowView - Names of Modules
 
 	envir[showView] = StaticText(envir[comp], showViewPos)
-	.font_(Font("Verdana", 13, bold: true))
+	.font_(Font("Verdana", 13*~fontSizeMul, bold: true))
 	.align_(showViewAlign)
 	.acceptsMouse_(0)
 	.stringColor_(showViewColor)
@@ -11023,7 +11066,7 @@ pair for phase modulation, which sounds similar to FM
 	.background_(readBackgroundColorView)
 	.knobColor_(Color.red/*black*/)
 	.acceptsMouse_(0)
-	.thumbSize_(333/4);
+	.thumbSize_(333/4*~xSizeMul);
 
 	// Comment optimiser le code - pour changer la couleur de la barre du bouton ???
 	envir[readView].palette = envir[readView].palette.button_(Color.yellow);
@@ -11032,7 +11075,7 @@ pair for phase modulation, which sounds similar to FM
 	// PosView - Text shows Pos & Value in module
 
 	envir[posView] = StaticText(envir[comp], ~posViewPos5)
-	.font_(Font("Verdana", 11, bold: true))
+	.font_(Font("Verdana", 11*~fontSizeMul, bold: true))
 	.align_(\left)
 	.acceptsMouse_(0)
 	.stringColor_(Color.black);
@@ -11055,13 +11098,13 @@ comp, display, displayReduceFontPos, displayString1, displayString2,
 multiView, data, dataSpec, multiViewFilled, multiViewDrawLines, multiViewValueThumbSize, multiViewBackground, multiViewFillColor, multiViewStrokeColor,
 seqView, seqStart, seqStop, seqDur, seqSpec, seqSpec2, seqVSpec, seqVSpec2,
 indexView, index,
-rangeView, min, max, rangeSpec, rangeViewMinRange, rangeSliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-mulView, mul, mulSpec, mulSliderColor, mulPresetView, mulPresetViewItems, mulPresetViewDefault,
-roundView, roundViewPos, round, roundValue, roundViewItems, roundViewDefault,
+rangeView, min, max, rangeSpec, rangeViewMinRange, rangeSliderColor, rangePresetViewView, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
+mulView, mul, mulSpec, mulSliderColor, mulPresetViewView, mulPresetView, mulPresetViewItems, mulPresetViewDefault,
+roundViewView, roundView, roundViewPos, round, roundValue, roundViewItems, roundViewDefault,
 randView, randFunc,
 seqAllView, rangeMode, seqMode,
 copyAView, copyA, pasteAView, pasteA, pasteMView, pasteM, defaultView, default,
-dirView, dir, patView, pat, patSelView, patSel, block,
+dirView, dir, patView, pat, patSelViewView, patSelView, patSel, block,
 showView, showViewPos, showViewAlign, showViewColor, showViewString,
 readView, readBackgroundColorView, posView
 |
@@ -11088,7 +11131,7 @@ readView, readBackgroundColorView, posView
 
 	~rtmTypeView = RoundButton(~rtmComp2, ~miniSlider1Pos5 /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Relative", Color.white, Color.blue], ["\Absolute", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~rtmType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
 
@@ -11101,7 +11144,7 @@ readView, readBackgroundColorView, posView
 
 	~rtmTypeView2 = RoundButton(~rtmComp2, ~miniSlider2Pos5 /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Sequence", Color.white, Color.blue], ["\Looping", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({ |i|
 		// ~x.fire(~sequenceType[~tracksValue][~seqsValue]);
 		~sequenceType[~tracksValue][~seqsValue] = i.value;
@@ -11122,13 +11165,13 @@ readView, readBackgroundColorView, posView
 		\rtmSeqView, \rtmSeqStart, \rtmSeqStop, \seqDurRtm, \rtmSeqSpec, \rtmSeqSpec2, \rtmSeqVSpec, \rtmSeqVSpec2,
 		\rtmIndexView, \rtmIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\rtmRangeView, \rtmMin, \rtmMax, \rtmRangeSpec, "NoRangeViewMinRange", Color.red, \rtmRangePresetView, ["0->0.5", "0.5->1", "0->1", "0->2", "0->4"], 3, "->", 60,
-		\rtmMulView, \rtmMul, \rtmMulSpec, ~sliderHilightColor, \rtmMulPresetView, ["0.1", "0.2", "0.25", "0.3", "0.4", "0.5", "0.6", "0.7", "0.75", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 11,
-		\rtmRoundView, ~roundViewPos5, \rtmRound, \rtmRoundValue, ["@ inf", "@ 0.01", "@ 0.1", "@ 0.125", "@ 0.2", "@ 0.25", "@ 0.5"], 0,
+		\rtmRangeView, \rtmMin, \rtmMax, \rtmRangeSpec, "NoRangeViewMinRange", Color.red, \rtmRangePresetViewView, \rtmRangePresetView, ["0->0.5", "0.5->1", "0->1", "0->2", "0->4"], 3, "->", 60,
+		\rtmMulView, \rtmMul, \rtmMulSpec, ~sliderHilightColor, \rtmMulPresetViewView, \rtmMulPresetView, ["0.1", "0.2", "0.25", "0.3", "0.4", "0.5", "0.6", "0.7", "0.75", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 11,
+		\rtmRoundViewView, \rtmRoundView, ~roundViewPos5, \rtmRound, \rtmRoundValue, ["@ inf", "@ 0.01", "@ 0.1", "@ 0.125", "@ 0.2", "@ 0.25", "@ 0.5"], 0,
 		\rtmRandView, \duration2show,
 		\rtmSeqAllView, \rtmRangeMode, \rtmSeqMode,
 		\rtmCopyAView, \rtmCopyA, \rtmPasteAView, \rtmPasteA, \rtmPasteMView, \rtmPasteM, \rtmDefaultView, \rtmDefault,
-		\rtmDirView, \rtmDir, \rtmPatView, \rtmPat, \rtmPatSelView, \rtmPatSel, \rtmBlock,
+		\rtmDirView, \rtmDir, \rtmPatView, \rtmPat, \rtmPatSelViewView, \rtmPatSelView, \rtmPatSel, \rtmBlock,
 		\rtmShowView, ~nameModPos, \center, Color.green, "RTM",
 		\rtmReadView, Color.grey(0.6) /*Color.magenta*/ /*~rtmCompColor.alpha_(0)*/, \rtmPosView
 	);
@@ -11163,13 +11206,13 @@ readView, readBackgroundColorView, posView
 		\proSeqView, \proSeqStart, \proSeqStop, \seqDurPro, \proSeqSpec, \proSeqSpec2, \proSeqVSpec, \proSeqVSpec2,
 		\proIndexView, \proIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\proRangeView, \proMin, \proMax, \proRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \proRangePresetView, ["0->0.5", "0.5->1", "0->1"], 2, "->", 1,
-		\proMulView, \proMul, \proMulSpec, ~sliderHilightColor, \proMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\proRoundView, ~roundViewPos5, \proRound, \proRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0, // \proRoundValue pas utilisé ???
+		\proRangeView, \proMin, \proMax, \proRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \proRangePresetViewView, \proRangePresetView, ["0->0.5", "0.5->1", "0->1"], 2, "->", 1,
+		\proMulView, \proMul, \proMulSpec, ~sliderHilightColor, \proMulPresetViewView, \proMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\proRoundViewView, \proRoundView, ~roundViewPos5, \proRound, \proRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0, // \proRoundValue pas utilisé ???
 		\proRandView, \probability,
 		\proSeqAllView, \proRangeMode, \proSeqMode,
 		\proCopyAView, \proCopyA, \proPasteAView, \proPasteA, \proPasteMView, \proPasteM, \proDefaultView, \proDefault,
-		\proDirView, \proDir, \proPatView, \proPat, \proPatSelView, \proPatSel, \proBlock,
+		\proDirView, \proDir, \proPatView, \proPat, \proPatSelViewView, \proPatSelView, \proPatSel, \proBlock,
 		\proShowView, ~nameModPos, \center, Color.green, "PRO",
 		\proReadView, Color.grey(0.6) /*Color.magenta*/ /*~rtmCompColor.alpha_(0)*/, \proPosView
 	);
@@ -11196,7 +11239,7 @@ readView, readBackgroundColorView, posView
 			view.string = "Hit : %".format(~proBjor[~tracksValue][~seqsValue]);
 		});
 	}) // Action redéfinie dans le Global
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -11216,7 +11259,7 @@ readView, readBackgroundColorView, posView
 			view.string = "Off : %".format(~proBjor2[~tracksValue][~seqsValue]);
 		});
 	}) // Action redéfinie dans le Global
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -11226,7 +11269,7 @@ readView, readBackgroundColorView, posView
 	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
 	.doAction;
 
-	~proBjor3View = SmoothSlider(~proComp, Rect(274, 156, 60, 18))
+	~proBjor3View = SmoothSlider(~proComp, Rect(274*~xSizeMul, 156*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul))
 	.action_({ |view|
 		~proBjor3[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
 		~proGridsBias[~tracksValue][~seqsValue] = view.value.round(0.001);
@@ -11237,7 +11280,7 @@ readView, readBackgroundColorView, posView
 			view.string = "H2 : %".format(~proBjor3[~tracksValue][~seqsValue]);
 		});
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -11247,7 +11290,7 @@ readView, readBackgroundColorView, posView
 	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
 	.doAction;
 
-	~proBjor4View = SmoothSlider(~proComp, Rect(274, 174, 60, 18))
+	~proBjor4View = SmoothSlider(~proComp, Rect(274*~xSizeMul, 174*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul))
 	.action_({ |view|
 		~proBjor4[~tracksValue][~seqsValue] = ~proBjorSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
 		~proGridsBias2[~tracksValue][~seqsValue] = view.value.round(0.001);
@@ -11258,7 +11301,7 @@ readView, readBackgroundColorView, posView
 		{ ~proPatSel[~tracksValue][~seqsValue] == 22 } { view.string = "GY2 : %".format(~proGridsBias2[~tracksValue][~seqsValue]) }
 
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -11268,12 +11311,12 @@ readView, readBackgroundColorView, posView
 	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
 	.doAction;
 
-	~proWeightView = SmoothSlider(~proComp, Rect(212, 156, 60, 18))
+	~proWeightView = SmoothSlider(~proComp, Rect(212*~xSizeMul, 156*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul))
 	.action_({ |view|
 		~proWeight[~tracksValue][~seqsValue] = view.value;
 		view.string = "We : %".format(~proWeight[~tracksValue][~seqsValue])
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -11283,11 +11326,11 @@ readView, readBackgroundColorView, posView
 	.value_( 1 /*~proBjorSpec[~tracksValue][~seqsValue].unmap(1)*/)
 	.doAction;
 
-	~proDrumTypeView = PopUpMenu.new(~proComp, Rect(212, 174, 60, 18))
+	~proDrumTypeView = PopUpMenu.new(~proComp, Rect(212*~xSizeMul, 174*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul))
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|menu| ~proDrumType[~tracksValue][~seqsValue] = menu.item; })
 	.items_([\kick, \hihat, \snare]);
 
@@ -11322,9 +11365,9 @@ readView, readBackgroundColorView, posView
 	});
 
 	// Action mis plus bas car necessité de le déclarer après ~proSelectViewG car action sur le Global
-	~proSelectView = RoundButton(~proComp, Rect(337, 2, 60/*30*/, 16))
+	~proSelectView = RoundButton(~proComp, Rect(337*~xSizeMul, 2*~ySizeMul, 60*~xSizeMul /*30*/, 16*~ySizeMul))
 	.states_([["\PROS", Color.white, Color.blue], ["\PRO1", Color.white, Color.red]])
-	.font_(Font("Verdana",8));
+	.font_(Font("Verdana",8*~fontSizeMul));
 	/*.action_({|i| ~proSelect[~tracksValue][~seqsValue] = i.value;
 	[\rtmBlock, \proBlock, \synBlock, \spaBlock, \legBlock, \envBlock, \bufBlock, \ampBlock, \ratBlock, \rat2Block, \offBlock, \strBlock, \str2Block, \cenBlock, \cen2Block, \panBlock, \delBlock, \outLBlock, \outRBlock, \fxLBlock, \fxRBlock].do {|i| currentEnvironment[i][~tracksValue] = 1};
 	})
@@ -11352,26 +11395,26 @@ readView, readBackgroundColorView, posView
 		\synSeqView, \synSeqStart, \synSeqStop, \seqDurSyn, \synSeqSpec, \synSeqSpec2, \synSeqVSpec, \synSeqVSpec2,
 		\synIndexView, \synIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\synRangeView, \synMin, \synMax, \synRangeSpec, (1/~allSynths2.size), ~sliderHilightNoColor, \synRangePresetView, ~synRangePresetItems, (~synRangePresetItems.size-1), "-", (~allSynths2.size -1),
-		\synMulView, \synMul, \synMulSpec, ~sliderHilightNoColor, \synMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\synRoundView, ~roundViewPos5, \synRound, \synRoundValue, ~synViewItems, 0,
+		\synRangeView, \synMin, \synMax, \synRangeSpec, (1/~allSynths2.size), ~sliderHilightNoColor, \synRangePresetViewView, \synRangePresetView, ~synRangePresetItems, (~synRangePresetItems.size-1), "-", (~allSynths2.size -1),
+		\synMulView, \synMul, \synMulSpec, ~sliderHilightNoColor, \synMulPresetViewView, \synMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\synRoundViewView, \synRoundView, ~roundViewPos5, \synRound, \synRoundValue, ~synViewItems, 0,
 		\synRandView, \synthese,
 		\synSeqAllView, \synRangeMode, \synSeqMode,
 		\synCopyAView, \synCopyA, \synPasteAView, \synPasteA, \synPasteMView, \synPasteM, \synDefaultView, \synDefault,
-		\synDirView, \synDir, \synPatView, \synPat, \synPatSelView, \synPatSel, \synBlock,
+		\synDirView, \synDir, \synPatView, \synPat, \synPatSelViewView, \synPatSelView, \synPatSel, \synBlock,
 		\synShowView, ~nameModPos, \center, Color.yellow, "SYN",
 		\synReadView, Color.grey(0.6), \synPosView
 	);
 
-	~synTypeView = RoundButton(~synComp, /*~miniSlider1Pos5*/ Rect(338, 154, 40, 18))
+	~synTypeView = RoundButton(~synComp, /*~miniSlider1Pos5*/ Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 18*~ySizeMul))
 	.states_([["\BufM", Color.white, Color.blue], ["\BufS", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~synType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
 
-	~offRateRandSecondBufView = RoundButton(~synComp, /*~miniSlider1Pos5*/ Rect(378, 154, 20, 18))
+	~offRateRandSecondBufView = RoundButton(~synComp, /*~miniSlider1Pos5*/ Rect(378*~xSizeMul, 154*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 	.states_([["\NR", Color.white, Color.red], ["\R", Color.black, Color.green]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~offRateRandSecondBuf[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
 
@@ -11380,7 +11423,7 @@ readView, readBackgroundColorView, posView
 	.action_({ |view| ~offRateSecondBuf[~tracksValue][~seqsValue] = ~offRateSecondBufSpec.map(view.value);
 		view.string = "2B : %".format(~offRateSecondBuf[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -11397,9 +11440,9 @@ readView, readBackgroundColorView, posView
 	("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet
 	*/
 
-	~synRangeDefView = RoundButton(~synComp, Rect(337, 2, 30, 16))
+	~synRangeDefView = RoundButton(~synComp, Rect(337*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 	.states_([["\RAN", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i|
 		// if (("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.notNil, {
 		// Rappuyer une deuxième fois sur RAN dans le module de synthèse provoque une erreur ??? même chose pour DEF ???
@@ -11415,9 +11458,9 @@ readView, readBackgroundColorView, posView
 		});
 	});
 
-	~synMSDefView = RoundButton(~synComp, Rect(367, 2, 30, 16))
+	~synMSDefView = RoundButton(~synComp, Rect(367*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 	.states_([["\DEF", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i|
 		// if (("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.notNil, {
 		// Rappuyer une deuxième fois sur RAN dans le module de synthèse provoque une erreur ??? même chose pour DEF ??? -> ligne 8760
@@ -11713,13 +11756,13 @@ readView, readBackgroundColorView, posView
 		\spaSeqView, \spaSeqStart, \spaSeqStop, \seqDurSpa, \spaSeqSpec, \spaSeqSpec2, \spaSeqVSpec, \spaSeqVSpec2,
 		\spaIndexView, \spaIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\spaRangeView, \spaMin, \spaMax, \spaRangeSpec, 0 /*Pourquoi 0 initialement*/ /*(1/~allSpasGUIFinal.size)*/, ~sliderHilightNoColor /*Color.red*/, \spaRangePresetView, ~spaRangePresetItems, (~spaRangePresetItems.size -1), "-", (~allSpasGUIFinal.size -1),
-		\spaMulView, \spaMul, \spaMulSpec, ~sliderHilightNoColor, \spaMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\spaRoundView, ~roundViewPos5, \spaRound, \spaRoundValue, ~spaViewItems, 0,
+		\spaRangeView, \spaMin, \spaMax, \spaRangeSpec, 0 /*Pourquoi 0 initialement*/ /*(1/~allSpasGUIFinal.size)*/, ~sliderHilightNoColor /*Color.red*/, \spaRangePresetViewView, \spaRangePresetView, ~spaRangePresetItems, (~spaRangePresetItems.size -1), "-", (~allSpasGUIFinal.size -1),
+		\spaMulView, \spaMul, \spaMulSpec, ~sliderHilightNoColor, \spaMulPresetViewView, \spaMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\spaRoundViewView, \spaRoundView, ~roundViewPos5, \spaRound, \spaRoundValue, ~spaViewItems, 0,
 		\spaRandView, \spatialisation,
 		\spaSeqAllView, \spaRangeMode, \spaSeqMode,
 		\spaCopyAView, \spaCopyA, \spaPasteAView, \spaPasteA, \spaPasteMView, \spaPasteM, \spaDefaultView, \spaDefault,
-		\spaDirView, \spaDir, \spaPatView, \spaPat, \spaPatSelView, \spaPatSel, \spaBlock,
+		\spaDirView, \spaDir, \spaPatView, \spaPat, \spaPatSelViewView, \spaPatSelView, \spaPatSel, \spaBlock,
 		\spaShowView, ~nameModPos, \center, Color.green, "SPA",
 		\spaReadView, Color.grey(0.6), \spaPosView
 	);
@@ -11732,15 +11775,15 @@ readView, readBackgroundColorView, posView
 
 	// ~spa2Comp = CompositeView(~tabGUI, Rect(1199, 0, 399, 216)).background = ~panCompColor;
 
-	~spa2CompTabbedView = TabbedView2(~spa2Comp, Rect(0, 0, 399, 216))
+	~spa2CompTabbedView = TabbedView2(~spa2Comp, Rect(0, 0, 399*~xSizeMul, 216*~ySizeMul))
 	.lockPosition_(true)
 	.lockEdges_(true)
 	.backgrounds_([Color(0.8, 0.8, 0.8), Color(0.8, 0.8, 0.8), Color.clear /*~panCompColor*/])
 	.unfocusedColors_([~sliderBackgroundColor/*Color.white*/])
 	.stringColors_([Color.white])
 	.labelColors_([Color.blue])
-	.font_(Font("Verdana",11, bold: true))
-	.tabHeight_(18).tabWidth_(~spa2Comp.bounds.height/4).tabPosition_(\left)/*.tabCurve_(10)*/;
+	.font_(Font("Verdana",11*~fontSizeMul, bold: true))
+	.tabHeight_(18*~ySizeMul).tabWidth_(~spa2Comp.bounds.height/4).tabPosition_(\left)/*.tabCurve_(10)*/;
 
 	~tabBufComp = ~spa2CompTabbedView.add("BUF", 0, scroll:true).focusAction={ ~envParTab = 0; ~envParTabView.value_(0) };
 	~tabEnvComp = ~spa2CompTabbedView.add("ENV", 1 /*, scroll:true*/).focusAction={ ~envParTab = 1; ~envParTabView.value_(1) };
@@ -11748,15 +11791,15 @@ readView, readBackgroundColorView, posView
 	~tabHarComp = ~spa2CompTabbedView.add("MUL", 3 /*, scroll:true*/).focusAction={ ~envParTab = 3; ~envParTabView.value_(3) };
 	// ~spa2CompTabbedView.focus(2); // déjà déclenché par ~envParTabView
 
-	~tabHarmComp = TabbedView2(~tabHarComp, Rect(-2, -2, 349, 216))
+	~tabHarmComp = TabbedView2(~tabHarComp, Rect(-2*~xSizeMul, -2*~ySizeMul, 349*~xSizeMul, 216*~ySizeMul))
 	.lockPosition_(true)
 	.lockEdges_(true)
 	.backgrounds_([Color(0.8, 0.8, 0.8), Color(0.8, 0.8, 0.8), Color.clear /*~panCompColor*/])
 	.unfocusedColors_([~sliderBackgroundColor/*Color.white*/])
 	.stringColors_([Color.white])
 	.labelColors_([Color.blue])
-	.font_(Font("Verdana",11, bold: true))
-	.tabHeight_(18).tabWidth_(~spa2Comp.bounds.width/8).tabPosition_(\bottom)/*.tabCurve_(10)*/;
+	.font_(Font("Verdana",11*~fontSizeMul, bold: true))
+	.tabHeight_(18*~ySizeMul).tabWidth_(~spa2Comp.bounds.width/8).tabPosition_(\bottom)/*.tabCurve_(10)*/;
 
 	~tabHarmRatComp = ~tabHarmComp.add("RAT"/*, scroll:true*/, 0).focusAction={ ~envParTab = 3; ~envParTabView.value_(3) };
 	~tabHarmCenComp = ~tabHarmComp.add("CEN"/*, scroll:true*/, 1).focusAction={ ~envParTab = 4; ~envParTabView.value_(4) };
@@ -11765,49 +11808,49 @@ readView, readBackgroundColorView, posView
 	~tabHarmAmpComp = ~tabHarmComp.add("AMP"/*, scroll:true*/, 4).focusAction={ ~envParTab = 7; ~envParTabView.value_(7) };
 	// ~tabHarmEnvComp = ~tabHarmComp.add("ENV"/*, scroll:true*/, 4);
 
-	~spatTypeComp = CompositeView(~tabSpa2Comp, Rect(2, 4, 116, 210)).background = ~popUpMenuBackgroundColor;
+	~spatTypeComp = CompositeView(~tabSpa2Comp, Rect(2*~xSizeMul, 4*~ySizeMul, 116*~xSizeMul, 210*~ySizeMul)).background = ~popUpMenuBackgroundColor;
 
 	/*StaticText(~spatTypeComp, Rect(68, 2, 46, 46)).background_(~panCompColor).stringColor_(Color.white).align_(\center).font_(Font("Verdana",10/*, bold: true*/))
 	.string = "Stereo \nLine \nPanning";*/
 
 	~stereoSpatType = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~stereoSpatTypeView = ListView(~spatTypeComp, Rect(2, 2, 55, 45))
+	~stereoSpatTypeView = ListView(~spatTypeComp, Rect(2*~xSizeMul, 2*~ySizeMul, 55*~xSizeMul, 45*~ySizeMul))
 	.background_(~panCompColor /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font("Verdana",11, bold: true))
-	.items_(["2 Eq Po", "2 Virtu", "2 Spect"])
+	.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true))
+	.items_(["2 EqPo", "2 Virtu", "2 Spec"])
 	.action_({ |menu| ~stereoSpatType[~tracksValue][~seqsValue] = menu.value });
 
 	~circSpatType = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~circSpatTypeView = ListView(~spatTypeComp, Rect(60, 2, 55, 31))
+	~circSpatTypeView = ListView(~spatTypeComp, Rect(60*~xSizeMul, 2*~ySizeMul, 55*~xSizeMul, 31*~ySizeMul))
 	.background_(~panCompColor /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font("Verdana",11, bold: true))
-	.items_(["C Eq Po", "C Vbap"])
+	.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true))
+	.items_(["C EqPo", "C Vbap"])
 	.action_({ |menu| ~circSpatType[~tracksValue][~seqsValue] = menu.value });
 
 	~sdSpatType = 1 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~sdSpatTypeView = ListView(~spatTypeComp, Rect(60, 35, 55, 58))
+	~sdSpatTypeView = ListView(~spatTypeComp, Rect(60*~xSizeMul, 35*~ySizeMul, 55*~xSizeMul, 58*~ySizeMul))
 	.background_(Color.red /*~panCompColor*/ /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font("Verdana",11, bold: true))
+	.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true))
 	.items_(["S Virtu", "S Vbap", "S VDis", "S Ambi"])
 	.action_({ |menu| ~sdSpatType[~tracksValue][~seqsValue] = menu.value })
 	.valueAction_(1);
 
 	~trajSpatType = 1 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~trajSpatTypeView = ListView(~spatTypeComp, Rect(2, 49, 55, 44))
+	~trajSpatTypeView = ListView(~spatTypeComp, Rect(2*~xSizeMul, 49*~ySizeMul, 55*~xSizeMul, 44*~ySizeMul))
 	.background_(Color.red /*~panCompColor*/ /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font("Verdana",11, bold: true))
+	.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true))
 	.items_(["T Virtu", "T VDis", "T Ambi"])
 	.action_({ |menu| ~trajSpatType[~tracksValue][~seqsValue] = menu.value })
 	.valueAction_(1);
@@ -11835,36 +11878,36 @@ readView, readBackgroundColorView, posView
 	~spaRangePresetItemsLV4Buttons = 0 ! ~spaRangePresetItemsLV4.size;
 
 	~spaRangePresetItemsLV1.do { |val, i|
-		~spaRangePresetItemsLV1Buttons[i] = RoundButton(~spatTypeComp, Rect(2, 95+(14*i), 55, 14))
+		~spaRangePresetItemsLV1Buttons[i] = RoundButton(~spatTypeComp, Rect(2*~xSizeMul, (95+(14*i))*~ySizeMul, 55*~xSizeMul, 14*~ySizeMul))
 		.states_([[~spaRangePresetItemsLV1[i].asString, Color.white, Color.blue]])
-		.font_(Font("Verdana",9, true))
+		.font_(Font("Verdana",9*~fontSizeMul, true))
 		.action_({ ~spaRangePresetView.valueAction_(~spaRangePresetItemsLValues1[i]); ~spaRangePresetItemsLFunctions1[i].();
 			if (~harTrig[~tracksValue][~seqsValue] == 1, {/*~spaHarRangePresetView.valueAction_(~spaRangePresetItemsLValues1[i]);*/ ~spaHarRandView.valueAction_(1)} );
 		})
 	};
 
 	~spaRangePresetItemsLV2.do { |val, i|
-		~spaRangePresetItemsLV2Buttons[i] = RoundButton(~spatTypeComp, Rect(2, 137+(14*i), 55, 14))
+		~spaRangePresetItemsLV2Buttons[i] = RoundButton(~spatTypeComp, Rect(2*~xSizeMul, (137+(14*i))*~ySizeMul, 55*~xSizeMul, 14*~ySizeMul))
 		.states_([[~spaRangePresetItemsLV2[i].asString, Color.white, ~panCompColor]])
-		.font_(Font("Verdana",9, true))
+		.font_(Font("Verdana",9*~fontSizeMul, true))
 		.action_({ ~spaRangePresetView.valueAction_(~spaRangePresetItemsLValues2[i]); ~spaRandView.valueAction_(1); ~spaRangePresetItemsLFunctions2[i].();
 			if (~harTrig[~tracksValue][~seqsValue] == 1, {/*~spaHarRangePresetView.valueAction_(~spaRangePresetItemsLValues2[i]);*/ ~spaHarRandView.valueAction_(1)} );
 		})
 	};
 
 	~spaRangePresetItemsLV3.do { |val, i|
-		~spaRangePresetItemsLV3Buttons[i] = RoundButton(~spatTypeComp, Rect(58, 95+(18*i), 55, 18))
+		~spaRangePresetItemsLV3Buttons[i] = RoundButton(~spatTypeComp, Rect(58*~xSizeMul, (95+(18*i))*~ySizeMul, 55*~xSizeMul, 18*~ySizeMul))
 		.states_([[~spaRangePresetItemsLV3[i].asString, Color.white, Color.magenta /*~panCompColor*/]])
-		.font_(Font("Verdana",9, true))
+		.font_(Font("Verdana",9*~fontSizeMul, true))
 		.action_({ ~spaRangePresetView.valueAction_(~spaRangePresetItemsLValues3[i]); ~spaRandView.valueAction_(1);
 			if (~harTrig[~tracksValue][~seqsValue] == 1, {/*~spaHarRangePresetView.valueAction_(~spaRangePresetItemsLValues3[i]);*/ ~spaHarRandView.valueAction_(1)} );
 		})
 	};
 
 	~spaRangePresetItemsLV4.do { |val, i|
-		~spaRangePresetItemsLV4Buttons[i] = RoundButton(~spatTypeComp, Rect(58, 131+(18*i), 55, 18))
+		~spaRangePresetItemsLV4Buttons[i] = RoundButton(~spatTypeComp, Rect(58*~xSizeMul, (131+(18*i))*~ySizeMul, 55*~xSizeMul, 18*~ySizeMul))
 		.states_([[~spaRangePresetItemsLV4[i].asString, Color.white, Color.blue]])
-		.font_(Font("Verdana",9, true))
+		.font_(Font("Verdana",9*~fontSizeMul, true))
 		.action_({ ~spaRangePresetView.valueAction_(~spaRangePresetItemsLValues4[i]); ~spaRandView.valueAction_(1); ~spaRangePresetItemsLFunctions4[i].();
 			if (~harTrig[~tracksValue][~seqsValue] == 1, {/*~spaHarRangePresetView.valueAction_(~spaRangePresetItemsLValues4[i]);*/ ~spaHarRandView.valueAction_(1)} );
 		})
@@ -11872,8 +11915,8 @@ readView, readBackgroundColorView, posView
 
 
 
-	~spatParametersComp = CompositeView(~tabSpa2Comp, Rect(120, 4, 258, 210)).background_(~popUpMenuBackgroundColor);
-	~spatParametersCompFlowLayout = FlowLayout(~spatParametersComp.bounds, 2@2, 1@1);
+	~spatParametersComp = CompositeView(~tabSpa2Comp, Rect(120*~xSizeMul, 4*~ySizeMul, 258*~xSizeMul, 210*~ySizeMul)).background_(~popUpMenuBackgroundColor);
+	~spatParametersCompFlowLayout = FlowLayout(~spatParametersComp.bounds, (2*~xSizeMul)@(2*~ySizeMul), (1*~xSizeMul)@(1*~ySizeMul));
 	~spatParametersComp.decorator_(~spatParametersCompFlowLayout);
 
 	/*StaticText(~spatParametersComp, Rect(80, 2, 170, 18)).background_(~panCompColor).stringColor_(Color.white).align_(\center).font_(Font("Verdana",10/*, bold: true*/))
@@ -11881,14 +11924,14 @@ readView, readBackgroundColorView, posView
 
 	~dbRollOffSpec = [-24, 0, \lin, 1, -6 ].asSpec;
 	~dbRollOff = ~dbRollOffSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~dbRollOffView = EZSlider.new2(~spatParametersComp, 171@17, "dbRollOff", ~dbRollOffSpec,
-		{ |ez| ~dbRollOff[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~dbRollOffSpec.default, numberWidth:30, labelWidth:55, layout:\horz)
+	~dbRollOffView = EZSlider.new2(~spatParametersComp, (171*~xSizeMul)@(17*~ySizeMul), "dbRollOff", ~dbRollOffSpec,
+		{ |ez| ~dbRollOff[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~dbRollOffSpec.default, numberWidth:30*~xSizeMul, labelWidth:55*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
-	~virtualMSpatTypeRandView = RoundButton(~spatParametersComp, Rect(2, 2, 40, 16))
+	~virtualMSpatTypeRandView = RoundButton(~spatParametersComp, Rect(2*~xSizeMul, 2*~ySizeMul, 38*~xSizeMul, 16*~ySizeMul))
 	.states_([["Rand", Color.white, Color.red]])
-	.font_(Font("Verdana",9/*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul/*, bold: true*/))
 	.action_({ |a|
 		~dbRollOffView.valueAction_(~dbRollOffSpec.map(1.0.rand));
 		~speakRadView.valueAction_(~speakRadSpec.map(1.0.rand));
@@ -11914,9 +11957,9 @@ readView, readBackgroundColorView, posView
 		~vbapX2OffView.valueAction_(~vbapX2OffSpec.map(1.0.rand));
 	});
 
-	~virtualMSpatTypeDefView = RoundButton(~spatParametersComp, Rect(2, 2, 40, 16))
+	~virtualMSpatTypeDefView = RoundButton(~spatParametersComp, Rect(2*~xSizeMul, 2*~ySizeMul, 38*~xSizeMul, 16*~ySizeMul))
 	.states_([["Def", Color.white, Color.blue]])
-	.font_(Font("Verdana",9/*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul/*, bold: true*/))
 	.action_({ |a|
 		~dbRollOffView.valueAction_(~dbRollOffSpec.default);
 		~speakRadView.valueAction_(~speakRadSpec.default);
@@ -11944,17 +11987,17 @@ readView, readBackgroundColorView, posView
 
 	~speakRadSpec = [0, 1, \lin, 0, 0.3].asSpec;
 	~speakRad = ~speakRadSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~speakRadView = EZSlider.new2(~spatParametersComp, 126@17, "spRad", ~speakRadSpec,
-		{ |ez| ~speakRad[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~speakRadSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~speakRadView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "spRad", ~speakRadSpec,
+		{ |ez| ~speakRad[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~speakRadSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~orientationSpec = [0, ~numChannels, \lin, 0.5, 0.5].asSpec;
 	~orientation = ~orientationSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~orientationView = EZSlider.new2(~spatParametersComp, 126@17, "orient", ~orientationSpec,
-		{ |ez| ~orientation[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~orientationSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~orientationView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "orient", ~orientationSpec,
+		{ |ez| ~orientation[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~orientationSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	/*~trajSpatTypeComp = CompositeView(~tabSpa2Comp, Rect(120, 88, 258, 126)).background_(~popUpMenuBackgroundColor);
 	~trajSpatTypeComp.decorator_(FlowLayout(~trajSpatTypeComp.bounds, 2@2, 1@1));*/
@@ -11990,126 +12033,126 @@ readView, readBackgroundColorView, posView
 
 	~vmPointScaleSpec = [0.1, 200, \exp, 0.1, 1].asSpec;
 	~vmPointScale = ~vmPointScaleSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~vmPointScaleView = EZSlider.new2(~spatParametersComp, 126@17, "VM Px", ~vmPointScaleSpec,
-		{ |ez| ~vmPointScale[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vmPointScaleSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~vmPointScaleView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "VM Px", ~vmPointScaleSpec,
+		{ |ez| ~vmPointScale[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vmPointScaleSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(Color.blue /*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~ambPointScaleSpec = ControlSpec(0.1, 2, \lin, 0.01, 0.5);
 	~ambPointScale = ~ambPointScaleSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~ambPointScaleView = EZSlider.new2(~spatParametersComp, 126@17, "Am Px", ~ambPointScaleSpec,
-		{ |ez| ~ambPointScale[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~ambPointScaleSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~ambPointScaleView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "Am Px", ~ambPointScaleSpec,
+		{ |ez| ~ambPointScale[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~ambPointScaleSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(Color.blue /*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~vbPointScaleSpec = [0.1, 200, \exp, 0.1, 1].asSpec;
 	~vbPointScale = ~vbPointScaleSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~vbPointScaleView = EZSlider.new2(~spatParametersComp, 126@17, "VB Px", ~vbPointScaleSpec,
-		{ |ez| ~vbPointScale[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vbPointScaleSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~vbPointScaleView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "VB Px", ~vbPointScaleSpec,
+		{ |ez| ~vbPointScale[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vbPointScaleSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(Color.blue /*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~vbapSpreadSpec = ControlSpec(0, 100, 4, 0.01, 0.2);
 	~vbapSpread = ~vbapSpreadSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~vbapSpreadView = EZSlider.new2(~spatParametersComp, 126@17, "VB W", ~vbapSpreadSpec,
-		{ |ez| ~vbapSpread[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vbapSpreadSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~vbapSpreadView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "VB W", ~vbapSpreadSpec,
+		{ |ez| ~vbapSpread[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vbapSpreadSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(Color.blue/*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~vbapX2OffSpec = ControlSpec(0, 360, \lin, 1, 180);
 	~vbapX2Off = ~vbapX2OffSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~vbapX2OffView = EZSlider.new2(~spatParametersComp, 126@17, "VB O2", ~vbapX2OffSpec,
-		{ |ez| ~vbapX2Off[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vbapX2OffSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~vbapX2OffView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "VB O2", ~vbapX2OffSpec,
+		{ |ez| ~vbapX2Off[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~vbapX2OffSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~circSpreadSpec = ControlSpec(0, ~numChannels, 1, 0.1, 2);
 	~circSpread = ~circSpreadSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~circSpreadView = EZSlider.new2(~spatParametersComp, 126@17, "Cir W", ~circSpreadSpec,
-		{ |ez| ~circSpread[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~circSpreadSpec.default, numberWidth:30, labelWidth:35, layout:\horz)
+	~circSpreadView = EZSlider.new2(~spatParametersComp, (125*~xSizeMul)@(17*~ySizeMul), "Cir W", ~circSpreadSpec,
+		{ |ez| ~circSpread[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~circSpreadSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~circSpeedRangeSpec = ControlSpec(0.2, 100, 4 /*\exp*/, 0.1, 0.2);
 	~circSpeedRangeMin = ~circSpeedRangeSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
 	~circSpeedRangeMax = 66 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~circSpeedRangeView = EZRanger.new(~spatParametersComp, 141@17, "C Sp", ~circSpeedRangeSpec /*\freq*/,
-		{ |ez| ~circSpeedRangeMin[~tracksValue][~seqsValue] = ez.value[0]; ~circSpeedRangeMax[~tracksValue][~seqsValue] = ez.value[1]; }, unitWidth:0, initVal:[~circSpeedRangeSpec.default, 66], numberWidth:30, labelWidth:25, labelHeight:17, layout:\horz /*\line2*/)
+	~circSpeedRangeView = EZRanger.new(~spatParametersComp, (141*~xSizeMul)@(17*~ySizeMul), "C Sp", ~circSpeedRangeSpec /*\freq*/,
+		{ |ez| ~circSpeedRangeMin[~tracksValue][~seqsValue] = ez.value[0]; ~circSpeedRangeMax[~tracksValue][~seqsValue] = ez.value[1]; }, unitWidth:0, initVal:[~circSpeedRangeSpec.default, 66], numberWidth:30*~xSizeMul, labelWidth:25*~xSizeMul, labelHeight:17, layout:\horz /*\line2*/)
 	.setColors(~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/, knobColor: Color.red)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~spec2spaCurveSpec = ControlSpec(-8, 8, \lin, 0.1, 7);
 	~spec2spaCurve = ~spec2spaCurveSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~spec2spaCurveView = EZSlider.new2(~spatParametersComp, 111@17, "Sp2 C", ~spec2spaCurveSpec,
-		{ |ez| ~spec2spaCurve[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~spec2spaCurveSpec.default, numberWidth:30, labelWidth:35, /*labelHeight:18,*/ layout:\horz /*\line2*/)
+	~spec2spaCurveView = EZSlider.new2(~spatParametersComp, (110*~xSizeMul)@(17*~ySizeMul), "Sp2 C", ~spec2spaCurveSpec,
+		{ |ez| ~spec2spaCurve[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~spec2spaCurveSpec.default, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, /*labelHeight:18,*/ layout:\horz /*\line2*/)
 	.setColors(~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~trajSpatTimeType = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~trajSpatTimeTypeView = ListView(~spatParametersComp, Rect(2, 2, 40, 45))
+	~trajSpatTimeTypeView = ListView(~spatParametersComp, Rect(2*~xSizeMul, 2*~ySizeMul, 43*~xSizeMul, 45*~ySizeMul))
 	.background_(~panCompColor /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font("Verdana",11, bold: true))
+	.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true))
 	.items_(["Adap", "Traj", "Slid"])
 	.action_({ |menu| ~trajSpatTimeType[~tracksValue][~seqsValue] = menu.value })
 	.valueAction_(0);
 
 	~trajSpatLoop = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~trajSpatLoopView = RoundButton(~spatParametersComp, Rect(2, 2, 45, 16))
-	.states_([["\No Loop", Color.white, Color.red], ["\Loop", Color.black, Color.green]])
-	.font_(Font("Verdana",9))
+	~trajSpatLoopView = RoundButton(~spatParametersComp, Rect(2*~xSizeMul, 2*~ySizeMul, 42*~xSizeMul, 16*~ySizeMul))
+	.states_([["\NoLoop", Color.white, Color.red], ["\Loop", Color.black, Color.green]])
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~trajSpatLoop[~tracksValue][~seqsValue] = i.value });
 
 	~trajSpatRateSpec = ControlSpec(0.1, 50, \exp, 0.01, 1);
 	~trajSpatRate = ~trajSpatRateSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~trajSpatRateView = EZSlider.new2(~spatParametersComp, 167@17, "TrajRate", ~trajSpatRateSpec,
-		{ |ez| ~trajSpatRate[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~trajSpatRateSpec.default, numberWidth:30, labelWidth:50, layout:\horz)
+	~trajSpatRateView = EZSlider.new2(~spatParametersComp, (164*~xSizeMul)@(17*~ySizeMul), "TrajRate", ~trajSpatRateSpec,
+		{ |ez| ~trajSpatRate[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~trajSpatRateSpec.default, numberWidth:30*~xSizeMul, labelWidth:50*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	// ~spatParametersCompFlowLayout.shift(200, 0); // ne marche pas ???
 	// ~spatParametersCompFlowLayout.left_(58).top_(147);
 	// ~spatParametersCompFlowLayout.left_(58).top_(165);
-	~spatParametersCompFlowLayout.left_(48).top_(137);
+	~spatParametersCompFlowLayout.left_(48*~xSizeMul).top_(137*~ySizeMul);
 
 	// juste pour le lissage des spatialisations liées à l'analyse des paramètres spectraux ou d'intensité
 	// essayer avec des valeurs 0.02 / 0.2 / 0.5 / 1 / 2 / 5 ...
 	~spaLagTimeSpec = ControlSpec(0.05, 5, 2 /*\exp*/, 0.01, 0.1);
 	~spaLagTime = ~spaLagTimeSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~spaLagTimeView = EZSlider.new2(~spatParametersComp, 207@17, "SD Lag", ~spaLagTimeSpec,
-		{ |ez| ~spaLagTime[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~spaLagTimeSpec.default, numberWidth:40, labelWidth:50, /*labelHeight:18,*/ layout:\horz /*\line2*/)
+	~spaLagTimeView = EZSlider.new2(~spatParametersComp, (207*~xSizeMul)@(17*~ySizeMul), "SD Lag", ~spaLagTimeSpec,
+		{ |ez| ~spaLagTime[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~spaLagTimeSpec.default, numberWidth:40*~xSizeMul, labelWidth:50*~xSizeMul, /*labelHeight:18,*/ layout:\horz /*\line2*/)
 	.setColors(Color.blue/*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
-	~spatParametersCompFlowLayout.left_(48).top_(155);
+	~spatParametersCompFlowLayout.left_(48*~xSizeMul).top_(155*~ySizeMul);
 
 	~spaLagCurveSpec = ControlSpec(-8, 8, \lin, 0.1, 0);
 	~spaLagCurve = ~spaLagCurveSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~spaLagCurveView = EZSlider.new2(~spatParametersComp, 207@17, "SD F Cur", ~spaLagCurveSpec,
-		{ |ez| ~spaLagCurve[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~spaLagCurveSpec.default, numberWidth:40, labelWidth:50, /*labelHeight:18,*/ layout:\horz /*\line2*/)
+	~spaLagCurveView = EZSlider.new2(~spatParametersComp, (207*~xSizeMul)@(17*~ySizeMul), "SD F Cur", ~spaLagCurveSpec,
+		{ |ez| ~spaLagCurve[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~spaLagCurveSpec.default, numberWidth:40*~xSizeMul, labelWidth:50*~xSizeMul, /*labelHeight:18,*/ layout:\horz /*\line2*/)
 	.setColors(Color.blue/*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
-	~spatParametersCompFlowLayout.left_(2).top_(174);
+	~spatParametersCompFlowLayout.left_(2*~xSizeMul).top_(174*~ySizeMul);
 	// \freq.asSpec
 	~sdFreqRangeSpec = ControlSpec(20, 8000, 2 /*\exp*/, 1, 20);
 	~sdFreqRangeMin = ~sdFreqRangeSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
 	~sdFreqRangeMax = 6000 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~sdFreqRangeView = EZRanger.new(~spatParametersComp, 253@17, "SD Freq", ~sdFreqRangeSpec /*\freq*/,
-		{ |ez| ~sdFreqRangeMin[~tracksValue][~seqsValue] = ez.value[0]; ~sdFreqRangeMax[~tracksValue][~seqsValue] = ez.value[1]; }, unitWidth:0, initVal:[~sdFreqRangeSpec.default, 6000], numberWidth:40, labelWidth:45, labelHeight:17, layout:\horz /*\line2*/)
+	~sdFreqRangeView = EZRanger.new(~spatParametersComp, (253*~xSizeMul)@(17*~ySizeMul), "SD Freq", ~sdFreqRangeSpec /*\freq*/,
+		{ |ez| ~sdFreqRangeMin[~tracksValue][~seqsValue] = ez.value[0]; ~sdFreqRangeMax[~tracksValue][~seqsValue] = ez.value[1]; }, unitWidth:0, initVal:[~sdFreqRangeSpec.default, 6000], numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, labelHeight:17, layout:\horz /*\line2*/)
 	.setColors(Color.blue/*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/, knobColor: Color.red)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
-	~spatParametersCompFlowLayout.left_(2).top_(192);
+	~spatParametersCompFlowLayout.left_(2*~xSizeMul).top_(192*~ySizeMul);
 	~sdDbRangeSpec = ControlSpec(0, 70, \lin /*\exp*/, 0.1, 0);
 	~sdDbRangeMin = ~sdDbRangeSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
 	~sdDbRangeMax = 50 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~sdDbRangeView = EZRanger.new(~spatParametersComp, 253@17, "SD dB", ~sdDbRangeSpec /*\freq*/,
-		{ |ez| ~sdDbRangeMin[~tracksValue][~seqsValue] = ez.value[0]; ~sdDbRangeMax[~tracksValue][~seqsValue] = ez.value[1]; }, unitWidth:0, initVal:[~sdDbRangeSpec.default, 50], numberWidth:40, labelWidth:45, labelHeight:17, layout:\horz /*\line2*/)
+	~sdDbRangeView = EZRanger.new(~spatParametersComp, (253*~xSizeMul)@(17*~ySizeMul), "SD dB", ~sdDbRangeSpec /*\freq*/,
+		{ |ez| ~sdDbRangeMin[~tracksValue][~seqsValue] = ez.value[0]; ~sdDbRangeMax[~tracksValue][~seqsValue] = ez.value[1]; }, unitWidth:0, initVal:[~sdDbRangeSpec.default, 50], numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, labelHeight:17, layout:\horz /*\line2*/)
 	.setColors(Color.blue/*~sliderBackgroundColor*/,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/, knobColor: Color.red)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 
 
@@ -12129,26 +12172,26 @@ readView, readBackgroundColorView, posView
 		\legSeqView, \legSeqStart, \legSeqStop, \seqDurLeg, \legSeqSpec, \legSeqSpec2, \legSeqVSpec, \legSeqVSpec2,
 		\legIndexView, \legIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\legRangeView, \legMin, \legMax, \legRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \legRangePresetView, ["0->0.5", "0->1", "0->2", "0->3", "0->4", "0->5", "0->10", "0->20", "0->50"], 2, "->", 50,
-		\legMulView, \legMul, \legMulSpec, ~sliderHilightColor, \legMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\legRoundView, ~roundViewPos5, \legRound, \legRoundValue, ["@ 0.01 EXP", "@ 0.1 EXP", "@ 0.125 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 LIN", "@ 0.2 LIN", "@ 0.25 LIN", "@ 0.5 LIN", "@ 1 LIN", "@ 2 LIN"], 0,
+		\legRangeView, \legMin, \legMax, \legRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \legRangePresetViewView, \legRangePresetView, ["0->0.5", "0->1", "0->2", "0->3", "0->4", "0->5", "0->10", "0->20", "0->50"], 2, "->", 50,
+		\legMulView, \legMul, \legMulSpec, ~sliderHilightColor, \legMulPresetViewView, \legMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\legRoundViewView, \legRoundView, ~roundViewPos5, \legRound, \legRoundValue, ["@ 0.01 EXP", "@ 0.1 EXP", "@ 0.125 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 LIN", "@ 0.2 LIN", "@ 0.25 LIN", "@ 0.5 LIN", "@ 1 LIN", "@ 2 LIN"], 0,
 		\legRandView, \legato,
 		\legSeqAllView, \legRangeMode, \legSeqMode,
 		\legCopyAView, \legCopyA, \legPasteAView, \legPasteA, \legPasteMView, \legPasteM, \legDefaultView, \legDefault,
-		\legDirView, \legDir, \legPatView, \legPat, \legPatSelView, \legPatSel, \legBlock,
+		\legDirView, \legDir, \legPatView, \legPat, \legPatSelViewView, \legPatSelView, \legPatSel, \legBlock,
 		\legShowView, ~nameModPos, \center, Color.yellow, "DUR",
 		\legReadView, Color.grey(0.6), \legPosView
 	);
 
-	~legTypeView = RoundButton(~legComp, Rect(337, 2, 30, 16))
+	~legTypeView = RoundButton(~legComp, Rect(337*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 	.states_([["\LEG", Color.white, Color.blue], ["\SUS", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~legType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
 
-	~legLoopView = RoundButton(~legComp, Rect(367, 2, 30, 16))
+	~legLoopView = RoundButton(~legComp, Rect(367*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 	.states_([["\Loop", Color.white, Color.red], ["\Loop", Color.black, Color.green]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~legLoop[~tracksValue][~seqSeq[~tracksValue]] = i.value;
 
 		if (~legLoop[~tracksValue][~seqSeq[~tracksValue]] == 0, { "Loop Deactivated".postln; }, { "Loop Activated".postln; });
@@ -12195,20 +12238,20 @@ readView, readBackgroundColorView, posView
 		\envSeqView, \envSeqStart, \envSeqStop, \seqDurEnv, \envSeqSpec, \envSeqSpec2, \envSeqVSpec, \envSeqVSpec2,
 		\envIndexView, \envIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\envRangeView, \envMin, \envMax, \envRangeSpec, (1/~allEnvsGUI.size), ~sliderHilightNoColor, \envRangePresetView, ["Line", "Perc", "Spec", "Exp", "LP", "LPS", "ALL"], 6, "->", (~allEnvsGUI.size-1),
-		\envMulView, \envMul, \envMulSpec, ~sliderHilightNoColor, \envMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\envRoundView, ~roundViewPos5, \envRound, \envRoundValue, ~envViewItems, 0,
+		\envRangeView, \envMin, \envMax, \envRangeSpec, (1/~allEnvsGUI.size), ~sliderHilightNoColor, \envRangePresetViewView, \envRangePresetView, ["Line", "Perc", "Spec", "Exp", "LP", "LPS", "ALL"], 6, "->", (~allEnvsGUI.size-1),
+		\envMulView, \envMul, \envMulSpec, ~sliderHilightNoColor, \envMulPresetViewView, \envMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\envRoundViewView, \envRoundView, ~roundViewPos5, \envRound, \envRoundValue, ~envViewItems, 0,
 		\envRandView, \enveloppe,
 		\envSeqAllView, \envRangeMode, \envSeqMode,
 		\envCopyAView, \envCopyA, \envPasteAView, \envPasteA, \envPasteMView, \envPasteM, \envDefaultView, \envDefault,
-		\envDirView, \envDir, \envPatView, \envPat, \envPatSelView, \envPatSel, \envBlock,
+		\envDirView, \envDir, \envPatView, \envPat, \envPatSelViewView, \envPatSelView, \envPatSel, \envBlock,
 		\envShowView, ~nameModPos, \center, Color.yellow, "ENV",
 		\envReadView, Color.grey(0.6), \envPosView
 	);
 
 	~envParTabView = RoundButton(~envComp, ~miniSlider1Pos5 /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Buf Par", Color.white, Color.blue], ["\Env Par", Color.white, Color.blue], ["\Spa Par", Color.white, Color.blue], ["\MI Rat Par", Color.white, Color.blue], ["\MI Cen Par", Color.white, Color.blue], ["\MI Del Par", Color.white, Color.blue], ["\MI Spa Par", Color.white, Color.blue], ["\MI Amp Par", Color.white, Color.blue]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~envParTab = i.value;
 		// if (~envParTab == 0, {~spa2CompTabbedView.focus(~envParTab+1)}, {~spa2CompTabbedView.focus(~envParTab+1)} )
 		case
@@ -12260,9 +12303,9 @@ readView, readBackgroundColorView, posView
 	.doAction;
 	*/
 
-	~envTypeView = RoundButton(~envComp, Rect(338, 2, 30, 16))
+	~envTypeView = RoundButton(~envComp, Rect(338*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
 	.states_([["\MIN", Color.white, Color.blue], ["\N M", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~envType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
 
@@ -12272,7 +12315,7 @@ readView, readBackgroundColorView, posView
 
 	// GUI ENVELOPPE 2
 
-	~tabEnvComp.decorator_(FlowLayout(~tabEnvComp.bounds, 3@5, 3@1));
+	~tabEnvComp.decorator_(FlowLayout(~tabEnvComp.bounds, (3*~xSizeMul)@(5*~ySizeMul), (3*~xSizeMul)@(1*~ySizeMul)));
 	~envSliderNames = ["Line ", "Perc " /*"Line1", "Line2", "Perc1", "Perc2"*/];
 
 	~envNum = 2;
@@ -12306,29 +12349,29 @@ readView, readBackgroundColorView, posView
 
 	~envNum.do { |i|
 
-		~atkView[i] = EZSlider.new2(~tabEnvComp, 186@18, "Atk"+(i+1).asString+"", ~atkSpec[i],
-			{ |ez| ~atk[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~atkSpec[i].default, numberWidth:40, labelWidth:45, layout:\horz, initAction:true)
+		~atkView[i] = EZSlider.new2(~tabEnvComp, (185*~xSizeMul)@(18*~ySizeMul), "Atk"+(i+1).asString+"", ~atkSpec[i],
+			{ |ez| ~atk[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~atkSpec[i].default, numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, layout:\horz, initAction:true)
 		.setColors(/*Color.grey*/ ~sliderBackgroundColor, Color.white /*, numBackground:~sliderBackgroundColor, numNormalColor:Color.white*/)
-		.font_(Font("Verdana",10));
+		.font_(Font("Verdana",10*~fontSizeMul));
 
-		~relView[i] = EZSlider.new2(~tabEnvComp, 186@18, "Rel"+(i+1).asString+"", ~relSpec[i],
-			{ |ez| ~rel[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~relSpec[i].default, numberWidth:40, labelWidth:45, layout:\horz, initAction:true)
+		~relView[i] = EZSlider.new2(~tabEnvComp, (185*~xSizeMul)@(18*~ySizeMul), "Rel"+(i+1).asString+"", ~relSpec[i],
+			{ |ez| ~rel[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~relSpec[i].default, numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, layout:\horz, initAction:true)
 		.setColors(/*Color.grey*/ ~sliderBackgroundColor, Color.white /*, numBackground:~sliderBackgroundColor, numNormalColor:Color.white*/)
-		.font_(Font("Verdana",10));
+		.font_(Font("Verdana",10*~fontSizeMul));
 
 	};
 
 	~envNum.do { |i|
 
-		~atkCurveView[i] = EZSlider.new2(~tabEnvComp, 186@18, "Atk"+~envSliderNames[i], ~atkCurveSpec[i],
-			{ |ez| ~atkCurve[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~atkCurveSpec[i].default, numberWidth:40, labelWidth:45, layout:\horz, initAction:true)
+		~atkCurveView[i] = EZSlider.new2(~tabEnvComp, (185*~xSizeMul)@(18*~ySizeMul), "Atk"+~envSliderNames[i], ~atkCurveSpec[i],
+			{ |ez| ~atkCurve[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~atkCurveSpec[i].default, numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, layout:\horz, initAction:true)
 		.setColors(/*Color.grey*/ ~panCompColor, Color.white /*, numBackground:~sliderBackgroundColor, numNormalColor:Color.white*/)
-		.font_(Font("Verdana",10));
+		.font_(Font("Verdana",10*~fontSizeMul));
 
-		~relCurveView[i] = EZSlider.new2(~tabEnvComp, 186@18, "Rel"+~envSliderNames[i], ~relCurveSpec[i],
-			{ |ez| ~relCurve[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~relCurveSpec[i].default, numberWidth:40, labelWidth:45, layout:\horz, initAction:true)
+		~relCurveView[i] = EZSlider.new2(~tabEnvComp, (185*~xSizeMul)@(18*~ySizeMul), "Rel"+~envSliderNames[i], ~relCurveSpec[i],
+			{ |ez| ~relCurve[~tracksValue][~seqsValue][i] = ez.value }, unitWidth:0, initVal:~relCurveSpec[i].default, numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, layout:\horz, initAction:true)
 		.setColors(/*Color.grey*/ ~panCompColor, Color.white /*, numBackground:~sliderBackgroundColor, numNormalColor:Color.white*/)
-		.font_(Font("Verdana",10));
+		.font_(Font("Verdana",10*~fontSizeMul));
 
 	};
 
@@ -12338,32 +12381,32 @@ readView, readBackgroundColorView, posView
 	~w1 = ~w1Spec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
 	~w2 = ~w2Spec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
 
-	~w1View = EZSlider.new2(~tabEnvComp, 186@18, "W1 ", ~w1Spec,
-		{ |ez| ~w1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~w1Spec.default, numberWidth:40, labelWidth:45, layout:\horz, initAction:true)
+	~w1View = EZSlider.new2(~tabEnvComp, (185*~xSizeMul)@(18*~ySizeMul), "W1 ", ~w1Spec,
+		{ |ez| ~w1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~w1Spec.default, numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, layout:\horz, initAction:true)
 	.setColors(/*Color.grey*/ ~sliderBackgroundColor, Color.white /*, numBackground:~sliderBackgroundColor, numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
-	~w2View = EZSlider.new2(~tabEnvComp, 186@18, "W2 ", ~w2Spec,
-		{ |ez| ~w2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~w2Spec.default, numberWidth:40, labelWidth:45, layout:\horz, initAction:true)
+	~w2View = EZSlider.new2(~tabEnvComp, (185*~xSizeMul)@(18*~ySizeMul), "W2 ", ~w2Spec,
+		{ |ez| ~w2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~w2Spec.default, numberWidth:40*~xSizeMul, labelWidth:45*~xSizeMul, layout:\horz, initAction:true)
 	.setColors(/*Color.grey*/ ~sliderBackgroundColor, Color.white /*, numBackground:~sliderBackgroundColor, numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~envParTabView.valueAction_(2);
 
 	~chaoticEnvStringView = 0 ! 3;
 	3.do { |i|
-		~chaoticEnvStringView[i] = TextView(~tabEnvComp, 375@30)
+		~chaoticEnvStringView[i] = TextView(~tabEnvComp, (375*~xSizeMul)@(30*~ySizeMul))
 		//.autohidesScrollers_(0)
 		.hasVerticalScroller_(false)
 		.hasHorizontalScroller_(false)
 		.enterInterpretsSelection_(1)
-		.font_(Font("arial",10))
+		.font_(Font("arial",10*~fontSizeMul))
 		.string_("~chaoticEnv["++i++"] = " ++ ~chaoticEnvString[i] ++ "; ~bufEnvFunc.(~server1, 0, "++i++");");
 	};
 
-	~envPlotShowView = RoundButton(~tabEnvComp, /*~miniSlider1Pos5*/ 80@18 /*Rect(338, 138+18, 60, 16)*/)
+	~envPlotShowView = RoundButton(~tabEnvComp, /*~miniSlider1Pos5*/ (80*~xSizeMul)@(18*~ySizeMul) /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Show Envs", Color.white, Color.blue], ["\Close Envs", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~envPlotShow = i.value;
 		if (~envPlotShow == 1,
 			{
@@ -12413,7 +12456,7 @@ readView, readBackgroundColorView, posView
 					~chaoticEnv[2],
 					Env([~durplotamp, 0.001], [~durplotenv], \exp),
 					Env([0.001, ~durplotamp], [~durplotenv], \exp)
-				].plot(bounds:Rect(316,300,1200,1100))
+				].plot(bounds:Rect(316*~xSizeMul,300*~ySizeMul,1200*~xSizeMul,1100*~ySizeMul))
 			},{
 				if ( Window.allWindows.notNil, { Window.allWindows[Window.allWindows.size-1].close; });
 		})
@@ -12425,7 +12468,7 @@ readView, readBackgroundColorView, posView
 
 	// GUI SYN 2 pour les Buffers
 
-	~tabBufComp.decorator_(FlowLayout(~tabEnvComp.bounds, 3@5, 3@1));
+	~tabBufComp.decorator_(FlowLayout(~tabEnvComp.bounds, (3*~xSizeMul)@(5*~ySizeMul), (3*~xSizeMul)@(1*~ySizeMul)));
 
 
 	// Pour supprimer un sous-dossier de sons
@@ -12524,88 +12567,88 @@ readView, readBackgroundColorView, posView
 	*/
 
 
-	~delFolderOfSoundsView = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ 60@20 /*Rect(338, 138+18, 60, 16)*/)
+	~delFolderOfSoundsView = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ (60*~xSizeMul)@(20*~ySizeMul) /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Del Bufs", Color.white, Color.red]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({|i| ~delFolderOfSounds.() });
 
-	~addFolderOfSoundsView = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ 60@20 /*Rect(338, 138+18, 60, 16)*/)
+	~addFolderOfSoundsView = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ (60*~xSizeMul)@(20*~ySizeMul) /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Add Bufs", Color.black, Color.yellow]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({|i| ~addFolderOfSounds.() });
 
-	~folderOfSoundsSizeView = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ 60@20 /*Rect(338, 138+18, 60, 16)*/)
+	~folderOfSoundsSizeView = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ (60*~xSizeMul)@(20*~ySizeMul) /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Size Bufs", Color.white, Color.blue]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({|i| /*~listingSoundFolders =*/ ("du -m -L "++ ~soundsFolder ++" | sort -nr").unixCmd/*GetStdOut*/ });
 
 	~grainSizeSpec = [0.0001, 200, \exp, 0.0001, 60].asSpec;
 	~grainSize = ~grainSizeSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~grainSizeView = EZSlider.new2(~tabBufComp, 360@22, "grain size", ~grainSizeSpec,
-		{ |ez| ~grainSize[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~grainSizeSpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~grainSizeView = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(22*~ySizeMul), "grain size", ~grainSizeSpec,
+		{ |ez| ~grainSize[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~grainSizeSpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~grainSize2Spec = [1, 200, \exp, 0.0001, 60].asSpec;
 	~grain2Size = ~grainSize2Spec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~grain2SizeView = EZSlider.new2(~tabBufComp, 360@22, "grain size 2", ~grainSize2Spec,
-		{ |ez| ~grain2Size[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~grainSize2Spec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~grain2SizeView = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(22*~ySizeMul), "grain size 2", ~grainSize2Spec,
+		{ |ez| ~grain2Size[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~grainSize2Spec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 
 	~lehmerInitSpec = [0, 1, \lin, 0.001, 0.5].asSpec;
 	~lehmerInit1 = ~lehmerInitSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerInit1View = EZSlider.new2(~tabBufComp, 360@18, "lehmer In 1", ~lehmerInitSpec,
-		{ |ez| ~lehmerInit1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerInitSpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~lehmerInit1View = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(18*~ySizeMul), "lehmer In 1", ~lehmerInitSpec,
+		{ |ez| ~lehmerInit1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerInitSpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*//*~sliderBackgroundColor*/ Color.black,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	~lehmerASpec = [0, 2, \lin, 0.001, 1].asSpec;
 	~lehmerA1 = ~lehmerASpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerA1View = EZSlider.new2(~tabBufComp, 360@18, "lehmer A 1", ~lehmerASpec,
-		{ |ez| ~lehmerA1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerASpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~lehmerA1View = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(18*~ySizeMul), "lehmer A 1", ~lehmerASpec,
+		{ |ez| ~lehmerA1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerASpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*//*~sliderBackgroundColor*/ Color.black,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10)); //.adaptToControlStep;
+	.font_(Font("Verdana",10*~fontSizeMul)); //.adaptToControlStep;
 
 	~lehmerBSpec = [0, 1, \lin, 0.001, 0.1].asSpec;
 	~lehmerB1 = ~lehmerBSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerB1View = EZSlider.new2(~tabBufComp, 360@18, "lehmer B 1", ~lehmerBSpec,
-		{ |ez| ~lehmerB1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerBSpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~lehmerB1View = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(18*~ySizeMul), "lehmer B 1", ~lehmerBSpec,
+		{ |ez| ~lehmerB1[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerBSpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*//*~sliderBackgroundColor*/ Color.black,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10)); //.adaptToControlStep;
+	.font_(Font("Verdana",10*~fontSizeMul)); //.adaptToControlStep;
 
 	~lehmerInitSpec = [0, 1, \lin, 0.001, 0.5].asSpec;
 	~lehmerInit2 = ~lehmerInitSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerInit2View = EZSlider.new2(~tabBufComp, 360@18, "lehmer In 2", ~lehmerInitSpec,
-		{ |ez| ~lehmerInit2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerInitSpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~lehmerInit2View = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(18*~ySizeMul), "lehmer In 2", ~lehmerInitSpec,
+		{ |ez| ~lehmerInit2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerInitSpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10)); //.adaptToControlStep;
+	.font_(Font("Verdana",10*~fontSizeMul)); //.adaptToControlStep;
 
 	~lehmerASpec = [0, 2, \lin, 0.001, 1].asSpec;
 	~lehmerA2 = ~lehmerASpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerA2View = EZSlider.new2(~tabBufComp, 360@18, "lehmer A 2", ~lehmerASpec,
-		{ |ez| ~lehmerA2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerASpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~lehmerA2View = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(18*~ySizeMul), "lehmer A 2", ~lehmerASpec,
+		{ |ez| ~lehmerA2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerASpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10)); //.adaptToControlStep;
+	.font_(Font("Verdana",10*~fontSizeMul)); //.adaptToControlStep;
 
 	~lehmerBSpec = [0, 1, \lin, 0.001, 0.1].asSpec;
 	~lehmerB2 = ~lehmerBSpec.default ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerB2View = EZSlider.new2(~tabBufComp, 360@18, "lehmer B 2", ~lehmerBSpec,
-		{ |ez| ~lehmerB2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerBSpec.default, numberWidth:60, labelWidth:60, layout:\horz)
+	~lehmerB2View = EZSlider.new2(~tabBufComp, (370*~xSizeMul)@(18*~ySizeMul), "lehmer B 2", ~lehmerBSpec,
+		{ |ez| ~lehmerB2[~tracksValue][~seqsValue] = ez.value }, unitWidth:0, initVal:~lehmerBSpec.default, numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10)); //.adaptToControlStep;
+	.font_(Font("Verdana",10*~fontSizeMul)); //.adaptToControlStep;
 
 	~lehmerReInit1 = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerReInit1View = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ 80@20 /*Rect(338, 138+18, 60, 16)*/)
+	~lehmerReInit1View = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ (80*~xSizeMul)@(20*~ySizeMul) /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Re Init L 1", Color.black, Color.green], ["\No Init L 1", Color.white, Color.red]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({|i| ~lehmerReInit1[~tracksValue][~seqsValue] = i.value }).valueAction_(0);
 
 	~lehmerReInit2 = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-	~lehmerReInit2View = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ 80@20 /*Rect(338, 138+18, 60, 16)*/)
+	~lehmerReInit2View = RoundButton(~tabBufComp, /*~miniSlider1Pos5*/ (80*~xSizeMul)@(20*~ySizeMul) /*Rect(338, 138+18, 60, 16)*/)
 	.states_([["\Re Init L 2", Color.black, Color.green], ["\No Init L 2", Color.white, Color.red]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({|i| ~lehmerReInit2[~tracksValue][~seqsValue] = i.value }).valueAction_(0);
 
 }.value;
@@ -12717,23 +12760,23 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\bufSeqView, \bufSeqStart, \bufSeqStop, \seqDurBuf, \bufSeqSpec, \bufSeqSpec2, \bufSeqVSpec, \bufSeqVSpec2,
 		\bufIndexView, \bufIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\bufRangeView, \bufMin, \bufMax, \bufRangeSpec, (1/~bufFolderM[0][0][0].size), ~sliderHilightNoColor, "NoRangePresetView" /*~bufFolderView*/, "NoRangePresetViewItems", "NoRangePresetViewDefault", "NoRangePresetViewSign", (~bufFolderM[0][0][0].size -1),
-		\bufMulView, \bufMul, \bufMulSpec, ~sliderHilightNoColor, \bufMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\bufRoundView, ~roundViewPos5, \bufRound, \bufRoundValue, 0, 0, // ligne pas utilisée
+		\bufRangeView, \bufMin, \bufMax, \bufRangeSpec, (1/~bufFolderM[0][0][0].size), ~sliderHilightNoColor, "NoRangePresetViewView", "NoRangePresetView" /*~bufFolderView*/, "NoRangePresetViewItems", "NoRangePresetViewDefault", "NoRangePresetViewSign", (~bufFolderM[0][0][0].size -1),
+		\bufMulView, \bufMul, \bufMulSpec, ~sliderHilightNoColor, \bufMulPresetViewView, \bufMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\bufRoundViewView, \bufRoundView, ~roundViewPos5, \bufRound, \bufRoundValue, 0, 0, // ligne pas utilisée
 		\bufRandView, \buffer,
 		\bufSeqAllView, \bufRangeMode, \bufSeqMode,
 		\bufCopyAView, \bufCopyA, \bufPasteAView, \bufPasteA, \bufPasteMView, \bufPasteM, \bufDefaultView, \bufDefault,
-		\bufDirView, \bufDir, \bufPatView, \bufPat, \bufPatSelView, \bufPatSel, \bufBlock,
+		\bufDirView, \bufDir, \bufPatView, \bufPat, \bufPatSelViewView, \bufPatSelView, \bufPatSel, \bufBlock,
 		\bufShowView, ~nameModPos, \center, Color.yellow, "BUF",
 		\bufReadView, Color.grey(0.6), \bufPosView
 	);
 
 	// Section remise aussi plus bas, mais avec une action différente
-	~bufFolderViewView = View(~bufComp, Rect(2, 136, 122, 16) /*~roundViewPos5*/); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
+	~bufFolderViewView = View(~bufComp, Rect(2*~xSizeMul, 136*~ySizeMul, 122*~xSizeMul, 16*~ySizeMul) /*~roundViewPos5*/); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
 
 	~seqSeq = 0 ! ~nbOfTracksX2; // nécessaire de le déclarer avant ~bufFolderView
 
-	~bufFolderView = PopUpMenu.new(~bufFolderViewView, Rect(0,0,210,16))
+	~bufFolderView = PopUpMenu.new(~bufFolderViewView, Rect(0,0,210*~xSizeMul,16*~ySizeMul))
 	.action_({ |a| var serv, seq;
 
 		if (~server2.isNil or: {(~tracksValue/2).asInteger < ~serverTrackSwitch}, {serv = 0}, {serv = 1});
@@ -12776,7 +12819,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.allowsReselection_(true)
 	.background_(Color.magenta(0.7)/*green*/)
 	.stringColor_(Color.white/*black*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 	// Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	// ~bufFolderView.items_(~arrayOfFolderPaths.size.collect { |i| ~arrayOfFolderPaths[i].folderName.copyRange(0, 13).asSymbol}/*++'Insultes'++'InsultesOMax'*/++'Kik & Hit'++'ALL sans Ins');
@@ -12814,9 +12857,9 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	a.flat.size
 	*/
 
-	~bufRangePresetView = RoundButton.new(~bufComp, Rect(328, 136, 30, 16) /*~rangePresetViewPos5*/)
+	~bufRangePresetView = RoundButton.new(~bufComp, Rect(328*~xSizeMul, 136*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul) /*~rangePresetViewPos5*/)
 	.states_([["AllR", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({~bufRangeView.valueAction_([ 0, ~bufRangeSpec[~tracksValue][~seqsValue].unmap(~bufFolderM[0][~tracksValue][~seqsValue].size - 1) ]);
 	});
 
@@ -12845,13 +12888,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\ampSeqView, \ampSeqStart, \ampSeqStop, \seqDurAmp, \ampSeqSpec, \ampSeqSpec2, \ampSeqVSpec, \ampSeqVSpec2,
 		\ampIndexView, \ampIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\ampRangeView, \ampMin, \ampMax, \ampRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ampRangePresetView, ["0->0.5", "0.5->1", "0->1", "0->1.2", "0->1.5"], 2, "->", 1.5,
-		\ampMulView, \ampMul, \ampMulSpec, ~sliderHilightColor, \ampMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.2", "1.5"], 10,
-		\ampRoundView, ~roundViewPos5, \ampRound, \ampRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
+		\ampRangeView, \ampMin, \ampMax, \ampRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ampRangePresetViewView, \ampRangePresetView, ["0->0.5", "0.5->1", "0->1", "0->1.2", "0->1.5"], 2, "->", 1.5,
+		\ampMulView, \ampMul, \ampMulSpec, ~sliderHilightColor, \ampMulPresetViewView, \ampMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.2", "1.5"], 10,
+		\ampRoundViewView, \ampRoundView, ~roundViewPos5, \ampRound, \ampRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
 		\ampRandView, \amplitude,
 		\ampSeqAllView, \ampRangeMode, \ampSeqMode,
 		\ampCopyAView, \ampCopyA, \ampPasteAView, \ampPasteA, \ampPasteMView, \ampPasteM, \ampDefaultView, \ampDefault,
-		\ampDirView, \ampDir, \ampPatView, \ampPat, \ampPatSelView, \ampPatSel, \ampBlock,
+		\ampDirView, \ampDir, \ampPatView, \ampPat, \ampPatSelViewView, \ampPatSelView, \ampPatSel, \ampBlock,
 		\ampShowView, ~nameModPos, \center, Color.yellow, "AMP",
 		\ampReadView, Color.grey(0.6), \ampPosView
 	);
@@ -12861,7 +12904,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~ampRat[~tracksValue][~seqsValue] = ~ampRatSpec.map(view.value);
 		view.string = "A : %".format(~ampRat[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -12875,7 +12918,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~aAmp[~tracksValue][~seqsValue] = ~aAmpSpec.map(view.value);
 		view.string = "AA : %".format(~aAmp[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -12905,13 +12948,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\offSeqView, \offSeqStart, \offSeqStop, \seqDurOff, \offSeqSpec, \offSeqSpec2, \offSeqVSpec, \offSeqVSpec2,
 		\offIndexView, \offIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\offRangeView, \offMin, \offMax, \offRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \offRangePresetView, ["0->0.5", "0.5->1", "0->1"], 2, "->", 1,
-		\offMulView, \offMul, \offMulSpec, ~sliderHilightNoColor, \offMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\offRoundView, ~roundViewPos5, \offRound, \offRoundValue, ["@ 0.001", "@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
+		\offRangeView, \offMin, \offMax, \offRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \offRangePresetViewView, \offRangePresetView, ["0->0.5", "0.5->1", "0->1"], 2, "->", 1,
+		\offMulView, \offMul, \offMulSpec, ~sliderHilightNoColor, \offMulPresetViewView, \offMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\offRoundViewView, \offRoundView, ~roundViewPos5, \offRound, \offRoundValue, ["@ 0.001", "@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
 		\offRandView, \offset,
 		\offSeqAllView, \offRangeMode, \offSeqMode,
 		\offCopyAView, \offCopyA, \offPasteAView, \offPasteA, \offPasteMView, \offPasteM, \offDefaultView, \offDefault,
-		\offDirView, \offDir, \offPatView, \offPat, \offPatSelView, \offPatSel, \offBlock,
+		\offDirView, \offDir, \offPatView, \offPat, \offPatSelViewView, \offPatSelView, \offPatSel, \offBlock,
 		\offShowView, ~nameModPos, \center, Color.yellow, "POS",
 		\offReadView, Color.grey(0.6), \offPosView
 	);
@@ -12921,7 +12964,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~offThresh[~tracksValue][~seqsValue] = ~offThreshSpec.map(view.value);
 		view.string = "Th : %".format(~offThresh[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(/*~sliderBackgroundColor*/ Color.magenta)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -12956,13 +12999,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\ratSeqView, \ratSeqStart, \ratSeqStop, \seqDurRat, \ratSeqSpec, \ratSeqSpec2, \ratSeqVSpec, \ratSeqVSpec2,
 		\ratIndexView, \ratIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\ratRangeView, \ratMin, \ratMax, \ratRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ratRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
-		\ratMulView, \ratMul, \ratMulSpec, ~sliderHilightColor, \ratMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\ratRoundView, ~roundViewPos5, \ratRound, \ratRoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+		\ratRangeView, \ratMin, \ratMax, \ratRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ratRangePresetViewView, \ratRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
+		\ratMulView, \ratMul, \ratMulSpec, ~sliderHilightColor, \ratMulPresetViewView, \ratMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\ratRoundViewView, \ratRoundView, ~roundViewPos5, \ratRound, \ratRoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 		\ratRandView, \rate,
 		\ratSeqAllView, \ratRangeMode, \ratSeqMode,
 		\ratCopyAView, \ratCopyA, \ratPasteAView, \ratPasteA, \ratPasteMView, \ratPasteM, \ratDefaultView, \ratDefault,
-		\ratDirView, \ratDir, \ratPatView, \ratPat, \ratPatSelView, \ratPatSel, \ratBlock,
+		\ratDirView, \ratDir, \ratPatView, \ratPat, \ratPatSelViewView, \ratPatSelView, \ratPatSel, \ratBlock,
 		\ratShowView, ~nameModPos2, \left, Color.yellow, "RAT",
 		\ratReadView, Color.grey(0.6), \ratPosView
 	);
@@ -12972,7 +13015,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~freqRat[~tracksValue][~seqsValue] = ~freqRatSpec.map(view.value);
 		view.string = "F : %".format(~freqRat[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -12986,7 +13029,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~fAmp[~tracksValue][~seqsValue] = ~fAmpSpec.map(view.value);
 		view.string = "FA : %".format(~fAmp[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -13003,13 +13046,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\rat2SeqView, \rat2SeqStart, \rat2SeqStop, \seqDurRat2, \rat2SeqSpec, \rat2SeqSpec2, \rat2SeqVSpec, \rat2SeqVSpec2,
 		\rat2IndexView, \rat2Index,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\rat2RangeView, \rat2Min, \rat2Max, \rat2RangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \rat2RangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
-		\rat2MulView, \rat2Mul, \rat2MulSpec, ~sliderHilightColor, \rat2MulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\rat2RoundView, ~roundViewPos5, \rat2Round, \rat2RoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+		\rat2RangeView, \rat2Min, \rat2Max, \rat2RangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \rat2RangePresetViewView, \rat2RangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
+		\rat2MulView, \rat2Mul, \rat2MulSpec, ~sliderHilightColor, \rat2MulPresetViewView, \rat2MulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\rat2RoundViewView, \rat2RoundView, ~roundViewPos5, \rat2Round, \rat2RoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 		\rat2RandView, \rate2f,
 		\rat2SeqAllView, \rat2RangeMode, \rat2SeqMode,
 		\rat2CopyAView, \rat2CopyA, \rat2PasteAView, \rat2PasteA, \rat2PasteMView, \rat2PasteM, \rat2DefaultView, \rat2Default,
-		\rat2DirView, \rat2Dir, \rat2PatView, \rat2Pat, \rat2PatSelView, \rat2PatSel, \rat2Block,
+		\rat2DirView, \rat2Dir, \rat2PatView, \rat2Pat, \rat2PatSelViewView, \rat2PatSelView, \rat2PatSel, \rat2Block,
 		\rat2ShowView, ~nameModPos2, \left, Color.yellow, "RAT 2",
 		\rat2ReadView, Color.grey(0.6), \rat2PosView
 	);
@@ -13036,13 +13079,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\strSeqView, \strSeqStart, \strSeqStop, \seqDurStr, \strSeqSpec, \strSeqSpec2, \strSeqVSpec, \strSeqVSpec2,
 		\strIndexView, \strIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\strRangeView, \strMin, \strMax, \strRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \strRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
-		\strMulView, \strMul, \strMulSpec, ~sliderHilightColor, \strMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\strRoundView, ~roundViewPos5, \strRound, \strRoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+		\strRangeView, \strMin, \strMax, \strRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \strRangePresetViewView, \strRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
+		\strMulView, \strMul, \strMulSpec, ~sliderHilightColor, \strMulPresetViewView, \strMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\strRoundViewView, \strRoundView, ~roundViewPos5, \strRound, \strRoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 		\strRandView, \stretching,
 		\strSeqAllView, \strRangeMode, \strSeqMode,
 		\strCopyAView, \strCopyA, \strPasteAView, \strPasteA, \strPasteMView, \strPasteM, \strDefaultView, \strDefault,
-		\strDirView, \strDir, \strPatView, \strPat, \strPatSelView, \strPatSel, \strBlock,
+		\strDirView, \strDir, \strPatView, \strPat, \strPatSelViewView, \strPatSelView, \strPatSel, \strBlock,
 		\strShowView, ~nameModPos2, \left, Color.yellow, "STR",
 		\strReadView, Color.grey(0.6), \strPosView
 	);
@@ -13051,7 +13094,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~psPitchDispers[~tracksValue][~seqsValue] = ~psPitchDispersSpec.map(view.value);
 		view.string = "PDis : %".format(~psPitchDispers[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -13064,7 +13107,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~psTimeDispers[~tracksValue][~seqsValue] = ~psTimeDispersSpec.map(view.value);
 		view.string = "TDis : %".format(~psTimeDispers[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -13081,13 +13124,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\str2SeqView, \str2SeqStart, \str2SeqStop, \seqDurStr2, \str2SeqSpec, \str2SeqSpec2, \str2SeqVSpec, \str2SeqVSpec2,
 		\str2IndexView, \str2Index,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\str2RangeView, \str2Min, \str2Max, \str2RangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \str2RangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
-		\str2MulView, \str2Mul, \str2MulSpec, ~sliderHilightColor, \str2MulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\str2RoundView, ~roundViewPos5, \str2Round, \str2RoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+		\str2RangeView, \str2Min, \str2Max, \str2RangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \str2RangePresetViewView, \str2RangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 3, "-", 128,
+		\str2MulView, \str2Mul, \str2MulSpec, ~sliderHilightColor, \str2MulPresetViewView, \str2MulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\str2RoundViewView, \str2RoundView, ~roundViewPos5, \str2Round, \str2RoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 		\str2RandView, \stretching2,
 		\str2SeqAllView, \str2RangeMode, \str2SeqMode,
 		\str2CopyAView, \str2CopyA, \str2PasteAView, \str2PasteA, \str2PasteMView, \str2PasteM, \str2DefaultView, \str2Default,
-		\str2DirView, \str2Dir, \str2PatView, \str2Pat, \str2PatSelView, \str2PatSel, \str2Block,
+		\str2DirView, \str2Dir, \str2PatView, \str2Pat, \str2PatSelViewView, \str2PatSelView, \str2PatSel, \str2Block,
 		\str2ShowView, ~nameModPos2, \left, Color.yellow, "STR 2",
 		\str2ReadView, Color.grey(0.6), \str2PosView
 	);
@@ -13114,13 +13157,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\cenSeqView, \cenSeqStart, \cenSeqStop, \seqDurCen, \cenSeqSpec, \cenSeqSpec2, \cenSeqVSpec, \cenSeqVSpec2,
 		\cenIndexView, \cenIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\cenRangeView, \cenMin, \cenMax, \cenRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \cenRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 12, "-", 128,
-		\cenMulView, \cenMul, \cenMulSpec, ~sliderHilightColor, \cenMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\cenRoundView, ~roundViewPos5, \cenRound, \cenRoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 11,
+		\cenRangeView, \cenMin, \cenMax, \cenRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \cenRangePresetViewView, \cenRangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 12, "-", 128,
+		\cenMulView, \cenMul, \cenMulSpec, ~sliderHilightColor, \cenMulPresetViewView, \cenMulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\cenRoundViewView, \cenRoundView, ~roundViewPos5, \cenRound, \cenRoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 11,
 		\cenRandView, \center,
 		\cenSeqAllView, \cenRangeMode, \cenSeqMode,
 		\cenCopyAView, \cenCopyA, \cenPasteAView, \cenPasteA, \cenPasteMView, \cenPasteM, \cenDefaultView, \cenDefault,
-		\cenDirView, \cenDir, \cenPatView, \cenPat, \cenPatSelView, \cenPatSel, \cenBlock,
+		\cenDirView, \cenDir, \cenPatView, \cenPat, \cenPatSelViewView, \cenPatSelView, \cenPatSel, \cenBlock,
 		\cenShowView, ~nameModPos2, \left, Color.yellow, "CEN",
 		\cenReadView, Color.grey(0.6), \cenPosView
 	);
@@ -13135,7 +13178,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		~psTimeDispersView.valueAction_(~psTimeDispersSpec.unmap(~psTimeDispers[~tracksValue][~seqsValue]));
 		view.string = "WinS : %".format(~psWindowSize[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -13152,13 +13195,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\cen2SeqView, \cen2SeqStart, \cen2SeqStop, \seqDurCen2, \cen2SeqSpec, \cen2SeqSpec2, \cen2SeqVSpec, \cen2SeqVSpec2,
 		\cen2IndexView, \cen2Index,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\cen2RangeView, \cen2Min, \cen2Max, \cen2RangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \cen2RangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 12, "-", 128,
-		\cen2MulView, \cen2Mul, \cen2MulSpec, ~sliderHilightColor, \cen2MulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\cen2RoundView, ~roundViewPos5, \cen2Round, \cen2RoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 11,
+		\cen2RangeView, \cen2Min, \cen2Max, \cen2RangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \cen2RangePresetViewView, \cen2RangePresetView, ["0-0.5", "0-1", "0.5-1.5", "0-2", "0-3", "0-4", "0-5", "0-6", "0-10", "0-20", "0-50", "0-100", "0-128", "36-84", "36-60", "60-84", "48-72"], 12, "-", 128,
+		\cen2MulView, \cen2Mul, \cen2MulSpec, ~sliderHilightColor, \cen2MulPresetViewView, \cen2MulPresetView, ["0.01", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\cen2RoundViewView, \cen2RoundView, ~roundViewPos5, \cen2Round, \cen2RoundValue, ["@ 0.001 EXP", "@ 0.01 EXP", "@ 0.1 EXP", "@ 0.2 EXP", "@ 0.25 EXP", "@ 0.5 EXP", "@ 1 EXP", "@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 11,
 		\cen2RandView, \center2,
 		\cen2SeqAllView, \cen2RangeMode, \cen2SeqMode,
 		\cen2CopyAView, \cen2CopyA, \cen2PasteAView, \cen2PasteA, \cen2PasteMView, \cen2PasteM, \cen2DefaultView, \cen2Default,
-		\cen2DirView, \cen2Dir, \cen2PatView, \cen2Pat, \cen2PatSelView, \cen2PatSel, \cen2Block,
+		\cen2DirView, \cen2Dir, \cen2PatView, \cen2Pat, \cen2PatSelViewView, \cen2PatSelView, \cen2PatSel, \cen2Block,
 		\cen2ShowView, ~nameModPos2, \left, Color.yellow, "CEN 2",
 		\cen2ReadView, Color.grey(0.6), \cen2PosView
 	);
@@ -13208,13 +13251,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\panSeqView, \panSeqStart, \panSeqStop, \seqDurPan, \panSeqSpec, \panSeqSpec2, \panSeqVSpec, \panSeqVSpec2,
 		\panIndexView, \panIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\panRangeView, \panMin, \panMax, \panRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \panRangePresetView, ~panRangePresetItems, (~panRangePresetItems.size-1), "->", 1,
-		\panMulView, \panMul, \panMulSpec, ~sliderHilightColor, \panMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\panRoundView, ~roundViewPos5, \panRound, \panRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
+		\panRangeView, \panMin, \panMax, \panRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \panRangePresetViewView, \panRangePresetView, ~panRangePresetItems, (~panRangePresetItems.size-1), "->", 1,
+		\panMulView, \panMul, \panMulSpec, ~sliderHilightColor, \panMulPresetViewView, \panMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\panRoundViewView, \panRoundView, ~roundViewPos5, \panRound, \panRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
 		\panRandView, \panning,
 		\panSeqAllView, \panRangeMode, \panSeqMode,
 		\panCopyAView, \panCopyA, \panPasteAView, \panPasteA, \panPasteMView, \panPasteM, \panDefaultView, \panDefault,
-		\panDirView, \panDir, \panPatView, \panPat, \panPatSelView, \panPatSel, \panBlock,
+		\panDirView, \panDir, \panPatView, \panPat, \panPatSelViewView, \panPatSelView, \panPatSel, \panBlock,
 		\panShowView, ~nameModPos, \center, Color.green, "PAN",
 		\panReadView, Color.grey(0.6) /*Color.blue*/ /*~panCompColor.alpha_(0)*/, \panPosView
 	);
@@ -13224,7 +13267,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~panRat[~tracksValue][~seqsValue] = ~panRatSpec.map(view.value);
 		view.string = "P : %".format(~panRat[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -13238,7 +13281,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.action_({ |view| ~pAmp[~tracksValue][~seqsValue] = ~pAmpSpec.map(view.value);
 		view.string = "PA : %".format(~pAmp[~tracksValue][~seqsValue]);
 	})
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.background_(~sliderBackgroundColor /*Color.magenta*/)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -13263,13 +13306,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\delSeqView, \delSeqStart, \delSeqStop, \seqDurDel, \delSeqSpec, \delSeqSpec2, \delSeqVSpec, \delSeqVSpec2,
 		\delIndexView, \delIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\delRangeView, \delMin, \delMax, \delRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \delRangePresetView, ["0->0.005", "0->0.01", "0->0.02", "0->0.05", "0->0.1", "0->0.2", "0->0.5", "0->1"], 1, "->", 1,
-		\delMulView, \delMul, \delMulSpec, ~sliderHilightNoColor, \delMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\delRoundView, ~roundViewPos5, \delRound, \delRoundValue, ["@ 0.001", "@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
+		\delRangeView, \delMin, \delMax, \delRangeSpec, "NoRangeViewMinRange", ~sliderHilightNoColor, \delRangePresetViewView, \delRangePresetView, ["0->0.005", "0->0.01", "0->0.02", "0->0.05", "0->0.1", "0->0.2", "0->0.5", "0->1"], 1, "->", 1,
+		\delMulView, \delMul, \delMulSpec, ~sliderHilightNoColor, \delMulPresetViewView, \delMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\delRoundViewView, \delRoundView, ~roundViewPos5, \delRound, \delRoundValue, ["@ 0.001", "@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
 		\delRandView, \delay,
 		\delSeqAllView, \delRangeMode, \delSeqMode,
 		\delCopyAView, \delCopyA, \delPasteAView, \delPasteA, \delPasteMView, \delPasteM, \delDefaultView, \delDefault,
-		\delDirView, \delDir, \delPatView, \delPat, \delPatSelView, \delPatSel, \delBlock,
+		\delDirView, \delDir, \delPatView, \delPat, \delPatSelViewView, \delPatSelView, \delPatSel, \delBlock,
 		\delShowView, ~nameModPos, \center, Color.green, "DEL",
 		\delReadView, Color.grey(0.6), \delPosView
 	);
@@ -13283,19 +13326,19 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	~posOutL = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // Déclaration variables pour le Pattern
 	~posOutR = 0 ! ~nbOfSeqs ! ~nbOfTracksX2; // Déclaration variables pour le Pattern
 
-	~outRandOnBothView = RoundButton(~tabGUI, Rect(1259, 784/*-216*/, 42, 16)) // décaler de 399 & 216 pour ajuster la position
+	~outRandOnBothView = RoundButton(~tabGUI, Rect(1259*~xSizeMul, 784*~ySizeMul/*-216*/, 42*~xSizeMul, 16*~ySizeMul)) // décaler de 399 & 216 pour ajuster la position
 	.states_([["\Rand 2", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~randOutView.valueAction_(1) });
 
-	~outActOnWhichView = RoundButton(~tabGUI, Rect(1536, 802/*-216*/, 36, 22))
+	~outActOnWhichView = RoundButton(~tabGUI, Rect(1536*~xSizeMul, 802*~ySizeMul/*-216*/, 36*~xSizeMul, 22*~ySizeMul))
 	.states_([["\Act \n on 1", Color.white, Color.blue], ["Act \n on 2", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~outActOnWhich = i.value; if (~outActOnWhich == 1, { ~outCompChooseView.valueAction_(0) }) })
 	.valueAction_(0).doAction;
 
-	~outLGrid = UserView(/*~outStackCompL*/ ~outLComp, Rect(2, 18, 333, 116) /*~outLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
-	~outRGrid = UserView(/*~outStackCompL*/ ~outRComp, Rect(2, 18, 333, 116) /*~outLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+	~outLGrid = UserView(/*~outStackCompL*/ ~outLComp, Rect(2*~xSizeMul, 18*~ySizeMul, 333*~xSizeMul, 116*~ySizeMul) /*~outLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+	~outRGrid = UserView(/*~outStackCompL*/ ~outRComp, Rect(2*~xSizeMul, 18*~ySizeMul, 333*~xSizeMul, 116*~ySizeMul) /*~outLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
 
 	~makeGrid = { | view, name, minL, minR, maxL, maxR |
 		// name = UserView(/*~outStackCompL*/ view, Rect(2, 18, 333, 116) /*~outLView.bounds*/).clearOnRefresh_(true)
@@ -13347,13 +13390,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\outRSeqView, \outRSeqStart, \outRSeqStop, \seqDurOutR, \outRSeqSpec, \outRSeqSpec2, \outRSeqVSpec, \outRSeqVSpec2,
 		\outRIndexView, \outRIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\outRRangeView, \outRMin, \outRMax, \outRRangeSpec, if (~numChannels == 2, {(1/16)}, {(1/(~numChannels-1))} ) /*(1/~numChannels)*/, ~sliderHilightNoColor, \outRRangePresetView, ["1->2", "1->3", "3->5", "4->5", "1->5", "1->6", "1->7", "1->8", "1->14", "1->16", "1->32"], if (~numChannelsConfig == "22-8+Dome-8-4-2-Pair", {8}, {10}), "->", "NoRangeMax",
-		\outRMulView, \outRMul, \outRMulSpec, ~sliderHilightNoColor, \outRMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\outRRoundView, Rect(2, 136, 57, 16) /*~roundViewPos5*/, \outRRound, \outRRoundValue, ["L Tr 1", "R Tr 1", "L Tr 2", "R Tr 2", "L Tr 3", "R Tr 3", "L Tr 4", "R Tr 4", "L Tr 5", "R Tr 5", "L Tr 6", "R Tr 6", "L Tr 7", "R Tr 7", "L Tr 8", "R Tr 8"], 1, // roundView & roundViewDefault à modifier selon le nombre de canaux
+		\outRRangeView, \outRMin, \outRMax, \outRRangeSpec, if (~numChannels == 2, {(1/16)}, {(1/(~numChannels-1))} ) /*(1/~numChannels)*/, ~sliderHilightNoColor, \outRRangePresetViewView, \outRRangePresetView, ["1->2", "1->3", "3->5", "4->5", "1->5", "1->6", "1->7", "1->8", "1->14", "1->16", "1->32"], if (~numChannelsConfig == "22-8+Dome-8-4-2-Pair", {8}, {10}), "->", "NoRangeMax",
+		\outRMulView, \outRMul, \outRMulSpec, ~sliderHilightNoColor, \outRMulPresetViewView, \outRMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\outRRoundViewView, \outRRoundView, Rect(2*~xSizeMul, 136*~ySizeMul, 57*~xSizeMul, 16*~ySizeMul) /*~roundViewPos5*/, \outRRound, \outRRoundValue, ["L Tr 1", "R Tr 1", "L Tr 2", "R Tr 2", "L Tr 3", "R Tr 3", "L Tr 4", "R Tr 4", "L Tr 5", "R Tr 5", "L Tr 6", "R Tr 6", "L Tr 7", "R Tr 7", "L Tr 8", "R Tr 8"], 1, // roundView & roundViewDefault à modifier selon le nombre de canaux
 		\outRRandView, \outingR,
 		\outRSeqAllView, \outRRangeMode, \outRSeqMode,
 		\outRCopyAView, \outRCopyA, \outRPasteAView, \outRPasteA, \outRPasteMView, \outRPasteM, \outRDefaultView, \outRDefault,
-		\outRDirView, \outRDir, \outRPatView, \outRPat, \outRPatSelView, \outRPatSel, \outRBlock,
+		\outRDirView, \outRDir, \outRPatView, \outRPat, \outRPatSelViewView, \outRPatSelView, \outRPatSel, \outRBlock,
 		\outRShowView, ~nameModPos2, \left, Color.green, "OUT    R",
 		\outRReadView, Color.grey(0.6) /*Color.blue*/ /*~panCompColor.alpha_(0)*/, \outRPosView
 	);
@@ -13366,13 +13409,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\outLSeqView, \outLSeqStart, \outLSeqStop, \seqDurOutL, \outLSeqSpec, \outLSeqSpec2, \outLSeqVSpec, \outLSeqVSpec2,
 		\outLIndexView, \outLIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\outLRangeView, \outLMin, \outLMax, \outLRangeSpec, if (~numChannels == 2, {(1/16)}, {(1/(~numChannels-1))} ) /*(1/~numChannels)*/, ~sliderHilightNoColor, \outLRangePresetView, ["1->2", "1->3", "3->5", "4->5", "1->5", "1->6", "1->7", "1->8", "1->14", "1->16", "1->32"], if (~numChannelsConfig == "22-8+Dome-8-4-2-Pair", {8}, {10}), "->", "NoRangeMax",
-		\outLMulView, \outLMul, \outLMulSpec, ~sliderHilightNoColor, \outLMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\outLRoundView, Rect(2, 136, 57, 16) /*~roundViewPos5*/, \outLRound, \outLRoundValue, ["L Tr 1", "R Tr 1", "L Tr 2", "R Tr 2", "L Tr 3", "R Tr 3", "L Tr 4", "R Tr 4", "L Tr 5", "R Tr 5", "L Tr 6", "R Tr 6", "L Tr 7", "R Tr 7", "L Tr 8", "R Tr 8"], 0, // roundView & roundViewDefault à modifier selon le nombre de canaux
+		\outLRangeView, \outLMin, \outLMax, \outLRangeSpec, if (~numChannels == 2, {(1/16)}, {(1/(~numChannels-1))} ) /*(1/~numChannels)*/, ~sliderHilightNoColor, \outLRangePresetViewView, \outLRangePresetView, ["1->2", "1->3", "3->5", "4->5", "1->5", "1->6", "1->7", "1->8", "1->14", "1->16", "1->32"], if (~numChannelsConfig == "22-8+Dome-8-4-2-Pair", {8}, {10}), "->", "NoRangeMax",
+		\outLMulView, \outLMul, \outLMulSpec, ~sliderHilightNoColor, \outLMulPresetViewView, \outLMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\outLRoundViewView, \outLRoundView, Rect(2*~xSizeMul, 136*~ySizeMul, 57*~xSizeMul, 16*~ySizeMul) /*~roundViewPos5*/, \outLRound, \outLRoundValue, ["L Tr 1", "R Tr 1", "L Tr 2", "R Tr 2", "L Tr 3", "R Tr 3", "L Tr 4", "R Tr 4", "L Tr 5", "R Tr 5", "L Tr 6", "R Tr 6", "L Tr 7", "R Tr 7", "L Tr 8", "R Tr 8"], 0, // roundView & roundViewDefault à modifier selon le nombre de canaux
 		\outLRandView, \outingL,
 		\outLSeqAllView, \outLRangeMode, \outLSeqMode,
 		\outLCopyAView, \outLCopyA, \outLPasteAView, \outLPasteA, \outLPasteMView, \outLPasteM, \outLDefaultView, \outLDefault,
-		\outLDirView, \outLDir, \outLPatView, \outLPat, \outLPatSelView, \outLPatSel, \outLBlock,
+		\outLDirView, \outLDir, \outLPatView, \outLPat, \outLPatSelViewView, \outLPatSelView, \outLPatSel, \outLBlock,
 		\outLShowView, ~nameModPos2, \left, Color.green, "OUT L",
 		\outLReadView, Color.grey(0.6) /*Color.blue*/ /*~panCompColor.alpha_(0)*/, \outLPosView
 	);
@@ -13390,20 +13433,20 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 
 	~numEffects = 5;
 
-	~fxLGrid = UserView(/*~fxStackCompL*/ ~fxLComp, Rect(2, 18, 333, 116) /*~fxLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
-	~fxRGrid = UserView(/*~fxStackCompL*/ ~fxRComp, Rect(2, 18, 333, 116) /*~fxLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+	~fxLGrid = UserView(/*~fxStackCompL*/ ~fxLComp, Rect(2*~xSizeMul, 18*~ySizeMul, 333*~xSizeMul, 116*~ySizeMul) /*~fxLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+	~fxRGrid = UserView(/*~fxStackCompL*/ ~fxRComp, Rect(2*~xSizeMul, 18*~ySizeMul, 333*~xSizeMul, 116*~ySizeMul) /*~fxLView.bounds*/).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
 
 	// ~makeGrid.(~fxLComp, ~numEffects+1, ~fxLGrid, ~numChannels, ~numChannels); // intégré dans le RangeView
 	// ~makeGrid.(~fxRComp, ~numEffects+1, ~fxRGrid, ~numChannels, ~numChannels);
 
-	~fxRandOnBothView = RoundButton(~tabGUI, Rect(1259, 784+216, 42, 16))
+	~fxRandOnBothView = RoundButton(~tabGUI, Rect(1259*~xSizeMul, (784+216)*~ySizeMul, 42*~xSizeMul, 16*~ySizeMul))
 	.states_([["\Rand 2", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~randFxView.valueAction_(1); /*var previousfxActOnWhich = ~fxActOnWhich; ~fxActOnWhichView.valueAction_(0); ~fxLRandView.valueAction_(1); ~fxRRandView.valueAction_(1); ~fxActOnWhichView.valueAction_(previousfxActOnWhich)*/ });
 
-	~fxActOnWhichView = RoundButton(~tabGUI, Rect(1536, 802+216, 30, 38))
+	~fxActOnWhichView = RoundButton(~tabGUI, Rect(1536*~xSizeMul, (802+216)*~ySizeMul, 30*~xSizeMul, 38*~ySizeMul))
 	.states_([["\Act \n on 1", Color.white, Color.blue], ["Act \n on 2", Color.white, Color.red]])
-	.font_(Font("Verdana",9))
+	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~fxActOnWhich = i.value; if (~fxActOnWhich == 1, { ~outCompChooseView.valueAction_(0) }) })
 	.valueAction_(1);
 
@@ -13416,13 +13459,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\fxRSeqView, \fxRSeqStart, \fxRSeqStop, \seqDurFxR, \fxRSeqSpec, \fxRSeqSpec2, \fxRSeqVSpec, \fxRSeqVSpec2,
 		\fxRIndexView, \fxRIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\fxRRangeView, \fxRMin, \fxRMax, \fxRRangeSpec, (1/~numEffects), ~sliderHilightNoColor, \fxRRangePresetView, ["0->4", "0->5", "0->8"], 1, "->", ~numEffects,
-		\fxRMulView, \fxRMul, \fxRMulSpec, ~sliderHilightNoColor, \fxRMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\fxRRoundView, Rect(2, 136, 57, 16) /*~roundViewPos5*/, \fxRRound, \fxRRoundValue, ["No Fx", "Fx 1", "Fx 2", "Fx 3", "Fx 4"], 0,
+		\fxRRangeView, \fxRMin, \fxRMax, \fxRRangeSpec, (1/~numEffects), ~sliderHilightNoColor, \fxRRangePresetViewView, \fxRRangePresetView, ["0->4", "0->5", "0->8"], 1, "->", ~numEffects,
+		\fxRMulView, \fxRMul, \fxRMulSpec, ~sliderHilightNoColor, \fxRMulPresetViewView, \fxRMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\fxRRoundViewView, \fxRRoundView, Rect(2*~xSizeMul, 136*~ySizeMul, 57*~xSizeMul, 16*~ySizeMul) /*~roundViewPos5*/, \fxRRound, \fxRRoundValue, ["No Fx", "Fx 1", "Fx 2", "Fx 3", "Fx 4"], 0,
 		\fxRRandView, \efxR,
 		\fxRSeqAllView, \fxRRangeMode, \fxRSeqMode,
 		\fxRCopyAView, \fxRCopyA, \fxRPasteAView, \fxRPasteA, \fxRPasteMView, \fxRPasteM, \fxRDefaultView, \fxRDefault,
-		\fxRDirView, \fxRDir, \fxRPatView, \fxRPat, \fxRPatSelView, \fxRPatSel, \fxRBlock,
+		\fxRDirView, \fxRDir, \fxRPatView, \fxRPat, \fxRPatSelViewView, \fxRPatSelView, \fxRPatSel, \fxRBlock,
 		\fxRShowView, ~nameModPos2, \left, Color.green /*Color.new255(255, 165, 0)*/, "FX    R",
 		\fxRReadView, Color.grey(0.6) /*Color.green*/ /*~fxCompColor.alpha_(0)*/, \fxRPosView
 	);
@@ -13435,13 +13478,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\fxLSeqView, \fxLSeqStart, \fxLSeqStop, \seqDurFxL, \fxLSeqSpec, \fxLSeqSpec2, \fxLSeqVSpec, \fxLSeqVSpec2,
 		\fxLIndexView, \fxLIndex,
 		// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign, rangeMax,
-		\fxLRangeView, \fxLMin, \fxLMax, \fxLRangeSpec, (1/~numEffects), ~sliderHilightNoColor, \fxLRangePresetView, ["0->4", "0->5", "0->8"], 1, "->", ~numEffects,
-		\fxLMulView, \fxLMul, \fxLMulSpec, ~sliderHilightNoColor, \fxLMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
-		\fxLRoundView, Rect(2, 136, 57, 16) /*~roundViewPos5*/, \fxLRound, \fxLRoundValue, ["No Fx", "Fx 1", "Fx 2", "Fx 3", "Fx 4"], 0,
+		\fxLRangeView, \fxLMin, \fxLMax, \fxLRangeSpec, (1/~numEffects), ~sliderHilightNoColor, \fxLRangePresetViewView, \fxLRangePresetView, ["0->4", "0->5", "0->8"], 1, "->", ~numEffects,
+		\fxLMulView, \fxLMul, \fxLMulSpec, ~sliderHilightNoColor, \fxLMulPresetViewView, \fxLMulPresetView, ["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.5", "2", "3", "4", "5", "10"], 10,
+		\fxLRoundViewView, \fxLRoundView, Rect(2*~xSizeMul, 136*~ySizeMul, 57*~xSizeMul, 16*~ySizeMul) /*~roundViewPos5*/, \fxLRound, \fxLRoundValue, ["No Fx", "Fx 1", "Fx 2", "Fx 3", "Fx 4"], 0,
 		\fxLRandView, \efxL,
 		\fxLSeqAllView, \fxLRangeMode, \fxLSeqMode,
 		\fxLCopyAView, \fxLCopyA, \fxLPasteAView, \fxLPasteA, \fxLPasteMView, \fxLPasteM, \fxLDefaultView, \fxLDefault,
-		\fxLDirView, \fxLDir, \fxLPatView, \fxLPat, \fxLPatSelView, \fxLPatSel, \fxLBlock,
+		\fxLDirView, \fxLDir, \fxLPatView, \fxLPat, \fxLPatSelViewView, \fxLPatSelView, \fxLPatSel, \fxLBlock,
 		\fxLShowView, ~nameModPos2, \left, Color.green /*Color.new255(255, 165, 0)*/, "FX L",
 		\fxLReadView, Color.grey(0.6) /*Color.green*/ /*~fxCompColor.alpha_(0)*/, \fxLPosView
 	);
@@ -13917,8 +13960,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	comp, display, displayReduceFontPos, displayString1,
 	multiView, data, dataSeq, dataSpec, multiViewFilled, multiViewDrawLines, multiViewValueThumbSize, multiViewBackground, multiViewFillColor, multiViewStrokeColor,
 	seqView, seqStart, seqStop, seqDur, seqSpec,
-	rangeView, min, max, rangeSpec, rangeViewMinRange, rangeSliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
-	roundView, roundViewPos, round, roundValue, roundViewItems, roundViewDefault,
+	rangeView, min, max, rangeSpec, rangeViewMinRange, rangeSliderColor, rangePresetViewView, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
+	roundViewView, roundView, roundViewPos, round, roundValue, roundViewItems, roundViewDefault,
 	randView, randFunc,
 	seqAllView, rangeMode, seqMode,
 	defaultView, default,
@@ -14043,7 +14086,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	.hasVerticalScroller_(false)
 	.hasHorizontalScroller_(false)
 	.enterInterpretsSelection_(1)
-	.font_(Font("arial",10));
+	.font_(Font("arial",10*~fontSizeMul));
 
 	// MultiView
 
@@ -14124,7 +14167,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	// SeqView
 
 	envir[seqView] = SmoothRangeSlider(envir[comp], ~seqViewHarPos5)
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
@@ -14190,7 +14233,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	{ [\ratHar].includes(data) }
 	{
 		envir[rangeView] = SmoothRangeSlider(envir[comp], ~rangeViewHarPos5)
-		.font_(Font("Verdana", 8))
+		.font_(Font("Verdana", 8*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.hilightColor_(rangeSliderColor)
 		.stringColor_(Color.white)
@@ -14222,7 +14265,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	{ [\cenHar].includes(data) }
 	{
 		envir[rangeView] = SmoothRangeSlider(envir[comp], ~rangeViewHarPos5)
-		.font_(Font("Verdana", 8))
+		.font_(Font("Verdana", 8*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.hilightColor_(rangeSliderColor)
 		.stringColor_(Color.white)
@@ -14253,7 +14296,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	}
 	{ [\delHar].includes(data) }
 	{ envir[rangeView] = SmoothRangeSlider(envir[comp], ~rangeViewHarPos5)
-		.font_(Font("Verdana", 8))
+		.font_(Font("Verdana", 8*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.hilightColor_(rangeSliderColor)
 		.stringColor_(Color.white)
@@ -14280,7 +14323,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	}
 	{ [\spaHar].includes(data) }
 	{ envir[rangeView] = SmoothRangeSlider(envir[comp], ~rangeViewHarPos5)
-		.font_(Font("Verdana", 8))
+		.font_(Font("Verdana", 8*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.hilightColor_(rangeSliderColor)
 		.stringColor_(Color.white)
@@ -14312,11 +14355,13 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 
 	// RoundView
 
-	envir[roundView] = PopUpMenu.new(envir[comp], ~roundViewHarPos5)
+	envir[roundViewView] = View(envir[comp], ~roundViewHarPos5);
+
+	envir[roundView] = PopUpMenu.new(envir[roundViewView], Rect(0, 0, 130*~xSizeMul, 16*~ySizeMul))
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.items_(roundViewItems);
 
 	case { [\ratHar, \cenHar, \delHar].includes(data) }
@@ -14368,25 +14413,29 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 
 	// RangePresetView
 
+	envir[rangePresetViewView] = View(envir[comp], ~rangePresetViewHarPos5);
+
+	envir[rangePresetView] = PopUpMenu.new(envir[rangePresetViewView], Rect(0, 0, 100*~xSizeMul, 16*~ySizeMul););
+
 	case
 	{[\ratHar, \cenHar, \delHar].includes(data)}
 	{
-		envir[rangePresetView] = PopUpMenu.new(envir[comp], ~rangePresetViewHarPos5)
+		envir[rangePresetView]
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(~popUpMenuStringColor)
-		.font_(Font("Verdana",8))
+		.font_(Font("Verdana",8*~fontSizeMul))
 		.items_(rangePresetViewItems)
 		.action_({|menu| envir[rangeView].valueAction_(envir[rangeSpec][~tracksValue][~seqsValue].unmap([menu.item.replace(rangePresetViewSign, " ").split($ )[0].asFloat, menu.item.replace(rangePresetViewSign, " ").split($ )[1].asFloat])) })
 		.valueAction_(rangePresetViewDefault);
 	}
 	{\spaHar == data}
 	{
-		envir[rangePresetView] = PopUpMenu.new(envir[comp], ~rangePresetViewHarPos5)
+		envir[rangePresetView]
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(~popUpMenuStringColor)
-		.font_(Font("Verdana",8))
+		.font_(Font("Verdana",8*~fontSizeMul))
 		.items_(rangePresetViewItems)
 		.action_({|menu| ~spaHarRangePresetViewFunc[menu.value].value(~tracksValue, ~seqsValue) })
 		.valueAction_(rangePresetViewDefault);
@@ -14403,7 +14452,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 
 	envir[randView]
 	.states_([["Rand", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({if (~patFlag == 0, {
 		envir[randFunc].value(~tracksValue, ~seqsValue)}, {
 		~seqs.do {|i|
@@ -14415,7 +14464,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 
 	envir[seqAllView]
 	.states_([["All Seq", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({envir[seqView].valueAction_([0, 1]);
 	});
 
@@ -14423,19 +14472,19 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	if ( [\ratHar, \cenHar, \spaHar, \delHar].includes(data), {
 		envir[rangeMode] = RoundButton(envir[comp], ~rangeModeHarPos5)
 		.states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor] /*["\Drag", Color.white, Color.blue], ["\Jump", Color.black, Color.green]*/])
-		.font_(Font("Verdana",8))
+		.font_(Font("Verdana",8*~fontSizeMul))
 		.action_({|i| envir[rangeView].mode_(~modes[i.value])});
 	});
 
 	envir[seqMode]
 	.states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor] /*["\Drag", Color.white, Color.blue], ["\Jump", Color.black, Color.green]*/])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| envir[seqView].mode_(~modes[i.value])})
 	.valueAction_(1);
 
 	envir[defaultView]
 	.states_([["Def", Color.white, Color.blue]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({if (~patFlag == 0, {
 		envir[default].value(~tracksValue, ~seqsValue)}, {
 		~seqs.do {|i| envir[default].value(~tracksValue, i)}});
@@ -14447,7 +14496,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	// ShowView - Names of Modules
 
 	envir[showView] = StaticText(envir[comp], showViewPos)
-	.font_(Font("Verdana", 13, bold: true))
+	.font_(Font("Verdana", 13*~fontSizeMul, bold: true))
 	.align_(showViewAlign)
 	.acceptsMouse_(0)
 	.stringColor_(showViewColor)
@@ -14467,8 +14516,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 ~harIndex[tr][seq] = ~harNbSpec[tr][seq].default;
 }};*/
 
-~harIndexView = SmoothSlider(~tabHarComp, Rect(342, 2, 35, 90))
-.font_(Font("Verdana", 10))
+~harIndexView = SmoothSlider(~tabHarComp, Rect(342*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 90*~ySizeMul))
+.font_(Font("Verdana", 10*~fontSizeMul))
 .background_(~sliderBackgroundColor)
 .hilightColor_(~sliderHilightColor)
 .stringColor_(Color.white)
@@ -14481,9 +14530,9 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 .valueAction_(~harNbSpec.unmap(~harIndex[~tracksValue][~seqsValue]))
 .doAction;
 
-~harDefView = RoundButton(~tabHarComp, Rect(305, 149, 35, 20))
+~harDefView = RoundButton(~tabHarComp, Rect(305*~xSizeMul, 149*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 .states_([["Def A", Color.white, Color.blue]])
-.font_(Font("Verdana",9))
+.font_(Font("Verdana",9*~fontSizeMul))
 .action_({if (~patFlag == 0, {
 	~ratHarDefault.value(~tracksValue, ~seqsValue);
 	~cenHarDefault.value(~tracksValue, ~seqsValue);
@@ -14500,9 +14549,9 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 }});
 });
 
-~harRandView = RoundButton(~tabHarComp, Rect(305, 169, 35, 20))
+~harRandView = RoundButton(~tabHarComp, Rect(305*~xSizeMul, 169*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 .states_([["Rand A", Color.white, Color.red]])
-.font_(Font("Verdana",9))
+.font_(Font("Verdana",9*~fontSizeMul))
 .action_({if (~patFlag == 0, {
 	~rateHar.value(~tracksValue, ~seqsValue);
 	~centerHar.value(~tracksValue, ~seqsValue);
@@ -14522,9 +14571,9 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 });
 });
 
-~harSpaDefView = RoundButton(~tabHarComp, Rect(342, 173, 38, 20))
+~harSpaDefView = RoundButton(~tabHarComp, Rect(342*~xSizeMul, 173*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
 .states_([["De Spa", Color.white, Color.blue]])
-.font_(Font("Verdana",9))
+.font_(Font("Verdana",9*~fontSizeMul))
 .action_({if (~patFlag == 0, {
 	~spaHarDefault.value(~tracksValue, ~seqsValue);
 }, {
@@ -14532,9 +14581,9 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 });
 });
 
-~harSpaRandView = RoundButton(~tabHarComp, Rect(342, 193, 38, 20))
+~harSpaRandView = RoundButton(~tabHarComp, Rect(342*~xSizeMul, 193*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
 .states_([["Ra Spa", Color.white, Color.red]])
-.font_(Font("Verdana",9))
+.font_(Font("Verdana",9*~fontSizeMul))
 .action_({if (~patFlag == 0, {
 	~spatialisationHar.value(~tracksValue, ~seqsValue);
 }, {
@@ -14542,15 +14591,15 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 });
 });
 
-~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338, 154, 40, 22) /*Rect(305, 191, 35, 22)*/)
+~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul) /*Rect(305, 191, 35, 22)*/)
 .states_([["Mul X", Color.white, Color.red],["Mul X", Color.black, Color.green]])
-.font_(Font("Verdana",10, bold: true))
+.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 .action_({ |i| ~harTrig[~tracksValue][~seqsValue] = i.value;
 });
 
-~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338, 154, 40, 22) /*Rect(305, 191, 35, 22)*/)
+~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul) /*Rect(305, 191, 35, 22)*/)
 .states_([["Mul X", Color.white, Color.red],["Mul X", Color.black, Color.green]])
-.font_(Font("Verdana",10, bold: true))
+.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 .action_({ |i| ~harTrig[~tracksValue][~seqsValue] = i.value;
 });
 
@@ -14566,8 +14615,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	\ratHarView, \ratHar, \ratHarSeq, \ratHarSpec, false, true, 10, ~compColor1, ~multiCompColor1, Color.white,
 	\ratHarSeqView, \ratHarSeqStart, \ratHarSeqStop, \seqDurRatHar, \ratHarSeqSpec,
 	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
-	\ratHarRangeView, \ratHarMin, \ratHarMax, \ratHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ratHarRangePresetView, ["0->6", "0->12", "0->24", "0->48", "0->60", "0->84", "0->-6", "0->-12", "0->-24", "0->-48", "0->-60", "0->-84", "-1->1", "-6->6", "-12->12", "-24->24", "-48->48", "-60->60", "-84->84"], 14, "->",
-	\ratHarRoundView, ~roundViewPos5, \ratHarRound, \ratHarRoundValue, ["@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+	\ratHarRangeView, \ratHarMin, \ratHarMax, \ratHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ratHarRangePresetViewView, \ratHarRangePresetView, ["0->6", "0->12", "0->24", "0->48", "0->60", "0->84", "0->-6", "0->-12", "0->-24", "0->-48", "0->-60", "0->-84", "-1->1", "-6->6", "-12->12", "-24->24", "-48->48", "-60->60", "-84->84"], 14, "->",
+	\ratHarRoundViewView, \ratHarRoundView, ~roundViewPos5, \ratHarRound, \ratHarRoundValue, ["@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 	\ratHarRandView, \rateHar,
 	\ratHarSeqAllView, \ratHarRangeMode, \ratHarSeqMode,
 	\ratHarDefaultView, \ratHarDefault,
@@ -14577,22 +14626,22 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 ~makeRandHarFunction.(currentEnvironment, \rateHar, \ratHar, \ratHarView, \dur, \seqDurRatHar, \ratHarSeqView, \ratHarSeqStart, \ratHarSeqStop, \ratHarSeqSpec/*, \ratHarIndex, \ratSeqVSpec, \ratReadView*/);
 
 ~outLHarSpatType = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-~outLHarSpatTypeView = ListView(~tabHarComp, Rect(342, 94, 38, 38))
+~outLHarSpatTypeView = ListView(~tabHarComp, Rect(342*~xSizeMul, 94*~ySizeMul, 41*~xSizeMul, 39*~ySizeMul))
 .background_(~panCompColor /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 .hiliteColor_(Color.yellow(alpha: 1))
 .selectedStringColor_(Color.black)
 .stringColor_(Color.white)
-.font_(Font("Verdana",9, bold: true))
+.font_(Font("Verdana",(9*~fontSizeMul).asInteger, bold: true))
 .items_(["Out L", "Seq L", "Ran L"])
 .action_({ |menu| ~outLHarSpatType[~tracksValue][~seqsValue] = menu.value });
 
 ~outRHarSpatType = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
-~outRHarSpatTypeView = ListView(~tabHarComp, Rect(342, 134, 38, 38))
+~outRHarSpatTypeView = ListView(~tabHarComp, Rect(342*~xSizeMul, 134*~ySizeMul, 41*~xSizeMul, 39*~ySizeMul))
 .background_(~panCompColor /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 .hiliteColor_(Color.yellow(alpha: 1))
 .selectedStringColor_(Color.black)
 .stringColor_(Color.white)
-.font_(Font("Verdana",9, bold: true))
+.font_(Font("Verdana",(9*~fontSizeMul).asInteger, bold: true))
 .items_(["Out R", "Seq R", "Ran R"])
 .action_({ |menu| ~outRHarSpatType[~tracksValue][~seqsValue] = menu.value });
 
@@ -14603,8 +14652,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	\cenHarView, \cenHar, \cenHarSeq, \cenHarSpec, false, true, 10, ~compColor1, ~multiCompColor1, Color.white,
 	\cenHarSeqView, \cenHarSeqStart, \cenHarSeqStop, \seqDurCenHar, \cenHarSeqSpec,
 	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
-	\cenHarRangeView, \cenHarMin, \cenHarMax, \cenHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \cenHarRangePresetView, ["0->6", "0->12", "0->24", "0->48", "0->60", "0->84", "0->-6", "0->-12", "0->-24", "0->-48", "0->-60", "0->-84", "-1->1", "-6->6", "-12->12", "-24->24", "-48->48", "-60->60", "-84->84"], 13, "->",
-	\cenHarRoundView, ~roundViewPos5, \cenHarRound, \cenHarRoundValue, ["@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
+	\cenHarRangeView, \cenHarMin, \cenHarMax, \cenHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \cenHarRangePresetViewView, \cenHarRangePresetView, ["0->6", "0->12", "0->24", "0->48", "0->60", "0->84", "0->-6", "0->-12", "0->-24", "0->-48", "0->-60", "0->-84", "-1->1", "-6->6", "-12->12", "-24->24", "-48->48", "-60->60", "-84->84"], 13, "->",
+	\cenHarRoundViewView, \cenHarRoundView, ~roundViewPos5, \cenHarRound, \cenHarRoundValue, ["@ 0.01 LIN", "@ 0.1 LIN", "@ 0.125 1÷16T LIN", "@ 0.2 LIN", "@ 0.25 1÷8T LIN", "@ 0.5 1÷4T LIN", "@ 1 1÷2T LIN", "@ 2 1T LIN"], 0,
 	\cenHarRandView, \centerHar,
 	\cenHarSeqAllView, \cenHarRangeMode, \cenHarSeqMode,
 	\cenHarDefaultView, \cenHarDefault,
@@ -14620,8 +14669,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	\delHarView, \delHar, \delHarSeq, \delHarSpec, false, true, 10, ~compColor1, ~multiCompColor1, Color.white,
 	\delHarSeqView, \delHarSeqStart, \delHarSeqStop, \seqDurDelHar, \delHarSeqSpec,
 	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
-	\delHarRangeView, \delHarMin, \delHarMax, \delHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \delHarRangePresetView, ["0->0.005", "0->0.01", "0->0.02", "0->0.05", "0->0.1", "0->0.2", "0->0.5", "0->1"], 1, "->",
-	\delHarRoundView, ~roundViewPos5, \delHarRound, \delHarRoundValue, ["@ 0.001", "@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
+	\delHarRangeView, \delHarMin, \delHarMax, \delHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \delHarRangePresetViewView, \delHarRangePresetView, ["0->0.005", "0->0.01", "0->0.02", "0->0.05", "0->0.1", "0->0.2", "0->0.5", "0->1"], 1, "->",
+	\delHarRoundViewView, \delHarRoundView, ~roundViewPos5, \delHarRound, \delHarRoundValue, ["@ 0.001", "@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
 	\delHarRandView, \delayHar,
 	\delHarSeqAllView, \delHarRangeMode, \delHarSeqMode,
 	\delHarDefaultView, \delHarDefault,
@@ -14637,8 +14686,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	\ampHarView, \ampHar, \ampHarSeq, \ampHarSpec, false, true, 10, ~compColor1, ~multiCompColor1, Color.white,
 	\ampHarSeqView, \ampHarSeqStart, \ampHarSeqStop, \seqDurAmpHar, \ampHarSeqSpec,
 	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
-	\ampHarRangeView, \ampHarMin, \ampHarMax, \ampHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ampHarRangePresetView, ["0->6", "0->12", "0->24", "0->48", "0->60", "0->84", "-12->12", "-24->24", "-48->48", "-60->60", "-84->84"], 6, "->",
-	\ampHarRoundView, ~roundViewPos5, \ampHarRound, \ampHarRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
+	\ampHarRangeView, \ampHarMin, \ampHarMax, \ampHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \ampHarRangePresetViewView, \ampHarRangePresetView, ["0->6", "0->12", "0->24", "0->48", "0->60", "0->84", "-12->12", "-24->24", "-48->48", "-60->60", "-84->84"], 6, "->",
+	\ampHarRoundViewView, \ampHarRoundView, ~roundViewPos5, \ampHarRound, \ampHarRoundValue, ["@ 0.01", "@ 0.1", "@ 0.2", "@ 0.25", "@ 0.5", "@ 1"], 0,
 	\ampHarRandView, \amplitudeHar,
 	\ampHarSeqAllView, \ampHarRangeMode, \ampHarSeqMode,
 	\ampHarDefaultView, \ampHarDefault,
@@ -14654,8 +14703,8 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	\spaHarView, \spaHar, \spaHarSeq, \spaHarSpec, false, true, 10, ~compColor1, ~multiCompColor1, Color.white,
 	\spaHarSeqView, \spaHarSeqStart, \spaHarSeqStop, \seqDurSpaHar, \spaHarSeqSpec,
 	// rangeView, min, max, rangeSpec, rangeViewMinRange, sliderColor, rangePresetView, rangePresetViewItems, rangePresetViewDefault, rangePresetViewSign,
-	\spaHarRangeView, \spaHarMin, \spaHarMax, \spaHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \spaHarRangePresetView, ~spaRangePresetItems, (~spaRangePresetItems.size-1), "-",
-	\spaHarRoundView, ~roundViewPos5, \spaHarRound, \spaHarRoundValue, ~spaViewItems, 0,
+	\spaHarRangeView, \spaHarMin, \spaHarMax, \spaHarRangeSpec, "NoRangeViewMinRange", ~sliderHilightColor, \spaHarRangePresetViewView, \spaHarRangePresetView, ~spaRangePresetItems, (~spaRangePresetItems.size-1), "-",
+	\spaHarRoundViewView, \spaHarRoundView, ~roundViewPos5, \spaHarRound, \spaHarRoundValue, ~spaViewItems, 0,
 	\spaHarRandView, \spatialisationHar,
 	\spaHarSeqAllView, \spaHarRangeMode, \spaHarSeqMode,
 	\spaHarDefaultView, \spaHarDefault,
@@ -15098,7 +15147,7 @@ data.postln;*/
 		var serv;
 		// Utilisation seulement du ~dur car le nb d'éléments dans toutes les séquences est le même
 		var rtmSeqSize = ~dur[~tracksValue][~seqsValue].size;
-		var rtmThumbSize = max(333 / rtmSeqSize, ~readViewThumbSize);
+		var rtmThumbSize = max((333 / rtmSeqSize)*~xSizeMul, ~readViewThumbSize);
 		var rtmSeqStep = 1 / rtmSeqSize;
 		var rtmSeqSpec = ControlSpec(0, rtmSeqSize, \lin, 1);
 		var ratHarSeqSize, ratHarSeqSpec, ratHarSeqStep; // Pour les Miroirs Multiples
@@ -16460,7 +16509,7 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 
 	// Utilisation seulement du ~dur car la nb d'éléments dans toutes les séquences est le même
 	var rtmSeqSize = ~presets[index][\rtmView].size;
-	var rtmThumbSize = max(333 / rtmSeqSize, ~readViewThumbSize);
+	var rtmThumbSize = max((333 / rtmSeqSize)*~xSizeMul, ~readViewThumbSize);
 	var rtmSeqStep = 1 / rtmSeqSize;
 	var rtmSeqSpec = ControlSpec(0, rtmSeqSize, \lin, 1, 1);
 	var rtmSeqVSpec = ControlSpec(0, rtmSeqSize-1, \lin, 1, 1);
@@ -18044,7 +18093,7 @@ case
 	// var rtmSeqStep = 1 / rtmSeqSize;
 	var rtmSeqSpec = ControlSpec(0, rtmSeqSize, \lin, 1, 1);
 
-	var rtmThumbSize = max(333 / rtmSeqSize, ~readViewThumbSize); // Pour modif du ThumbSize du ReadViewSlider dans le Tab Global XXX
+	var rtmThumbSize = max((333 / rtmSeqSize)*~xSizeMul, ~readViewThumbSize); // Pour modif du ThumbSize du ReadViewSlider dans le Tab Global XXX
 	var rtmSeqVSpec = ControlSpec(0, rtmSeqSize-1, \lin, 1, 1);
 	var ratHarSeqSize, ratHarSeqSpec; // Pour les Miroirs Multiples
 
@@ -18825,14 +18874,14 @@ case
 	~tabPresetSelectionDetached = 0;
 
 
-	~presetSelectionTabbedView = TabbedView2(~patComp, Rect(2, 2, 362, 207))
+	~presetSelectionTabbedView = TabbedView2(~patComp, Rect(2*~xSizeMul, 2*~ySizeMul, 362*~xSizeMul, 207*~ySizeMul))
 	.lockPosition_(true)
 	.lockEdges_(true)
 	.backgrounds_([Color(0.8, 0.8, 0.8)])
 	.unfocusedColors_([Color.white])
 	.labelColors_([Color.blue])
-	.font_(Font("Verdana",11))
-	.tabHeight_(22).tabWidth_(if (~presetsFileName2.isNil, {60}, {30}) )/*.tabCurve_(10)*/.resize_(5);
+	.font_(Font("Verdana",11*~fontSizeMul))
+	.tabHeight_(22*~ySizeMul).tabWidth_(if (~presetsFileName2.isNil, {60*~xSizeMul}, {30*~xSizeMul}) )/*.tabCurve_(10)*/.resize_(5);
 
 	~tabPresetSelection = ~presetSelectionTabbedView.add( if (~presetsFileName2.isNil, {"Preset"}, {"Pre"} ) /*, scroll:true*/).useDetachIcon_(false)
 	.onChangeParent_({ |i|
@@ -18927,12 +18976,12 @@ case
 			});*/
 		};
 
-		~presetSelection2View = ListView(~tabPresetSelection2, Rect(0, 0, 362, 187))
+		~presetSelection2View = ListView(~tabPresetSelection2, Rect(0, 0, 362*~xSizeMul, 187*~ySizeMul))
 		.background_(Color./*clear*/red(0.4, alpha: 0.8))
 		.hiliteColor_(Color.yellow(alpha: 1))
 		.selectedStringColor_(Color.black)
 		.stringColor_(Color.white)
-		.font_(Font(/*"Verdana"*/ ~monoSpaceFont /*"Courier New"*/, 11/*, bold: true*/))
+		.font_(Font(/*"Verdana"*/ ~monoSpaceFont /*"Courier New"*/, (11*~fontSizeMul).asInteger /*, bold: true*/))
 		.resize_(5) // Pour ajuster la taille du ListView selon le TabView
 		.beginDragAction_({ arg listView; listView.items[ listView.value ].postln; }) // pour faire le drag and drop
 		.action_({ |menu| var presetSym;
@@ -18941,9 +18990,9 @@ case
 				if (~followPreset == 1, {
 					~seqsView.valueAction_(~seqsValue+1); ~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([~seqsValue, ~seqsValue+1]));
 					if (~currentTab == 0, {
-						~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+						~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 					},{
-						~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+						~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 					});
 				});
 
@@ -18969,12 +19018,12 @@ case
 
 
 	// si hauteur > de 20 pixels, la barre verticale de navigation devient utile
-	~presetSelectionView = ListView(~tabPresetSelection, Rect(0, 0, 362, 187))
+	~presetSelectionView = ListView(~tabPresetSelection, Rect(0, 0, 362*~xSizeMul, 187*~ySizeMul))
 	.background_(Color./*clear*/red(0.4, alpha: 0.8))
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font(/*"Verdana"*/ ~monoSpaceFont /*"Courier New"*/, 11/*, bold: true*/))
+	.font_(Font(/*"Verdana"*/ ~monoSpaceFont /*"Courier New"*/, (11*~fontSizeMul).asInteger /*, bold: true*/))
 	.resize_(5) // Pour ajuster la taille du ListView selon le TabView
 	.beginDragAction_({ arg listView; listView.items[ listView.value ].postln; }) // pour faire le drag and drop
 	.action_({ |menu| var presetSym;
@@ -19005,17 +19054,17 @@ case
 	});
 
 
-	~presetStoringNameView = TextField(~patComp, Rect(68, 2, 212, 20)/*(197, 214, 116, 20)*/)
+	~presetStoringNameView = TextField(~patComp, Rect(68*~xSizeMul, 2*~ySizeMul, 212*~xSizeMul, 20*~ySizeMul)/*(197, 214, 116, 20)*/)
 	.string_("T PresetName")
 	.action_({|field| ~presetStoringName[~tracksValue][~seqsValue] = field.value.asSymbol })
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.background_(Color.grey(0.3))
 	.stringColor_(Color.white);
 
 	// ~presetSelectionButton = 0; // obligé de l'initialiser car le .valueAction ne le fait pas ??? -> à supprimer
-	~presetSelectionButtonView = RoundButton(~patComp, Rect(367, 2, 22, 20)/*(377, 214, 20, 20)*/)
+	~presetSelectionButtonView = RoundButton(~patComp, Rect(367*~xSizeMul, 2*~ySizeMul, 22*~xSizeMul, 20*~ySizeMul)/*(377, 214, 20, 20)*/)
 	.states_([["NS", Color.black, Color.green],["OS", Color.white, Color.red]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~presetSelectionButton = i.value })
 	.value_(0).doAction;
 
@@ -19023,9 +19072,9 @@ case
 	if (~presetsFileName2.isNil, {
 
 		// Un faux BPM est enregistré si la touche Random n'a pas été déclenché car c'est cette fonction qui actualise le nb de valeurs dans le multislider
-		~presetStoringButtonView = RoundButton(~patComp, Rect(325, 2, 40, 20)/*(345, 214, 30, 20)*/)
+		~presetStoringButtonView = RoundButton(~patComp, Rect(325*~xSizeMul, 2*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul)/*(345, 214, 30, 20)*/)
 		.states_([["Store", Color.black, Color.green]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ var presetList, currentItem, currentItemIndex, newItem;
 			~presetStoringNameView.doAction;
 			// ligne ci-dessous nécessaire pour pouvoir enregistrer un preset dès le début et qui n'a pas un nb d'Ev de 0 ???
@@ -19104,9 +19153,9 @@ case
 
 		});
 
-		~presetRemoveButtonView = RoundButton(~patComp, Rect(284, 2, 40, 20)/*(314, 214, 30, 20)*/)
+		~presetRemoveButtonView = RoundButton(~patComp, Rect(284*~xSizeMul, 2*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul) /*(314, 214, 30, 20)*/)
 		.states_([["Delete", Color.white, Color.red]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ var presetList, presetListValue, presetListName; // + nécessaire
 			if (~presetList.size > 0 /*~presetSelectionView.value.notNil*/, {
 				presetListValue = ~presetSelectionView.value;
@@ -19137,8 +19186,9 @@ case
 			})
 		});
 
+		~presetSortViewView = View(~patComp, Rect(2*~xSizeMul, 214*~ySizeMul, 52*~xSizeMul, 20*~ySizeMul));
 
-		~presetSortView = PopUpMenu.new(~patComp, Rect(2, 214, 60, 20))
+		~presetSortView = PopUpMenu.new(~presetSortViewView, Rect(0, 0, 80*~xSizeMul, 20*~ySizeMul))
 		.action_({ |menu|
 			var currentItem, currentItemIndex, presetList;
 			currentItem = ~presetSelectionView.item;
@@ -19155,11 +19205,11 @@ case
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(Color.black)
-		.font_(Font("Verdana",9));
+		.font_(Font("Verdana",9*~fontSizeMul));
 
-		~retriggerPreset = RoundButton(~patComp, Rect(116, 214, 60, 20)/*(64, 214, 40, 20)*/)
+		~retriggerPreset = RoundButton(~patComp, Rect(116*~xSizeMul, 214*~ySizeMul, 60*~xSizeMul, 20*~ySizeMul) /*(64, 214, 40, 20)*/)
 		.states_([["Cur P", Color.white, Color.red]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ |i| ~presetSelectionView.valueAction_(~presetSelectionView.selection[0]);
 		});
 
@@ -19167,9 +19217,9 @@ case
 	},{
 
 
-		~presetStoringButtonView = RoundButton(~patComp, Rect(325, 2, 40, 20)/*(345, 214, 30, 20)*/)
+		~presetStoringButtonView = RoundButton(~patComp, Rect(325*~xSizeMul, 2*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul) /*(345, 214, 30, 20)*/)
 		.states_([["Store", Color.black, Color.green]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ var presetList, currentItem, currentItemIndex, newItem;
 			~presetStoringNameView.doAction;
 			~nbTotalBeatsView.doAction;
@@ -19234,9 +19284,9 @@ case
 
 		});
 
-		~presetRemoveButtonView = RoundButton(~patComp, Rect(284, 2, 40, 20)/*(314, 214, 30, 20)*/)
+		~presetRemoveButtonView = RoundButton(~patComp, Rect(284*~xSizeMul, 2*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul) /*(314, 214, 30, 20)*/)
 		.states_([["Delete", Color.white, Color.red]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ var presetList, presetListValue, presetListName; // + nécessaire
 			if (~presetList.size > 0 and: { ~currentTabPresetSelection == 1 } /*~presetSelectionView.value.notNil*/, {
 				presetListValue = ~presetSelection2View.value;
@@ -19267,8 +19317,9 @@ case
 			})
 		});
 
+		~presetSortViewView = View(~patComp, Rect(2*~xSizeMul, 214*~ySizeMul, 52*~xSizeMul, 20*~ySizeMul));
 
-		~presetSortView = PopUpMenu.new(~patComp, Rect(2, 214, 52, 20))
+		~presetSortView = PopUpMenu.new(~presetSortViewView, Rect(0, 0, 80*~xSizeMul, 20*~ySizeMul))
 		.action_({ |menu|
 			var currentItem, currentItemIndex, presetList, view, list;
 			if ( ~currentTabPresetSelection == 0, { view = \presetSelectionView.envirGet; list = \presetList1.envirGet },{ view = \presetSelection2View.envirGet; list = \presetList2.envirGet });
@@ -19281,11 +19332,11 @@ case
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(Color.black)
-		.font_(Font("Verdana",9));
+		.font_(Font("Verdana",9*~fontSizeMul));
 
-		~retriggerPreset = RoundButton(~patComp, Rect(150, 214, 26, 20)/*(64, 214, 40, 20)*/)
+		~retriggerPreset = RoundButton(~patComp, Rect(150*~xSizeMul, 214*~ySizeMul, 26*~xSizeMul, 20*~ySizeMul) /*(64, 214, 40, 20)*/)
 		.states_([["Cur", Color.white, Color.red]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ |i| var view; if ( ~currentTabPresetSelection == 0, { view = \presetSelectionView.envirGet; },{ view = \presetSelection2View.envirGet; });
 			view.valueAction_(view.selection[0]);
 		});
@@ -19293,14 +19344,14 @@ case
 	});
 
 
-	~presetsDontTriggerFXView = RoundButton(~patComp, Rect(262, 214, 60, 20)/*(64, 214, 40, 20)*/)
+	~presetsDontTriggerFXView = RoundButton(~patComp, Rect(262*~xSizeMul, 214*~ySizeMul, 60*~xSizeMul, 20*~ySizeMul) /*(64, 214, 40, 20)*/)
 	.states_([["Trig FX", Color.black, Color.green], ["NTrigFX", Color.white, Color.red]])
-	.font_(Font("Verdana",10/*, bold: true*/))
+	.font_(Font("Verdana",10*~fontSizeMul/*, bold: true*/))
 	.action_({ |i| ~presetsDontTriggerFX = i.value });
 
-	~allDirView = RoundButton(~patComp, Rect(324, 214, 20, 20))
+	~allDirView = RoundButton(~patComp, Rect(324*~xSizeMul, 214*~ySizeMul, 20*~xSizeMul, 20*~ySizeMul))
 	.states_([["\>", Color.black, ~popUpMenuBackgroundColor], ["\<", Color.white, Color.red]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({ |i| ~allDir = i.value;
 
 		[ ~rtmDirView, ~proDirView, ~synDirView, ~spaDirView, ~legDirView, ~envDirView, ~bufDirView, ~ampDirView, ~ratDirView, ~rat2DirView, ~offDirView, ~strDirView, ~cenDirView, ~str2DirView, ~cen2DirView, ~panDirView, ~delDirView, ~outLDirView, ~outRDirView, ~fxLDirView, ~fxRDirView ].do { |i| i.valueAction_(~allDir) };
@@ -19333,9 +19384,9 @@ case
 	// Disable the function d'injection:
 	// ~presetsEventInjection.doDef(\action1);
 
-	~lastPresetView = RoundButton(~patComp, Rect(178, 214, 40, 20)/*(106, 214, 20, 20)*/)
+	~lastPresetView = RoundButton(~patComp, Rect(178*~xSizeMul, 214*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul) /*(106, 214, 20, 20)*/)
 	.states_([["\<", Color.black, Color.green]])
-	.font_(Font("Verdana", 9, bold: true))
+	.font_(Font("Verdana", 9*~fontSizeMul, bold: true))
 	.action_({|i| var curPresetItem;
 		// [\rtmBlock, \proBlock, \synBlock, \spaBlock, \legBlock, \envBlock, \bufBlock, \ampBlock, \ratBlock, \rat2Block, \offBlock, \strBlock, \str2Block, \cenBlock, \cen2Block, \panBlock, \delBlock, \outLBlock, \outRBlock, \fxLBlock, \fxRBlock].do {|i| currentEnvironment[i][~tracksValue] = 1}; // ~ampBlock // intégré directement dans les boutons
 		// ~positionInPreset.postln;
@@ -19366,9 +19417,9 @@ case
 		});
 	});
 
-	~nextPresetView = RoundButton(~patComp, Rect(220, 214, 40, 20)/*(128, 214, 20, 20)*/)
+	~nextPresetView = RoundButton(~patComp, Rect(220*~xSizeMul, 214*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul) /*(128, 214, 20, 20)*/)
 	.states_([["\>", Color.black, Color.green]])
-	.font_(Font("Verdana", 9, bold: true))
+	.font_(Font("Verdana", 9*~fontSizeMul, bold: true))
 	.action_({|i| var curPresetItem;
 		~positionInPreset = min(~presetsListMemoryNb, ~positionInPreset + 1);
 		curPresetItem = ~presetsCollection[~positionInPreset];
@@ -19419,13 +19470,15 @@ case
 		// ~presetListAcType[2] = ~presetList.reject({ |i| var type = i.split($|)[3]; type.endsWith("E") or: {type.endsWith("S")} or: {type.beginsWith("D")} });
 		~presetListAcType[2] = ~presetListAcType[1].reject({ |i| var type = i.split($|)[3]; type.endsWith("E") or: {type.endsWith("S")} });
 
-		~presetRandomTypeView = PopUpMenu.new(~patComp, Rect(64, 214, 50, 20)/*(150, 214, 45, 20)*/)
+		~presetRandomTypeViewView = View(~patComp, Rect(60*~xSizeMul, 214*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul));
+
+		~presetRandomTypeView = PopUpMenu.new(~presetRandomTypeViewView, Rect(0, 0, 80*~xSizeMul, 20*~ySizeMul) /*(150, 214, 45, 20)*/)
 		.action_({ |menu| ~presetRandomTypeValue = menu.value;
 		})
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(Color.black)
-		.font_(Font("Verdana",9));
+		.font_(Font("Verdana",9*~fontSizeMul));
 		~presetRandomTypeView.items_(~presetsTypeList).valueAction_(1);
 
 	},{
@@ -19451,22 +19504,26 @@ case
 		~presetListAcType2[1] = ~presetList2.reject({ |i| i.split($|)[3].split($ )[1].beginsWith("D") });
 		~presetListAcType2[2] = ~presetListAcType2[1].reject({ |i| var type = i.split($|)[3]; type.endsWith("E") or: {type.endsWith("S")} });
 
-		~presetRandomTypeView = PopUpMenu.new(~patComp, Rect(56, 214, 45, 20)/*(150, 214, 45, 20)*/)
+		~presetRandomTypeViewView = View(~patComp, Rect(56*~xSizeMul, 214*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul));
+
+		~presetRandomTypeView = PopUpMenu.new(~presetRandomTypeViewView, Rect(0, 0, 80*~xSizeMul, 20*~ySizeMul) /*(150, 214, 45, 20)*/)
 		.action_({ |menu| ~presetRandomTypeValue = menu.value;
 		})
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(Color.black)
-		.font_(Font("Verdana",9));
+		.font_(Font("Verdana",9*~fontSizeMul));
 		~presetRandomTypeView.items_(~presetsTypeList1).valueAction_(1);
 
-		~presetRandomType2View = PopUpMenu.new(~patComp, Rect(103, 214, 45, 20)/*(150, 214, 45, 20)*/)
+		~presetRandomType2ViewView = View(~patComp, Rect(102*~xSizeMul, 214*~ySizeMul, 45*~xSizeMul, 20*~ySizeMul));
+
+		~presetRandomType2View = PopUpMenu.new(~presetRandomType2ViewView, Rect(0, 0, 80*~xSizeMul, 20*~ySizeMul) /*(150, 214, 45, 20)*/)
 		.action_({ |menu| ~presetRandomType2Value = menu.value;
 		})
 		.allowsReselection_(true)
 		.background_(~popUpMenuBackgroundColor)
 		.stringColor_(Color.black)
-		.font_(Font("Verdana",9));
+		.font_(Font("Verdana",9*~fontSizeMul));
 		~presetRandomType2View.items_(~presetsTypeList2).valueAction_(1);
 
 	});
@@ -19519,14 +19576,14 @@ case
 
 
 	// Montage
-	~nbEventsTrigComp = CompositeView(~globalWindow, Rect(274, 2, 93, 41)).background = Color.black /*~sliderHilightNoColor*/ /*Color.magenta*/;
+	~nbEventsTrigComp = CompositeView(~globalWindow, Rect(274*~xSizeMul, 2*~ySizeMul, 93*~xSizeMul, 41*~ySizeMul)).background = Color.black /*~sliderHilightNoColor*/ /*Color.magenta*/;
 
 	~nbEventsTrigSpec = ControlSpec(1, 100, 'lin', 1, 3);
 	~nbEventsTrig = ~nbEventsTrigSpec.default /*! ~nbOfSeqs */ ! ~nbOfTracksX2;
-	~nbEventView = EZNumber.new(/*~patComp*/ ~nbEventsTrigComp, Rect(2, 1, 22, 20), nil, ~nbEventsTrigSpec,
-		{ |ez| ~nbOfTracksX2.do { |i| ~nbEventsTrig[/*~tracksValue*/ i ] = ez.value }}, unitWidth:0, initVal:~nbEventsTrigSpec.default, numberWidth:24, labelWidth:0, layout: \horz)
+	~nbEventView = EZNumber.new(/*~patComp*/ ~nbEventsTrigComp, Rect(2*~xSizeMul, 1*~ySizeMul, 22*~xSizeMul, 20*~ySizeMul), nil, ~nbEventsTrigSpec,
+		{ |ez| ~nbOfTracksX2.do { |i| ~nbEventsTrig[/*~tracksValue*/ i ] = ez.value }}, unitWidth:0, initVal:~nbEventsTrigSpec.default, numberWidth:24*~xSizeMul, labelWidth:0, layout: \horz)
 	.setColors(/*Color.grey*/~sliderBackgroundColor,Color.white/*,numBackground:~sliderBackgroundColor,numNormalColor:Color.white*/)
-	.font_(Font("Verdana",10));
+	.font_(Font("Verdana",10*~fontSizeMul));
 
 
 	// ~lastTrigEvent = {0 ! 1} ! 1 /*! ~nbOfTracks*/; déjà initialisé plus haut
@@ -19635,14 +19692,14 @@ case
 
 	};
 
-	~curEventTrigView = RoundButton(~nbEventsTrigComp, Rect(28, 2, 30, 18))
+	~curEventTrigView = RoundButton(~nbEventsTrigComp, Rect(28*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 	.states_([["Trig", Color.black, Color.green]])
-	.font_(Font("Verdana",10/*, bold: true*/))
+	.font_(Font("Verdana",10*~fontSizeMul/*, bold: true*/))
 	.action_({ |i| ~curEventTrigFunction.(1) });
 
-	~lastEventTrigView = RoundButton(~nbEventsTrigComp, Rect(60, 2, 30, 18))
+	~lastEventTrigView = RoundButton(~nbEventsTrigComp, Rect(60*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 	.states_([["Last", Color.black, Color.green]])
-	.font_(Font("Verdana",10/*, bold: true*/))
+	.font_(Font("Verdana",10*~fontSizeMul/*, bold: true*/))
 	// .action_({ |i| ~lastTrigEvent[(~tracksValue/2).floor].size.do { |item, i| ~lastTrigEvent[(~tracksValue/2).floor][i].play; };
 	.action_({ |i|
 		/*fork {
@@ -19668,9 +19725,9 @@ case
 
 
 	~curSeqTrig = 0;
-	~curSeqTrigView = RoundButton(~nbEventsTrigComp, Rect(2, 22, 28, 18))
+	~curSeqTrigView = RoundButton(~nbEventsTrigComp, Rect(2*~xSizeMul, 22*~ySizeMul, 28*~xSizeMul, 18*~ySizeMul))
 	.states_([["Arm", Color.white, Color.red, bold:true], ["Arm", Color.white, Color.blue]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |i|
 
 		~curSeqTrig = i.value;
@@ -19699,16 +19756,16 @@ case
 
 	});
 
-	~updatePresetSelectionView = RoundButton(~nbEventsTrigComp, Rect(32, 22, 28, 18) /*~seqComp, Rect(367, 204, 30, 20)*/)
+	~updatePresetSelectionView = RoundButton(~nbEventsTrigComp, Rect(32*~xSizeMul, 22*~ySizeMul, 28*~xSizeMul, 18*~ySizeMul) /*~seqComp, Rect(367, 204, 30, 20)*/)
 	.states_([["\Up", Color.black, Color.yellow], ["\Nup", Color.red, Color.yellow]])
-	.font_(Font("Verdana",8, bold:true))
+	.font_(Font("Verdana",8*~fontSizeMul, bold:true))
 	.action_({|i| ~updatePresetSelection = i.value })
 	.valueAction_(1);
 
 	~readType = 0;
-	~readTypeView = RoundButton(~nbEventsTrigComp, Rect(62, 22, 28, 18))
+	~readTypeView = RoundButton(~nbEventsTrigComp, Rect(62*~xSizeMul, 22*~ySizeMul, 28*~xSizeMul, 18*~ySizeMul))
 	.states_([["End" /*"End\nLess"*/, Color.white, Color.magenta],["Blok" /*"Block\nRead"*/, Color.white, Color.magenta]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |i| ~readType = i.value });
 
 
@@ -19781,11 +19838,11 @@ case
 
 
 
-~seqComp = CompositeView(~tabGUI, Rect(2, 0, 399, 227))/*.focus(false)*/.background = ~seqCompColor;
-~seqComp2 = ScrollView(~seqComp, Rect(2, 22, 362, 132)).hasHorizontalScroller_(false).hasVerticalScroller_(false).background = ~seqCompColor; // MultiSlider
-~seqComp3 = ScrollView(~seqComp, Rect(2, 156, 362, 24)).hasHorizontalScroller_(false).hasVerticalScroller_(false).background = ~seqCompColor; // RangeSlider
-~seqComp4 = ScrollView(~seqComp, Rect(2, 2, 362, 18)).hasHorizontalScroller_(false).hasVerticalScroller_(false).background = ~seqCompColor; // Slider
-~seqComp5 = ScrollView(~seqComp, Rect(2, 2, 362, 199)).hasHorizontalScroller_(false).hasVerticalScroller_(false).focus(false).background = ~seqCompColor; // StaticText des presets - vertical
+~seqComp = CompositeView(~tabGUI, Rect(2*~xSizeMul, 0, 399*~xSizeMul, 227*~ySizeMul))/*.focus(false)*/.background = ~seqCompColor;
+~seqComp2 = ScrollView(~seqComp, Rect(2*~xSizeMul, 22*~ySizeMul, 362*~xSizeMul, 132*~ySizeMul)).hasHorizontalScroller_(false).hasVerticalScroller_(false).background = ~seqCompColor; // MultiSlider
+~seqComp3 = ScrollView(~seqComp, Rect(2*~xSizeMul, 156*~ySizeMul, 362*~xSizeMul, 24*~ySizeMul)).hasHorizontalScroller_(false).hasVerticalScroller_(false).background = ~seqCompColor; // RangeSlider
+~seqComp4 = ScrollView(~seqComp, Rect(2*~xSizeMul, 2*~ySizeMul, 362*~xSizeMul, 18*~ySizeMul)).hasHorizontalScroller_(false).hasVerticalScroller_(false).background = ~seqCompColor; // Slider
+~seqComp5 = ScrollView(~seqComp, Rect(2*~xSizeMul, 2*~ySizeMul, 362*~xSizeMul, 199*~ySizeMul)).hasHorizontalScroller_(false).hasVerticalScroller_(false).focus(false).background = ~seqCompColor; // StaticText des presets - vertical
 // .focus(false) ne marche pas ??????
 
 ~seqMin = 1;
@@ -19823,9 +19880,9 @@ case
 
 ~visibleSeqValue = 1;
 ~visibleSeqValue2 = 0;
-~visibleSeqView = RoundButton(~seqComp, Rect(363, 2, 18, 20))
+~visibleSeqView = RoundButton(~seqComp, Rect(363*~xSizeMul, 2*~ySizeMul, 18*~xSizeMul, 20*~ySizeMul))
 .states_([["V1", Color.white, Color.blue], ["V2", Color.black, Color.green]])
-.font_(Font("Verdana", 8))
+.font_(Font("Verdana", 8*~fontSizeMul))
 .action_({|i| ~visibleSeqValue = i.value;
 	if (~visibleSeqValue == 0, {~visibleSeqValue2 = 1});
 	if (~visibleSeqValue == 1, {~visibleSeqValue2 = 0});
@@ -19857,15 +19914,15 @@ case
 });
 
 
-~seqDisplay = TextView(~seqComp, Rect(2, 166+12, 362, 20))
+~seqDisplay = TextView(~seqComp, Rect(2*~xSizeMul, (166+12)*~ySizeMul, 362*~xSizeMul, 20*~ySizeMul))
 // .hasVerticalScroller_(true) // supprimé car hauteur trop petite pour être visible
 // .autohidesScrollers_(true)
 .hasVerticalScroller_(false)
 .hasHorizontalScroller_(false)
 .enterInterpretsSelection_(1)
-.font_(Font("arial",10));
+.font_(Font("arial",10*~fontSizeMul));
 
-~seqView = MultiSliderView.new(~seqComp2, Rect(-2, -2, 998, 130));
+~seqView = MultiSliderView.new(~seqComp2, Rect(-2*~xSizeMul, -2*~ySizeMul, 998*~xSizeMul, 130*~ySizeMul));
 ~seqView.value_(~seq[~tracksValue])
 .background_(~sliderBackgroundColor/*~seqCompColor*/)
 .strokeColor_(Color.white)
@@ -19885,18 +19942,18 @@ case
 });
 
 // Pourquoi nécessaire de rajouter cette car pas pris en compte dans le multislider du dessus
-~seqView.valueThumbSize_(max(8, (138 / (~seqMax - ~seqMin +1))));
+~seqView.valueThumbSize_(max(8, (138 / (~seqMax - ~seqMin +1)))*~xSizeMul);
 
 
-~seqSeqViewStaticText = StaticText(~seqComp, Rect(100, 158, 210, 20))
-.font_(Font("Verdana", 10))
+~seqSeqViewStaticText = StaticText(~seqComp, Rect(100*~xSizeMul, 158*~ySizeMul, 210*~xSizeMul, 20*~ySizeMul))
+.font_(Font("Verdana", 10*~fontSizeMul))
 .acceptsMouse_(0)
 .align_(\left)
 .stringColor_(Color.white)
 .string_("SEL");
 
 
-~seqSeqView = SmoothRangeSlider(~seqComp3, Rect(-2, 0, 998, 20))
+~seqSeqView = SmoothRangeSlider(~seqComp3, Rect(-2*~xSizeMul, 0, 998*~xSizeMul, 20*~ySizeMul))
 .action_({ |view| // var presetName;
 	~seqSeqStart[~tracksValue] = ~seqSeqSpec.map(view.lo).asInteger; ~seqSeqStop[~tracksValue] = ~seqSeqSpec.map(view.hi).asInteger-1;
 	~seqDurSeq[~tracksValue] = ~seqSeqStop[~tracksValue] - ~seqSeqStart[~tracksValue]+1;
@@ -19912,7 +19969,7 @@ case
 	// ~seqComp2.visibleOrigin = (~seqSeqStart[~tracksValue] * 20 - 2)@78;
 
 })
-.font_(Font("Verdana", 10))
+.font_(Font("Verdana", 10*~fontSizeMul))
 .background_(~sliderBackgroundColor)
 .stringColor_(Color.white)
 .border_(~border)
@@ -19928,8 +19985,8 @@ case
 // Comment faire pour que les autres ~seqComp 3 & 4 puissent avoir aussi une action sur le ~seqComp 2 sans générer une boucle sans fin ???
 ~seqComp2.action = { var origin;
 	origin = ~seqComp2.visibleOrigin;
-	~seqComp3.visibleOrigin = (origin.x)@0/*(origin.y)*/;
-	~seqComp4.visibleOrigin = (origin.x)@0/*(origin.y)*/;
+	~seqComp3.visibleOrigin = (origin.x*~xSizeMul)@0/*(origin.y)*/;
+	~seqComp4.visibleOrigin = (origin.x*~xSizeMul)@0/*(origin.y)*/;
 };
 
 
@@ -19941,12 +19998,12 @@ case
 // Comment savoir si l'on survolle une View ???
 // ~seqSeqView.mouseOverAction = { | a, b, c| a.postln; b.postln; c.postln; };
 
-~seqUserView = UserView(~seqComp2, Rect(-2, -2, 998, 130)).acceptsMouse_(0);
+~seqUserView = UserView(~seqComp2, Rect(-2*~xSizeMul, -2*~ySizeMul, 998*~xSizeMul, 130*~ySizeMul)).acceptsMouse_(0);
 
 // Comment mettre en place une grille ???
 ~seqUserViewXGrid = ControlSpec(0, 50, \lin, 0.1).grid/*.looseRange(10, 50, 10)*/;
 ~seqUserViewYGrid = ControlSpec(0, ~nbOfSeqs, \lin, 0.1).grid/*.asGrid.looseRange(ntick: 24)*/;
-~seqUserViewGrid = DrawGrid(Rect(0, 0, 1000, 130), ~seqUserViewXGrid, ~seqUserViewYGrid).font_(Font("Verdana", 10, bold: true)).fontColor_(Color.green).gridColors_(Color.yellow !2).opacity_(1);
+~seqUserViewGrid = DrawGrid(Rect(0, 0, 1000*~xSizeMul, 130*~ySizeMul), ~seqUserViewXGrid, ~seqUserViewYGrid).font_(Font("Verdana", 10*~fontSizeMul, bold: true)).fontColor_(Color.green).gridColors_(Color.yellow !2).opacity_(1);
 
 ~seqUserView.drawFunc = { ~seqUserViewGrid.draw };
 
@@ -19965,7 +20022,7 @@ u.drawFunc = { d.draw }
 
 
 
-~seqIndexView = SmoothSlider(~seqComp, Rect(367, 2+22, 30, 130))
+~seqIndexView = SmoothSlider(~seqComp, Rect(367*~xSizeMul, (2+22)*~ySizeMul, 30*~xSizeMul, 130*~ySizeMul))
 .action_({ |view| ~seqIndex[~tracksValue] = ~seqSpec.map(view.value);
 	view.string = "%".format((~seqIndex[~tracksValue]).round(1).asInteger);
 	// ~seqView.valueAction_(~seqIndex.curvelin(~seqMin, ~seqMax, 0, 1, 2) ! ~seq.size)
@@ -19973,7 +20030,7 @@ u.drawFunc = { d.draw }
 	~seqView.valueAction_(~seq[~tracksValue].putEach([(~seqSeqStart[~tracksValue]..~seqSeqStop[~tracksValue])], [~seqSpec.unmap(~seqIndex[~tracksValue])] ));
 })
 .valueAction_(~seqSpec.unmap(0)) // pour initialiser les valeurs du View au chargement
-.font_(Font("Verdana", 10))
+.font_(Font("Verdana", 10*~fontSizeMul))
 .background_(~sliderBackgroundColor)
 .hilightColor_(~sliderHilightColor)
 .stringColor_(Color.white)
@@ -19991,8 +20048,8 @@ u.drawFunc = { d.draw }
 
 // Name OF Module SEQ
 
-~seqShowView = StaticText(~seqComp, Rect(170, 25, 50, 20))
-.font_(Font("Verdana",14, bold: true))
+~seqShowView = StaticText(~seqComp, Rect(170*~xSizeMul, 25*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
+.font_(Font("Verdana",14*~fontSizeMul, bold: true))
 .align_(\center)
 .acceptsMouse_(0)
 .stringColor_(/*Color.gray*/ Color.white)
@@ -20031,10 +20088,10 @@ u.drawFunc = { d.draw }
 
 ~presetSeqRangeRand = 0 ! ~nbOfTracksX2;
 
-~seqUserView2 = UserView(~seqComp5, Rect(0, 0, 340, 1290)).acceptsMouse_(0); // si 350 au lieu de 340 , léger vacillement horizontal
+~seqUserView2 = UserView(~seqComp5, Rect(0, 0, 340*~xSizeMul, 1290*~ySizeMul)).acceptsMouse_(0); // si 350 au lieu de 340 , léger vacillement horizontal
 
 ~presetSeqRangeSpec = ControlSpec(~nbOfSeqs, 0, \lin, 1, 0);
-~presetSeqRangeView = SmoothRangeSlider(~seqComp5, Rect(2, 0, 26, (20*~nbOfSeqs)+6))
+~presetSeqRangeView = SmoothRangeSlider(~seqComp5, Rect(2*~xSizeMul, 0, 26*~xSizeMul, ((20*~nbOfSeqs)+6)*~ySizeMul))
 .action_({ |view| // var presetName;
 	var a, b, c, p;
 	~presetSeqStart[~tracksValue] = ~presetSeqRangeSpec.map(view.hi).asInteger; ~presetSeqStop[~tracksValue] = ~presetSeqRangeSpec.map(view.lo).asInteger - 1;
@@ -20160,7 +20217,7 @@ u.drawFunc = { d.draw }
 	});
 
 })
-.font_(Font("Verdana", 8))
+.font_(Font("Verdana", 8*~fontSizeMul))
 .background_(~sliderBackgroundColor2/*Color.red*/)
 .hilightColor_(Color.red)
 .stringColor_(Color.white)
@@ -20186,15 +20243,15 @@ u.drawFunc = { d.draw }
 
 ~nbOfSeqs.do { |i|
 
-	~presetSeqNbView[i] = StaticText(~seqComp5, Rect(4, 2+(20*i), 20, 15))
+	~presetSeqNbView[i] = StaticText(~seqComp5, Rect(4*~xSizeMul, (2+(20*i))*~ySizeMul, 20*~xSizeMul, 15*~ySizeMul))
 	.acceptsMouse_(0)
-	.font_(Font("Verdana", 11 /*, bold: true*/))
+	.font_(Font("Verdana", 11*~fontSizeMul /*, bold: true*/))
 	.stringColor_(Color.white)
 	.string_((i+1).asString);
 
-	~presetSeqTextView[i] = StaticText(~seqComp5, Rect(55, 2+(20*i), 304, 18))
+	~presetSeqTextView[i] = StaticText(~seqComp5, Rect(55*~xSizeMul, (2+(20*i))*~ySizeMul, 304*~xSizeMul, 18*~ySizeMul))
 	.background_(Color.grey(0.4))
-	.font_(Font(~monoSpaceFont, 10) /*("Arial", 10) ("Verdana", 9)*/)
+	.font_(Font(~monoSpaceFont, (10*~fontSizeMul).asInteger) /*("Arial", 10) ("Verdana", 9)*/)
 	.stringColor_(Color.white)
 	.canReceiveDragHandler_({ // Protection pour ne pas changer le preset qui est en train d'être lu
 		// if (/*(~presetSeqStart[~tracksValue]..~presetSeqStop[~tracksValue]).includes(~seqSeq[~tracksValue]) == false*/
@@ -20218,9 +20275,9 @@ u.drawFunc = { d.draw }
 	// .visible_(0);
 
 
-	~presetSeqNbTextView[i] = StaticText(~seqComp5, Rect(32, 2+(20*i), 18, 15))
+	~presetSeqNbTextView[i] = StaticText(~seqComp5, Rect(32*~xSizeMul, (2+(20*i))*~ySizeMul, 18*~xSizeMul, 15*~ySizeMul))
 	.acceptsMouse_(0)
-	.font_(Font("Verdana", 10 /*, bold: true*/))
+	.font_(Font("Verdana", 10*~fontSizeMul /*, bold: true*/))
 	.stringColor_(Color./*black*/white)
 	.align_(\right)
 	// .background_(Color.yellow)
@@ -20230,29 +20287,29 @@ u.drawFunc = { d.draw }
 
 
 // Basculement entre le MultiSlider et les TextView pour les séquences
-~switchSeqView = RoundButton(~seqComp, Rect(381, 2, 18, 20))
+~switchSeqView = RoundButton(~seqComp, Rect(381*~xSizeMul, 2*~ySizeMul, 18*~xSizeMul, 20*~ySizeMul))
 .states_([["V1", Color.white, Color.blue], ["V2", Color.black, Color.green]])
-.font_(Font("Verdana", 8))
+.font_(Font("Verdana", 8*~fontSizeMul))
 .action_({|i| ~switchSeqValue[~tracksValue] = i.value });
 
-~positionSeqView = RoundButton(~seqComp, Rect(367, 30, 30, 20))
+~positionSeqView = RoundButton(~seqComp, Rect(367*~xSizeMul, 30*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 .states_([["^", Color.black, ~popUpMenuBackgroundColor]])
-.font_(Font("Verdana", 12))
+.font_(Font("Verdana", 12*~fontSizeMul))
 .action_({|i| ~seqComp5.visibleOrigin = 0@0 });
 
-~position2SeqView = RoundButton(~seqComp, Rect(367, 55, 30, 20))
+~position2SeqView = RoundButton(~seqComp, Rect(367*~xSizeMul, 55*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 .states_([[">", Color.black, ~popUpMenuBackgroundColor]])
-.font_(Font("Verdana", 12))
+.font_(Font("Verdana", 12*~fontSizeMul))
 .action_({|i| ~seqComp5.visibleOrigin = 0@~seqComp5MaxVisibleOrigin/*((20*~nbOfSeqs)+2)*/ });
 
-~positionRandSeqView = RoundButton(~seqComp, Rect(367, 80, 30, 20))
+~positionRandSeqView = RoundButton(~seqComp, Rect(367*~xSizeMul, 80*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 .states_([["Seq", Color.white, Color.blue], ["RSeq", Color.white, Color.red]])
-.font_(Font("Verdana", 9))
+.font_(Font("Verdana", 9*~fontSizeMul))
 .action_({|i| ~positionRandSeq[~tracksValue] = i.value;  ~positionRandSeqViewG[~tracksValue].value_(~positionRandSeq[~tracksValue]) });
 
-~seqSeqAllView = RoundButton(~seqComp, Rect(367, 156, 30, 20))
+~seqSeqAllView = RoundButton(~seqComp, Rect(367*~xSizeMul, 156*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 .states_([["All S", Color.black, ~popUpMenuBackgroundColor]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({~seqSeqView.valueAction_([0, 1]); ~presetSeqRangeView.valueAction_([0, 1]);
 });
 
@@ -20261,9 +20318,9 @@ u.drawFunc = { d.draw }
 .font_(Font("Verdana",8))
 .action_({|i| ~seqRangeView.mode_(~modes[i.value])});*/
 
-~seqSeqMode = RoundButton(~seqComp, Rect(367, 180, 30, 20))
+~seqSeqMode = RoundButton(~seqComp, Rect(367*~xSizeMul, 180*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 .states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor]])
-.font_(Font("Verdana",8))
+.font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~seqSeqView.mode_(~modes[i.value]); ~presetSeqRangeView.mode_(~modes[i.value]) })
 .valueAction_(1);
 
@@ -20298,14 +20355,14 @@ u.drawFunc = { d.draw }
 
 // Visuels Suivi du Pattern des Sliders & Text pour les modules séquences
 
-~seqReadView = Slider(~seqComp4, Rect(-2, -2, 998, 18)).background_(Color.grey(0.6)).knobColor_(Color.black).acceptsMouse_(0).thumbSize_(22);
-~seqRead2View = Slider(~seqComp5, Rect(27, 1, 28, (20*~nbOfSeqs))).background_(Color.grey(0.6).alpha_(0)).knobColor_(/*Color.black*/Color.clear).acceptsMouse_(0).thumbSize_(18).valueAction_(1).canFocus_(false);
+~seqReadView = Slider(~seqComp4, Rect(-2*~xSizeMul, -2*~ySizeMul, 998*~xSizeMul, 18*~ySizeMul)).background_(Color.grey(0.6)).knobColor_(Color.black).acceptsMouse_(0).thumbSize_(22);
+~seqRead2View = Slider(~seqComp5, Rect(27*~xSizeMul, 1*~ySizeMul, 28*~xSizeMul, (20*~nbOfSeqs)*~ySizeMul)).background_(Color.grey(0.6).alpha_(0)).knobColor_(/*Color.black*/Color.clear).acceptsMouse_(0).thumbSize_(18*~xSizeMul).valueAction_(1).canFocus_(false);
 
 ~seqReadView.palette = ~seqReadView.palette.button_(Color.yellow);
 ~seqRead2View.palette = ~seqReadView.palette.button_(Color.blue.alpha_(0.5));
 
-~seqPosView = StaticText(~seqComp, Rect(2, 2, 363, 18))
-.font_(Font("Verdana", 12, bold: true))
+~seqPosView = StaticText(~seqComp, Rect(2*~xSizeMul, 2*~ySizeMul, 363*~xSizeMul, 18*~ySizeMul))
+.font_(Font("Verdana", 12*~fontSizeMul, bold: true))
 .align_(\left)
 .acceptsMouse_(0)
 .stringColor_(Color.black);
@@ -20327,13 +20384,13 @@ u.drawFunc = { d.draw }
 .setColors(Color.grey(0.9),Color.black, Color.red(0.7),Color.grey, Color.white, Color.yellow,nil, Color.blue, Color.grey(0.7))
 .font_(Font("Verdana",8));*/
 
-~pFadeView = SmoothSlider(~seqComp, Rect(2, 202, 178, 24))
+~pFadeView = SmoothSlider(~seqComp, Rect(2*~xSizeMul, 202*~ySizeMul, 178*~xSizeMul, 24*~ySizeMul))
 .action_({ |view| ~pFade[~tracksValue] = ~pFadeSpec.map(view.value);
 	view.string = ("XFade : % Beats - % sec").format(~pFade[~tracksValue], (~pFade[~tracksValue] / ~toTempo).round(0.01));
 	// Action sur le Global
 	~pFadeViewG[~tracksValue].valueAction = view.value;
 })
-.font_(Font("Verdana", 10))
+.font_(Font("Verdana", 10*~fontSizeMul))
 .background_(~sliderBackgroundColor)
 .hilightColor_(~sliderHilightColor)
 .stringColor_(Color.white)
@@ -20343,13 +20400,13 @@ u.drawFunc = { d.draw }
 // obligé de le mettre en dessous quand ~pFadeViewG est déclaré
 // ~pFadeView.valueAction_(~pFadeSpec.unmap(60));
 
-~quantView = SmoothSlider(~seqComp, Rect(184, 202, 178, 24))
+~quantView = SmoothSlider(~seqComp, Rect(184*~xSizeMul, 202*~ySizeMul, 178*~xSizeMul, 24*~ySizeMul))
 .action_({ |view| ~quant[~tracksValue] = ~quantSpec.map(view.value);
 	view.string = ("Quant : % Beats - % sec").format(~quant[~tracksValue], (~quant[~tracksValue] / ~toTempo).round(0.01));
 	// Action sur le Global
 	~quantViewG[~tracksValue].valueAction = view.value;
 })
-.font_(Font("Verdana", 10))
+.font_(Font("Verdana", 10*~fontSizeMul))
 .background_(~sliderBackgroundColor)
 .hilightColor_(~sliderHilightColor)
 .stringColor_(Color.white)
@@ -20615,8 +20672,8 @@ u.drawFunc = { d.draw }
 	/*{ tr.inclusivelyBetween(0, 7)} { width = (tr / 2).asInteger * 399+2; if (tr.even, {height = 0}, {height = 270})  }
 	{ tr.inclusivelyBetween(8, 15)} { width = (tr / 2).asInteger % 4 * 399+2; if (tr.even, {height = 270*2}, {height = 270*3})  };*/
 
-	{ tr.inclusivelyBetween(0, 7)} { width = (tr / 2).asInteger * 399+2; height = 0 }
-	{ tr.inclusivelyBetween(8, 15)} { width = (tr / 2).asInteger % 4 * 399+2; height = 270*2 };
+	{ tr.inclusivelyBetween(0, 7)} { width = ((tr / 2).asInteger * 399+2)*~xSizeMul; height = 0 }
+	{ tr.inclusivelyBetween(8, 15)} { width = ((tr / 2).asInteger % 4 * 399+2)*~xSizeMul; height = (270*2)*~ySizeMul };
 
 
 	// ~seqsGlobalColors = ([~seqCompColor, Color.yellow, ~seqCompColor, Color.yellow, Color.yellow, ~seqCompColor, Color.yellow, ~seqCompColor] ! /*~nbOfTracksX2*/ 2).flat;
@@ -20624,17 +20681,17 @@ u.drawFunc = { d.draw }
 	~seqsGlobalColors = ([Color.grey(0.2)!2, Color.grey(0.1)!2] !2).flat ++ ([Color.grey(0.1)!2, Color.grey(0.2)!2] !2).flat;
 	// ~seqsGlobalColors = Color.grey(0.7) ! ~nbOfTracksX2;
 
-	~seqCompG[tr] = CompositeView(~tabGlobal, Rect(width, height, 399, 270*2))/*.focus(false)*/.background = ~seqsGlobalColors[tr] /*Color.grey(0.7)*/;
+	~seqCompG[tr] = CompositeView(~tabGlobal, Rect(width, height, 399*~xSizeMul, (270*2)*~ySizeMul))/*.focus(false)*/.background = ~seqsGlobalColors[tr] /*Color.grey(0.7)*/;
 	/*~seqCompG[tr].decorator = FlowLayout(~tabGlobal.view.bounds);
 	~seqCompG[tr].decorator.nextLine;
 	~tabGlobal.decorator.nextLine;*/
 
-	~seqCompG1[tr] = ScrollView(~seqCompG[tr], Rect(34, 20, 363, 422 /*198*2*/)).hasHorizontalScroller_(false).hasVerticalScroller_(true/*false*/).focus(false).background_( /*~seqsGlobalColors[tr]*/ Color.grey(0.7)); // StaticText des presets - vertical
+	~seqCompG1[tr] = ScrollView(~seqCompG[tr], Rect(34*~xSizeMul, 20*~ySizeMul, 363*~xSizeMul, 422*~ySizeMul /*198*2*/)).hasHorizontalScroller_(false).hasVerticalScroller_(true/*false*/).focus(false).background_( /*~seqsGlobalColors[tr]*/ Color.grey(0.7)); // StaticText des presets - vertical
 
-	~seqUserView2[tr] = UserView(~seqCompG[tr], Rect(0, 0, 340, 1290)).acceptsMouse_(0); // si 350 au lieu de 340, léger vacillement horizontal
+	~seqUserView2[tr] = UserView(~seqCompG[tr], Rect(0, 0, 340*~xSizeMul, 1290*~ySizeMul)).acceptsMouse_(0); // si 350 au lieu de 340, léger vacillement horizontal
 
 	~presetSeqRangeSpec = ControlSpec(~nbOfSeqs, 0, \lin, 1, 0);
-	~presetSeqRangeViewG[tr] = SmoothRangeSlider(~seqCompG1[tr], Rect(1, 0, 26, (20*~nbOfSeqs)+6))
+	~presetSeqRangeViewG[tr] = SmoothRangeSlider(~seqCompG1[tr], Rect(1*~xSizeMul, 0, 26*~xSizeMul, ((20*~nbOfSeqs)+6)*~ySizeMul))
 	.action_({ |view| // var presetName;
 		var a, b, p;
 
@@ -20738,7 +20795,7 @@ u.drawFunc = { d.draw }
 		}.defer;
 
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor2/*Color.red*/)
 	.hilightColor_(Color.red)
 	.stringColor_(Color.white)
@@ -20753,9 +20810,9 @@ u.drawFunc = { d.draw }
 
 	~nbOfSeqs.do { |i|
 
-		~presetSeqTextViewG[tr][i] = StaticText(~seqCompG1[tr], Rect(53, 2+(20*i), 308, 18))
+		~presetSeqTextViewG[tr][i] = StaticText(~seqCompG1[tr], Rect(53*~xSizeMul, (2+(20*i))*~ySizeMul, 308*~xSizeMul, 18*~ySizeMul))
 		.background_(Color.grey(0.3))
-		.font_(Font(~monoSpaceFont, 10) /*("Arial", 10) ("Verdana", 9)*/)
+		.font_(Font(~monoSpaceFont, (10*~fontSizeMul).asInteger) /*("Arial", 10) ("Verdana", 9)*/)
 		.stringColor_(Color.white)
 		// .canReceiveDragHandler_({ View.currentDrag.isString })
 		.canReceiveDragHandler_({ // Protection pour ne pas changer le preset qui est en train d'être lu
@@ -20775,15 +20832,15 @@ u.drawFunc = { d.draw }
 		.string_(0);
 		// .visible_(0);
 
-		~presetSeqNbViewG[tr][i] = StaticText(~seqCompG1[tr], Rect(3, 3+(20*i), 20, 15))
+		~presetSeqNbViewG[tr][i] = StaticText(~seqCompG1[tr], Rect(3*~xSizeMul, (3+(20*i))*~ySizeMul, 20*~xSizeMul, 15*~ySizeMul))
 		.acceptsMouse_(0)
-		.font_(Font("Verdana", 11 /*, bold: true*/))
+		.font_(Font("Verdana", (11*~fontSizeMul).asInteger /*, bold: true*/))
 		.stringColor_(Color.white)
 		.string_((i+1).asString);
 
-		~presetSeqNb2ViewG[tr][i] = /*Round*/NumberBox(~seqCompG1[tr], Rect(28, 4+(20*i), 24, 15))
+		~presetSeqNb2ViewG[tr][i] = /*Round*/NumberBox(~seqCompG1[tr], Rect(28*~xSizeMul, (4+(20*i))*~ySizeMul, 24*~xSizeMul, 15*~ySizeMul))
 		.clipLo_(1).clipHi_(~nbOfSeqs).align_( \right )
-		.font_(Font("Verdana", 10 /*, bold: true*/))
+		.font_(Font("Verdana", 10*~fontSizeMul /*, bold: true*/))
 		.background_(Color.clear.alpha_(0)/*~sliderBackgroundColor*//*Color.blue*/)
 		.stringColor_(Color.white)
 		.typingColor_(Color.white)
@@ -20820,9 +20877,9 @@ u.drawFunc = { d.draw }
 		});
 
 
-		~presetSeqNbSelectDurViewG[tr][i] = /*Round*/NumberBox(~seqCompG1[tr], Rect(335, 1+(i*20), 26, 20))
+		~presetSeqNbSelectDurViewG[tr][i] = /*Round*/NumberBox(~seqCompG1[tr], Rect(335*~xSizeMul, (1+(i*20))*~ySizeMul, 26*~xSizeMul, 20*~ySizeMul))
 		.clipLo_(1).clipHi_(~nbOfSeqs).align_( \right )
-		.font_(Font("Verdana", 10 /*, bold: true*/))
+		.font_(Font("Verdana", 10*~fontSizeMul /*, bold: true*/))
 		.background_(Color.clear.alpha_(0)/*~sliderBackgroundColor*//*Color.blue*/)
 		.stringColor_(Color.white)
 		.typingColor_(Color.white)
@@ -20855,9 +20912,9 @@ u.drawFunc = { d.draw }
 		~presetSeqNbSelectDurViewG[tr][i].valueAction = 1;
 
 
-		~presetSeqNbTextViewG[tr][i] = StaticText(~seqCompG1[tr], Rect(32, 4+(20*i), 18, 15))
+		~presetSeqNbTextViewG[tr][i] = StaticText(~seqCompG1[tr], Rect(32*~xSizeMul, (4+(20*i))*~ySizeMul, 18*~xSizeMul, 15*~ySizeMul))
 		.acceptsMouse_(0)
-		.font_(Font("Verdana", 10 /*, bold: true*/))
+		.font_(Font("Verdana", 10*~fontSizeMul /*, bold: true*/))
 		.stringColor_(Color.black)
 		.align_(\right)
 		// .background_(Color.yellow)
@@ -20875,14 +20932,14 @@ u.drawFunc = { d.draw }
 
 	~positiontoSeqTrViewGStringColors = ([Color.white, Color.magenta] ! ~nbOfTracks).flat;
 	~positiontoSeqTrViewGBackgroundColors = ([Color.magenta, Color.white] ! ~nbOfTracks).flat;
-	~positiontoSeqTrViewG[tr] = RoundButton(~seqCompG[tr], Rect(34, 2, 50, 16))
+	~positiontoSeqTrViewG[tr] = RoundButton(~seqCompG[tr], Rect(34*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 16*~ySizeMul))
 	.states_([[~tracksViewItemsB[tr], ~positiontoSeqTrViewGStringColors[tr], ~positiontoSeqTrViewGBackgroundColors[tr]]])
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.action_({|i| ~tracksView.valueAction_(tr); /*~tabbedView.focus(0)*/ });
 
-	~seqABVisibleViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 2, 30, 20))
+	~seqABVisibleViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["A", Color.white, Color.magenta], ["B", Color.magenta, Color.white]])
-	.font_(Font("Verdana",10 /*, bold: true*/))
+	.font_(Font("Verdana", 10*~fontSizeMul /*, bold: true*/))
 	.action_({ |i| ~seqCompGABIndex[(tr/2).asInteger] = i.value;
 		if (tr.even,
 			{ /*~seqCompGABIndex[(tr/2).asInteger] = 1;*/ ~seqCompG[tr].visible_(0); ~seqCompG[tr+1].visible_(1); ~seqABVisibleViewG[tr+1].value_(1); /*if (~lemurConnected1 == 1 or: { ~aControllerConnected == 1 }, {*/ {~tracksView.valueAction_(tr+1)}.defer; /*} )*/ },
@@ -20891,14 +20948,14 @@ u.drawFunc = { d.draw }
 		~rhythmTracksX2 = ~rhythmTracks.collect { |i| (i*2) + ~seqCompGABIndex[i] }; // Mise à jour de pistes rythmiques
 	});
 
-	~seqABPlayingViewG[tr] = StaticText(~seqCompG[tr], Rect(2, 24, 30, 20))
+	~seqABPlayingViewG[tr] = StaticText(~seqCompG[tr], Rect(2*~xSizeMul, 24*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.background_(Color.grey)
-	.font_(Font("Verdana", 10, bold: true))
+	.font_(Font("Verdana", 10*~fontSizeMul, bold: true))
 	.stringColor_(Color.yellow);
 
-	~positionRandSeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 262, 30, 20))
+	~positionRandSeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 262*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Seq", Color.white, Color.blue], ["RSeq", Color.white, Color.red]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~positionRandSeq[tr] = i.value; ~positionRandSeqView.value_(~positionRandSeq[tr]) });
 
 	/*~seqSeqAllViewG[tr] = RoundButton(~seqCompG[tr], /*Rect(367, 175, 30, 16)*/ Rect(38, 220, 32, 20))
@@ -20907,9 +20964,9 @@ u.drawFunc = { d.draw }
 	.action_({~seqSeqView.valueAction_([0, 1]); ~presetSeqRangeViewG[tr].valueAction_([0, 1]);
 	});*/
 
-	~seqSeqModeG[tr] = RoundButton(~seqCompG[tr], /*Rect(367, 195, 30, 16)*/ Rect(2, 469, 32, 20))
+	~seqSeqModeG[tr] = RoundButton(~seqCompG[tr], /*Rect(367, 195, 30, 16)*/ Rect(2*~xSizeMul, 469*~ySizeMul, 32*~xSizeMul, 20*~ySizeMul))
 	.states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~seqSeqView.mode_(~modes[i.value]); ~presetSeqRangeViewG[tr].mode_(~modes[i.value]) })
 	.valueAction_(1);
 
@@ -20929,11 +20986,11 @@ u.drawFunc = { d.draw }
 	/*~seqReadViewG[tr] = Slider(~seqCompG1[tr], Rect(292, 1, 18, (6400/200*~nbOfSeqs))).background_(~readViewSliderBackgroundColor).knobColor_(/*~readViewSliderButtonColor2*/Color.yellow).acceptsMouse_(0).thumbSize_(28).valueAction_(1);
 	~seqReadViewG[tr].palette = ~seqReadViewG[tr].palette.button_(/*~readViewSliderButtonColor*/Color.blue);*/
 
-	~seqReadViewG[tr] = Slider(~seqCompG1[tr], Rect(26, 1, 28, (20*~nbOfSeqs))).background_(/*~readViewSliderBackgroundColor*/ Color(0.7, 0.7, 0.7, 0)).knobColor_(/*~readViewSliderButtonColor2*//*Color.yellow.alpha_(0.4)*//*Color.blue.alpha_(0.4)*/Color.clear).acceptsMouse_(0).thumbSize_(18).valueAction_(1).canFocus_(false);
+	~seqReadViewG[tr] = Slider(~seqCompG1[tr], Rect(26*~xSizeMul, 1*~ySizeMul, 28*~xSizeMul, (20*~nbOfSeqs)*~ySizeMul)).background_(/*~readViewSliderBackgroundColor*/ Color(0.7, 0.7, 0.7, 0)).knobColor_(/*~readViewSliderButtonColor2*//*Color.yellow.alpha_(0.4)*//*Color.blue.alpha_(0.4)*/Color.clear).acceptsMouse_(0).thumbSize_(18*~xSizeMul).valueAction_(1).canFocus_(false);
 	// ~seqReadViewG[0].palette.hasColor = (Color(0.6, 0.6, 0.6, 0));
 	~seqReadViewG[tr].palette = ~seqReadViewG[tr].palette.button_(/*~readViewSliderButtonColor*/Color.blue.alpha_(0.5));
 
-	~rtmReadViewG[tr] = Slider(~seqCompG[tr], /*~readViewPos5*/ Rect(84, 2, 314, 16)).background_(~readViewSliderBackgroundColor).knobColor_(~readViewSliderButtonColor2).acceptsMouse_(0).thumbSize = ~rtmThumbSizeValue[0][0] /*15*/;
+	~rtmReadViewG[tr] = Slider(~seqCompG[tr], /*~readViewPos5*/ Rect(84*~xSizeMul, 2*~ySizeMul, 314*~xSizeMul, 16*~ySizeMul)).background_(~readViewSliderBackgroundColor).knobColor_(~readViewSliderButtonColor2).acceptsMouse_(0).thumbSize = ~rtmThumbSizeValue[0][0] /*15*/;
 	~rtmReadViewG[tr].palette = ~rtmReadViewG[tr].palette.button_(~readViewSliderButtonColor);
 
 
@@ -20950,9 +21007,9 @@ u.drawFunc = { d.draw }
 
 
 
-	~xqViewG[tr] = RoundButton(/*~seqComp, Rect(5, 217, 65, 25)*/ ~seqCompG[tr], Rect(2, 284, 30, 20))
+	~xqViewG[tr] = RoundButton(/*~seqComp, Rect(5, 217, 65, 25)*/ ~seqCompG[tr], Rect(2*~xSizeMul, 284*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["wiXQ", Color.black, Color.yellow /*Color.new255(255, 165, 0)*/ /*Color.green*/], ["NoXQ", Color.white, Color.red]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({|i| ~xqViewValue[tr] = i.value;
 		~xqControlView[tr].value_(~xqViewValue[tr]);
 	});
@@ -20966,10 +21023,10 @@ u.drawFunc = { d.draw }
 	Pdef(~patterns2[0]).pause
 	*/
 
-	~playViewG[tr] = RoundButton(/*~seqComp, Rect(75, 217, 75, 25)*/ ~seqCompG[tr], Rect(2, 306, 30, 24))
+	~playViewG[tr] = RoundButton(/*~seqComp, Rect(75, 217, 75, 25)*/ ~seqCompG[tr], Rect(2*~xSizeMul, 306*~ySizeMul, 30*~xSizeMul, 24*~ySizeMul))
 	// .states_([["Play", Color.black, Color.green], ["ying", Color.white, Color.red]])
 	.states_([["Play", Color.black, Color.white], ["ying", Color.black, Color.green]])
-	.font_(Font("Verdana", 9, bold: true))
+	.font_(Font("Verdana", 9*~fontSizeMul, bold: true))
 	.action_({|i| var playMSwitch; if (~playMono[tr] == 0, { playMSwitch =  \play.envirGet }, { playMSwitch =  \playM.envirGet} );
 
 		~playViewValue[tr] = i.value;
@@ -21050,9 +21107,9 @@ u.drawFunc = { d.draw }
 
 	});
 
-	~play2ViewG[tr] = RoundButton(/*~seqComp, Rect(150, 217, 75, 25)*/ ~seqCompG[tr], Rect(2, 332, 30, 20))
+	~play2ViewG[tr] = RoundButton(/*~seqComp, Rect(150, 217, 75, 25)*/ ~seqCompG[tr], Rect(2*~xSizeMul, 332*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Res", Color.black, ~popUpMenuBackgroundColor/*Color.grey*/]])
-	.font_(Font("Verdana", 9))
+	.font_(Font("Verdana", 9*~fontSizeMul))
 	.action_({
 		if (Pdef(~patterns2[tr]).isPlaying == false, {
 			// La ligne ci-dessous n'est pas forcément nécessaire par rapport à la quantisation qui est quand même pris en compte ??? - voire ~play2ControlView[tr]
@@ -21073,9 +21130,9 @@ u.drawFunc = { d.draw }
 		});
 	});
 
-	~triggerAllSeqsViewG[tr] = RoundButton(~seqCompG[tr], Rect(368, 494, 30, 20))
+	~triggerAllSeqsViewG[tr] = RoundButton(~seqCompG[tr], Rect(368*~xSizeMul, 494*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["1", Color.white, Color.blue], ["Sel", Color.white, Color.magenta] /*, ["Pre", Color.black, Color.yellow]*/ ])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |i| ~triggerAllSeqs[tr] = i.value;
 		// [ /RyWinC/Sel4/x, /RyWinC/Sel5/x, /RyWinC/Sel6/x, /RyWinC/Sel7/x, /RyWinC/Sel8/x ] // autre ordre que ~lemurSelRyValues
 		if (~lemurConnected1 == 1 and: {~rhythmTracksX2.includes(tr)}, { ~lemurAdress1.sendMsg( [ "/RyWinC/Sel4/x", "/RyWinC/Sel5/x", "/RyWinC/Sel6/x", "/RyWinC/Sel7/x", "/RyWinC/Sel8/x" ][(tr/2).asInteger-3], ~triggerAllSeqs[tr]) });
@@ -21103,9 +21160,9 @@ u.drawFunc = { d.draw }
 
 	if ( ~presetsFileName2.isNil, {
 
-		~retriggerPresetPreViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 354, 30, 20))
+		~retriggerPresetPreViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 354*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.states_([["Pre", Color.black, Color.yellow]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ var pres, seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); pres = ~presetSelection[tr][seq];
 			~presetsDontTriggerFX = 1; // Pour ne pas déclencher les effets
 			// var sequenceSelected = ~nbOfSeqs.collect { |i| if (~presetSeqTextViewG[tr][i].string != "0", {i}) }.reject({ arg item, i; item.isNil }); // préférable de prendre les presets identifiés dans les pistes pour faire de l'aléatoire
@@ -21135,9 +21192,9 @@ u.drawFunc = { d.draw }
 			~presetsDontTriggerFX = 0;
 		});
 
-		~retriggerPreset1ViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 400, 30, 20))
+		~retriggerPreset1ViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 400*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.states_([["C1", Color.white, Color.blue]])
-		.font_(Font("Verdana",10 /*, bold: true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*, bold: true*/))
 		.action_({ var pres, seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); pres = ~presetSelection[tr][seq];
 			~presetsDontTriggerFX = 1; // Pour ne pas déclencher les effets
 
@@ -21175,9 +21232,9 @@ u.drawFunc = { d.draw }
 			~presetsDontTriggerFX = 0;
 		});
 
-		~retriggerPresetViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 376, 30, 22))
+		~retriggerPresetViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 376*~ySizeMul, 30*~xSizeMul, 22*~ySizeMul))
 		.states_([["Sel", Color.black, Color.new255(255, 165, 0) ]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ var pres, seq, sequenceSelected = (~presetSeqStart[tr]..~presetSeqStop[tr]).collect { |i| i /*if (~presetSeqNbTextViewG[tr][i].isNil, {~presetSeqNbSelectViewG[tr][i-~nbOfSeqs].value-1}, {~presetSeqNbTextViewG[tr][i].string.asInteger-1})*/ }; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); pres = ~presetSelection[tr][seq];
 			~presetsDontTriggerFX = 1; // Pour ne pas déclencher les effets
 
@@ -21227,9 +21284,9 @@ u.drawFunc = { d.draw }
 	},{
 
 
-		~retriggerPresetPreViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 354, 30, 20))
+		~retriggerPresetPreViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 354*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.states_([["Pre", Color.black, Color.yellow]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ var pres, seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); pres = ~presetSelection[tr][seq];
 			~presetsDontTriggerFX = 1;
 
@@ -21257,9 +21314,9 @@ u.drawFunc = { d.draw }
 			~presetsDontTriggerFX = 0;
 		});
 
-		~retriggerPreset1ViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 400, 30, 20))
+		~retriggerPreset1ViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 400*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.states_([["C1", Color.white, Color.blue]])
-		.font_(Font("Verdana",10 /*, bold: true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*, bold: true*/))
 		.action_({ var pres, seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); pres = ~presetSelection[tr][seq];
 			~presetsDontTriggerFX = 1;
 
@@ -21284,9 +21341,9 @@ u.drawFunc = { d.draw }
 			~presetsDontTriggerFX = 0;
 		});
 
-		~retriggerPresetViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 376, 30, 22))
+		~retriggerPresetViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 376*~ySizeMul, 30*~xSizeMul, 22*~ySizeMul))
 		.states_([["Sel", Color.black, Color.new255(255, 165, 0) ]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ var pres, seq, sequenceSelected = (~presetSeqStart[tr]..~presetSeqStop[tr]).collect { |i| i };
 			if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] }); pres = ~presetSelection[tr][seq];
 			~presetsDontTriggerFX = 1;
@@ -21335,29 +21392,29 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~position1SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 46, 30, 12))
+	~position1SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 46*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([["^", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@0 });
 
-	~position2SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 60, 30, 12))
+	~position2SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 60*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([["-", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana", 12))
-	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y - 400) });
+	.font_(Font("Verdana", 12*~fontSizeMul))
+	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y - 400)*~ySizeMul });
 
-	~position3SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 74, 30, 12))
+	~position3SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 74*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([["+", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana", 12))
-	.action_({|i| if (~seqCompG1[tr].visibleOrigin.y == 0, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + 380).min(~seqCompG1MaxVisibleOrigin) }, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + 400).min(~seqCompG1MaxVisibleOrigin) }) }); // (4380) = (400 * 11) - 20 ou (20 ° 20 * 11) - 20
+	.font_(Font("Verdana", 12*~fontSizeMul))
+	.action_({|i| if (~seqCompG1[tr].visibleOrigin.y == 0, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + 380).min(~seqCompG1MaxVisibleOrigin)*~ySizeMul }, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + 400).min(~seqCompG1MaxVisibleOrigin)*~ySizeMul }) }); // (4380) = (400 * 11) - 20 ou (20 ° 20 * 11) - 20
 
-	~position4SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 88, 30, 12))
+	~position4SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 88*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([[">", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana", 12))
-	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@(4380) });
+	.font_(Font("Verdana", 12*~fontSizeMul))
+	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@(4380*~ySizeMul) });
 
-	~presetSeqVisuViewG[tr] = ListView(~seqCompG[tr], Rect(2, 102, 30, 158)).stringColor_(Color.white).hiliteColor_(Color.grey(0.8)/*black*/).font_(Font("Verdana",10)).background = Color.grey(0.3);
+	~presetSeqVisuViewG[tr] = ListView(~seqCompG[tr], Rect(2*~xSizeMul, 102*~ySizeMul, 30*~xSizeMul, 158*~ySizeMul)).stringColor_(Color.white).hiliteColor_(Color.grey(0.8)/*black*/).font_(Font("Verdana",(10*~fontSizeMul).asInteger)).background = Color.grey(0.3);
 	~presetSeqVisuViewG[tr].items = [1, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220]; /*(1..12);*/
-	~presetSeqVisuViewG[tr].action_({|i| ~seqCompG1[tr].visibleOrigin = 0@( ((i.value)*400)-20).max(0) });
+	~presetSeqVisuViewG[tr].action_({|i| ~seqCompG1[tr].visibleOrigin = 0@( ((i.value)*400)-20).max(0)*~ySizeMul });
 
 
 	// Regroupement Free parties will survive - Avant Parme
@@ -21530,14 +21587,14 @@ u.drawFunc = { d.draw }
 	};
 
 
-	~folRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 423, 30, 20))
+	~folRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 423*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["FOL", Color.red, Color.white]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({~folRandFunction.(tr); ~bufFolderViewG[tr].value_(~bufFolderValue[tr][~seqSeq[tr]]) });
 
-	~ratRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(64, 445, 30, 20))
+	~ratRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(64*~xSizeMul, 445*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["RAT", Color.red, Color.white]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({ var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		case
 		{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
@@ -21565,9 +21622,9 @@ u.drawFunc = { d.draw }
 		}
 	});
 
-	~strRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(95, 445, 30, 20))
+	~strRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(95*~xSizeMul, 445*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["RST", Color.red, Color.white]])
-	.font_(Font("Verdana",9 /*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul /*, bold: true*/))
 	.action_({ var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		case
 		{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
@@ -21598,9 +21655,9 @@ u.drawFunc = { d.draw }
 		}
 	});
 
-	~bufRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 445, 30, 20))
+	~bufRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 445*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["RBU", Color.red, Color.white]])
-	.font_(Font("Verdana",9 /*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul /*, bold: true*/))
 	.action_({ var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		case
 		{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
@@ -21628,9 +21685,9 @@ u.drawFunc = { d.draw }
 		}
 	});
 
-	~offRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(33, 445, 30, 20))
+	~offRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(33*~xSizeMul, 445*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["ROF", Color.red, Color.white]])
-	.font_(Font("Verdana",9 /*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul /*, bold: true*/))
 	.action_({ var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		case
 		{ ~triggerAllSeqs[tr] == 0} // Séquence de le piste en cours de sélection
@@ -21658,9 +21715,9 @@ u.drawFunc = { d.draw }
 		}
 	});
 
-	~spaRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(126, 445, 30, 20))
+	~spaRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(126*~xSizeMul, 445*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["RSP", Color.red, Color.white]])
-	.font_(Font("Verdana",9 /*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul /*, bold: true*/))
 	.action_({ var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		case
 		{ ~triggerSpaSeqs == 0} // Séquence de le piste en cours de sélection
@@ -21694,9 +21751,9 @@ u.drawFunc = { d.draw }
 		}*/
 	});
 
-	~outRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(157, 445, 30, 20))
+	~outRandViewG[tr] = RoundButton(~seqCompG[tr], Rect(157*~xSizeMul, 445*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["ROU", Color.red, Color.white]])
-	.font_(Font("Verdana",9 /*, bold: true*/))
+	.font_(Font("Verdana",9*~fontSizeMul /*, bold: true*/))
 	.action_({ var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		case
 		{ ~triggerSpaSeqs == 0} // Séquence de le piste en cours de sélection
@@ -21743,11 +21800,11 @@ u.drawFunc = { d.draw }
 
 	// Sliders XFade & Quantisation
 
-	~pFadeViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(36, 468, 75, 22))
+	~pFadeViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(36*~xSizeMul, 468*~ySizeMul, 75*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~pFade[tr] = ~pFadeSpec.map(view.value);
 		view.string = ("X:%-%s").format(~pFade[tr], (~pFade[tr] / ~toTempo).round(0.01));
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -21756,11 +21813,11 @@ u.drawFunc = { d.draw }
 	// .doAction // utilité ???
 	.valueAction_(~pFadeSpec.unmap(~trackXFadeDefault));
 
-	~quantViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(113, 468, 75, 22))
+	~quantViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(113*~xSizeMul, 468*~ySizeMul, 75*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~quant[tr] = ~quantSpec.map(view.value);
 		view.string = ("Q:%-%s").format(~quant[tr], (~quant[tr] / ~toTempo).round(0.01));
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -21772,9 +21829,9 @@ u.drawFunc = { d.draw }
 
 	~triggerSpaSeqs = 1; // obligé de le déclarer car la GUI est plus loin
 
-	~spaRangePresetViewViewG[tr] = View(~seqCompG[tr], Rect(190, 468, 48, 21));
+	~spaRangePresetViewViewG[tr] = View(~seqCompG[tr], Rect(190*~xSizeMul, 468*~ySizeMul, 48*~xSizeMul, 21*~ySizeMul));
 
-	~spaRangePresetViewG[tr] = PopUpMenu.new(~spaRangePresetViewViewG[tr], Rect(0, 0, 65, 21))
+	~spaRangePresetViewG[tr] = PopUpMenu.new(~spaRangePresetViewViewG[tr], Rect(0, 0, 75*~xSizeMul, 21*~ySizeMul))
 	// .action_({|menu| ~spaRangeView.valueAction_(~spaRangeSpec[tr][~seqsValue].unmap([menu.item.replace("->", " ").split($ )[1].asFloat, menu.item.replace("->", " ").split($ )[2].asFloat])) })
 	.action_({ |menu|
 		// ~spaRangeView.valueAction_(~spaRangeSpec[tr][~seqsValue].unmap([min, max]));
@@ -21821,14 +21878,14 @@ u.drawFunc = { d.draw }
 	.stringColor_(Color.white)*/
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font(/*"PT Mono"*/"Monaco"/*"Verdana"*/,9));
+	.font_(Font(/*"PT Mono"*/"Monaco"/*"Verdana"*/,9*~fontSizeMul));
 	~spaRangePresetViewG[tr].items_(~spaRangePresetItemsG)
 	.valueAction_(~spaRangePresetItemsG.size-1);
 
 
-	~spaPatSelViewViewG[tr] = View(~seqCompG[tr], Rect(240, 468, 38, 21));
+	~spaPatSelViewViewG[tr] = View(~seqCompG[tr], Rect(240*~xSizeMul, 468*~ySizeMul, 38*~xSizeMul, 21*~ySizeMul));
 
-	~spaPatSelViewG[tr] = PopUpMenu.new(~spaPatSelViewViewG[tr], Rect(0, 0, 56, 21))
+	~spaPatSelViewG[tr] = PopUpMenu.new(~spaPatSelViewViewG[tr], Rect(0, 0, 66*~xSizeMul, 21*~ySizeMul))
 	.action_({ |menu|
 		case
 		{ ~triggerSpaSeqs == 0} // Séquence de le piste en cours de sélection
@@ -21857,7 +21914,7 @@ u.drawFunc = { d.draw }
 	.stringColor_(Color.white)*/
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",9));
+	.font_(Font("Verdana",9*~fontSizeMul));
 	if (~acousItems.isNil, {
 		~spaPatSelViewG[tr].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I"]) // .valueAction_(4); // Initialisation à Pwhite
 	},{
@@ -21868,9 +21925,9 @@ u.drawFunc = { d.draw }
 	.value_(4); // Initialisation à Pwhite
 
 
-	~spaPatViewG[tr] = RoundButton(~seqCompG[tr], Rect(280, 468, 21, 20))
+	~spaPatViewG[tr] = RoundButton(~seqCompG[tr], Rect(280*~xSizeMul, 468*~ySizeMul, 21*~xSizeMul, 20*~ySizeMul))
 	.states_([["SC", Color.white, Color.blue/*~popUpMenuBackgroundColor*/], ["SP", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({ |a|
 		case
 		{ ~triggerSpaSeqs == 0} // Séquence de le piste en cours de sélection
@@ -21917,9 +21974,9 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~panRangePresetViewViewG[tr] = View(~seqCompG[tr], Rect(189, 444, 28, 21));
+	~panRangePresetViewViewG[tr] = View(~seqCompG[tr], Rect(189*~xSizeMul, 444*~ySizeMul, 28*~xSizeMul, 21*~ySizeMul));
 
-	~panRangePresetViewG[tr] = PopUpMenu.new(~panRangePresetViewViewG[tr], /*~rangePresetViewPos5*/ Rect(0, 0, 48, 21))
+	~panRangePresetViewG[tr] = PopUpMenu.new(~panRangePresetViewViewG[tr], /*~rangePresetViewPos5*/ Rect(0, 0, 58*~xSizeMul, 21*~ySizeMul))
 	// .action_({ |menu| ~panRangePresetViewFunc[menu.value].value(tr, ~seqsValue)  })
 	.action_({ |menu|
 		case
@@ -21952,18 +22009,18 @@ u.drawFunc = { d.draw }
 	.stringColor_(Color.white)*/
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",9));
+	.font_(Font("Verdana",9*~fontSizeMul));
 	~panRangePresetViewG[tr].items_(~panRangePresetItemsG)
 	.valueAction_(~panRangePresetItemsG.size-1);
 
 
-	~bufFolderViewViewG = View(~seqCompG[tr], Rect(219, 444, 86, 21) /*~roundViewPos5*/); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
+	~bufFolderViewViewG = View(~seqCompG[tr], Rect(219*~xSizeMul, 444*~ySizeMul, 86*~xSizeMul, 21*~ySizeMul) /*~roundViewPos5*/); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
 
-	~bufFolderViewG[tr] = PopUpMenu.new(~bufFolderViewViewG, Rect(0,0,120,21))
+	~bufFolderViewG[tr] = PopUpMenu.new(~bufFolderViewViewG, Rect(0,0,120*~xSizeMul,21*~ySizeMul))
 	.allowsReselection_(true)
 	.background_(~bufFolColor /*Color.grey(0.7)*//*green*//*magenta*/)
 	.stringColor_(Color.white/*black*/)
-	.font_(Font("Verdana",9/*,bold:true*/));
+	.font_(Font("Verdana",9*~fontSizeMul /*,bold:true*/));
 
 	if (~twister.isNil, {
 		~bufFolderViewG[tr].action_({ |a| var serv, seq;
@@ -22083,9 +22140,9 @@ u.drawFunc = { d.draw }
 	~bufFolderViewG[tr].valueAction_(~bufFolderValue[0][0]);
 
 
-	~proPatViewG[tr] = RoundButton(~seqCompG[tr], Rect(2, 492, 32, 20))
+	~proPatViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 492*~ySizeMul, 32*~xSizeMul, 20*~ySizeMul))
 	.states_([["P Cyc", Color.white, Color.blue /*~popUpMenuBackgroundColor*/], ["P Pat", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({ |a| var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		~proBlock[tr] = 1;
 		// if (~proPat[tr][~seqsValue] == 1, {~proPatSelView.background_(Color.red).stringColor_(Color.white)}, {~proPatSelView.background_(~popUpMenuBackgroundColor).stringColor_(~popUpMenuStringColor)} );
@@ -22122,11 +22179,11 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~proBjorViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(36, 492, 75, 22))
+	~proBjorViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(36*~xSizeMul, 492*~ySizeMul, 75*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~proBjor[tr][~seqsValue] = ~proBjorSpec[tr][~seqsValue].map(view.value).asInteger;
 		view.string = "Hit : %".format(~proBjor[tr][~seqsValue]);
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
@@ -22159,11 +22216,11 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~proBjor2ViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(113, 492, 75, 22))
+	~proBjor2ViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(113*~xSizeMul, 492*~ySizeMul, 75*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~proBjor2[tr][~seqsValue] = ~proBjorSpec[tr][~seqsValue].map(view.value).asInteger;
 		view.string = "Off : %".format(~proBjor2[tr][~seqsValue]);
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
@@ -22197,9 +22254,9 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~proSelectViewG[tr] = RoundButton(~seqCompG[tr], Rect(190, 492, 32, 20))
+	~proSelectViewG[tr] = RoundButton(~seqCompG[tr], Rect(190*~xSizeMul, 492*~ySizeMul, 32*~xSizeMul, 20*~ySizeMul))
 	.states_([["\PROS", Color.white, Color.blue], ["\PRO1", Color.white, Color.red]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({ |a| var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		~proBlock[tr] = 1;
 		[\rtmBlock, \proBlock, \synBlock, \spaBlock, \legBlock, \envBlock, \bufBlock, \ampBlock, \ratBlock, \rat2Block, \offBlock, \strBlock, \str2Block, \cenBlock, \cen2Block, \panBlock, \delBlock, \outLBlock, \outRBlock, \fxLBlock, \fxRBlock].do {|i| currentEnvironment[i][tr] = 1};
@@ -22234,7 +22291,7 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~rtmMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(2, 516, 75, 22))
+	~rtmMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(2*~xSizeMul, 516*~ySizeMul, 75*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view|
 		~rtmMul[tr][~seqsValue] = ~rtmMulSpec[tr][~seqsValue].map(view.value);
 		view.string = "Rtm : %".format(~rtmMul[tr][~seqsValue]);
@@ -22243,7 +22300,7 @@ u.drawFunc = { d.draw }
 		~rtmDisplay.string_("~rtmView.valueAction_(~rtmSpec["+tr+"]["+~seqsValue+"].unmap(~rtmMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~rtmSpec[tr][~seqsValue].map(~dur[tr][~seqsValue]) * ~rtmMul[tr][~seqsValue]).round(~rtmRound[tr][~seqsValue]).asCompileString+"));").asString; ~rtmDisplay.setFont((Font("arial",1)), 4, 75);
 		~nbTotalBeatsView.doAction;
 	})
-	.font_(Font("Verdana", 11))
+	.font_(Font("Verdana", 11*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~rtmColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22314,7 +22371,7 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~legMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(104, 516, 75, 22))
+	~legMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(104*~xSizeMul, 516*~ySizeMul, 75*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view|
 		~legMul[tr][~seqsValue] = ~legMulSpec.map(view.value);
 		view.string = "Dur : %".format(~legMul[tr][~seqsValue]);
@@ -22324,7 +22381,7 @@ u.drawFunc = { d.draw }
 		~legIndexView.string_("At : %".format((~legSpec[tr][~seqsValue].map(~legIndexView.value) * ~legMul[tr][~seqsValue]).round(~legRound[tr][~seqsValue]))); // léger pb de rounding ?
 		~legDisplay.string_(("~legView.valueAction_(~legSpec["+tr+"]["+~seqsValue+"].unmap(~legMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~legSpec[tr][~seqsValue].map(~leg[tr][~seqsValue]) * ~legMul[tr][~seqsValue]).round(~legRound[tr][~seqsValue]).asCompileString+"));").asString); ~legDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 11))
+	.font_(Font("Verdana", 11*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~legColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22411,9 +22468,9 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~rtmMulPresetViewViewG[tr] = View(~seqCompG[tr], Rect(77, 516, 26, 22));
+	~rtmMulPresetViewViewG[tr] = View(~seqCompG[tr], Rect(77*~xSizeMul, 516*~ySizeMul, 26*~xSizeMul, 22*~ySizeMul));
 
-	~rtmMulPresetViewG[tr] = PopUpMenu.new(~rtmMulPresetViewViewG[tr], Rect(0, 0, 50, 22))
+	~rtmMulPresetViewG[tr] = PopUpMenu.new(~rtmMulPresetViewViewG[tr], Rect(0, 0, 50*~xSizeMul, 22*~ySizeMul))
 	.action_({ |menu| var seq; if (tr == ~tracksValue and: {~curSeqTrig == 1}, { seq = ~seqsValue },{ seq = ~seqSeq[tr] });
 		~rtmMulViewG[tr].valueAction_(~rtmMulSpec[tr][seq].unmap(menu.item.asFloat));
 		if (tr == ~tracksValue, {~rtmMulView.valueAction_(~rtmMulSpec[tr][seq].unmap(menu.item.asFloat)) }); // redondant, mais nécessaire d'updater le slider de la séquence quand on est sur celle-ci.
@@ -22423,28 +22480,28 @@ u.drawFunc = { d.draw }
 	.stringColor_(Color.white)*/
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",8));
+	.font_(Font("Verdana",8*~fontSizeMul));
 	// ~rtmMulPresetViewG[tr].items_(["0.25", "0.5", "0.75", "1", "1.5", "2", "3", "5", "10"])
 	~rtmMulPresetViewG[tr].items_(["0.1", /*"0.125", "0.15",*/ "0.2", "0.25", "0.3", "0.4", "0.5", "0.6", "0.7", "0.75", "0.8", "0.9", "1", "1.5", "2", "2.5", "3", "4", "5", "6", "7", "7.5", "8", "9", "10"])
 	.valueAction_(/*3*/ 11);
 
 
-	~legMulPresetViewViewG[tr] = View(~seqCompG[tr], Rect(179, 516, 26, 22));
+	~legMulPresetViewViewG[tr] = View(~seqCompG[tr], Rect(179*~xSizeMul, 516*~ySizeMul, 26*~xSizeMul, 22*~ySizeMul));
 
-	~legMulPresetViewG[tr] = PopUpMenu.new(~legMulPresetViewViewG[tr], /*~mulPresetViewPos5*/ Rect(0, 0, 50, 22))
+	~legMulPresetViewG[tr] = PopUpMenu.new(~legMulPresetViewViewG[tr], /*~mulPresetViewPos5*/ Rect(0, 0, 50*~xSizeMul, 22*~ySizeMul))
 	.action_({ |menu| ~legMulViewG[tr].valueAction_(~legMulSpec.unmap(menu.item.asFloat));
 		if (tr == ~tracksValue, {~legMulView.valueAction_(~legMulSpec.unmap(menu.item.asFloat)) }); // redondant, mais nécessaire d'updater le slider de la séquence quand on est sur celle-ci.
 	})
 	.allowsReselection_(true)
 	.background_(~popUpMenuBackgroundColor)
 	.stringColor_(~popUpMenuStringColor)
-	.font_(Font("Verdana",8));
+	.font_(Font("Verdana",8*~fontSizeMul));
 	// ~legMulPresetViewG[tr].items_(["0", "0.1", "0.2", "0.5", "1", "2", "3", "5", "10"])
 	~legMulPresetViewG[tr].items_(["0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.75", "0.8", "0.9", "1", "1.5", "2", "2.5", "3", "4", "5", "6", "7", "7.5", "8", "9", "10"])
 	.valueAction_(/*4*/ 11);
 
 
-	~proMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(224, 492, 70, 22))
+	~proMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(224*~xSizeMul, 492*~ySizeMul, 70*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view|
 		~proMul[tr][~seqsValue] = ~proMulSpec.map(view.value);
 		view.string = "Pro : %".format(~proMul[tr][~seqsValue]);
@@ -22452,7 +22509,7 @@ u.drawFunc = { d.draw }
 		~proIndexView.string_("At : %".format((~proSpec[tr][~seqsValue].map(~proIndexView.value * ~proMul[tr][~seqsValue])).round(~proRound[tr][~seqsValue]))); // léger pb de rounding ?
 		~proDisplay.string_(("~proView.valueAction_(~proSpec["+tr+"]["+~seqsValue+"].unmap(~proMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~proSpec[tr][~seqsValue].map(~pro[tr][~seqsValue] * ~proMul[tr][~seqsValue])).round(~proRound[tr][~seqsValue]).asCompileString+"));").asString); ~proDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 11))
+	.font_(Font("Verdana", 11*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~proColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22519,7 +22576,7 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~ratMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(206, 516, 80, 22))
+	~ratMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(206*~xSizeMul, 516*~ySizeMul, 80*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| /*~tracksView.valueAction_(tr);*/
 		~ratMul[tr][~seqsValue] = ~ratMulSpec.map(view.value);
 		view.string = "Rat : %".format(~ratMul[tr][~seqsValue]);
@@ -22529,7 +22586,7 @@ u.drawFunc = { d.draw }
 		~ratIndexView.string_("At : %".format((~ratSpec[tr][~seqsValue].map(~ratIndexView.value) * ~ratMul[tr][~seqsValue]).round(~ratRound[tr][~seqsValue]))); // léger pb de rounding ?
 		~ratDisplay.string_(("~ratView.valueAction_(~ratSpec["+tr+"]["+~seqsValue+"].unmap(~ratMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~ratSpec[tr][~seqsValue].map(~rat[tr][~seqsValue]) * ~ratMul[tr][~seqsValue]).round(~ratRound[tr][~seqsValue]).asCompileString+"));").asString); ~ratDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 11))
+	.font_(Font("Verdana", 11*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(Color.magenta(0.7) /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22621,7 +22678,7 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~strMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(288, 516, 78, 22))
+	~strMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(288*~xSizeMul, 516*~ySizeMul, 78*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| /*~tracksView.valueAction_(tr);*/
 		~strMul[tr][~seqsValue] = ~strMulSpec.map(view.value);
 		view.string = "Str : %".format(~strMul[tr][~seqsValue]);
@@ -22631,7 +22688,7 @@ u.drawFunc = { d.draw }
 		~strIndexView.string_("At : %".format((~strSpec[tr][~seqsValue].map(~strIndexView.value) * ~strMul[tr][~seqsValue]).round(~strRound[tr][~seqsValue]))); // léger pb de rounding ?
 		~strDisplay.string_(("~strView.valueAction_(~strSpec["+tr+"]["+~seqsValue+"].unmap(~strMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~strSpec[tr][~seqsValue].map(~str[tr][~seqsValue]) * ~strMul[tr][~seqsValue]).round(~strRound[tr][~seqsValue]).asCompileString+"));").asString); ~strDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~strColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22698,7 +22755,7 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~cenMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(296, 492, 70, 22))
+	~cenMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(296*~xSizeMul, 492*~ySizeMul, 70*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| /*~tracksView.valueAction_(tr);*/
 		~cenMul[tr][~seqsValue] = ~cenMulSpec.map(view.value);
 		view.string = "Cen : %".format(~cenMul[tr][~seqsValue]);
@@ -22708,7 +22765,7 @@ u.drawFunc = { d.draw }
 		~cenIndexView.string_("At : %".format((~cenSpec[tr][~seqsValue].map(~cenIndexView.value) * ~cenMul[tr][~seqsValue]).round(~cenRound[tr][~seqsValue]))); // léger pb de rounding ?
 		~cenDisplay.string_(("~cenView.valueAction_(~cenSpec["+tr+"]["+~seqsValue+"].unmap(~cenMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~cenSpec[tr][~seqsValue].map(~cen[tr][~seqsValue]) * ~cenMul[tr][~seqsValue]).round(~cenRound[tr][~seqsValue]).asCompileString+"));").asString); ~cenDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~cenColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22775,14 +22832,14 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~bufMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(307, 444, 66, 22))
+	~bufMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(307*~xSizeMul, 444*~ySizeMul, 66*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| /*~tracksView.valueAction_(tr);*/
 		~bufMul[tr][~seqsValue] = ~bufMulSpec.map(view.value);
 		view.string = "Buf : %".format(~bufMul[tr][~seqsValue]);
 		~bufIndexView.string_("At : %".format((~bufSpec[tr][~seqsValue].map(~bufIndexView.value) * ~bufMul[tr][~seqsValue]).asInteger)); // léger pb de rounding ?
 		~bufDisplay.string_(("~bufView.valueAction_(~bufSpec["+tr+"]["+~seqsValue+"].unmap(~bufMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~bufSpec[tr][~seqsValue].map(~buf[tr][~seqsValue]) * ~bufMul[tr][~seqsValue]).asInteger.asCompileString+"));").asString); ~bufDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~bufColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22836,14 +22893,14 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~offMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(303, 468, 70, 22))
+	~offMulViewG[tr] = SmoothSlider(~seqCompG[tr], Rect(303*~xSizeMul, 468*~ySizeMul, 70*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| /*~tracksView.valueAction_(tr);*/
 		~offMul[tr][~seqsValue] = ~offMulSpec.map(view.value);
 		view.string = "Pos : %".format(~offMul[tr][~seqsValue]);
 		~offIndexView.string_("At : %".format((~offSpec[tr][~seqsValue].map(~offIndexView.value) * ~offMul[tr][~seqsValue]).asInteger)); // léger pb de rounding ?
 		~offDisplay.string_(("~offView.valueAction_(~offSpec["+tr+"]["+~seqsValue+"].unmap(~offMul["+tr+"]["+~seqsValue+"].reciprocal * "+(~offSpec[tr][~seqsValue].map(~off[tr][~seqsValue]) * ~offMul[tr][~seqsValue]).asInteger.asCompileString+"));").asString); ~offDisplay.setFont((Font("arial",1)), 4, 75);
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~offColor /*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -22935,9 +22992,9 @@ u.drawFunc = { d.draw }
 ~seqChange =  0 ! ~nbOfTracksX2;*/
 
 ~nbOfTracksX2.do { |a|
-	~seqChangeViewG[a] = RoundButton(~seqCompG[a], Rect(368, 517, 30, 20))
+	~seqChangeViewG[a] = RoundButton(~seqCompG[a], Rect(368*~xSizeMul, 517*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["NCh", Color.red, Color.white], ["Cha", Color.black, Color.green]])
-	.font_(Font("Verdana",9, bold: true))
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 	.action_({ |i| ~seqChange[a] = i.value;
 		/*if (a.even,
 		{ ~seqChangeViewG[a+1].value_(i.value) },
@@ -23357,9 +23414,9 @@ u.drawFunc = { d.draw }
 
 	// Default
 
-	~seqABVisibleAllViewG = RoundButton(~controlWindowDefault, Rect(4, 2, 30, 20))
+	~seqABVisibleAllViewG = RoundButton(~controlWindowDefault, Rect(4*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["Bll", Color.magenta, Color.white], ["All", Color.white, Color.magenta]])
-	.font_(Font("Verdana",10 /*, bold: true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*, bold: true*/))
 	.action_({ |i|
 		{
 			if (i.value == 0, {
@@ -23378,9 +23435,9 @@ u.drawFunc = { d.draw }
 		}.fork(AppClock);
 	}).valueAction_(1);
 
-	~seqPlayingVisibleAllViewG = RoundButton(~controlWindowDefault, Rect(34, 2, 30, 20))
+	~seqPlayingVisibleAllViewG = RoundButton(~controlWindowDefault, Rect(34*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 	.states_([["SPl", Color.white, Color.magenta], ["0Pl", Color.magenta, Color.white]])
-	.font_(Font("Verdana", 10 /*, bold: true*/))
+	.font_(Font("Verdana", 10*~fontSizeMul /*, bold: true*/))
 	.action_({ |i|
 		if (i.value == 0, {
 			~tracks.do { |tr| if ( ~playViewValue[tr] == 0, { ~seqABVisibleViewG[tr] /*~tracksView*/.value_(tr.wrap(0, 1)).doAction } ) };
@@ -23406,7 +23463,7 @@ u.drawFunc = { d.draw }
 	// Changer le tempo autrement que par un slider par la possibilité d'être précis XXX
 	// soit en rajoutant ou en l'échangeant par une Number Box
 	~toTempoSpec = ControlSpec(0.1, 10, 2, 0.01);
-	~toTempoView = SmoothSlider(~controlWindowTrig, Rect(5, 77, 250, 22))
+	~toTempoView = SmoothSlider(~controlWindowTrig, Rect(5*~xSizeMul, 77*~ySizeMul, 250*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~toTempo = ~toTempoSpec.map(view.value);
 		view.string = "% BPS -> % BPM".format(~toTempo, ~toTempo * 60);
 		view.hilightColor_(Color.red);
@@ -23420,7 +23477,7 @@ u.drawFunc = { d.draw }
 		(8.collect({|i| (~pBeat[~tracksValue][~seqsValue][i] > 0).if ({~nbBeat[~tracksValue][~seqsValue][i]}, {0}) })).sum, (~nbTotalBeats[~tracksValue][~seqsValue] / ~toTempo).round(0.01), ((8.collect({|i| (~pBeat[~tracksValue][~seqsValue][i] > 0).if ({~nbBeat[~tracksValue][~seqsValue][i]}, {0}) })).sum / ~nbTotalBeats[~tracksValue][~seqsValue] * ~toTempo * 60).round(0.01));
 		}*/
 	})
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	// .hilightColor_(~sliderHilightColor) // + utile voir ci-dessous car update de la couleur si changement
 	.stringColor_(Color.white)
@@ -23432,11 +23489,11 @@ u.drawFunc = { d.draw }
 	~toTempoView.hilightColor_(~sliderHilightColor);
 
 	~toSecSpec = ControlSpec(0, 60, \lin, 1);
-	~toSecView = SmoothSlider(~controlWindowTrig, Rect(5, 99, 250, 22))
+	~toSecView = SmoothSlider(~controlWindowTrig, Rect(5*~xSizeMul, 99*~ySizeMul, 250*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~toSec = ~toSecSpec.map(view.value);
 		view.string = "% sec".format(~toSec);
 	})
-	.font_(Font("Verdana", 12))
+	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -23454,17 +23511,17 @@ u.drawFunc = { d.draw }
 		"Done".yield;
 	});
 
-	~doNextTempo = RoundButton(~controlWindowTrig, Rect(218, 52, 50, 20))
+	~doNextTempo = RoundButton(~controlWindowTrig, Rect(218*~xSizeMul, 52*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["Do Tempo", Color.white, Color.blue]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({~toTempoView.hilightColor_(~sliderHilightColor);
 		~tempoPlay.reset; ~tempoPlay.play(AppClock);
 	});
 
 	~automationActive = 0;
-	~automationGUI = RoundButton(~controlWindowTrig, Rect(272, 52, 38, 20))
+	~automationGUI = RoundButton(~controlWindowTrig, Rect(272*~xSizeMul, 52*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
 	.states_([["Auto", Color.white, Color.red], ["Auto", Color.white, Color.blue]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({ |i| ~automationActive = i.value; if (~automationActive == 1, {~automationLoad.(); }, {~automationWindow.close} ); });
 
 
@@ -23493,7 +23550,7 @@ u.drawFunc = { d.draw }
 			~gblSeqStop[tr][seq] = (~gblSeqSpec[tr][seq].map(1) -1).asInteger;
 	}};
 
-	~gblSeqView = SmoothRangeSlider(~rtmCompb, Rect(2, 56, 333/*260*/, 22)) // (~controlWindowTrig, Rect(5, 142, 250, 22))
+	~gblSeqView = SmoothRangeSlider(~rtmCompb, Rect(2*~xSizeMul, 56*~ySizeMul, 333*~xSizeMul /*260*/, 22*~ySizeMul)) // (~controlWindowTrig, Rect(5, 142, 250, 22))
 	.action_({ |view| ~gblSeqStart[~tracksValue][~seqsValue] = ~gblSeqSpec[~tracksValue][~seqsValue].map(view.lo).asInteger; ~gblSeqStop[~tracksValue][~seqsValue] = (~gblSeqSpec[~tracksValue][~seqsValue].map(view.hi)-1).asInteger;
 		view.string = ("% to % (Dur :"+(~gblSeqStop[~tracksValue][~seqsValue] - ~gblSeqStart[~tracksValue][~seqsValue] + 1).asInteger+")").format(~gblSeqStart[~tracksValue][~seqsValue], ~gblSeqStop[~tracksValue][~seqsValue]);
 		// if (view.range != 1, {view.background = Color.red}, {view.background = ~sliderBackgroundColor} );
@@ -23519,7 +23576,7 @@ u.drawFunc = { d.draw }
 		~fxLSeqView.valueAction_(~gblSeqSpec[~tracksValue][~seqsValue].unmap([~gblSeqStart[~tracksValue][~seqsValue], ~gblSeqStop[~tracksValue][~seqsValue]+1]));
 		~fxRSeqView.valueAction_(~gblSeqSpec[~tracksValue][~seqsValue].unmap([~gblSeqStart[~tracksValue][~seqsValue], ~gblSeqStop[~tracksValue][~seqsValue]+1]));
 	})
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightNoColor)
 	.stringColor_(Color.white)
@@ -23530,13 +23587,13 @@ u.drawFunc = { d.draw }
 	.valueAction_([0, 1])
 	.doAction;
 
-	~gblSeqIndexView = RoundSlider(~rtmCompb, Rect(2, 78, 333/*260*/, 18))
+	~gblSeqIndexView = RoundSlider(~rtmCompb, Rect(2*~xSizeMul, 78*~ySizeMul, 333*~xSizeMul /*260*/, 18*~ySizeMul))
 	.action_({ |view| ~gblSeqIndex[~tracksValue][~seqsValue] = ~gblSeqIndexSpec[~tracksValue][~seqsValue].map(view.value).asInteger;
 		view.string = "At : %".format(~gblSeqIndex[~tracksValue][~seqsValue]);
 		~gblSeqView.valueAction_([~gblSeqIndexSpec[~tracksValue][~seqsValue].unmap(~gblSeqIndex[~tracksValue][~seqsValue]), ~gblSeqIndexSpec[~tracksValue][~seqsValue].unmap(~gblSeqIndex[~tracksValue][~seqsValue])]);
 	})
 	// .valueAction_(0) // pour initialiser les valeurs du View au chargement
-	.font_(Font("Verdana", 10))
+	.font_(Font("Verdana", 10*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(~sliderHilightColor)
 	.stringColor_(Color.white)
@@ -23545,9 +23602,9 @@ u.drawFunc = { d.draw }
 	.step_(1/(~dur[~tracksValue][~seqsValue].size))
 	.doAction;
 
-	~gblSeqAllView = RoundButton(~rtmCompb, Rect(340, 57, 35, 18))
+	~gblSeqAllView = RoundButton(~rtmCompb, Rect(340*~xSizeMul, 57*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["All Seq", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	/*.action_({if (~patFlag == 0,
 	{~gblSeqView.valueAction_([0, 1]);
 	}, {~seqs.do {|i| ~gblSeqView[i].valueAction_([0, 1]);
@@ -23608,9 +23665,9 @@ u.drawFunc = { d.draw }
 
 	~gblSeqAllView.valueAction_(1);
 
-	~gblSeqMode = RoundButton(~rtmCompb, Rect(340, 77, 35, 18))
+	~gblSeqMode = RoundButton(~rtmCompb, Rect(340*~xSizeMul, 77*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["\Drag", Color.black, ~popUpMenuBackgroundColor], ["\Jump", Color.black, ~popUpMenuBackgroundColor]])
-	.font_(Font("Verdana",8))
+	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~gblSeqView.mode_(~modes[i.value])})
 	.valueAction_(1);
 
@@ -23620,29 +23677,29 @@ u.drawFunc = { d.draw }
 
 	// Gestion Visuels Sliders & Données
 
-	~controlWindowGlobal = CompositeView(~rtmCompb, Rect(0, 105, 266, 42)).background = Color.grey(0.6);
+	~controlWindowGlobal = CompositeView(~rtmCompb, Rect(0, 105*~ySizeMul, 266*~xSizeMul, 42*~ySizeMul)).background = Color.grey(0.6);
 
-	~visuelTabView = RoundButton(~controlWindowGlobal, Rect(122, 2, 35, 18))
+	~visuelTabView = RoundButton(~controlWindowGlobal, Rect(122*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Tab", Color.white, Color.red], ["Tab", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~visuelTab = i.value})
 	.valueAction_(1);
 
-	~visuelLocView = RoundButton(~controlWindowGlobal, Rect(122, 22, 35, 18))
+	~visuelLocView = RoundButton(~controlWindowGlobal, Rect(122*~xSizeMul, 22*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Loc", Color.white, Color.blue]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	// .action_({|i| ~seqsView.valueAction_(~seqSeq[t.activeTab])}); // valable avec TabbedView
 	.action_({|i| ~seqsView.valueAction_(~seqSeq[~currentTab])}); // ??????
 
-	~visuelValView = RoundButton(~controlWindowGlobal, Rect(161, 2, 35, 18))
+	~visuelValView = RoundButton(~controlWindowGlobal, Rect(161*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Val", Color.white, Color.red], ["Val", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~visuelVal = i.value})
 	.valueAction_(1);
 
-	~visuelSliderView = RoundButton(~controlWindowGlobal, Rect(161, 22, 35, 18))
+	~visuelSliderView = RoundButton(~controlWindowGlobal, Rect(161*~xSizeMul, 22*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Mul", Color.white, Color.red], ["Sli", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~visuelSlider = i.value;
 		if(~visuelSlider == 0, {
 			[~rtmView, ~proView, ~synView, ~spaView, ~legView, ~envView, ~bufView, ~offView, ~ratView, ~ampView, ~strView, ~cenView, ~panView,  ~delView, ~outLView, ~outRView, ~fxLView, ~fxRView, ~rat2View, ~str2View, ~cen2View].do { |i| i.showIndex_(1) };
@@ -23653,22 +23710,22 @@ u.drawFunc = { d.draw }
 	})
 	.valueAction_(1);
 
-	~cutSynthView = RoundButton(~controlWindowGlobal, Rect(5, 2, 35, 18))
+	~cutSynthView = RoundButton(~controlWindowGlobal, Rect(5*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["CutS", Color.black, Color.green], ["CutS", Color.white, Color.red]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~cutSynth = i.value})
 	// .value_(0).doAction; // Pour effectuer l'action lorsque l'état ne change pas
 	.valueAction_(1);
 
 	~updateSoundFile = 0;
-	~updateSoundFileView = RoundButton(~controlWindowGlobal, Rect(5, 22, 35, 18))
+	~updateSoundFileView = RoundButton(~controlWindowGlobal, Rect(5*~xSizeMul, 22*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Buf", Color.white, Color.red,], ["Buf", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~updateSoundFile = i.value;
 		if (~updateSoundFile == 1, {
 			// ~soundFileViewWindow = Window.new("SoundfileView", Rect(1517+~windowWidth-1920, 683+~windowHeight-1200, 400, 180)).alwaysOnTop_(true);
-			~soundFileViewWindow = Window.new("SoundfileView").setTopLeftBounds(Rect(1517+~windowWidth-1920, 292+(~windowUpperMargin.neg*4), 400, 180)).alwaysOnTop_(true);
-			~soundFileView = SoundFileView.new(~soundFileViewWindow, Rect(0, 0, 400, 180));
+			~soundFileViewWindow = Window.new("SoundfileView").setTopLeftBounds(Rect(/*1517+~windowWidth-1920*/ ~windowWidth-(400*~xSizeMul), 292+(~windowUpperMargin.neg*4)*~ySizeMul, 400*~xSizeMul, 180*~ySizeMul)).alwaysOnTop_(true);
+			~soundFileView = SoundFileView.new(~soundFileViewWindow, Rect(0, 0, 400*~xSizeMul, 180*~ySizeMul));
 			~soundFileViewWindow.front;
 			// ~updateSoundFile = i.value;
 		} , {~soundFileViewWindow.close});
@@ -23678,27 +23735,27 @@ u.drawFunc = { d.draw }
 
 	// A renommer -> sélection du QuickPreset
 	~updateVisualPreset = 0;
-	~updateVisualPresetView = RoundButton(~controlWindowGlobal, Rect(83, 2, 35, 18))
+	~updateVisualPresetView = RoundButton(~controlWindowGlobal, Rect(83*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["QPre", Color.white, Color.red], ["QPre", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~updateVisualPreset = i.value;
 		// coupure de l'affichage graphique lorque QuickPreset est sélectionné (au moins lorsqu'un pattern aléatoire est sélectionné
 		~updateVisualRandView.valueAction_(~updateVisualPreset); /*~visuelValView.valueAction_(~updateVisualPreset);*/
 	});
 
-	~updateVisualRandView = RoundButton(~controlWindowGlobal, Rect(83, 22, 35, 18))
+	~updateVisualRandView = RoundButton(~controlWindowGlobal, Rect(83*~xSizeMul, 22*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["VRan", Color.black, Color.green], ["VRan", Color.white, Color.red]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~updateVisualRand = i.value})
 	.value_(0).doAction; // Pour effectuer l'action lorsque l'état ne change pas
 
-	~zoomMultiSliderView = RoundButton(~controlWindowGlobal, Rect(44, 2, 35, 18))
+	~zoomMultiSliderView = RoundButton(~controlWindowGlobal, Rect(44*~xSizeMul, 2*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Z MS", Color.white, Color.red], ["Z MS", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i|
 		var seqSize = ~dur[~tracksValue][~seqsValue].size;
 		var seqVSize = seqSize-1;
-		var thumbsize = max(333 / seqSize, ~readViewThumbSize);
+		var thumbsize = max((333 / seqSize)*~xSizeMul, ~readViewThumbSize);
 		~zoomMultiSlider = i.value;
 		if (~zoomMultiSlider == 0,
 			{ // Pour revenir à la normale sans le zoom MultiSlider
@@ -23856,147 +23913,147 @@ u.drawFunc = { d.draw }
 				~rtmView.indexThumbSize_(~rtmView.bounds.width / ~seqDurRtm[~tracksValue][~seqsValue]);
 				~rtmSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurRtm[~tracksValue][~seqsValue], \lin, 1, 1);
 				~rtmSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurRtm[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~rtmReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurRtm[~tracksValue][~seqsValue]));
+				~rtmReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurRtm[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~proView.valueAction_(~pro[~tracksValue][~seqsValue][(0..max(0,~proSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~proView.startIndex_(~proSeqStart[~tracksValue][~seqsValue]);
 				~proView.indexThumbSize_(~proView.bounds.width / ~seqDurPro[~tracksValue][~seqsValue]);
 				~proSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurPro[~tracksValue][~seqsValue], \lin, 1, 1);
 				~proSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurPro[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~proReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurPro[~tracksValue][~seqsValue]));
+				~proReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurPro[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~synView.valueAction_(~syn[~tracksValue][~seqsValue][(0..max(0,~synSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~synView.startIndex_(~synSeqStart[~tracksValue][~seqsValue]);
 				~synView.indexThumbSize_(~synView.bounds.width / ~seqDurSyn[~tracksValue][~seqsValue]);
 				~synSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurSyn[~tracksValue][~seqsValue], \lin, 1, 1);
 				~synSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurSyn[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~synReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurSyn[~tracksValue][~seqsValue]));
+				~synReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurSyn[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~spaView.valueAction_(~spa[~tracksValue][~seqsValue][(0..max(0,~spaSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~spaView.startIndex_(~spaSeqStart[~tracksValue][~seqsValue]);
 				~spaView.indexThumbSize_(~spaView.bounds.width / ~seqDurSpa[~tracksValue][~seqsValue]);
 				~spaSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurSpa[~tracksValue][~seqsValue], \lin, 1, 1);
 				~spaSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurSpa[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~spaReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurSpa[~tracksValue][~seqsValue]));
+				~spaReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurSpa[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~legView.valueAction_(~leg[~tracksValue][~seqsValue][(0..max(0,~legSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~legView.startIndex_(~legSeqStart[~tracksValue][~seqsValue]);
 				~legView.indexThumbSize_(~legView.bounds.width / ~seqDurLeg[~tracksValue][~seqsValue]);
 				~legSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurLeg[~tracksValue][~seqsValue], \lin, 1, 1);
 				~legSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurLeg[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~legReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurLeg[~tracksValue][~seqsValue]));
+				~legReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurLeg[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~envView.valueAction_(~env[~tracksValue][~seqsValue][(0..max(0,~envSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~envView.startIndex_(~envSeqStart[~tracksValue][~seqsValue]);
 				~envView.indexThumbSize_(~envView.bounds.width / ~seqDurEnv[~tracksValue][~seqsValue]);
 				~envSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurEnv[~tracksValue][~seqsValue], \lin, 1, 1);
 				~envSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurEnv[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~envReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurEnv[~tracksValue][~seqsValue]));
+				~envReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurEnv[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~bufView.valueAction_(~buf[~tracksValue][~seqsValue][(0..max(0,~bufSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~bufView.startIndex_(~bufSeqStart[~tracksValue][~seqsValue]);
 				~bufView.indexThumbSize_(~bufView.bounds.width / ~seqDurBuf[~tracksValue][~seqsValue]);
 				~bufSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurBuf[~tracksValue][~seqsValue], \lin, 1, 1);
 				~bufSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurBuf[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~bufReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurBuf[~tracksValue][~seqsValue]));
+				~bufReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurBuf[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~offView.valueAction_(~off[~tracksValue][~seqsValue][(0..max(0,~offSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~offView.startIndex_(~offSeqStart[~tracksValue][~seqsValue]);
 				~offView.indexThumbSize_(~offView.bounds.width / ~seqDurOff[~tracksValue][~seqsValue]);
 				~offSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOff[~tracksValue][~seqsValue], \lin, 1, 1);
 				~offSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOff[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~offReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurOff[~tracksValue][~seqsValue]));
+				~offReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurOff[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~ratView.valueAction_(~rat[~tracksValue][~seqsValue][(0..max(0,~ratSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~ratView.startIndex_(~ratSeqStart[~tracksValue][~seqsValue]);
 				~ratView.indexThumbSize_(~ratView.bounds.width / ~seqDurRat[~tracksValue][~seqsValue]);
 				~ratSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurRat[~tracksValue][~seqsValue], \lin, 1, 1);
 				~ratSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurRat[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~ratReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurRat[~tracksValue][~seqsValue]));
+				~ratReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurRat[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~rat2View.valueAction_(~rat2[~tracksValue][~seqsValue][(0..max(0,~rat2SeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~rat2View.startIndex_(~rat2SeqStart[~tracksValue][~seqsValue]);
 				~rat2View.indexThumbSize_(~rat2View.bounds.width / ~seqDurRat2[~tracksValue][~seqsValue]);
 				~rat2SeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurRat2[~tracksValue][~seqsValue], \lin, 1, 1);
 				~rat2SeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurRat2[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~rat2ReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurRat2[~tracksValue][~seqsValue]));
+				~rat2ReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurRat2[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~ampView.valueAction_(~amp[~tracksValue][~seqsValue][(0..max(0,~ampSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~ampView.startIndex_(~ampSeqStart[~tracksValue][~seqsValue]);
 				~ampView.indexThumbSize_(~ampView.bounds.width / ~seqDurAmp[~tracksValue][~seqsValue]);
 				~ampSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurAmp[~tracksValue][~seqsValue], \lin, 1, 1);
 				~ampSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurAmp[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~ampReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurAmp[~tracksValue][~seqsValue]));
+				~ampReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurAmp[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~strView.valueAction_(~str[~tracksValue][~seqsValue][(0..max(0,~strSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~strView.startIndex_(~strSeqStart[~tracksValue][~seqsValue]);
 				~strView.indexThumbSize_(~strView.bounds.width / ~seqDurStr[~tracksValue][~seqsValue]);
 				~strSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurStr[~tracksValue][~seqsValue], \lin, 1, 1);
 				~strSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurStr[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~strReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurStr[~tracksValue][~seqsValue]));
+				~strReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurStr[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~str2View.valueAction_(~str2[~tracksValue][~seqsValue][(0..max(0,~str2SeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~str2View.startIndex_(~str2SeqStart[~tracksValue][~seqsValue]);
 				~str2View.indexThumbSize_(~str2View.bounds.width / ~seqDurStr2[~tracksValue][~seqsValue]);
 				~str2SeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurStr2[~tracksValue][~seqsValue], \lin, 1, 1);
 				~str2SeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurStr2[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~str2ReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurStr2[~tracksValue][~seqsValue]));
+				~str2ReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurStr2[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~cenView.valueAction_(~cen[~tracksValue][~seqsValue][(0..max(0,~cenSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~cenView.startIndex_(~cenSeqStart[~tracksValue][~seqsValue]);
 				~cenView.indexThumbSize_(~cenView.bounds.width / ~seqDurCen[~tracksValue][~seqsValue]);
 				~cenSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurCen[~tracksValue][~seqsValue], \lin, 1, 1);
 				~cenSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurCen[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~cenReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurCen[~tracksValue][~seqsValue]));
+				~cenReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurCen[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~cen2View.valueAction_(~cen2[~tracksValue][~seqsValue][(0..max(0,~cen2SeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~cen2View.startIndex_(~cen2SeqStart[~tracksValue][~seqsValue]);
 				~cen2View.indexThumbSize_(~cen2View.bounds.width / ~seqDurCen2[~tracksValue][~seqsValue]);
 				~cen2SeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurCen2[~tracksValue][~seqsValue], \lin, 1, 1);
 				~cen2SeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurCen2[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~cen2ReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurCen2[~tracksValue][~seqsValue]));
+				~cen2ReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurCen2[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~panView.valueAction_(~pan[~tracksValue][~seqsValue][(0..max(0,~panSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~panView.startIndex_(~panSeqStart[~tracksValue][~seqsValue]);
 				~panView.indexThumbSize_(~panView.bounds.width / ~seqDurPan[~tracksValue][~seqsValue]);
 				~panSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurPan[~tracksValue][~seqsValue], \lin, 1, 1);
 				~panSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurPan[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~panReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurPan[~tracksValue][~seqsValue]));
+				~panReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurPan[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~delView.valueAction_(~del[~tracksValue][~seqsValue][(0..max(0,~delSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~delView.startIndex_(~delSeqStart[~tracksValue][~seqsValue]);
 				~delView.indexThumbSize_(~delView.bounds.width / ~seqDurDel[~tracksValue][~seqsValue]);
 				~delSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurDel[~tracksValue][~seqsValue], \lin, 1, 1);
 				~delSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurDel[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~delReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurDel[~tracksValue][~seqsValue]));
+				~delReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurDel[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~outLView.valueAction_(~outL[~tracksValue][~seqsValue][(0..max(0,~outLSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~outLView.startIndex_(~outLSeqStart[~tracksValue][~seqsValue]);
 				~outLView.indexThumbSize_(~outLView.bounds.width / ~seqDurOutL[~tracksValue][~seqsValue]);
 				~outLSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutL[~tracksValue][~seqsValue], \lin, 1, 1);
 				~outLSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutL[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~outLReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurOutL[~tracksValue][~seqsValue]));
+				~outLReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurOutL[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~outRView.valueAction_(~outR[~tracksValue][~seqsValue][(0..max(0,~outRSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~outRView.startIndex_(~outRSeqStart[~tracksValue][~seqsValue]);
 				~outRView.indexThumbSize_(~outRView.bounds.width / ~seqDurOutR[~tracksValue][~seqsValue]);
 				~outRSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutR[~tracksValue][~seqsValue], \lin, 1, 1);
 				~outRSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurOutR[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~outRReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurOutR[~tracksValue][~seqsValue]));
+				~outRReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurOutR[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~fxLView.valueAction_(~fxL[~tracksValue][~seqsValue][(0..max(0,~fxLSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~fxLView.startIndex_(~fxLSeqStart[~tracksValue][~seqsValue]);
 				~fxLView.indexThumbSize_(~fxLView.bounds.width / ~seqDurFxL[~tracksValue][~seqsValue]);
 				~fxLSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxL[~tracksValue][~seqsValue], \lin, 1, 1);
 				~fxLSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxL[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~fxLReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurFxL[~tracksValue][~seqsValue]));
+				~fxLReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurFxL[~tracksValue][~seqsValue])*~xSizeMul));
 
 				~fxRView.valueAction_(~fxR[~tracksValue][~seqsValue][(0..max(0,~fxRSeqStop[~tracksValue][~seqsValue]))]); // apparemment pas besoin de flat
 				~fxRView.startIndex_(~fxRSeqStart[~tracksValue][~seqsValue]);
 				~fxRView.indexThumbSize_(~fxRView.bounds.width / ~seqDurFxR[~tracksValue][~seqsValue]);
 				~fxRSeqSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxR[~tracksValue][~seqsValue], \lin, 1, 1);
 				~fxRSeqVSpec2[~tracksValue][~seqsValue] = ControlSpec(0, ~seqDurFxR[~tracksValue][~seqsValue]-1, \lin, 1, 1);
-				~fxRReadView.thumbSize_(max(~readViewThumbSize, 333 / ~seqDurFxR[~tracksValue][~seqsValue]));
+				~fxRReadView.thumbSize_(max(~readViewThumbSize, (333 / ~seqDurFxR[~tracksValue][~seqsValue])*~xSizeMul));
 
 		});
 	})
@@ -24083,27 +24140,27 @@ u.drawFunc = { d.draw }
 	// ~trajectoryWindow = Window.new("TrajectoryView", Rect(400, 200, 1100, 800)).alwaysOnTop_(true);
 
 	// ~trajectoryWindowStatus = 0; // Pourquoi besoin d'assigner la valeur alors que doit déjà être fait par .valueAction ??? OK
-	~trajectoryOpenView = RoundButton(~controlWindowGlobal, Rect(44, 22, 35, 18))
+	~trajectoryOpenView = RoundButton(~controlWindowGlobal, Rect(44*~xSizeMul, 22*~ySizeMul, 35*~xSizeMul, 18*~ySizeMul))
 	.states_([["Traj", Color.white, Color.red,], ["Traj", Color.black, Color.green]])
-	.font_(Font("Verdana",10))
+	.font_(Font("Verdana",10*~fontSizeMul))
 	.action_({|i| ~trajectoryWindowStatus = i.value;
 		if (~trajectoryWindowStatus == 1, {
-			~trajectoryWindow = Window.new("TrajectoryView", Rect(380+~windowWidth-1920, 128+~windowHeight-1200+(~windowUpperMargin*4), 1480, 740)).alwaysOnTop_(true);
-			~trajectoryCompositeView = CompositeView(~trajectoryWindow, Rect(5, 5, 800, 700));
+			~trajectoryWindow = Window.new("TrajectoryView", Rect(/*(380+~windowWidth-1920)*~xSizeMul*/ ~windowWidth-(1480*~xSizeMul), ~windowHeight-(136+740*~ySizeMul) /*(128+~windowHeight-1200+(~windowUpperMargin*4))*~ySizeMul*/, 1480*~xSizeMul, 740*~ySizeMul)).alwaysOnTop_(true);
+			~trajectoryCompositeView = CompositeView(~trajectoryWindow, Rect(5*~xSizeMul, 5*~ySizeMul, 800*~xSizeMul, 700*~ySizeMul));
 			~trajectoryView = WFSPathGUI2.new(~trajectoryCompositeView);
-			~trajectoryView.openGeneratorView2(~trajectoryWindow, Rect(850, 25, 200, 200) );
+			~trajectoryView.openGeneratorView2(~trajectoryWindow, Rect(850*~xSizeMul, 25*~ySizeMul, 200*~xSizeMul, 200*~ySizeMul) );
 			// ~trajectoryView.generatorView.view.findWindow.close
 
 
-			~presetTrajectoryStoringNameView = TextField(~trajectoryWindow, Rect(1100, 25, 190, 20))
+			~presetTrajectoryStoringNameView = TextField(~trajectoryWindow, Rect(1100*~xSizeMul, 25*~ySizeMul, 190*~xSizeMul, 20*~ySizeMul))
 			.string_("TrajectoryName")
 			.action_({|field| ~presetTrajectoryStoringName = field.value.asSymbol })
-			.font_(Font("Verdana",10));
+			.font_(Font("Verdana",10*~fontSizeMul));
 
 
-			~presetTrajectoryStoringButtonView = RoundButton(~trajectoryWindow, Rect(1300, 25, 50, 20))
+			~presetTrajectoryStoringButtonView = RoundButton(~trajectoryWindow, Rect(1300*~xSizeMul, 25*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 			.states_([["Store", Color.black, Color.green]])
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({ var presetList, currentItemIndex, currentItemIndex2;
 				~presetTrajectoryStoringNameView.doAction;
 
@@ -24181,12 +24238,12 @@ u.drawFunc = { d.draw }
 			});
 
 
-			~presetTrajectorySelectionView = ListView(~trajectoryWindow, Rect(1100, 50, 300, 640))
+			~presetTrajectorySelectionView = ListView(~trajectoryWindow, Rect(1100*~xSizeMul, 50*~ySizeMul, 300*~xSizeMul, 640*~ySizeMul))
 			.background_(Color./*clear*/grey(0.3, alpha: 0.8))
 			.hiliteColor_(Color.yellow(alpha: 1))
 			.selectedStringColor_(Color.black)
 			.stringColor_(Color.white)
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({ |menu|
 				~presetTrajectorySelection = menu.item.asString.split($ )[menu.item.asString.split($ ).size -1].asSymbol;
 				~presetTrajectoryGetFunction.value(~presetTrajectorySelection);
@@ -24194,9 +24251,9 @@ u.drawFunc = { d.draw }
 			});
 
 
-			~presetTrajectoryRemoveButtonView = RoundButton(~trajectoryWindow, Rect(1360, 25, 30, 20))
+			~presetTrajectoryRemoveButtonView = RoundButton(~trajectoryWindow, Rect(1360*~xSizeMul, 25*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 			.states_([["Del", Color.white, Color.red]])
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({ var presetList, presetListValue; // + nécessaire
 				if (~presetTrajectorySelectionView.items.size > 0, {
 					presetListValue = ~presetTrajectorySelectionView.value;
@@ -24239,9 +24296,9 @@ u.drawFunc = { d.draw }
 			});
 
 
-			~presetTrajectoryUpButtonView = RoundButton(~trajectoryWindow, Rect(1410, 60, 50, 20))
+			~presetTrajectoryUpButtonView = RoundButton(~trajectoryWindow, Rect(1410*~xSizeMul, 60*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 			.states_([["Up", Color.white, Color.blue]])
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({ var currentItemIndex;
 				currentItemIndex = ~presetTrajectorySelectionView.value -1;
 				if (~presetTrajectorySelectionView.value > 0, {
@@ -24268,9 +24325,9 @@ u.drawFunc = { d.draw }
 			});
 
 
-			~presetTrajectoryDownButtonView = RoundButton(~trajectoryWindow, Rect(1410, 90, 50, 20))
+			~presetTrajectoryDownButtonView = RoundButton(~trajectoryWindow, Rect(1410*~xSizeMul, 90*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 			.states_([["Down", Color.white, Color.blue]])
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({ var currentItemIndex;
 				currentItemIndex = ~presetTrajectorySelectionView.value +1;
 				if (~presetTrajectorySelectionView.items.size > currentItemIndex, {
@@ -24297,9 +24354,9 @@ u.drawFunc = { d.draw }
 			});
 
 
-			~presetTrajectoryUpdateMultiSlider = RoundButton(~trajectoryWindow, Rect(1410, 120, 50, 60))
+			~presetTrajectoryUpdateMultiSlider = RoundButton(~trajectoryWindow, Rect(1410*~xSizeMul, 120*~ySizeMul, 50*~xSizeMul, 60*~ySizeMul))
 			.states_([["Update \n Multi \n Slider", Color.white, Color.blue]])
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({
 				// ~allSpasGUI = ["Stereo", "Traj 0->1", "Traj 1->0", "Traj 0->1->0", "Traj 1->0->1", /*"Bad PanB2", "Bad Pan"*/ "Circ_1_GD", "Circ_1_DG", "CircM_GD", "CircM_DG", "A"];
 				~allSpasGUIBase = ~allSpasGUI[0..~allSpasGUI.size -2];
@@ -24405,13 +24462,13 @@ u.drawFunc = { d.draw }
 
 
 	(
-		~presetVarsWindow = Window("Preset Associations", border:false).setTopLeftBounds(Rect(1516, 587, 400, 540))/*.alpha_(0.8)*/.alwaysOnTop_(true);
+		~presetVarsWindow = Window("Preset Associations", border:false).setTopLeftBounds(Rect(1516*~xSizeMul, 587*~ySizeMul, 400*~xSizeMul, 540*~ySizeMul))/*.alpha_(0.8)*/.alwaysOnTop_(true);
 
 		// Comment faire pour appliquer les actions du clavier sur cette fenêtre qui est instancié à chaque ouverture ?
 		// Qu'elle soit toujours présente et juste la cachée ???
 		~presetVarsWindow.view./*global*/keyDownAction_(~keyActions);
 
-		WindowHandleView(~presetVarsWindow, Rect(1, 0, 398, 4))/*.minHeight_(4)*/;
+		WindowHandleView(~presetVarsWindow, Rect(1*~xSizeMul, 0, 398*~xSizeMul, 4*~ySizeMul))/*.minHeight_(4)*/;
 
 		/*~presetVarsSliderView = EZSlider.new2(~presetVarsWindow, Rect(0,50,400,20) /*400@20*/, nil, ControlSpec(1, 60, \lin, 1, 1),
 		{ |ez| ~presetVarsSlider = (ez.value-1)/*.postln*/;
@@ -24422,13 +24479,13 @@ u.drawFunc = { d.draw }
 		.font_(Font("Helvetica",11));*/
 
 		~presetVarsSliderSpec = ControlSpec(1,60, \lin, 1,1);
-		~presetVarsSliderView = RoundSlider(~presetVarsWindow, Rect(1, 6, 398, 24))
+		~presetVarsSliderView = RoundSlider(~presetVarsWindow, Rect(1*~xSizeMul, 6*~ySizeMul, 398*~xSizeMul, 24*~ySizeMul))
 		.action_({ |view|
 			~presetVarsSlider = ~presetVarsSliderSpec.map(view.value) -1;
 			~presetVarsSliderViewFunction.(~presetVarsSlider);
 			view.string = "Preset Ass N° : %".format((~presetVarsSlider+1).asInteger);
 		})
-		.font_(Font("Verdana", 12,true))
+		.font_(Font("Verdana", 12*~fontSizeMul,true))
 		.background_(~sliderBackgroundColor)
 		.hilightColor_(~sliderHilightColor)
 		.stringColor_(Color.white)
@@ -24439,13 +24496,14 @@ u.drawFunc = { d.draw }
 		// .valueAction_(1);
 
 
-		~tabbedPresetVars = TabbedView2(~presetVarsWindow, Rect(1, 32, 398, 510))
+		~tabbedPresetVars = TabbedView2(~presetVarsWindow, Rect(1*~xSizeMul, 32*~ySizeMul, 398*~xSizeMul, 510*~ySizeMul))
 		.lockPosition_(true)
 		.lockEdges_(true)
 		.backgrounds_([Color(0.8, 0.8, 0.8)])
 		.unfocusedColors_([Color.white])
 		.labelColors_([Color.magenta])
-		.tabHeight_(28).tabWidth_(39).tabCurve_(8);
+		.tabHeight_(28*~ySizeMul).tabWidth_(39*~xSizeMul).tabCurve_(8)
+		.font_(Font("Verdana",12*~fontSizeMul, bold: false));
 
 		~tabbedPresetVarsPage = 0;
 		// ~tabbedPresetVars.add( ~tabbedPresetVarsPages = ~nbOfpresetVarsPages.collect{|i| ~tabbedPresetVars.add((i+1).asString)}); // Classique numérotation de 1 à 10
@@ -24460,14 +24518,14 @@ u.drawFunc = { d.draw }
 		// ~tabbedPresetVars.stringColors_([Color.white]); // ne semble pas marcher comme cela ???
 
 		~presetVarsMatrices = ~nbOfpresetVarsPages.collect{ |i|
-			BoxMatrix(~tabbedPresetVars.tabAt(i),394@476, 6,10);
+			BoxMatrix(~tabbedPresetVars.tabAt(i),(394*~xSizeMul)@(476*~ySizeMul), 6, 10);
 		};
 
 
 		~randAssociationFunction = { |tracks, array|
 			/*[0, 4]*/tracks.do { |a, at|
 				~presetSeqRangeViewG[a].valueAction_(~presetSeqRangeSpec.unmap([ array[at], array[at] ]));
-				~seqCompG1[a].visibleOrigin = 0@( (~presetSeqStart[a]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin);
+				~seqCompG1[a].visibleOrigin = 0@( (~presetSeqStart[a]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin);
 
 				/*var p;
 				if (p.isArray, {
@@ -24481,7 +24539,7 @@ u.drawFunc = { d.draw }
 		~randRyAssociationFunction = { |tracks, array|
 			/*[0, 4]*/tracks.do { |a, at|
 				~presetSeqRangeViewG[a].valueAction_(~presetSeqRangeSpec.unmap([ array[at].round(10)-10, array[at].round(10) ]));
-				~seqCompG1[a].visibleOrigin = 0@( (~presetSeqStart[a]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin);
+				~seqCompG1[a].visibleOrigin = 0@( (~presetSeqStart[a]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin);
 
 				/*var p;
 				if (p.isArray, {
@@ -24527,7 +24585,7 @@ u.drawFunc = { d.draw }
 			// Range d'1
 			var rand = ~presetSeqRandList[track].choose;
 			~presetSeqRangeViewG[track].valueAction_(~presetSeqRangeSpec.unmap([ rand, rand+1 ]));
-			~seqCompG1[track].visibleOrigin = 0@( (~presetSeqStart[track]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin);
+			~seqCompG1[track].visibleOrigin = 0@( (~presetSeqStart[track]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin);
 		};
 
 		~randRhythmSelMulAssociationFunction = { | track, range |
@@ -25073,7 +25131,7 @@ u.drawFunc = { d.draw }
 
 			~presetVarsMatrices[i].defaultStyle
 			.boxColor_(Color.grey(0.4)).borderColor_(Color.red)
-			.font_(Font("Helvetica", 12)).fontColor_(Color.white).center_(true);
+			.font_(Font("Helvetica", 12*~fontSizeMul)).fontColor_(Color.white).center_(true);
 
 			// ~presetVarsMatrices[i].styles['down'] = (boxColor: { arg c; c.darken(Color.red,0.9) });
 			~presetVarsMatrices[i].styles['focused'] =  (borderColor: Color.yellow);
@@ -25088,16 +25146,16 @@ u.drawFunc = { d.draw }
 	});
 
 
-	~presetVarsChangeView = RoundSlider(~controlWindowTrig, Rect(260, 80, 50, 18))
+	~presetVarsChangeView = RoundSlider(~controlWindowTrig, Rect(260*~xSizeMul, 80*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 	.action_({ |view|
 		case
-		{view.value == 1} { ~presetVarsWindow.setTopLeftBounds(Rect(1516+~windowWidth-1920, 586+~windowTopMargin, 400, 540) /*(1515, 511, 402, 594+14+4)*/); }
-		{view.value == (3/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(1516+~windowWidth-1920, 44+~windowTopMargin, 400, 540)); }
-		{view.value == (2/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(1116+~windowWidth-1920, 44+~windowTopMargin, 400, 540)); }
-		{view.value == (1/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(717+~windowWidth-1920, 44+~windowTopMargin, 400, 540)); }
-		{view.value == 0} { ~presetVarsWindow.setTopLeftBounds(Rect(317+~windowWidth-1920, 586+~windowTopMargin, 400, 540)); } // 1920 - 317
+		{view.value == 1} { ~presetVarsWindow.setTopLeftBounds(Rect(/*(1516+~windowWidth-1920)*~xSizeMul*/ ~windowWidth-5-(399*~xSizeMul), (586+~windowTopMargin)*~ySizeMul, 400*~xSizeMul, 540*~ySizeMul) /*(1515, 511, 402, 594+14+4)*/); }
+		{view.value == (3/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(/*(1516+~windowWidth-1920)*~xSizeMul*/ ~windowWidth-5-(399*~xSizeMul), (44+~windowTopMargin)*~ySizeMul, 400*~xSizeMul, 540*~ySizeMul)); }
+		{view.value == (2/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(/*(1116+~windowWidth-1920)*~xSizeMul*/ ~windowWidth-5-(399*2*~xSizeMul), (44+~windowTopMargin)*~ySizeMul, 400*~xSizeMul, 540*~ySizeMul)); }
+		{view.value == (1/4)} { ~presetVarsWindow.setTopLeftBounds(Rect(/*(717+~windowWidth-1920)*~xSizeMul*/ ~windowWidth-5-(399*3*~xSizeMul), (44+~windowTopMargin)*~ySizeMul, 400*~xSizeMul, 540*~ySizeMul)); }
+		{view.value == 0} { ~presetVarsWindow.setTopLeftBounds(Rect(/*(317+~windowWidth-1920)*~xSizeMul*/  ~windowWidth-5-(399*4*~xSizeMul), (586+~windowTopMargin)*~ySizeMul, 400*~xSizeMul, 540*~ySizeMul)); } // 1920 - 317
 	})
-	.font_(Font("Verdana", 10,true))
+	.font_(Font("Verdana", 10*~fontSizeMul,true))
 	.background_(Color.blue/*~sliderBackgroundColor*/)
 	.hilightColor_(Color.new255(138, 43, 226)/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -25107,9 +25165,9 @@ u.drawFunc = { d.draw }
 	.valueAction_(1);
 
 
-	~presetVarsOpenView = RoundButton(~controlWindowTrig, Rect(260, 100, 50, 18))
+	~presetVarsOpenView = RoundButton(~controlWindowTrig, Rect(260*~xSizeMul, 100*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 	.states_([["PVarsW", Color.white, Color.red], ["PVarsW", Color.black, Color.green]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({|i| ~presetVarsWindowStatus = i.value;
 
 		if (~presetVarsWindowStatus == 1, {
@@ -25155,11 +25213,11 @@ u.drawFunc = { d.draw }
 
 	// Contrôle de les pistes rythmiques (Volume / Spatialisation / Buffers ...)
 
-	~controlWindowSpaRy = CompositeView(~controlWindow, Rect(0, 360, 315, 134)).background = Color.grey(0.6);
+	~controlWindowSpaRy = CompositeView(~controlWindow, Rect(0, 360*~ySizeMul, 315*~xSizeMul, 134*~ySizeMul)).background = Color.grey(0.6);
 
-	~presetVarsVolFocusView = RoundButton(~controlWindowSpaRy, Rect(4, 2, 32, 22))
+	~presetVarsVolFocusView = RoundButton(~controlWindowSpaRy, Rect(4*~xSizeMul, 2*~ySizeMul, 32*~xSizeMul, 22*~ySizeMul))
 	.states_([["VFoc", Color.white, Color.red], ["VFoc", Color.black, Color.green]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i| ~presetVarsVolFocus = i.value;
 
 		// Le code ci-dessous pour permettre de couper ou d'allumer aléatoirement les volumes avec r n'a pas l'air de marcher...
@@ -25177,7 +25235,9 @@ u.drawFunc = { d.draw }
 
 	}).valueAction_(0);
 
-	~defaultPresetVarsMenu = PopUpMenu.new(~controlWindowSpaRy,  Rect(38, 2, 38, 22))
+	~defaultPresetVarsMenuView = View(~controlWindowSpaRy, Rect(38*~xSizeMul, 2*~ySizeMul, 38*~xSizeMul, 22*~ySizeMul)); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
+
+	~defaultPresetVarsMenu = PopUpMenu.new(~defaultPresetVarsMenuView,  Rect(0, 0, 68*~xSizeMul, 22*~ySizeMul))
 	.action_({|menu| ~defaultPresetVars = menu./*item*/value/*.asInteger*/;
 		case
 		{ ~defaultPresetVars == 0 } { ~presetVarsSpaTimeRandSlider.valueAction_(0.04); ~presetVarsRatTimeRandSlider.valueAction_(0.31); }
@@ -25187,19 +25247,19 @@ u.drawFunc = { d.draw }
 	.allowsReselection_(true)
 	.background_(Color.yellow)
 	.stringColor_(Color.red)
-	.font_(Font("Verdana", 9 /*, bold: true*/))
+	.font_(Font("Verdana", 9*~fontSizeMul /*, bold: true*/))
 	.items_([ "T1", "T2", "T3" ])
 	.value_(1); // .valueAction_(0);
 
-	~triggerSpaSeqsView = RoundButton(~controlWindowSpaRy, Rect(78, 2, 30, 22))
+	~triggerSpaSeqsView = RoundButton(~controlWindowSpaRy, Rect(78*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 22*~ySizeMul))
 	.states_([["S1", Color.white, Color.blue], ["SSel", Color.white, Color.magenta] /*, ["Pre", Color.black, Color.yellow]*/ ])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |i| ~triggerSpaSeqs = i.value })
 	.valueAction_(1);
 
-	~multiStereoRyView = RoundButton(~controlWindowSpaRy, Rect(110, 2, 50, 22))
+	~multiStereoRyView = RoundButton(~controlWindowSpaRy, Rect(110*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 22*~ySizeMul))
 	.states_([["Ster Ry", Color.white, Color.blue], ["Multi Ry", Color.white, Color.green(0.4)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i| var a = i.value;
 		~rhythmTracks.do { |tr| ~multiStereoControlView[tr].valueAction_(a) };
 		if (a == 1, {
@@ -25216,26 +25276,28 @@ u.drawFunc = { d.draw }
 	~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", "ntx" ] ++ ~kindOfFolders ); // Parme
 	// ~folderRyGroupItems = ( ["All", "Buf"] ++ [ "dbd", "din", "dtv", "nbi", /*"ntx"*/ ] ++ ~kindOfFolders ); // Adaptation Parme / Dhomont
 
-	~folderRyRandView = PopUpMenu.new(~controlWindowSpaRy, Rect(162, 2, 44, 21))
+	~folderRyRandViewView  = View(~controlWindowSpaRy, Rect(162*~xSizeMul, 2*~ySizeMul, 44*~xSizeMul, 21*~ySizeMul)); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
+
+	~folderRyRandView = PopUpMenu.new(~folderRyRandViewView, Rect(0, 0, 74*~xSizeMul, 21*~ySizeMul))
 	.action_({|menu| ~folderRyRand = menu./*item*/value.asInteger })
 	.allowsReselection_(true)
 	.background_(Color.white)
 	.stringColor_(Color.red)
-	.font_(Font("Verdana",10 /*, bold: true*/));
+	.font_(Font("Verdana",(10*~fontSizeMul).asInteger /*, bold: true*/));
 	// ~folderRyRandView.items_([ "Buf", "A", "D", "I", "P", "P+", "ALL"]) // Valeur par défault 5
 	~folderRyRandView.items_(~folderRyGroupItems) // Pour Parme & Suite
 	.valueAction_(1);
 
-	~folRandViewRy = RoundButton(~controlWindowSpaRy, Rect(208, 2, 50, 22))
+	~folRandViewRy = RoundButton(~controlWindowSpaRy, Rect(208*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 22*~ySizeMul))
 	.states_([["FOL", Color.red, Color.white]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |a|
 		~rhythmTracksX2.do {|i| ~folRandViewG[i].valueAction_(1); }
 	});
 
-	~retriggerPresetViewRy = RoundButton(~controlWindowSpaRy, Rect(260, 2, 52, 22))
+	~retriggerPresetViewRy = RoundButton(~controlWindowSpaRy, Rect(260*~xSizeMul, 2*~ySizeMul, 52*~xSizeMul, 22*~ySizeMul))
 	.states_([["Sel Ry", Color.black, Color.new255(255, 165, 0) ]])
-	.font_(Font("Verdana",10, bold: true))
+	.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 	.action_({ |a|
 		{ "WAIT RESETTING PRESETS OF RHYTHM TRACKS !".postln;
 			~rhythmTracksX2.do {|i| ~retriggerPresetViewG[i].valueAction_(1); 0.02.wait; };
@@ -25263,7 +25325,7 @@ u.drawFunc = { d.draw }
 		[ 1, 1, 1, 1, 0 ], [ 1, 1, 1, 0, 1 ], [ 1, 1, 0, 1, 1 ], [ 1, 0, 1, 1, 1 ], [ 0, 1, 1, 1, 1 ], [ 1, 1, 1, 1, 1 ] ] };
 
 	~presetVarsVol2Spec = ControlSpec(0, ~presetVarsVolMuteSwitch.size-1, \lin, 1);
-	~presetVarsVol2SliderView = SmoothSlider(~controlWindowSpaRy, Rect(4, 27, 70, 26))
+	~presetVarsVol2SliderView = SmoothSlider(~controlWindowSpaRy, Rect(4*~xSizeMul, 27*~ySizeMul, 70*~xSizeMul, 26*~ySizeMul))
 	.action_({ |view| ~presetVarsVol2 = ~presetVarsVol2Spec.map(view.value);
 		~rhythmTracks.do { |i, id|
 			if (~trackVol[i] !=0, { ~prevRyTrackVols[id] = ~trackVol[i] });
@@ -25274,7 +25336,7 @@ u.drawFunc = { d.draw }
 		if (~presetVarsVol2 == 0, { ~presetVarsVolSliderView.value_(0).string = "Mute"; });
 		if (~presetVarsVol2 == (~presetVarsVolMuteSwitch.size-1), { ~presetVarsVolSliderView.value_(1).string = "ALL"; });
 	})
-	.font_(Font("Verdana", 10 /*,true*/))
+	.font_(Font("Verdana", 10*~fontSizeMul /*,true*/))
 	.background_(Color.red/*~sliderBackgroundColor*/)
 	.hilightColor_(Color.new255(138, 43, 226)/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -25287,7 +25349,7 @@ u.drawFunc = { d.draw }
 	~presetVarsVolSliderA = (1 ! ~rhythmTracks.size).asString.replace(" ","");
 
 	~presetVarsVolSpec = ControlSpec(0,1, \lin, 1);
-	~presetVarsVolSliderView = SmoothSlider(~controlWindowSpaRy, Rect(76, 27, 32, 22))
+	~presetVarsVolSliderView = SmoothSlider(~controlWindowSpaRy, Rect(76*~xSizeMul, 27*~ySizeMul, 32*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| var prev; ~presetVarsVol = ~presetVarsVolSpec.map(view.value);
 		// view.string = "At : %".format(~presetVarsVol);
 		prev = ~insSliderFadeTime; ~insSliderFadeTime = 0.7; // n'a pas l'air de marcher ???????????
@@ -25304,7 +25366,7 @@ u.drawFunc = { d.draw }
 		// ~insSliderFadeTime.postln;
 		~insSliderFadeTime = prev;
 	})
-	.font_(Font("Verdana", 10 /*,true*/))
+	.font_(Font("Verdana", 10*~fontSizeMul /*,true*/))
 	.background_(Color.red/*~sliderBackgroundColor*/)
 	.hilightColor_(Color.new255(138, 43, 226)/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -25395,57 +25457,57 @@ u.drawFunc = { d.draw }
 
 	];
 
-	~controlWindowSpaRyBts = CompositeView(~controlWindowSpaRy, Rect(185, 27, 91, 28)).background = Color.grey(0.7);
+	~controlWindowSpaRyBts = CompositeView(~controlWindowSpaRy, Rect(185*~xSizeMul, 27*~ySizeMul, 91*~xSizeMul, 28*~ySizeMul)).background = Color.grey(0.7);
 
-	~multiStereoRandRy1View = RoundButton(~controlWindowSpaRyBts, Rect(0, 0, 18, 14))
+	~multiStereoRandRy1View = RoundButton(~controlWindowSpaRyBts, Rect(0, 0, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["C1", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(0)).doAction; // ~presetVarsSpaSwitchF[0].([9,11,13]); // ~presetVarsSpaSwitchNames[0].postln;
 	});
 
-	~multiStereoRandRy2View = RoundButton(~controlWindowSpaRyBts, Rect(0, 15, 18, 14))
+	~multiStereoRandRy2View = RoundButton(~controlWindowSpaRyBts, Rect(0, 15*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["SD", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(1)).doAction; });
 
-	~multiStereoRandRy3View = RoundButton(~controlWindowSpaRyBts, Rect(18, 0, 18, 14))
+	~multiStereoRandRy3View = RoundButton(~controlWindowSpaRyBts, Rect(18*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["R-", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(2)).doAction; });
 
-	~multiStereoRandRy4View = RoundButton(~controlWindowSpaRyBts, Rect(18, 15, 18, 14))
+	~multiStereoRandRy4View = RoundButton(~controlWindowSpaRyBts, Rect(18*~xSizeMul, 15*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["R+", Color.green(0.3), Color.white]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(3)).doAction; });
 
-	~multiStereoRandRy5View = RoundButton(~controlWindowSpaRyBts, Rect(36, 0, 18, 14))
+	~multiStereoRandRy5View = RoundButton(~controlWindowSpaRyBts, Rect(36*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["V-", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(4)).doAction; });
 
-	~multiStereoRandRy6View = RoundButton(~controlWindowSpaRyBts, Rect(36, 15, 18, 14))
+	~multiStereoRandRy6View = RoundButton(~controlWindowSpaRyBts, Rect(36*~xSizeMul, 15*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["V+", Color.green(0.3), Color.white]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(5)).doAction; });
 
-	~multiStereoRandRy7View = RoundButton(~controlWindowSpaRyBts, Rect(54, 0, 18, 14))
+	~multiStereoRandRy7View = RoundButton(~controlWindowSpaRyBts, Rect(54*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["C-", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(6)).doAction; });
 
-	~multiStereoRandRy8View = RoundButton(~controlWindowSpaRyBts, Rect(54, 15, 18, 14))
+	~multiStereoRandRy8View = RoundButton(~controlWindowSpaRyBts, Rect(54*~xSizeMul, 15*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["C+", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(7)).doAction; });
 
-	~multiStereoRandRy9View = RoundButton(~controlWindowSpaRyBts, Rect(72, 0, 18, 14))
+	~multiStereoRandRy9View = RoundButton(~controlWindowSpaRyBts, Rect(72*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["2", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(8)).doAction; });
 
-	~multiStereoRandRy10View = RoundButton(~controlWindowSpaRyBts, Rect(72, 15, 18, 14))
+	~multiStereoRandRy10View = RoundButton(~controlWindowSpaRyBts, Rect(72*~xSizeMul, 15*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 	.states_([["A+", Color.white, Color.green(0.3)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|	~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(9)).doAction; });
 
 
@@ -25485,105 +25547,105 @@ u.drawFunc = { d.draw }
 			{ |tracks| tracks.do { |i| ~spaRangePresetViewG[i].valueAction_(18); ~spaPatAcousFunc.(i, 21) }; }, // Acous Ab - 25
 		]);
 
-		~controlWindowSpaRyABts = CompositeView(~controlWindowSpaRy, Rect(131, 56, 145, 28)).background = Color.grey(0.7);
+		~controlWindowSpaRyABts = CompositeView(~controlWindowSpaRy, Rect(131*~xSizeMul, 56*~ySizeMul, 145*~xSizeMul, 28*~ySizeMul)).background = Color.grey(0.7);
 
-		~multiStereoRandRy1AcView = RoundButton(~controlWindowSpaRyABts, Rect(0, 0, 18, 14))
+		~multiStereoRandRy1AcView = RoundButton(~controlWindowSpaRyABts, Rect(0, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["11", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(11)).doAction; });
 
-		~multiStereoRandRy2AcView = RoundButton(~controlWindowSpaRyABts, Rect(18, 0, 18, 14))
+		~multiStereoRandRy2AcView = RoundButton(~controlWindowSpaRyABts, Rect(18*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["1a", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(12)).doAction; });
 
-		~multiStereoRandRy3AcView = RoundButton(~controlWindowSpaRyABts, Rect(36, 0, 18, 14))
+		~multiStereoRandRy3AcView = RoundButton(~controlWindowSpaRyABts, Rect(36*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["1b", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(13)).doAction; });
 
-		~multiStereoRandRy4AcView = RoundButton(~controlWindowSpaRyABts, Rect(0, 14, 18, 14))
+		~multiStereoRandRy4AcView = RoundButton(~controlWindowSpaRyABts, Rect(0, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["21", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(14)).doAction; });
 
-		~multiStereoRandRy5AcView = RoundButton(~controlWindowSpaRyABts, Rect(18, 14, 18, 14))
+		~multiStereoRandRy5AcView = RoundButton(~controlWindowSpaRyABts, Rect(18*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["2a", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(15)).doAction; });
 
-		~multiStereoRandRy6AcView = RoundButton(~controlWindowSpaRyABts, Rect(36, 14, 18, 14))
+		~multiStereoRandRy6AcView = RoundButton(~controlWindowSpaRyABts, Rect(36*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["2b", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(16)).doAction; });
 
-		~multiStereoRandRy7AcView = RoundButton(~controlWindowSpaRyABts, Rect(54, 0, 18, 14))
+		~multiStereoRandRy7AcView = RoundButton(~controlWindowSpaRyABts, Rect(54*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["31", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(17)).doAction; });
 
-		~multiStereoRandRy8AcView = RoundButton(~controlWindowSpaRyABts, Rect(72, 0, 18, 14))
+		~multiStereoRandRy8AcView = RoundButton(~controlWindowSpaRyABts, Rect(72*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["3a", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(18)).doAction; });
 
-		~multiStereoRandRy9AcView = RoundButton(~controlWindowSpaRyABts, Rect(90, 0, 18, 14))
+		~multiStereoRandRy9AcView = RoundButton(~controlWindowSpaRyABts, Rect(90*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["3b", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(19)).doAction; });
 
-		~multiStereoRandRy10AcView = RoundButton(~controlWindowSpaRyABts, Rect(54, 14, 18, 14))
+		~multiStereoRandRy10AcView = RoundButton(~controlWindowSpaRyABts, Rect(54*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["41", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(20)).doAction; });
 
-		~multiStereoRandRy11AcView = RoundButton(~controlWindowSpaRyABts, Rect(72, 14, 18, 14))
+		~multiStereoRandRy11AcView = RoundButton(~controlWindowSpaRyABts, Rect(72*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["4a", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(21)).doAction; });
 
-		~multiStereoRandRy12AcView = RoundButton(~controlWindowSpaRyABts, Rect(90, 14, 18, 14))
+		~multiStereoRandRy12AcView = RoundButton(~controlWindowSpaRyABts, Rect(90*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["4b", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(22)).doAction; });
 
-		~multiStereoRandRy13AcView = RoundButton(~controlWindowSpaRyABts, Rect(108, 0, 18, 14))
+		~multiStereoRandRy13AcView = RoundButton(~controlWindowSpaRyABts, Rect(108*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["A1", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(23)).doAction; });
 
-		~multiStereoRandRy14AcView = RoundButton(~controlWindowSpaRyABts, Rect(126, 0, 18, 14))
+		~multiStereoRandRy14AcView = RoundButton(~controlWindowSpaRyABts, Rect(126*~xSizeMul, 0, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["Aa", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(24)).doAction; });
 
-		~multiStereoRandRy15AcView = RoundButton(~controlWindowSpaRyABts, Rect(108, 14, 18, 14))
+		~multiStereoRandRy15AcView = RoundButton(~controlWindowSpaRyABts, Rect(108*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["Ab", Color.white, Color.green(0.3)]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| ~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(25)).doAction; });
 
-		~multiStereoRandRy16AcView = RoundButton(~controlWindowSpaRyABts, Rect(126, 14, 18, 14))
+		~multiStereoRandRy16AcView = RoundButton(~controlWindowSpaRyABts, Rect(126*~xSizeMul, 14*~ySizeMul, 18*~xSizeMul, 14*~ySizeMul))
 		.states_([["R", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i|
 			var r = (0..24).wchoose( ([(0.5/10)!10] ++ [(0.5/14)!14]).flatten ); // Pour que les spatialisations "Mobiles" au nombre de 10 aient les mêmes chances que les "Acousmonium" au nombre de 14
 			~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(r)).doAction;
 		});
 
-		~acousTypeSensView = ListView(~controlWindowSpaRy, Rect(77, 51, 28, 58))
+		~acousTypeSensView = ListView(~controlWindowSpaRy, Rect(77*~xSizeMul, 51*~ySizeMul, 28*~xSizeMul, 58*~ySizeMul))
 		.background_( Color.green(0.3)  /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 		.hiliteColor_(Color.yellow(alpha: 1))
 		.selectedStringColor_(Color.black)
 		.stringColor_(Color.white)
-		.font_(Font("Verdana",9 /*, bold: true*/))
+		.font_(Font("Verdana",(9*~fontSizeMul).asInteger /*, bold: true*/))
 		.items_(["+", "-", "Mir", "Ran", "Whi"])
 		.action_({ |menu| ~acousTypeSens = menu.value })
 		.valueAction_(3);
 
 
-		~multiStereoRandRyAc1View = RoundButton(~controlWindowSpaRy, Rect(106, 57, 24, 14))
+		~multiStereoRandRyAc1View = RoundButton(~controlWindowSpaRy, Rect(106*~xSizeMul, 57*~ySizeMul, 24*~xSizeMul, 14*~ySizeMul))
 		.states_([["Ac1", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana", 10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| var r = [(11..13).choose, (23..25).choose, (17..22).choose].scramble; // Acousmatique moins Aléatoire
 			// La variation spatiale sur 3 pistes : Acous 1 / Acous A / Acous 3/4 a l'air de bien marcher
 			{~presetVarsSpaSwitchF[r[0]].([9]); ~ryWaitTime.wait;
@@ -25592,9 +25654,9 @@ u.drawFunc = { d.draw }
 			/*"Ry Acousmonium".postln;*/ }.fork(AppClock);
 		});
 
-		~multiStereoRandRyAcView = RoundButton(~controlWindowSpaRy, Rect(106, 71, 24, 14))
+		~multiStereoRandRyAcView = RoundButton(~controlWindowSpaRy, Rect(106*~xSizeMul, 71*~ySizeMul, 24*~xSizeMul, 14*~ySizeMul))
 		.states_([["AcR", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana" ,10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| var r = [(11..25).choose, (11..25).choose, (11..25).choose]; // Acousmatique Aléatoire
 			{~presetVarsSpaSwitchF[r[0]].([9]); ~ryWaitTime.wait;
 				~presetVarsSpaSwitchF[r[1]].([11]); ~ryWaitTime.wait;
@@ -25602,9 +25664,9 @@ u.drawFunc = { d.draw }
 			/*"Ry Acousmonium".postln;*/ }.fork(AppClock);
 		});
 
-		~multiStereoRandRyMView = RoundButton(~controlWindowSpaRy, Rect(106, 61+26, 24, 20))
+		~multiStereoRandRyMView = RoundButton(~controlWindowSpaRy, Rect(106*~xSizeMul, (61+26)*~ySizeMul, 24*~xSizeMul, 20*~ySizeMul))
 		.states_([["Mob", Color.red, Color.white]])
-		.font_(Font("Verdana" ,10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| var r = [(0..9).choose, (0..9).choose, (0..9).choose];
 			{~presetVarsSpaSwitchF[r[0]].([9]); ~ryWaitTime.wait;
 				~presetVarsSpaSwitchF[r[1]].([11]); ~ryWaitTime.wait;
@@ -25612,9 +25674,9 @@ u.drawFunc = { d.draw }
 			/*"Ry Mobile".postln;*/ }.fork(AppClock);
 		});
 
-		~multiStereoRandRy3EView = RoundButton(~controlWindowSpaRy, Rect(130, 61+26, 24, 20))
+		~multiStereoRandRy3EView = RoundButton(~controlWindowSpaRy, Rect(130*~xSizeMul, (61+26)*~ySizeMul, 24*~xSizeMul, 20*~ySizeMul))
 		.states_([["3E", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana", 10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| var r = [(0..9).choose, (17..22).choose, (0..25).choose].scramble; // Mobile // Acous 3 ou 4 // ALL
 			{~presetVarsSpaSwitchF[r[0]].([9]); ~ryWaitTime.wait;
 				~presetVarsSpaSwitchF[r[1]].([11]); ~ryWaitTime.wait;
@@ -25622,9 +25684,9 @@ u.drawFunc = { d.draw }
 			/*"Ry All".postln;*/ }.fork(AppClock);
 		});
 
-		~multiStereoRandRyALLView = RoundButton(~controlWindowSpaRy, Rect(154, 61+26, 24, 20))
+		~multiStereoRandRyALLView = RoundButton(~controlWindowSpaRy, Rect(154*~xSizeMul, (61+26)*~ySizeMul, 24*~xSizeMul, 20*~ySizeMul))
 		.states_([["AllR", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana",9 /*,true*/))
+		.font_(Font("Verdana",9*~fontSizeMul /*,true*/))
 		.action_({ |i| var r = [(0..25).choose, (0..25).choose, (0..25).choose]; // Aléatoire complet
 			// L'intérêt de l'aléatoire spatiale et notamment AllR, mais même des autres aléatoires est de déterminer des combinaisons qui marchent...
 			{~presetVarsSpaSwitchF[r[0]].([9]); ~ryWaitTime.wait;
@@ -25635,9 +25697,9 @@ u.drawFunc = { d.draw }
 
 	},{
 
-		~multiStereoRandRyMView = RoundButton(~controlWindowSpaRy, Rect(223, 58, 27, 20)/*(214, 58, 30, 20)*/)
+		~multiStereoRandRyMView = RoundButton(~controlWindowSpaRy, Rect(223*~xSizeMul, 58*~ySizeMul, 27*~xSizeMul, 20*~ySizeMul) /*(214, 58, 30, 20)*/)
 		.states_([["3 E", Color.red, Color.white]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i| var r = [(0..9).choose, (0..9).choose, (0..9).choose];
 			{~presetVarsSpaSwitchF[r[0]].([9]); ~ryWaitTime.wait;
 				~presetVarsSpaSwitchF[r[1]].([11]); ~ryWaitTime.wait;
@@ -25645,9 +25707,9 @@ u.drawFunc = { d.draw }
 			/*"Ry Mobile".postln;*/ }.fork(AppClock);
 		});
 
-		~multiStereoRandRy16AcView = RoundButton(~controlWindowSpaRy, Rect(251, 58, 27, 20))
+		~multiStereoRandRy16AcView = RoundButton(~controlWindowSpaRy, Rect(251*~xSizeMul, 58*~ySizeMul, 27*~xSizeMul, 20*~ySizeMul))
 		.states_([["R", Color.green(0.3), Color.white]])
-		.font_(Font("Verdana",10 /*,true*/))
+		.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 		.action_({ |i|
 			var r = (0..10).wchoose( ([(0.1)!10]).flatten );
 			~presetVarsSpa1SwitchSlider.value_(~presetVarsSpa1Spec.unmap(r)).doAction;
@@ -25657,9 +25719,9 @@ u.drawFunc = { d.draw }
 
 
 	// jeu avec la distinction stéréo sur les différentes pistes
-	~multiStereoRandRyRout2View = RoundButton(~controlWindowSpaRy, Rect(131, 56, 36, 28))
+	~multiStereoRandRyRout2View = RoundButton(~controlWindowSpaRy, Rect(131*~xSizeMul, 56*~ySizeMul, 36*~xSizeMul, 28*~ySizeMul))
 	.states_([["2 Ry\nFix", Color.white, Color.blue], ["2 Ry\nRand", Color.black, Color.green]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i|
 		// Mise en place d'une quantisation sur la routine aléatoire (Task de spatialisation) -> la même que celle d'une des pistes rythmiques (la 1ère)
 		// Mais comme une quantisation n'aura aucun effet si les changements de séquence sont effectuées avec ~seqChange à 1 -> quantisation seulement si ~seqChange de la piste est à 0
@@ -25706,13 +25768,15 @@ u.drawFunc = { d.draw }
 
 	})/*.valueAction_(0)*/;
 
-	~stereoRandSelectView = PopUpMenu.new(~controlWindowSpaRy,  Rect(167, 56, 54, 28))
+	~stereoRandSelectViewView = View(~controlWindowSpaRy, Rect(167*~xSizeMul, 56*~ySizeMul, 54*~xSizeMul, 28*~ySizeMul)); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
+
+	~stereoRandSelectView = PopUpMenu.new(~stereoRandSelectViewView,  Rect(0, 0, 84*~xSizeMul, 28*~ySizeMul))
 	.action_({|menu| ~stereoRandSelect = menu./*item*/value/*.asInteger*/;
 	})
 	.allowsReselection_(true)
 	.background_(Color.yellow)
 	.stringColor_(Color.red)
-	.font_(Font("Verdana",10 /*, bold: true*/))
+	.font_(Font("Verdana",(10*~fontSizeMul).asInteger /*, bold: true*/))
 	.items_([ "Rand", "---->", "<----" ])
 	.valueAction_(1);
 
@@ -25726,9 +25790,9 @@ u.drawFunc = { d.draw }
 		});
 	};
 
-	~multiStereoRandRyRoutView = RoundButton(~controlWindowSpaRy, Rect(4, 56, 34, 26))
+	~multiStereoRandRyRoutView = RoundButton(~controlWindowSpaRy, Rect(4*~xSizeMul, 56*~ySizeMul, 34*~xSizeMul, 26*~ySizeMul))
 	.states_([["SPR\nOUT", Color.white, Color.red], ["SPR\nOUT", Color.black, Color.green]])
-	.font_(Font("Verdana",10,true))
+	.font_(Font("Verdana",10*~fontSizeMul ,true))
 	.action_({ |i|
 		// Mise en place d'une quantisation sur la routine aléatoire (Task de spatialisation) -> la même que celle d'une des pistes rythmiques (la 1ère)
 		// Mais comme une quantisation n'aura aucun effet si les changements de séquence sont effectuées avec ~seqChange à 1 -> quautisation seulement si ~seqChange de la piste est à 0
@@ -25802,21 +25866,23 @@ u.drawFunc = { d.draw }
 
 	});
 
-	~spaRoutTypeView = PopUpMenu.new(~controlWindowSpaRy, Rect(40, 57, 34, 24))
+	~spaRoutTypeViewView = View(~controlWindowSpaRy, Rect(40*~xSizeMul, 57*~ySizeMul, 34*~xSizeMul, 24*~ySizeMul)); // Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
+
+	~spaRoutTypeView = PopUpMenu.new(~spaRoutTypeViewView, Rect(0, 0, 64*~xSizeMul, 24*~ySizeMul))
 	.action_({|menu| ~spaRoutType = menu./*item*/value.asInteger })
 	.allowsReselection_(true)
 	.background_(Color.yellow)
 	.stringColor_(Color.red)
-	.font_(Font("Verdana",10 /*, bold: true*/));
+	.font_(Font("Verdana",(10*~fontSizeMul).asInteger /*, bold: true*/));
 	~spaRoutTypeView.items_([ "D", "C", "A" ])
 	.valueAction_(0);
 
-	~rySpaTypeTrackView = ListView(~controlWindowSpaRy, Rect(280, 26, 30, 80))
+	~rySpaTypeTrackView = ListView(~controlWindowSpaRy, Rect(280*~xSizeMul, 26*~ySizeMul, 30*~xSizeMul, 80*~ySizeMul))
 	.background_( Color.green(0.4)  /*Color./*clear*/grey(0.3, alpha: 0.8)*/)
 	.hiliteColor_(Color.yellow(alpha: 1))
 	.selectedStringColor_(Color.black)
 	.stringColor_(Color.white)
-	.font_(Font("Verdana",9 /*, bold: true*/))
+	.font_(Font("Verdana",(9*~fontSizeMul).asInteger /*, bold: true*/))
 	.items_(["All", "Fol", "5", "6", "7", "8", "4"])
 	.action_({ |menu| ~rySpaTypeTrack = menu.value;
 		if (~lemurConnected1 == 1, {
@@ -25855,11 +25921,11 @@ u.drawFunc = { d.draw }
 
 
 	~presetVarsSpaTimeRandSpec = ControlSpec(0.125 /*0.5*/, 7.5, \lin, 0.125); // 0.125*60
-	~presetVarsSpaTimeRandSlider = SmoothSlider(~controlWindowSpaRy, Rect(4, 58+26, 70, 22))
+	~presetVarsSpaTimeRandSlider = SmoothSlider(~controlWindowSpaRy, Rect(4*~xSizeMul, (58+26)*~ySizeMul, 70*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~presetVarsSpaTimeRand = ~presetVarsSpaTimeRandSpec.map(view.value);
 		view.string = ~presetVarsSpaTimeRand.asString +"s";
 	})
-	.font_(Font("Verdana", 10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.background_(Color.grey/*~sliderBackgroundColor*/)
 	.hilightColor_(Color.green(0.3)/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -25869,9 +25935,9 @@ u.drawFunc = { d.draw }
 	.valueAction_(0.05);
 
 
-	~multiStereoPanDefView = RoundButton(~controlWindowSpaRy, Rect(148, 27, 34, 26))
+	~multiStereoPanDefView = RoundButton(~controlWindowSpaRy, Rect(148*~xSizeMul, 27*~ySizeMul, 34*~xSizeMul, 26*~ySizeMul))
 	.states_([["Pan\nDef", Color.black, Color.new255(255, 165, 0)]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i| // remet la spatialisation par défaut, mais la séquence reste en rouge, car le preset n'a pas été rappelé
 		// ~presetVarsSpaSwitchF[10].([9,11,13]); // ~presetVarsSpaSwitchNames[10].postln;
 		if (~rySpaTypeTrack == 1, {
@@ -25883,9 +25949,9 @@ u.drawFunc = { d.draw }
 
 	~ryWaitTime = 0.01;
 
-	~multiStereoSwapView = RoundButton(~controlWindowSpaRy, Rect(112, 27, 34, 26))
+	~multiStereoSwapView = RoundButton(~controlWindowSpaRy, Rect(112*~xSizeMul, 27*~ySizeMul, 34*~xSizeMul, 26*~ySizeMul))
 	.states_([["Pan\nSwap", Color.green(0.3), Color.white]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ // // Ajout d'un bouton qui permet de (swaper) / wraper les spatialisations entre les pistes rythmiques
 		var a,b,c,d,s; s =~rhythmTracks.size;
 		a= 0!s; b= 0!s; c= 0!s; d= 0!s;
@@ -25909,13 +25975,13 @@ u.drawFunc = { d.draw }
 
 
 	~presetVarsSpa1Spec = ControlSpec(0,~presetVarsSpaSwitchNames.size-1, \lin, 1);
-	~presetVarsSpa1SwitchSlider = SmoothSlider(~controlWindowSpaRy, Rect(180, 61+26, 96, 20))
+	~presetVarsSpa1SwitchSlider = SmoothSlider(~controlWindowSpaRy, Rect(180*~xSizeMul, (61+26)*~ySizeMul, 96*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~presetVarsSpa1 = ~presetVarsSpa1Spec.map(view.value);
 		~rySpaTypeTrackFunc.(); // pour définir ~rySpaTypeTrackAction
 		~presetVarsSpaSwitchF[~presetVarsSpa1].(~rySpaTypeTrackAction);
 		view.string = ~presetVarsSpaSwitchNames[~presetVarsSpa1].asString/*.postln*/;
 	})
-	.font_(Font("Verdana", 10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.background_(Color.grey(0.5) /*Color.grey*//*~sliderBackgroundColor*/)
 	.hilightColor_(Color.green(0.3)/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -25925,9 +25991,9 @@ u.drawFunc = { d.draw }
 	.value_(0).string = ~presetVarsSpaSwitchNames[0].asString/*.doAction*/;
 
 
-	~presetRatSwitch3View = RoundButton(~controlWindowSpaRy, Rect(4, 84+26, 35, 20))
+	~presetRatSwitch3View = RoundButton(~controlWindowSpaRy, Rect(4*~xSizeMul, (84+26)*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 	.states_([["S Rat", Color.white, Color.red], ["S Rat", Color.black, Color.green]])
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i| ~presetRyRa3tSwitch = i.value;
 		~presetRatSwitchView.valueAction_(i.value);
 		~presetRatSwitch2View.valueAction_(i.value);
@@ -25936,15 +26002,15 @@ u.drawFunc = { d.draw }
 		if (~lemurConnected2 == 1, { ~lemurAdress2.sendMsg( "/RatPresetVar/x", ~presetRyRatSwitch) });*/
 	}).valueAction_(0);
 
-	~presetRatSwitchView = RoundButton(~controlWindowSpaRy, Rect(41, 84+26, 35, 20))
+	~presetRatSwitchView = RoundButton(~controlWindowSpaRy, Rect(41*~xSizeMul, (84+26)*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 	.states_([["T1", Color.white, Color.red], ["S T1", Color.black, Color.green]]) // "SRat Ry"
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i| ~presetRyRatSwitch = i.value;
 	});//.valueAction_(1);
 
-	~presetRatSwitch2View = RoundButton(~controlWindowSpaRy, Rect(78, 84+26, 35, 20))
+	~presetRatSwitch2View = RoundButton(~controlWindowSpaRy, Rect(78*~xSizeMul, (84+26)*~ySizeMul, 35*~xSizeMul, 20*~ySizeMul))
 	.states_([["R2", Color.white, Color.red], ["S R2", Color.black, Color.green]]) // "SRat Tx"
-	.font_(Font("Verdana",10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.action_({ |i| ~presetRyRat2Switch = i.value;
 		if (~lemurConnected1 == 1, { ~lemurAdress1.sendMsg( "/RatPresetVar/x", ~presetRyRatSwitch) });
 		if (~lemurConnected2 == 1, { ~lemurAdress2.sendMsg( "/RatPresetVar/x", ~presetRyRatSwitch) });
@@ -25952,12 +26018,12 @@ u.drawFunc = { d.draw }
 	});//.valueAction_(1);
 
 	~presetVarsRatTimeRandSpec = ControlSpec(/*0,125*/ 0.125, 7.5, \lin, 0.125); // 0.125*60
-	~presetVarsRatTimeRandSlider = SmoothSlider(~controlWindowSpaRy, Rect(115, 84+26, 62, 20))
+	~presetVarsRatTimeRandSlider = SmoothSlider(~controlWindowSpaRy, Rect(115*~xSizeMul, (84+26)*~ySizeMul, 62*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view| ~presetVarsRatTimeRand = ~presetVarsRatTimeRandSpec.map(view.value);
 		~presetVarsRatWaitTime = ~presetVarsRatTimeRand;
 		view.string = ~presetVarsRatTimeRand.asString + "s";
 	})
-	.font_(Font("Verdana", 10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.background_(Color.grey/*~sliderBackgroundColor*/)
 	.hilightColor_(Color.red/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -25966,9 +26032,9 @@ u.drawFunc = { d.draw }
 	.step_(1/60)
 	.valueAction_(0.48);
 
-	~presetRatRoutView = RoundButton(~controlWindowSpaRy, Rect(278, 84+26, 34, 20))
+	~presetRatRoutView = RoundButton(~controlWindowSpaRy, Rect(278*~xSizeMul, (84+26)*~ySizeMul, 34*~xSizeMul, 20*~ySizeMul))
 	.states_([["RAT\nOUT", Color.white, Color.red], ["RAT\nOUT", Color.black, Color.green]])
-	.font_(Font("Verdana",8,true))
+	.font_(Font("Verdana",8*~fontSizeMul,true))
 	.action_({ |i| var bt;
 		~presetRatRout = i.value;
 		{ block { |break| inf.do {
@@ -26008,7 +26074,7 @@ u.drawFunc = { d.draw }
 
 	// relier ~presetVarsRatSliderView à l'argument de rat de ~controlRandLineCollection, mais comment ???
 	~presetVarsRatSliderSpec = ControlSpec(0,3, \lin, 0.01,0);
-	~presetVarsRatSliderView = SmoothSlider(~controlWindowSpaRy, Rect(180, 84+26, 96, 20))
+	~presetVarsRatSliderView = SmoothSlider(~controlWindowSpaRy, Rect(180*~xSizeMul, (84+26)*~ySizeMul, 96*~xSizeMul, 20*~ySizeMul))
 	.action_({ |view|  var a = ~ryRatRange.rand; if (a > 0, { a = a+~ryRatBase }, { a = a-~ryRatBase }); // a.postln;
 		~prevTrigAll = ~trigAllView.value;
 		~presetVarsRatSlider = ~presetVarsRatSliderSpec.map(view.value)/*.postln*/;
@@ -26026,7 +26092,7 @@ u.drawFunc = { d.draw }
 		});
 		view.string = "Rat : % at :".format(~presetVarsRatSlider);
 	})
-	.font_(Font("Verdana", 10 /*,true*/))
+	.font_(Font("Verdana",10*~fontSizeMul /*,true*/))
 	.background_(~sliderBackgroundColor)
 	.hilightColor_(Color.red/*~sliderHilightColor*/)
 	.stringColor_(Color.white)
@@ -26136,13 +26202,15 @@ u.drawFunc = { d.draw }
 
 	// Les infos sont envoyées selon selon le temps indiqué dans s.aliveThreadPeriod
 
+	~cpuStopViewView = View(~controlWindowGlobal, Rect(200*~xSizeMul, 22*~ySizeMul, 32*~xSizeMul, 18*~ySizeMul));
+
 	// ~cpuStop = 70; // pas nécessaire
-	~cpuStopView = PopUpMenu.new(~controlWindowGlobal, Rect(200, 22, 40, 18))
+	~cpuStopView = PopUpMenu.new(~cpuStopViewView, Rect(0, 0, 60*~xSizeMul, 18*~ySizeMul))
 	.action_({|menu| ~cpuStop = menu.item.asInteger })
 	.allowsReselection_(true)
 	.background_(Color.yellow)
 	.stringColor_(Color.red)
-	.font_(Font("Verdana",9, bold: true));
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true));
 	~cpuStopView.items_(["40", "50", "55", "60", "65", "70", "75", "80", "90"])
 	.valueAction_(3);
 
@@ -26271,12 +26339,14 @@ u.drawFunc = { d.draw }
 
 	});
 
-	~aliveThreadPeriodView = PopUpMenu.new(~controlWindowGlobal, Rect(200, 2, 56, 18))
+	~aliveThreadPeriodViewView = View(~controlWindowGlobal, Rect(200*~xSizeMul, 2*~ySizeMul, 42*~xSizeMul, 18*~ySizeMul));
+
+	~aliveThreadPeriodView = PopUpMenu.new(~aliveThreadPeriodViewView, Rect(0, 0, 70*~xSizeMul, 18*~ySizeMul))
 	.action_({|menu| ~aliveThreadPeriodFunc[menu.value].value })
 	.allowsReselection_(true)
 	.background_(Color.yellow)
 	.stringColor_(Color.red)
-	.font_(Font("Verdana",9, bold: true));
+	.font_(Font("Verdana",9*~fontSizeMul, bold: true));
 	~aliveThreadPeriodView.items_(["0.001", "0.003", "0.005", "0.01", /*"0.016",*/ "0.02", "0.025", "0.05", "0.1", "0.25", "0.5", "0.7"])
 	.valueAction_(4);
 
@@ -26320,10 +26390,10 @@ u.drawFunc = { d.draw }
 // Quand on sélectionne et déclenche tout, affihcage d'une erreur si on a sauté une ligne ???
 // nécessaire de retirer les accents sinon Ã© ???
 
-~codeDisplay = TextView(~tabCode, Rect(5, 5, 900, 255))
+~codeDisplay = TextView(~tabCode, Rect(5*~xSizeMul, 5*~ySizeMul, 900*~xSizeMul, 255*~ySizeMul))
 .hasVerticalScroller_(true)
 .autohidesScrollers_(true)
-.font_(Font("Verdana", 11))
+.font_(Font("Verdana", 11*~fontSizeMul))
 .enterInterpretsSelection_(1)
 .syntaxColorize // Pourquoi pas nécessaire ???
 // .string_(); // + pratique de charger un fichier Html
@@ -26336,43 +26406,43 @@ u.drawFunc = { d.draw }
 // Mais pourquoi ~currentPath doit être indiqué auparavant et non pas dans ce fichier ???
 .open(PathName.new(~currentPath).pathOnly ++ "_code Live for Life Voices Trigger.html");
 
-~codeDisplayb = TextView(~tabCode, Rect(910, 5, 650, 255))
+~codeDisplayb = TextView(~tabCode, Rect(910*~xSizeMul, 5*~ySizeMul, 650*~xSizeMul, 255*~ySizeMul))
 .hasVerticalScroller_(true)
 // .hasHorizontalScroller_(true)
 .autohidesScrollers_(true)
-.font_(Font("Verdana", 11))
+.font_(Font("Verdana", 11*~fontSizeMul))
 .enterInterpretsSelection_(1)
 .syntaxColorize // Pourquoi pas nécessaire ???
 .open(PathName.new(~currentPath).pathOnly ++ "_code Live for Life Voices Load2.html");
 
-~codeDisplay2 = TextView(~tabCode, Rect(5, 265, 900, 255))
+~codeDisplay2 = TextView(~tabCode, Rect(5*~xSizeMul, 265*~ySizeMul, 900*~xSizeMul, 255*~ySizeMul))
 .hasVerticalScroller_(true)
 .autohidesScrollers_(true)
-.font_(Font("Verdana", 11))
+.font_(Font("Verdana", 11*~fontSizeMul))
 .enterInterpretsSelection_(1)
 .syntaxColorize // Pourquoi pas nécessaire ???
 .open(PathName.new(~currentPath).pathOnly ++ "_code Live for Life MasterEQ Trigger.html");
 
-~codeDisplay2b = TextView(~tabCode, Rect(910, 265, 650, 255))
+~codeDisplay2b = TextView(~tabCode, Rect(910*~xSizeMul, 265*~ySizeMul, 650*~xSizeMul, 255*~ySizeMul))
 .hasVerticalScroller_(true)
 .autohidesScrollers_(true)
-.font_(Font("Verdana", 11))
+.font_(Font("Verdana", 11*~fontSizeMul))
 .enterInterpretsSelection_(1)
 .syntaxColorize // Pourquoi pas nécessaire ???
 .open(PathName.new(~currentPath).pathOnly ++ "_code Live for Life MasterEQ Load.html");
 
-~codeDisplay3 = TextView(~tabCode, Rect(5, 525, 1400, 255))
+~codeDisplay3 = TextView(~tabCode, Rect(5*~xSizeMul, 525*~ySizeMul, 1400*~xSizeMul, 255*~ySizeMul))
 .hasVerticalScroller_(true)
 .autohidesScrollers_(true)
-.font_(Font("Verdana", 11))
+.font_(Font("Verdana", 11*~fontSizeMul))
 .enterInterpretsSelection_(1)
 .syntaxColorize // Pourquoi pas nécessaire ???
 .open(PathName.new(~currentPath).pathOnly ++ "_code Live for Life Pdefn.html");
 
-~codeDisplay4 = TextView(~tabCode, Rect(5, 785, 1400, 255))
+~codeDisplay4 = TextView(~tabCode, Rect(5*~xSizeMul, 785*~ySizeMul, 1400*~xSizeMul, 255*~ySizeMul))
 .hasVerticalScroller_(true)
 .autohidesScrollers_(true)
-.font_(Font("Verdana", 11))
+.font_(Font("Verdana", 11*~fontSizeMul))
 .enterInterpretsSelection_(1)
 .syntaxColorize // Pourquoi pas nécessaire ???
 .open(PathName.new(~currentPath).pathOnly ++ "_code Live for Life GUI actions.html");
@@ -26453,15 +26523,16 @@ u.drawFunc = { d.draw }
 	~fxRandView = 0 ! ~numEffects ! 2;
 	~fxRandParametersView = 0 ! ~numEffects ! 2;
 
-	~fxTabbedView = TabbedView2(~globalWindow, Rect(373, 2, 1228, 40))
+	~fxTabbedView = TabbedView2(~globalWindow, Rect(373*~xSizeMul, 2*~ySizeMul, 1228*~xSizeMul, 40*~ySizeMul))
 	.lockPosition_(true)
 	.lockEdges_(true)
 	.followEdges_(false)
 	.backgrounds_([Color.black/*Color(0.8, 0.8, 0.8)*/])
 	.unfocusedColors_([Color.white])
 	.labelColors_([Color.blue])
-	.font_(Font("Verdana",11, bold: true))
-	.tabHeight_(20).tabWidth_(30).tabPosition_(\left)/*.tabCurve_(10)*/;
+	.font_(Font("Verdana",11*~fontSizeMul, bold: true))
+	.tabHeight_(20*~ySizeMul).tabWidth_(30*~xSizeMul).tabPosition_(\left)/*.tabCurve_(10)*/
+	.font_(Font("Verdana",11*~fontSizeMul, bold: false));
 
 	~fxComp = 0 ! 2;
 	~fxViewComp = 0 ! 2;
@@ -26469,26 +26540,26 @@ u.drawFunc = { d.draw }
 	~fxComp[0] = ~fxTabbedView.add("S1", 0, scroll:false).focusAction={ ~currentServerTab = 0;
 		if (~fxSelect[1].sum > 0, {~fxComp[1].unfocusedColor_(Color.red)}, {~fxComp[1].unfocusedColor_(Color.white)} ); ~fxTabbedView.refresh;// Marquer le Tab si le FX de l'autre serveur est actif
 	};
-	~fxViewComp[0] = CompositeView(~fxComp[0], Rect(82, 0, 1144, 40) /*Rect(480, 2, 1118, 40)*/).background = Color.black /*Color.magenta*/;
+	~fxViewComp[0] = CompositeView(~fxComp[0], Rect(82*~xSizeMul, 0, 1144*~xSizeMul, 40*~ySizeMul) /*Rect(480, 2, 1118, 40)*/).background = Color.black /*Color.magenta*/;
 
 	if (~server2.notNil, {
 		~fxComp[1] = ~fxTabbedView.add("S2", 1, scroll:false).focusAction={~currentServerTab = 1;
 			if (~fxSelect[0].sum > 0, {~fxComp[0].unfocusedColor_(Color.red)}, {~fxComp[0].unfocusedColor_(Color.white)} ); ~fxTabbedView.refresh;// Marquer le Tab si le FX de l'autre serveur est actif
 		};
-		~fxViewComp[1] = CompositeView(~fxComp[1], Rect(82, 0, 1144, 40) /*Rect(480, 2, 1118, 40)*/).background = Color.black /*Color.magenta*/;
+		~fxViewComp[1] = CompositeView(~fxComp[1], Rect(82*~xSizeMul, 0, 1144*~xSizeMul, 40*~ySizeMul) /*Rect(480, 2, 1118, 40)*/).background = Color.black /*Color.magenta*/;
 	});
 
 	// Pour afficher les dossiers-sons dans leur intégralité dans le PopUp menu
 	~fxSelectViewViewPos = 0 ! 2;
 	~nbOfServers.do { |s|
-		~fxSelectViewViewPos[s] = [ View(~fxViewComp[s], Rect( 2, 2, 80, 18)), View(~fxViewComp[s], Rect( 2, 20, 80, 18)), View(~fxViewComp[s], Rect( 162, 2, 80, 18)), View(~fxViewComp[s], Rect( 162, 20, 80, 18)), View(~fxViewComp[s], Rect( 322, 2, 80, 18)) ];
+		~fxSelectViewViewPos[s] = [ View(~fxViewComp[s], Rect( 2*~xSizeMul, 2*~ySizeMul, 80*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( 2*~xSizeMul, 20*~ySizeMul, 80*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( 162*~xSizeMul, 2*~ySizeMul, 80*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( 162*~xSizeMul, 20*~ySizeMul, 80*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( 322*~xSizeMul, 2*~ySizeMul, 80*~xSizeMul, 18*~ySizeMul)) ];
 	};
-	~fxSelectViewPos = Rect( 0, 0, 120, 20); /* ! ~numEffects*/
+	~fxSelectViewPos = Rect( 0, 0, 120*~xSizeMul, 20*~ySizeMul); /* ! ~numEffects*/
 	// ~fxSelectViewPos = [Rect( 460, 2, 80, 20), Rect( 460, 24, 80, 20), Rect( 570, 2, 80, 20), Rect( 570, 24, 80, 20), Rect( 680, 2, 80, 20)]; // OLD sans agrandissement
 
-	~fxRandViewPos = [Rect( 84, 2, 25, 18), Rect( 84, 20, 25, 18), Rect( 244, 2, 25, 18), Rect( 244, 20, 25, 18), Rect( 404, 2, 25, 18)];
-	~fxRandViewPos2 = [Rect( 109, 2, 25, 18), Rect( 109, 20, 25, 18), Rect( 269, 2, 25, 18), Rect( 269, 20, 25, 18), Rect( 429, 2, 25, 18)];
-	~fxDefaultViewPos = [Rect( 133, 2, 25, 18), Rect( 133, 20, 25, 18), Rect( 293, 2, 25, 18), Rect( 293, 20, 25, 18), Rect( 453, 2, 25, 18)];
+	~fxRandViewPos = [Rect( 84*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 84*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 244*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 244*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 404*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul)];
+	~fxRandViewPos2 = [Rect( 109*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 109*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 269*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 269*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 429*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul)];
+	~fxDefaultViewPos = [Rect( 133*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 133*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 293*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 293*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( 453*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul)];
 
 	~fadeTimeSynthFx = 1 ! 2;
 
@@ -26737,7 +26808,7 @@ u.drawFunc = { d.draw }
 			.allowsReselection_(false/*true*/) // Pour ne pas permettre de relancer le même effet qui relance un crossfade et donc augmente le CPU - defaults to false - apparemment ne marche pas ??????
 			.background_(~popUpMenuBackgroundColor/*Color.yellow*/)
 			.stringColor_(Color.black)
-			.font_(Font("Verdana",10, bold: true));
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true));
 
 			~fxSelectView[s][a].items_(
 				// (~fxSynthDef.collect { |item, i| ~fxSynthDef[i].variants.size.collect { |y| (a+1).asString ++ "." ++ ~fxSynthDef[i].name ++ "." ++ ~fxSynthDef[i].variants.keys.asArray.sort[y].asSymbol } }.flatten).addFirst((a+1).asString++".No Fx")
@@ -26764,7 +26835,7 @@ u.drawFunc = { d.draw }
 
 				~fxRandView[s][a] = RoundButton(~fxViewComp[s], ~fxRandViewPos[a])
 				.states_([["R", Color.white, Color.red]])
-				.font_(Font("Verdana",9, bold: true))
+				.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 				.action_({
 					if (~fxXfadePlaying[s][a] == 0 and: {~fxXfadePlayingT[s][a].isPlaying == false}, {
 						~fxSelectView[s][a].valueAction_((1..~numFxSynthDef+4/*~fxListSize*//*-4*/).choose);
@@ -26783,7 +26854,7 @@ u.drawFunc = { d.draw }
 
 				~fxRandView[s][a] = RoundButton(~fxViewComp[s], ~fxRandViewPos[a])
 				.states_([["R", Color.white, Color.red]])
-				.font_(Font("Verdana",9, bold: true))
+				.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 				.action_({
 					if (~fxXfadePlaying[s][a] == 0 and: {~fxXfadePlayingT[s][a].isPlaying == false}, {
 						~fxSelectView[s][a].valueAction_((1..~fxListSize/*-4*/).choose);
@@ -26802,7 +26873,7 @@ u.drawFunc = { d.draw }
 
 			~fxRandParametersView[s][a] = RoundButton(~fxViewComp[s], ~fxRandViewPos2[a])
 			.states_([["RP", Color.red, Color.white]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({ case
 				{~fxSelect[s][a].inclusivelyBetween(1, ~numFxSynthDef+3)}
 				{~fxTabCompRandView[s][~fxSelect[s][a]-1].valueAction_(1);
@@ -26848,7 +26919,7 @@ u.drawFunc = { d.draw }
 
 			~fxDefaultView[s][a] = RoundButton(~fxViewComp[s], ~fxDefaultViewPos[a])
 			.states_([["D", Color.white, Color.blue]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({ ~fxSelectView[s][a].valueAction_(0);
 			});
 		};
@@ -26876,9 +26947,9 @@ u.drawFunc = { d.draw }
 		// Remplacement de ~fxListSize par ~numFxSynthDef+4 pour ne pas avoir un random sur les synthés FFT Diffusion et Delay lorsque le nb de canaux est trop important
 		if (~numChannelsFX > 8, {
 
-			~fxRandAllView[s] = RoundButton(~fxViewComp[s], Rect( 325, 21, 30, 18))
+			~fxRandAllView[s] = RoundButton(~fxViewComp[s], Rect( 325*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 			.states_([["RA", Color.white, Color.red]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({ // ~numEffects.do {|a| ~fxSelectView[a].valueAction_(((~fxSynthDef.size+1)..~fxListSize).choose) };
 				// {~numEffects.do {|a| ~fxSelectView[a].valueAction_(( 1 /*(~fxSynthDef.size+1+2/*EQ*/)*/..~numFxSynthDef+4/*-4*/).choose) ; ~fxSynthWaitTime.wait; } }.fork(AppClock);
 				// { ("Try to Wait" + ( ~fadeTimeSynthFx /*/ ~toTempo*/) ++ "s - end of FX Xfade !!!").warn; ~fadeTimeSynthFx.wait; "End of FX Xfade - OK to retrigger".inform }.fork;
@@ -26887,26 +26958,26 @@ u.drawFunc = { d.draw }
 
 		},{
 
-			~fxRandAllView[s] = RoundButton(~fxViewComp[s], Rect( 325, 21, 30, 18))
+			~fxRandAllView[s] = RoundButton(~fxViewComp[s], Rect( 325*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 			.states_([["RA", Color.white, Color.red]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({ // ~numEffects.do {|a| ~fxSelectView[a].valueAction_(((~fxSynthDef.size+1)..~fxListSize).choose) };
 				// {~numEffects.do {|a| ~fxSelectView[a].valueAction_(( 1 /*(~fxSynthDef.size+1+2/*EQ*/)*/..~fxListSize/*-4*/).choose) ; ~fxSynthWaitTime.wait; } }.fork(AppClock);
 				~numEffects.do {|a| ~fxRandView[s][a].valueAction_(1); /*~fxSynthWaitTime.wait;*/ };
 			});
 		});
 
-		~fxRandParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 355, 21, 30, 18))
+		~fxRandParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 355*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["RPA", Color.red, Color.white]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({ ~numEffects.do {|a| ~fxRandParametersView[s][a].valueAction_(1) }; if (~fxSelect[s].sum > 0, { "FX Parameters randomized".postln; });
 		});
 
 		if ( ~hpModulation == 1, {
 
-			~fxDefaultAllView[s] = RoundButton(~fxViewComp[s], Rect( 385, 21, 30, 18))
+			~fxDefaultAllView[s] = RoundButton(~fxViewComp[s], Rect( 385*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 			.states_([["RHP", Color.white, Color.blue(0.6)]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({
 				~fxSelect[s].do { |i|
 					if ( i.inclusivelyBetween(1, ~numFxSynthDef),
@@ -26918,9 +26989,9 @@ u.drawFunc = { d.draw }
 
 		},{
 
-			~fxDefaultAllView[s] = RoundButton(~fxViewComp[s], Rect( 385, 21, 30, 18))
+			~fxDefaultAllView[s] = RoundButton(~fxViewComp[s], Rect( 385*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 			.states_([["D1", Color.black, Color.green]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({
 				{
 					~fxSelectView[s][0].valueAction_(~numFxSynthDef+1+6/*EQ*/); ~fxSynthWaitTime.wait;
@@ -26933,9 +27004,9 @@ u.drawFunc = { d.draw }
 
 		});
 
-		~fxDefaultAll2View[s] = RoundButton(~fxViewComp[s], Rect( 415, 21, 30, 18))
+		~fxDefaultAll2View[s] = RoundButton(~fxViewComp[s], Rect( 415*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["DN", Color.white, Color.blue]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({
 
 			var presStart, presStop;
@@ -27000,13 +27071,13 @@ u.drawFunc = { d.draw }
 	~fxARightShift = 665;
 	~fxASelectViewViewPos = 0 ! 2;
 	~nbOfServers.do { |s|
-		~fxASelectViewViewPos[s] = [ View(~fxViewComp[s], Rect( 2+~fxARightShift, 2, 70, 18)), View(~fxViewComp[s], Rect( 2+~fxARightShift, 20, 70, 18)), View(~fxViewComp[s], Rect( 152+~fxARightShift, 2, 70, 18)), View(~fxViewComp[s], Rect( 152+~fxARightShift, 20, 70, 18)), View(~fxViewComp[s], Rect( 302+~fxARightShift, 2, 70, 18)) ];
+		~fxASelectViewViewPos[s] = [ View(~fxViewComp[s], Rect( (2+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 70*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( (2+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 70*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( (152+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 70*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( (152+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 70*~xSizeMul, 18*~ySizeMul)), View(~fxViewComp[s], Rect( (302+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 70*~xSizeMul, 18*~ySizeMul)) ];
 	};
-	~fxASelectViewPos = Rect( 0, 0, 86, 20) ! ~numEffects;
+	~fxASelectViewPos = Rect( 0, 0, 100*~xSizeMul, 20*~ySizeMul) ! ~numEffects;
 
-	~fxARandViewPos = [Rect( 74+~fxARightShift, 2, 25, 18), Rect( 74+~fxARightShift, 20, 25, 18), Rect( 224+~fxARightShift, 2, 25, 18), Rect( 224+~fxARightShift, 20, 25, 18), Rect( 374+~fxARightShift, 2, 25, 18)];
-	~fxARandViewPos2 = [Rect( 99+~fxARightShift, 2, 25, 18), Rect( 99+~fxARightShift, 20, 25, 18), Rect( 249+~fxARightShift, 2, 25, 18), Rect( 249+~fxARightShift, 20, 25, 18), Rect( 399+~fxARightShift, 2, 25, 18)];
-	~fxADefaultViewPos = [Rect( 124+~fxARightShift, 2, 25, 18), Rect( 124+~fxARightShift, 20, 25, 18), Rect( 274+~fxARightShift, 2, 25, 18), Rect( 274+~fxARightShift, 20, 25, 18), Rect( 424+~fxARightShift, 2, 25, 18)];
+	~fxARandViewPos = [Rect( (74+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (74+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (224+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (224+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (374+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul)];
+	~fxARandViewPos2 = [Rect( (99+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (99+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (249+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (249+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (399+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul)];
+	~fxADefaultViewPos = [Rect( (124+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (124+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (274+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (274+~fxARightShift)*~xSizeMul, 20*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul), Rect( (424+~fxARightShift)*~xSizeMul, 2*~ySizeMul, 25*~xSizeMul, 18*~ySizeMul)];
 
 
 
@@ -27117,7 +27188,7 @@ u.drawFunc = { d.draw }
 			// .allowsReselection_(true) // Pour ne pas permettre de relancer le même effet qui relance un crossfade et donc augmente le CPU
 			.background_(~popUpMenuBackgroundColor/*Color.yellow*/)
 			.stringColor_(Color.black)
-			.font_(Font("Verdana",10, bold: true));
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true));
 
 			~fxASelectView[s][a].items_(
 				([(a+1).asString++".No AFx"]) ++
@@ -27133,7 +27204,7 @@ u.drawFunc = { d.draw }
 
 			~fxARandView[s][a] = RoundButton(~fxViewComp[s], ~fxARandViewPos[a])
 			.states_([["R", Color.white, Color.red]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({ var rand, randTyp;
 				// rand = (1..~fxAListSize).rand; // peut déclencher 2 effets identiques - préférable de répérer les effets déjà utilisées pour ne pas les resélectionner
 				~fxATabCompSelValues[s] = ~fxTabCompSel5Values[s] ++ ~fxTabCompSel6Values[s] ++ ~fxTabCompSel7Values[s] ++ ~fxTabCompSel8Values[s];
@@ -27172,7 +27243,7 @@ u.drawFunc = { d.draw }
 
 			~fxARandParametersView[s][a] = RoundButton(~fxViewComp[s], ~fxARandViewPos2[a])
 			.states_([["RP", Color.red, Color.white]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({
 				case
 				{~fxASelect[s][a].inclusivelyBetween(1, ~numFxSynthDefA)}
@@ -27181,7 +27252,7 @@ u.drawFunc = { d.draw }
 
 			~fxADefaultView[s][a] = RoundButton(~fxViewComp[s], ~fxADefaultViewPos[a])
 			.states_([["D", Color.white, Color.blue]])
-			.font_(Font("Verdana",9, bold: true))
+			.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 			.action_({ ~fxASelectView[s][a].valueAction_(0);
 			});
 		};
@@ -27193,23 +27264,23 @@ u.drawFunc = { d.draw }
 
 
 
-		~fxARandAllView[s] = RoundButton(~fxViewComp[s], Rect( 305+~fxARightShift, 21, 30, 18))
+		~fxARandAllView[s] = RoundButton(~fxViewComp[s], Rect( (305+~fxARightShift)*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["RA", Color.white, Color.red]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({
 
 			{~numEffects.do {|a| /*~fxASelectView[a].valueAction_(( 1..~fxAListSize).choose)*/ ~fxARandView[s][a].valueAction_(1); ~fxSynthWaitTime.wait; } }.fork(AppClock)
 		});
 
-		~fxARandParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 335+~fxARightShift, 21, 30, 18))
+		~fxARandParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( (335+~fxARightShift)*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["RPA", Color.red, Color.white]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({ ~numEffects.do {|a| ~fxARandParametersView[s][a].valueAction_(1) }
 		});
 
-		~fxADefaultAllView[s] = RoundButton(~fxViewComp[s], Rect( 365+~fxARightShift, 21, 30, 18))
+		~fxADefaultAllView[s] = RoundButton(~fxViewComp[s], Rect( (365+~fxARightShift)*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["D1", Color.black, Color.green]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({
 			{
 				~fxASelectView[s][0].valueAction_(1); ~fxSynthWaitTime.wait;
@@ -27220,9 +27291,9 @@ u.drawFunc = { d.draw }
 			}.fork(AppClock)
 		});
 
-		~fxADefaultAll2View[s] = RoundButton(~fxViewComp[s], Rect( 395+~fxARightShift, 21, 30, 18))
+		~fxADefaultAll2View[s] = RoundButton(~fxViewComp[s], Rect( (395+~fxARightShift)*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["DN", Color.white, Color.blue]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({
 			// ~numEffects.do {|a| ~fxSelectView[a].valueAction_(0) };
 			// Remise à 0 seulement si aucun preset n'a de E à la fin dans tous les presets
@@ -27432,20 +27503,20 @@ u.drawFunc = { d.draw }
 
 			if (~hpModulation == 1, {
 
-				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383, 8 + (( (if (~fxSynthDefNoHPMod.includes(envir[fxSynthDefNb][syni].name) == false, {envir[fxSynthDefNb][syni].metadata['specsM'].keys.size},{0})) + envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
+				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383*~xSizeMul, (8 + (( (if (~fxSynthDefNoHPMod.includes(envir[fxSynthDefNb][syni].name) == false, {envir[fxSynthDefNb][syni].metadata['specsM'].keys.size},{0})) + envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))*~ySizeMul)).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
 
 			}, {
 
-				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383, 8 + ((envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
+				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383*~xSizeMul, (8 + ((envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))*~ySizeMul)).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
 
 			});
 
 			// if (i > 1 and: {~fxSynthDefNoHPMod.includes(envir[fxSynthDefNb][syni].name) == false}, {
 
 			envir[fxTabCompNb][serverNb][syni].decorator = FlowLayout(tab.view.bounds);
-			envir[fxTabCompNb][serverNb][syni].decorator.gap = 1@1;
+			envir[fxTabCompNb][serverNb][syni].decorator.gap = (1*~xSizeMul)@(1*~ySizeMul);
 
-			envir[fxTabCompNameNbView][serverNb][syni] = StaticText(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 113/*8*/, 20)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12, bold: true)).align_(\center);
+			envir[fxTabCompNameNbView][serverNb][syni] = StaticText(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 113*~xSizeMul /*8*/, 20*~ySizeMul)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12*~fontSizeMul, bold: true)).align_(\center);
 
 			case
 			{nb == 1}
@@ -27459,9 +27530,9 @@ u.drawFunc = { d.draw }
 
 
 			~numEffects.do { |fx|
-				envir[fxTabCompSelNbView][serverNb][syni][fx] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 20, 18))
+				envir[fxTabCompSelNbView][serverNb][syni][fx] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 				.states_([[(fx+1).asString, Color.white, Color.grey(0.5)],[(fx+1).asString, Color.red, Color.yellow]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a| // fx.postln; syni.postln;
 					envir[fxTabCompSelNbValues][serverNb][syni][fx] = a.value;
 					if (a.value == 1, {
@@ -27475,9 +27546,9 @@ u.drawFunc = { d.draw }
 
 			if (~hpModulation == 1 and: {envir[fxSynthDefNb][syni].metadata['specsM'].notNil}, {
 
-				envir[fxTabCompDefNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 30, 18))
+				envir[fxTabCompDefNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 				.states_([["Def", Color.white, Color.blue]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a|
 					envir[fxSynthDefNb][syni].metadata['specs'].keys.size.do { |i|
 						~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default);
@@ -27489,9 +27560,9 @@ u.drawFunc = { d.draw }
 
 			},{
 
-				envir[fxTabCompDefNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 30, 18))
+				envir[fxTabCompDefNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 				.states_([["Def", Color.white, Color.blue]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a|
 					envir[fxSynthDefNb][syni].metadata['specs'].keys.size.do { |i|
 						~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default);
@@ -27499,9 +27570,9 @@ u.drawFunc = { d.draw }
 				});
 			});
 
-			envir[fxTabCompRandMNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 20, 18))
+			envir[fxTabCompRandMNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 			.states_([["M", Color.black, Color.white/*grey*/]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				/*(envir[fxSynthDefNb][syni].metadata['specsR'].keys.size).do { |i|
 				~fxSynthDefViews[(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specsR'][envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]].map(1.0.rand))};*/
@@ -27509,9 +27580,9 @@ u.drawFunc = { d.draw }
 				~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ \mix /*listSpecR.keys.asArray[i]*/).asSymbol].valueAction_(1.0.rand2)/*(listSpecR[listSpecR.keys.asArray[i]].map(1.0.rand))*/
 			});
 
-			envir[fxTabCompRandLNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 20, 18))
+			envir[fxTabCompRandLNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 			.states_([["L", Color.black, Color.white/*grey*/]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				/*(envir[fxSynthDefNb][syni].metadata['specsR'].keys.size).do { |i|
 				~fxSynthDefViews[(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specsR'][envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]].map(1.0.rand))};*/
@@ -27519,9 +27590,9 @@ u.drawFunc = { d.draw }
 				~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ \lag /*listSpecR.keys.asArray[i]*/).asSymbol].valueAction_(30.0.rand)/*(listSpecR[listSpecR.keys.asArray[i]].map(1.0.rand))*/
 			});
 
-			envir[fxTabCompRandNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 30, 18))
+			envir[fxTabCompRandNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 			.states_([["RP", Color.red, Color.white]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				/*(envir[fxSynthDefNb][syni].metadata['specsR'].keys.size).do { |i|
 				~fxSynthDefViews[(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specsR'][envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]].map(1.0.rand))};*/
@@ -27533,9 +27604,9 @@ u.drawFunc = { d.draw }
 
 			if (~hpModulation == 1 and: {envir[fxSynthDefNb][syni].metadata['specsM'].notNil}, {
 
-				envir[fxTabCompRandANbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 20, 18))
+				envir[fxTabCompRandANbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 				.states_([["A", Color.white, Color.blue(0.6)]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a|
 					/*(envir[fxSynthDefNb][syni].metadata['specsR'].keys.size).do { |i|
 					~fxSynthDefViews[(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specsR'][envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]].map(1.0.rand))};*/
@@ -27550,9 +27621,9 @@ u.drawFunc = { d.draw }
 						~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ listSpecM.keys.asArray[i]).asSymbol].valueAction_(listSpecM[listSpecM.keys.asArray[i]].map(1.0.rand))};
 				});
 
-				envir[fxTabCompRandHNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 30, 18))
+				envir[fxTabCompRandHNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 				.states_([["RH", Color.white, Color.blue(0.6)]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a|
 					/*(envir[fxSynthDefNb][syni].metadata['specsR'].keys.size).do { |i|
 					~fxSynthDefViews[(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specsR'][envir[fxSynthDefNb][syni].metadata['specsR'].keys.asArray[i]].map(1.0.rand))};*/
@@ -27570,7 +27641,7 @@ u.drawFunc = { d.draw }
 					envir[fxTabCompNb][serverNb][syni].decorator.nextLine;
 
 					~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol] =
-					EZSlider.new2(envir[fxTabCompNb][serverNb][syni], 375@18, envir[fxSynthDefNb][syni].metadata['order'][i].asString, envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]],
+					EZSlider.new2(envir[fxTabCompNb][serverNb][syni], (375*~xSizeMul)@(18*~ySizeMul), envir[fxSynthDefNb][syni].metadata['order'][i].asString, envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]],
 						{ |ez| var orderM, mod, mixLagTime;
 
 							//	{
@@ -27632,9 +27703,9 @@ u.drawFunc = { d.draw }
 							} ) };
 							//	}.fork(AppClock);
 						},
-						unitWidth:0, initVal:envir[fxSynthDefNb][syni].controls[5+i], numberWidth:60, labelWidth:68, layout:\horz)
+						unitWidth:0, initVal:envir[fxSynthDefNb][syni].controls[5+i], numberWidth:60*~xSizeMul, labelWidth:70*~xSizeMul, layout:\horz)
 					.setColors(Color.grey,Color.white)
-					.font_(Font("Helvetica",11))
+					.font_(Font("Helvetica",11*~fontSizeMul))
 					.valueAction_(envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default);
 
 				};
@@ -27649,7 +27720,7 @@ u.drawFunc = { d.draw }
 						envir[fxTabCompNb][serverNb][syni].decorator.nextLine;
 
 						~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['orderM'][i]).asSymbol] =
-						EZSlider.new2(envir[fxTabCompNb][serverNb][syni], 375@18, envir[fxSynthDefNb][syni].metadata['orderM'][i].asString, envir[fxSynthDefNb][syni].metadata['specsM'][envir[fxSynthDefNb][syni].metadata['orderM'][i]],
+						EZSlider.new2(envir[fxTabCompNb][serverNb][syni], (375*~xSizeMul)@(18*~ySizeMul), envir[fxSynthDefNb][syni].metadata['orderM'][i].asString, envir[fxSynthDefNb][syni].metadata['specsM'][envir[fxSynthDefNb][syni].metadata['orderM'][i]],
 							{ |ez| var mod;
 								~fxSynthDefValues[serverNb][(synthDef.name ++ metadata['orderM'][i]).asSymbol] = ez.value/*.postln*/;
 								mod = ~numChannelsFX.collect { |i| ( ( ((i) / (~numChannelsFX-1) /*- 0.5*/) * ez.value) ) }/*.postln*/;
@@ -27705,9 +27776,9 @@ u.drawFunc = { d.draw }
 								// (valeur de contrôle + (modulateur HP allant de - 1 à +1) * range du contrôle).fold(minimum de la valeur de contrôle, maximum de la valeur de contrôle)
 								// .clip / fold / wrap
 							},
-							unitWidth:0, initVal:envir[fxSynthDefNb][syni].controls[5+i], numberWidth:60, labelWidth:88, layout:\horz)
+							unitWidth:0, initVal:envir[fxSynthDefNb][syni].controls[5+i], numberWidth:60*~xSizeMul, labelWidth:90*~xSizeMul, layout:\horz)
 						.setColors(Color.blue(0.6),Color.white)
-						.font_(Font("Helvetica",11))
+						.font_(Font("Helvetica",11*~fontSizeMul))
 						.valueAction_(envir[fxSynthDefNb][syni].metadata['specsM'][envir[fxSynthDefNb][syni].metadata['orderM'][i]].default);
 
 
@@ -27760,7 +27831,7 @@ u.drawFunc = { d.draw }
 					envir[fxTabCompNb][serverNb][syni].decorator.nextLine;
 
 					~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol] =
-					EZSlider.new2(envir[fxTabCompNb][serverNb][syni], 375@18, envir[fxSynthDefNb][syni].metadata['order'][i].asString, envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]],
+					EZSlider.new2(envir[fxTabCompNb][serverNb][syni], (375*~xSizeMul)@(18*~ySizeMul), envir[fxSynthDefNb][syni].metadata['order'][i].asString, envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]],
 						{ |ez| var mixLagTime;
 							~fxSynthDefValues[serverNb][(envir[fxSynthDefNb][syni].name ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol] = ez.value;
 
@@ -27782,9 +27853,9 @@ u.drawFunc = { d.draw }
 							// ~fxSynth[0].defName.asString.contains(~fxSynthDef[0].name.asString)
 							~fxSynth[serverNb].do { |itemk, k| if (~fxSynth[serverNb][k] != 0 and: {~fxSynth[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDefNb][syni].name.asString /*)*/ }, {itemk.set(envir[fxSynthDefNb][syni].metadata['order'][i], ez.value, \lagM, mixLagTime)} ) };
 						},
-						unitWidth:0, initVal:envir[fxSynthDefNb][syni].controls[5+i], numberWidth:60, labelWidth:68, layout:\horz)
+						unitWidth:0, initVal:envir[fxSynthDefNb][syni].controls[5+i], numberWidth:60*~xSizeMul, labelWidth:68*~xSizeMul, layout:\horz)
 					.setColors(Color.grey,Color.white)
-					.font_(Font("Helvetica",11))
+					.font_(Font("Helvetica",11*~fontSizeMul))
 					.valueAction_(envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default);
 
 				};
@@ -27813,25 +27884,25 @@ u.drawFunc = { d.draw }
 
 
 			if (nb == 8, {
-				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383, 100 + ((envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
+				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383*~xSizeMul, (100 + ((envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))*~ySizeMul)).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
 			},{
-				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383, 70 + ((envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
+				envir[fxTabCompNb][serverNb][syni] = CompositeView(tab, Rect(widthPos, lastHeight, 383*~xSizeMul, (70 + ((envir[fxSynthDefNb][syni].metadata['specs'].keys.size + 1) * 19))*~ySizeMul)).background = ~compFxBackgroundColors[0] /*~compFxBackgroundColors.wrapAt(syni)*/;
 			});
 
 
 			envir[fxTabCompNb][serverNb][syni].decorator = FlowLayout(tab.view.bounds);
-			envir[fxTabCompNb][serverNb][syni].decorator.gap = 1@1;
+			envir[fxTabCompNb][serverNb][syni].decorator.gap = (1*~xSizeMul)@(1*~ySizeMul);
 
-			envir[fxTabCompNameNbView][serverNb][syni] = StaticText(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 168, 20)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12, bold: true)).align_(\center);
+			envir[fxTabCompNameNbView][serverNb][syni] = StaticText(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 168*~xSizeMul, 20*~ySizeMul)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12*~fontSizeMul, bold: true)).align_(\center);
 
 
 			envir[fxTabCompNameNbView][serverNb][syni].string = envir[fxSynthDefNb][syni].name.asString[0..synthNameSize] + (syni+1).asString; // Pour retirer le chiffre du nom du synthé
 
 
 			~numEffects.do { |fx|
-				envir[fxTabCompSelNbView][serverNb][syni][fx] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 20, 18))
+				envir[fxTabCompSelNbView][serverNb][syni][fx] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 				.states_([[(fx+1).asString, Color.white, Color.grey(0.5)],[(fx+1).asString, Color.red, Color.yellow]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a| // fx.postln; syni.postln;
 					envir[fxTabCompSelNbValues][serverNb][syni][fx] = a.value;
 					if (a.value == 1, {
@@ -27843,18 +27914,18 @@ u.drawFunc = { d.draw }
 			};
 
 
-			envir[fxTabCompRandNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 50, 18))
+			envir[fxTabCompRandNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				var listSpecR = envir[fxSynthDefNb][syni].metadata['specsR'];
 				listSpecR.keys.size.do { |i|
 					~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name.asString[0..synthNameSize /*(envir[fxSynthDefNb][syni].name.asString.size-2)*/] ++ syni.asSymbol ++ listSpecR.keys.asArray[i]).asSymbol].valueAction_(listSpecR[listSpecR.keys.asArray[i]].map(1.0.rand))};
 			});
 
-			envir[fxTabCompDefNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 50, 18))
+			envir[fxTabCompDefNbView][serverNb][syni] = RoundButton(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Def", Color.white, Color.blue]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[fxSynthDefNb][syni].metadata['specs'].keys.size.do { |i|
 					~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name.asString[0..synthNameSize /*(envir[fxSynthDefNb][syni].name.asString.size-2)*/] ++ syni.asSymbol ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol].valueAction_(envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default);
@@ -27864,7 +27935,7 @@ u.drawFunc = { d.draw }
 
 			envir[fxTabCompNb][serverNb][syni].decorator.nextLine;
 
-			envir[fxSynthDefNbSwitchTypView][serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 60, 60))
+			envir[fxSynthDefNbSwitchTypView][serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 60*~xSizeMul, 60*~ySizeMul))
 			.action_({|menu| envir[fxSynthDefNbSwitchTyp][serverNb][syni] = menu.value;
 				envir[fxSynthDefNb] = envir[fxSynthDefNbSwitchTyp][serverNb].size.collect { |a| envir[fxSynthDefNbALL][envir[fxSynthDefNbSwitchTyp][serverNb][a]] };
 				~fxSynthDefA = ~fxSynthDef5 ++ ~fxSynthDef6 ++ ~fxSynthDef7 ++ ~fxSynthDef8;
@@ -27873,7 +27944,7 @@ u.drawFunc = { d.draw }
 			.background_(Color.gray(0.7) /*~popUpMenuBackgroundColor*/)
 			.hiliteColor_(Color.yellow)
 			.selectedStringColor_(Color.red)
-			.font_(Font("Verdana",11, bold: true));
+			.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true));
 			envir[fxSynthDefNbSwitchTypView][serverNb][syni].items_(~fxSynthDefASwitchTypViewItems)
 			.valueAction_(syni);
 
@@ -27881,7 +27952,7 @@ u.drawFunc = { d.draw }
 			case
 			{nb == 7}
 			{
-				~fxSynthDef7SwitchTypPCView[serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 70, 32))
+				~fxSynthDef7SwitchTypPCView[serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 70*~xSizeMul, 32*~ySizeMul))
 				.action_({|menu| ~fxSynthDef7SwitchTypPC[serverNb][syni] = menu.value;
 					~fxSynthDef7 = ~fxSynthDef7SwitchTyp[serverNb].size.collect { |a| ~fxSynthDef7ALL.clump(4)[~fxSynthDef7SwitchTypPC[serverNb][a]][~fxSynthDef7SwitchTyp[serverNb][a]] };
 					~fxSynthDefA = ~fxSynthDef5 ++ ~fxSynthDef6 ++ ~fxSynthDef7 ++ ~fxSynthDef8;
@@ -27889,13 +27960,13 @@ u.drawFunc = { d.draw }
 				.background_(Color.gray(0.7) /*~popUpMenuBackgroundColor*/)
 				.hiliteColor_(Color.yellow)
 				.selectedStringColor_(Color.red)
-				.font_(Font("Verdana",11, bold: true));
+				.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true));
 				~fxSynthDef7SwitchTypPCView[serverNb][syni].items_(["Polar", "Cartesian"])
 				.valueAction_(0);
 			}
 			{nb == 8}
 			{
-				~fxSynthDef8SwitchTypPCView[serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 52, 32))
+				~fxSynthDef8SwitchTypPCView[serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 52*~xSizeMul, 32*~ySizeMul))
 				.action_({|menu| ~fxSynthDef8SwitchTypPC[serverNb][syni] = menu.value;
 					~fxSynthDef8 = ~fxSynthDef8SwitchTyp[serverNb].size.collect { |a| ~fxSynthDef8ALL.clump(4).clump(~ambATKSynthDefSDRevDelaytimes.size)[~fxSynthDef8SwitchTypPC[serverNb][0]][~fxSynthDef8SwitchRev[serverNb][0]][~fxSynthDef8SwitchTyp[serverNb][0]] };
 					~fxSynthDefA = ~fxSynthDef5 ++ ~fxSynthDef6 ++ ~fxSynthDef7 ++ ~fxSynthDef8;
@@ -27903,11 +27974,11 @@ u.drawFunc = { d.draw }
 				.background_(Color.gray(0.7) /*~popUpMenuBackgroundColor*/)
 				.hiliteColor_(Color.yellow)
 				.selectedStringColor_(Color.red)
-				.font_(Font("Verdana",11, bold: true));
+				.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true));
 				~fxSynthDef8SwitchTypPCView[serverNb][syni].items_(["Polar", "Cartes"])
 				.valueAction_(0);
 
-				~fxSynthDef8SwitchRevView[serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2, 2, 260, 90))
+				~fxSynthDef8SwitchRevView[serverNb][syni] = ListView.new(envir[fxTabCompNb][serverNb][syni], Rect(2*~xSizeMul, 2*~ySizeMul, 260*~xSizeMul, 90*~ySizeMul))
 				.action_({|menu| ~fxSynthDef8SwitchRev[serverNb][syni] = menu.value;
 					~fxSynthDef8 = ~fxSynthDef8SwitchTyp[serverNb].size.collect { |a| ~fxSynthDef8ALL.clump(4).clump(~ambATKSynthDefSDRevDelaytimes.size)[~fxSynthDef8SwitchTypPC[serverNb][a]][~fxSynthDef8SwitchRev[serverNb][a]][~fxSynthDef8SwitchTyp[serverNb][a]] };
 					~fxSynthDefA = ~fxSynthDef5 ++ ~fxSynthDef6 ++ ~fxSynthDef7 ++ ~fxSynthDef8;
@@ -27915,7 +27986,7 @@ u.drawFunc = { d.draw }
 				.background_(Color.gray(0.7) /*~popUpMenuBackgroundColor*/)
 				.hiliteColor_(Color.yellow)
 				.selectedStringColor_(Color.red)
-				.font_(Font("Verdana",11, bold: true));
+				.font_(Font("Verdana",(11*~fontSizeMul).asInteger, bold: true));
 				~fxSynthDef8SwitchRevView[serverNb][syni].items_(~fxSynthDefASwitchRevViewItems)
 				.valueAction_(0);
 			};
@@ -27926,14 +27997,14 @@ u.drawFunc = { d.draw }
 				envir[fxTabCompNb][serverNb][syni].decorator.nextLine;
 
 				~fxSynthDefViews[serverNb][(envir[fxSynthDefNb][syni].name.asString[0..synthNameSize /*(envir[fxSynthDefNb][syni].name.asString.size-2)*/] ++ syni.asSymbol ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol] =
-				EZSlider.new2(envir[fxTabCompNb][serverNb][syni], 375@18, envir[fxSynthDefNb][syni].metadata['order'][i].asString, envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]],
+				EZSlider.new2(envir[fxTabCompNb][serverNb][syni], (375*~xSizeMul)@(18*~ySizeMul), envir[fxSynthDefNb][syni].metadata['order'][i].asString, envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]],
 					{ |ez| ~fxSynthDefValues[serverNb][(envir[fxSynthDefNb][syni].name.asString[0..synthNameSize /*(envir[fxSynthDefNb][syni].name.asString.size-2)*/] ++ syni.asSymbol ++ envir[fxSynthDefNb][syni].metadata['order'][i]).asSymbol] = ez.value;
 
 						~fxSynthA[serverNb].do { |itemk, k| if (~fxSynthA[serverNb][k] != 0 and: {~fxSynthA[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDefNb][syni].name.asString /*)*/ }, {itemk.set(envir[fxSynthDefNb][syni].metadata['order'][i], ez.value)} ) };
 					},
-					unitWidth:0, initVal:envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default /*envir[fxSynthDefNb][syni].controls[5+i]*/, numberWidth:60, labelWidth:58, layout:\horz)
+					unitWidth:0, initVal:envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default /*envir[fxSynthDefNb][syni].controls[5+i]*/, numberWidth:60*~xSizeMul, labelWidth:58*~xSizeMul, layout:\horz)
 				.setColors(Color.grey,Color.white)
-				.font_(Font("Helvetica",11))
+				.font_(Font("Helvetica",11*~fontSizeMul))
 				.valueAction_(envir[fxSynthDefNb][syni].metadata['specs'][envir[fxSynthDefNb][syni].metadata['order'][i]].default);
 
 				if (envir[fxSynthDefNb][syni].metadata['order'][i].asSymbol == \angle, {
@@ -27952,15 +28023,15 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~makeFxColumn.(currentEnvironment, 1, 2, 4, ~tabFx[s], \fxSynthDef1, \fxTabComp1, \fxTabCompName1View, \fxTabCompRandM1View, \fxTabCompRandL1View, \fxTabCompRand1View, \fxTabCompRandA1View, \fxTabCompRandH1View, \fxTabCompDef1View, \fxTabCompSel1View, \fxTabCompSel1Values, s);
-		~makeFxColumn.(currentEnvironment, 2, 395, 4, ~tabFx[s], \fxSynthDef2, \fxTabComp2, \fxTabCompName2View, \fxTabCompRandM2View, \fxTabCompRandL2View, \fxTabCompRand2View, \fxTabCompRandA2View, \fxTabCompRandH2View, \fxTabCompDef2View, \fxTabCompSel2View, \fxTabCompSel2Values, s);
-		~makeFxColumn.(currentEnvironment, 3, 790, 167, ~tabFx[s], \fxSynthDef3, \fxTabComp3, \fxTabCompName3View, \fxTabCompRandM3View, \fxTabCompRandL3View, \fxTabCompRand3View, \fxTabCompRandA3View, \fxTabCompRandH3View, \fxTabCompDef3View, \fxTabCompSel3View, \fxTabCompSel3Values, s);
-		~makeFxColumn.(currentEnvironment, 4, 1185, 4, ~tabFx[s], \fxSynthDef4, \fxTabComp4, \fxTabCompName4View, \fxTabCompRandM4View, \fxTabCompRandL4View, \fxTabCompRand4View, \fxTabCompRandA4View, \fxTabCompRandH4View, \fxTabCompDef4View, \fxTabCompSel4View, \fxTabCompSel4Values, s);
+		~makeFxColumn.(currentEnvironment, 1, 2*~xSizeMul, 4*~ySizeMul, ~tabFx[s], \fxSynthDef1, \fxTabComp1, \fxTabCompName1View, \fxTabCompRandM1View, \fxTabCompRandL1View, \fxTabCompRand1View, \fxTabCompRandA1View, \fxTabCompRandH1View, \fxTabCompDef1View, \fxTabCompSel1View, \fxTabCompSel1Values, s);
+		~makeFxColumn.(currentEnvironment, 2, 395*~xSizeMul, 4*~ySizeMul, ~tabFx[s], \fxSynthDef2, \fxTabComp2, \fxTabCompName2View, \fxTabCompRandM2View, \fxTabCompRandL2View, \fxTabCompRand2View, \fxTabCompRandA2View, \fxTabCompRandH2View, \fxTabCompDef2View, \fxTabCompSel2View, \fxTabCompSel2Values, s);
+		~makeFxColumn.(currentEnvironment, 3, 790*~xSizeMul, 167*~ySizeMul, ~tabFx[s], \fxSynthDef3, \fxTabComp3, \fxTabCompName3View, \fxTabCompRandM3View, \fxTabCompRandL3View, \fxTabCompRand3View, \fxTabCompRandA3View, \fxTabCompRandH3View, \fxTabCompDef3View, \fxTabCompSel3View, \fxTabCompSel3Values, s);
+		~makeFxColumn.(currentEnvironment, 4, 1185*~xSizeMul, 4*~ySizeMul, ~tabFx[s], \fxSynthDef4, \fxTabComp4, \fxTabCompName4View, \fxTabCompRandM4View, \fxTabCompRandL4View, \fxTabCompRand4View, \fxTabCompRandA4View, \fxTabCompRandH4View, \fxTabCompDef4View, \fxTabCompSel4View, \fxTabCompSel4Values, s);
 
-		~makeFxAColumn.(currentEnvironment, 5, 2, 4, ~tabAmb[s], \fxSynthDef5, \fxSynthDef5ALL, \fxTabComp5, \fxTabCompName5View, \fxTabCompRand5View, \fxTabCompDef5View, \fxTabCompSel5View, \fxTabCompSel5Values, \numFxSynthDef5, 2, \fxSynthDef5SwitchTypView, \fxSynthDef5SwitchTyp, s);
-		~makeFxAColumn.(currentEnvironment, 6, 395, 4, ~tabAmb[s], \fxSynthDef6, \fxSynthDef6ALL, \fxTabComp6, \fxTabCompName6View, \fxTabCompRand6View, \fxTabCompDef6View, \fxTabCompSel6View, \fxTabCompSel6Values, \numFxSynthDef6, 2, \fxSynthDef6SwitchTypView, \fxSynthDef6SwitchTyp, s);
-		~makeFxAColumn.(currentEnvironment, 7, 790, 4, ~tabAmb[s], \fxSynthDef7, \fxSynthDef7ALL, \fxTabComp7, \fxTabCompName7View, \fxTabCompRand7View, \fxTabCompDef7View, \fxTabCompSel7View, \fxTabCompSel7Values, \numFxSynthDef7, 1, \fxSynthDef7SwitchTypView, \fxSynthDef7SwitchTyp, s);
-		~makeFxAColumn.(currentEnvironment, 8, 1185, 4, ~tabAmb[s], \fxSynthDef8, \fxSynthDef8ALL, \fxTabComp8, \fxTabCompName8View, \fxTabCompRand8View, \fxTabCompDef8View, \fxTabCompSel8View, \fxTabCompSel8Values, \numFxSynthDef8, 4, \fxSynthDef8SwitchTypView, \fxSynthDef8SwitchTyp, s);
+		~makeFxAColumn.(currentEnvironment, 5, 2*~xSizeMul, 4*~ySizeMul, ~tabAmb[s], \fxSynthDef5, \fxSynthDef5ALL, \fxTabComp5, \fxTabCompName5View, \fxTabCompRand5View, \fxTabCompDef5View, \fxTabCompSel5View, \fxTabCompSel5Values, \numFxSynthDef5, 2, \fxSynthDef5SwitchTypView, \fxSynthDef5SwitchTyp, s);
+		~makeFxAColumn.(currentEnvironment, 6, 395*~xSizeMul, 4*~ySizeMul, ~tabAmb[s], \fxSynthDef6, \fxSynthDef6ALL, \fxTabComp6, \fxTabCompName6View, \fxTabCompRand6View, \fxTabCompDef6View, \fxTabCompSel6View, \fxTabCompSel6Values, \numFxSynthDef6, 2, \fxSynthDef6SwitchTypView, \fxSynthDef6SwitchTyp, s);
+		~makeFxAColumn.(currentEnvironment, 7, 790*~xSizeMul, 4*~ySizeMul, ~tabAmb[s], \fxSynthDef7, \fxSynthDef7ALL, \fxTabComp7, \fxTabCompName7View, \fxTabCompRand7View, \fxTabCompDef7View, \fxTabCompSel7View, \fxTabCompSel7Values, \numFxSynthDef7, 1, \fxSynthDef7SwitchTypView, \fxSynthDef7SwitchTyp, s);
+		~makeFxAColumn.(currentEnvironment, 8, 1185*~xSizeMul, 4*~ySizeMul, ~tabAmb[s], \fxSynthDef8, \fxSynthDef8ALL, \fxTabComp8, \fxTabCompName8View, \fxTabCompRand8View, \fxTabCompDef8View, \fxTabCompSel8View, \fxTabCompSel8Values, \numFxSynthDef8, 4, \fxSynthDef8SwitchTypView, \fxSynthDef8SwitchTyp, s);
 
 	};
 
@@ -27992,8 +28063,8 @@ u.drawFunc = { d.draw }
 	~fxASliderMul = 0 ! 6 /*~numEffects*/ ! 2;
 	~fxASliderMulName = ["Mul P1", "Mul P2", "Mul P3", "Mul R1", "Mul R2", "Mul R3"] /*0 ! 6*/ /*~numEffects*/;
 
-	~fxACompViewPosH = [2, 197, 2, 197, 197+195, 197+(195*2)];
-	~fxACompViewPosV = [580, 580, 800, 800, 800, 800];
+	~fxACompViewPosH = [2, 197, 2, 197, 197+195, 197+(195*2)]*~xSizeMul;
+	~fxACompViewPosV = [580, 580, 800, 800, 800, 800]*~ySizeMul;
 
 	~fxASynthDefSlider2D = 0 ! 2; // nécessaire d'être déclaré sinon erreur
 
@@ -28003,19 +28074,19 @@ u.drawFunc = { d.draw }
 
 		/*~numEffects*/ 6.do { |i|
 
-			~fxACompView[s][i] = CompositeView(~tabAmb[s], Rect(~fxACompViewPosH[i], ~fxACompViewPosV[i], 190, 210)).background = ~compFxBackgroundColors[0];
+			~fxACompView[s][i] = CompositeView(~tabAmb[s], Rect(~fxACompViewPosH[i], ~fxACompViewPosV[i], 190*~xSizeMul, 210*~ySizeMul)).background = ~compFxBackgroundColors[0];
 			~fxACompView[s][i].decorator = FlowLayout(~fxACompView[s][i].bounds);
-			~fxACompView[s][i].decorator.gap = 1@1;
+			~fxACompView[s][i].decorator.gap = (1*~xSizeMul)@(1*~ySizeMul);
 
-			~fxASliderMulView[s][i] = EZSlider.new2(~fxACompView[s][i], 182@20, ~fxASliderMulName[i] /*("Mul"+(i+1).asString)*/, ControlSpec(0.1, 1, \lin, 0.01, 0.8),
+			~fxASliderMulView[s][i] = EZSlider.new2(~fxACompView[s][i], (182*~xSizeMul)@(20*~ySizeMul), ~fxASliderMulName[i] /*("Mul"+(i+1).asString)*/, ControlSpec(0.1, 1, \lin, 0.01, 0.8),
 				{ |ez| ~fxASliderMul[s][i] = ez.value; ~fxASlider2DView[s][i].setXYActive(~fxASlider2DView[s][i].x, ~fxASlider2DView[s][i].y) },
-				unitWidth:0, initVal:0.8, numberWidth:30, labelWidth:35, layout:\horz,)
+				unitWidth:0, initVal:0.8, numberWidth:30*~xSizeMul, labelWidth:35*~xSizeMul, layout:\horz,)
 			.setColors(Color.grey,Color.white)
-			.font_(Font("Helvetica",11));
+			.font_(Font("Helvetica",11*~fontSizeMul));
 
-			~fxASlider2DViewView[s][i] = View(~fxACompView[s][i], 182@182);
+			~fxASlider2DViewView[s][i] = View(~fxACompView[s][i], (182*~xSizeMul)@(182*~ySizeMul));
 
-			~fxASlider2DView[s][i] = Slider2D(bounds:182@182)
+			~fxASlider2DView[s][i] = Slider2D(bounds:(182*~xSizeMul)@(182*~ySizeMul))
 			// .x_(0.5) // initial location of x
 			// .y_(1)   // initial location of y
 			.background_(Color.blue(0.5, 0))
@@ -28173,18 +28244,18 @@ u.drawFunc = { d.draw }
 
 			});
 
-			~fxASlider2DUserView[s][i] = UserView( bounds: 182@182)
-			.drawFunc_({|uview| var height = uview.bounds.height-2; // donne aussi la hauteur
+			~fxASlider2DUserView[s][i] = UserView( bounds: (182*~xSizeMul)@(182*~ySizeMul))
+			.drawFunc_({|uview| var height = uview.bounds.height-(2*~ySizeMul); // donne aussi la hauteur
 				Pen.width_(4);
 				/*Pen.moveTo(0@uview.bounds.height.rand);
 				Pen.lineTo(uview.bounds.width@uview.bounds.height.rand);*/
 				Pen.strokeColor = Color.green;
-				Pen.addOval(Rect(75,75,30,30));
+				Pen.addOval(Rect(75*~xSizeMul,75*~ySizeMul,30*~xSizeMul,30*~ySizeMul));
 				Pen.stroke;
 				Pen.strokeColor = Color.yellow;
-				Pen.line(2@height/2, height*2@height/2); // Pourquoi pas height et ibligé de mettre height*2 ???
+				Pen.line(2@height/2, height*2@height/2); // Pourquoi pas height et obligé de mettre height*2 ???
 				Pen.line(height/2@2, height/2@height);
-				Pen.addOval(Rect(5,5,height-8,height-8));
+				Pen.addOval(Rect(5*~xSizeMul,5*~ySizeMul,height-(8*~xSizeMul),height-(8*~ySizeMul)));
 				Pen.stroke;
 			});
 
@@ -28284,18 +28355,18 @@ u.drawFunc = { d.draw }
 		// serverNb2 juste pour les EQ channels qui sont sur la 1ere vue, mais dont les EQ settings peuvent être sur des serveurs différents
 		|
 
-		envir[fxTabEQCompNb][serverNb] = CompositeView(~tabEq[serverNb], Rect(widthPos, heightPos, 383, 265)).background = Color.gray(0.2).alpha_(0.175);
+		envir[fxTabEQCompNb][serverNb] = CompositeView(~tabEq[serverNb], Rect(widthPos, heightPos, 383*~xSizeMul, 265*~ySizeMul)).background = Color.gray(0.2).alpha_(0.175);
 
-		envir[fxTabCompNameEQNbView][serverNb] = StaticText(envir[fxTabEQCompNb][serverNb], Rect(2, 2, 72, 20)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12, bold: true)).align_(\center);
+		envir[fxTabCompNameEQNbView][serverNb] = StaticText(envir[fxTabEQCompNb][serverNb], Rect(2*~xSizeMul, 2*~ySizeMul, 72*~xSizeMul, 20*~ySizeMul)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12*~fontSizeMul, bold: true)).align_(\center);
 		envir[fxTabCompNameEQNbView][serverNb].string = envir[fxSynthDef][nb].name;
 
 		case
 		{channel == 0} // EQ Normaux
 		{
 			~numEffects.do { |fx|
-				envir[fxTabCompSelNbView][serverNb][nb][fx] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(76 + (fx*20), 2, 20, 18))
+				envir[fxTabCompSelNbView][serverNb][nb][fx] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect((76 + (fx*20))*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 				.states_([[(fx+1).asString, Color.white, Color.grey(0.5)],[(fx+1).asString, Color.red, Color.yellow]])
-				.font_(Font("Verdana",10, bold: true))
+				.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 				.action_({ |a| // fx.postln; nb.postln;
 					envir[fxTabCompSelNbValues][serverNb][nb][fx] = a.value;
 					if (a.value == 1, {
@@ -28306,33 +28377,33 @@ u.drawFunc = { d.draw }
 				})
 			};
 
-			envir[fxTabCompRand1EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(180, 2, 50, 18))
+			envir[fxTabCompRand1EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(180*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand1", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [[100, 1, 12.rand2], [250, 1, 12.rand2], [1000, 1, 12.rand2], [3500, 1, 12.rand2], [6000, 1, 12.rand2]];
 				~fxSynth[serverNb].do { |itemk, k| if (~fxSynth[serverNb][k] != 0 and: {~fxSynth[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDef][nb].name.asString /*)*/ }, {itemk.set( \eqSetting, envir[eqUnitLib][serverNb][nb].setting, \lag, envir[lagTimeEQNb][serverNb] )} ) }
 			});
 
-			envir[fxTabCompRand2EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(230, 2, 50, 18))
+			envir[fxTabCompRand2EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(230*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand2", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [[100, exprand(0.2, 6), 12.rand2], [250, exprand(0.2, 6), 12.rand2], [1000, exprand(0.2, 6), 12.rand2], [3500, exprand(0.2, 6), 12.rand2], [6000, exprand(0.2, 6), 12.rand2]];
 				~fxSynth[serverNb].do { |itemk, k| if (~fxSynth[serverNb][k] != 0 and: {~fxSynth[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDef][nb].name.asString /*)*/ }, {itemk.set( \eqSetting, envir[eqUnitLib][serverNb][nb].setting, \lag, envir[lagTimeEQNb][serverNb] )} ) }
 			});
 
-			envir[fxTabCompRand3EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(280, 2, 50, 18))
+			envir[fxTabCompRand3EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(280*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand3", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [[20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2]];
 				~fxSynth[serverNb].do { |itemk, k| if (~fxSynth[serverNb][k] != 0 and: {~fxSynth[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDef][nb].name.asString /*)*/ }, {itemk.set( \eqSetting, envir[eqUnitLib][serverNb][nb].setting, \lag, envir[lagTimeEQNb][serverNb] )} ) }
 			});
 
-			envir[fxTabCompDefEQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(330, 2, 50, 18))
+			envir[fxTabCompDefEQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(330*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Def", Color.white, Color.blue]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [ [ 100, 1, 0 ], [ 250, 1, 0 ], [ 1000, 1, 0 ], [ 3500, 1, 0 ], [ 6000, 1, 0 ], [ 0 ] ];
 				~fxSynth[serverNb].do { |itemk, k| if (~fxSynth[serverNb][k] != 0 and: {~fxSynth[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDef][nb].name.asString /*)*/ }, {itemk.set( \eqSetting, envir[eqUnitLib][serverNb][nb].setting, \lag, envir[lagTimeEQNb][serverNb] )} ) }
@@ -28344,36 +28415,36 @@ u.drawFunc = { d.draw }
 		{channel == 1} // EQ Channel
 		{
 
-			envir[fxTabCompRand1EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(180, 2, 50, 18))
+			envir[fxTabCompRand1EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(180*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand1", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb2][nb].setting = [[150, 1, 12.rand2], [1500, 1, 12.rand2], [5000, 1, 12.rand2]];
 				if (~eqChaActivate[nb] == 1, { ~eqChaSynth[nb].set(\eqSetting, ~eqChannelUnitLib[serverNb2][nb], \lag, envir[lagTimeEQNb][0/*serverNb*/]) });
 				~eqChaLoView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[0][2])); ~eqChaMiView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[1][2])); ~eqChaHiView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[2][2]))
 			});
 
-			envir[fxTabCompRand2EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(230, 2, 50, 18))
+			envir[fxTabCompRand2EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(230*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand2", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb2][nb].setting = [[150, exprand(0.2, 6), 12.rand2], [1500, exprand(0.2, 6), 12.rand2], [5000, exprand(0.2, 6), 12.rand2]];
 				if (~eqChaActivate[nb] == 1, { ~eqChaSynth[nb].set(\eqSetting, ~eqChannelUnitLib[serverNb2][nb], \lag, envir[lagTimeEQNb][0/*serverNb*/]) });
 				~eqChaLoView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[0][2])); ~eqChaMiView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[1][2])); ~eqChaHiView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[2][2]))
 			});
 
-			envir[fxTabCompRand3EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(280, 2, 50, 18))
+			envir[fxTabCompRand3EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(280*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand3", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb2][nb].setting = [[20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2]];
 				if (~eqChaActivate[nb] == 1, { ~eqChaSynth[nb].set(\eqSetting, ~eqChannelUnitLib[serverNb2][nb], \lag, envir[lagTimeEQNb][0/*serverNb*/]) });
 				~eqChaLoView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[0][2])); ~eqChaMiView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[1][2])); ~eqChaHiView[nb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb2][nb].setting[2][2]))
 			});
 
-			envir[fxTabCompDefEQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(330, 2, 50, 18))
+			envir[fxTabCompDefEQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(330*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Def", Color.white, Color.blue]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb2][nb].setting = [ [ 150, 1, 0 ], [ 1500, 1, 0 ], [ 5000, 1, 0 ] ];
 				if (~eqChaActivate[nb] == 1, { ~eqChaSynth[nb].set(\eqSetting, ~eqChannelUnitLib[serverNb2][nb], \lag, envir[lagTimeEQNb][0/*serverNb*/]) });
@@ -28384,9 +28455,9 @@ u.drawFunc = { d.draw }
 		{channel == 2} // EQ FX
 		{
 
-			envir[fxTabCompRand1EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(180, 2, 50, 18))
+			envir[fxTabCompRand1EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(180*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand1", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [[150, 1, 12.rand2], [1500, 1, 12.rand2], [5000, 1, 12.rand2]];
 				if (~eqChaActivate[nb] == 1, {
@@ -28397,9 +28468,9 @@ u.drawFunc = { d.draw }
 				~eqChaLoView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[0][2])); ~eqChaMiView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[1][2])); ~eqChaHiView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[2][2]))
 			});
 
-			envir[fxTabCompRand2EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(230, 2, 50, 18))
+			envir[fxTabCompRand2EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(230*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand2", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [[150, exprand(0.2, 6), 12.rand2], [1500, exprand(0.2, 6), 12.rand2], [5000, exprand(0.2, 6), 12.rand2]];
 				if (~eqChaActivate[nb] == 1, {
@@ -28410,9 +28481,9 @@ u.drawFunc = { d.draw }
 				~eqChaLoView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[0][2])); ~eqChaMiView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[1][2])); ~eqChaHiView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[2][2]))
 			});
 
-			envir[fxTabCompRand3EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(280, 2, 50, 18))
+			envir[fxTabCompRand3EQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(280*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Rand3", Color.white, Color.red]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [[20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2], [20 exprand: 22000, exprand(0.2, 6), 12.rand2]];
 				if (~eqChaActivate[nb] == 1, {
@@ -28423,9 +28494,9 @@ u.drawFunc = { d.draw }
 				~eqChaLoView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[0][2])); ~eqChaMiView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[1][2])); ~eqChaHiView[nb][serverNb].value_(~eqChaSpec.unmap(envir[eqUnitLib][serverNb][nb].setting[2][2]))
 			});
 
-			envir[fxTabCompDefEQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(330, 2, 50, 18))
+			envir[fxTabCompDefEQNbView][serverNb] = RoundButton(envir[fxTabEQCompNb][serverNb], Rect(330*~xSizeMul, 2*~ySizeMul, 50*~xSizeMul, 18*~ySizeMul))
 			.states_([["Def", Color.white, Color.blue]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a|
 				envir[eqUnitLib][serverNb][nb].setting = [ [ 150, 1, 0 ], [ 1500, 1, 0 ], [ 5000, 1, 0 ] ];
 				if (~eqChaActivate[nb] == 1, {
@@ -28439,26 +28510,26 @@ u.drawFunc = { d.draw }
 		};
 
 		envir[lagEQNbView][serverNb] =
-		EZSlider.new2(envir[fxTabEQCompNb][serverNb], Rect(2, 25, 375, 20), envir[lagEQNb][serverNb], ControlSpec(0, 30, 'lin', 0.1, 1),
+		EZSlider.new2(envir[fxTabEQCompNb][serverNb], Rect(2*~xSizeMul, 25*~ySizeMul, 375*~xSizeMul, 20*~ySizeMul), envir[lagEQNb][serverNb], ControlSpec(0, 30, 'lin', 0.1, 1),
 			{ |ez| envir[lagTimeEQNb][serverNb] = ez.value;
 				/*(ez.value.asString ++" is the value of " ++ ez).postln*/
 			},
-			unitWidth:0, initVal:1, numberWidth:60, label: "mix", layout:\horz)
+			unitWidth:0, initVal:1, numberWidth:60*~xSizeMul, label: "mix", layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11))
+		.font_(Font("Helvetica",11*~fontSizeMul))
 		.valueAction_(1);
 
 		case
 		{channel == 0}
 		{
-			envir[eQViewNb][serverNb] = EQView(envir[fxTabEQCompNb][serverNb], Rect(5, 50, 373, 210), eqSetting: envir[eqUnitLib][serverNb][nb] ); // create a gui
+			envir[eQViewNb][serverNb] = EQView(envir[fxTabEQCompNb][serverNb], Rect(5*~xSizeMul, 50*~ySizeMul, 373*~xSizeMul, 210*~ySizeMul), eqSetting: envir[eqUnitLib][serverNb][nb] ); // create a gui
 			envir[eQViewNb][serverNb].action = { |view, setting|
 				~fxSynth[serverNb].do { |itemk, k| if (~fxSynth[serverNb][k] != 0 and: {~fxSynth[serverNb][k].defName.asString /*.contains(*/ == envir[fxSynthDef][nb].name.asString /*)*/ }, {itemk.set( \eqSetting, setting, \lag, envir[lagTimeEQNb][serverNb] )} ) }
 			};
 		}
 		{channel == 1}
 		{
-			envir[eQViewNb][serverNb] = EQView(envir[fxTabEQCompNb][serverNb], Rect(5, 50, 373, 210), eqSetting: envir[eqUnitLib][serverNb2][nb] ); // create a gui
+			envir[eQViewNb][serverNb] = EQView(envir[fxTabEQCompNb][serverNb], Rect(5*~xSizeMul, 50*~ySizeMul, 373*~xSizeMul, 210*~ySizeMul), eqSetting: envir[eqUnitLib][serverNb2][nb] ); // create a gui
 			envir[eQViewNb][serverNb].action = { |view, setting|
 				if (~eqChaActivate[nb] == 1, { ~eqChaSynth[nb].set(\eqSetting, ~eqChannelUnitLib[serverNb2][nb], \lag, envir[lagTimeEQNb][0/*serverNb*/]) });
 				~eqChaLoView[nb].value_(~eqChaSpec.unmap(setting[0][2])); ~eqChaMiView[nb].value_(~eqChaSpec.unmap(setting[1][2])); ~eqChaHiView[nb].value_(~eqChaSpec.unmap(setting[2][2]))
@@ -28466,7 +28537,7 @@ u.drawFunc = { d.draw }
 		}
 		{channel == 2}
 		{
-			envir[eQViewNb][serverNb] = EQView(envir[fxTabEQCompNb][serverNb], Rect(5, 50, 373, 210), eqSetting: envir[eqUnitLib][serverNb][nb] ); // create a gui
+			envir[eQViewNb][serverNb] = EQView(envir[fxTabEQCompNb][serverNb], Rect(5*~xSizeMul, 50*~ySizeMul, 373*~xSizeMul, 210*~ySizeMul), eqSetting: envir[eqUnitLib][serverNb][nb] ); // create a gui
 			envir[eQViewNb][serverNb].action = { |view, setting|
 				if (~eqChaActivate[nb] == 1, {
 					~numEffects.do { |i|
@@ -28487,17 +28558,17 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 		// EQ Effect 1
-		~makeEQWindow.(currentEnvironment, 0, /*790, 800*/ 5, 5,
+		~makeEQWindow.(currentEnvironment, 0, /*790, 800*/ 5*~xSizeMul, 5*~ySizeMul,
 			\fxTabEQComp1, \fxTabCompNameEQ1View, \fxTabCompRand1EQ1View, \fxTabCompRand2EQ1View, \fxTabCompRand3EQ1View, \fxTabCompDefEQ1View, \fxTabCompSel2bView, \fxTabCompSel2bValues,
 			\eQView1, \lagEQ1View, \lagEQ1, /* \lagEQ apparemment non utilisé*/ \lagTimeEQ1, 0, \fxSynthDef2b, \eqUnitLib, s
 		);
 		// EQ Effect 2
-		~makeEQWindow.(currentEnvironment, 1, /*790, 1075*/ 5+395, 5,
+		~makeEQWindow.(currentEnvironment, 1, /*790, 1075*/ (5+395)*~xSizeMul, 5*~ySizeMul,
 			\fxTabEQComp2, \fxTabCompNameEQ2View, \fxTabCompRand1EQ2View, \fxTabCompRand2EQ2View, \fxTabCompRand3EQ2View, \fxTabCompDefEQ2View, \fxTabCompSel2bView, \fxTabCompSel2bValues,
 			\eQView2, \lagEQ2View, \lagEQ2, /* \lagEQ apparemment non utilisé*/ \lagTimeEQ2, 0, \fxSynthDef2b, \eqUnitLib, s
 		);
 		// EQ Effect 3
-		~makeEQWindow.(currentEnvironment, 2, /*790, 1075*/ 400+395, 5,
+		~makeEQWindow.(currentEnvironment, 2, /*790, 1075*/ (400+395)*~xSizeMul, 5*~ySizeMul,
 			\fxTabEQComp3, \fxTabCompNameEQ3View, \fxTabCompRand1EQ3View, \fxTabCompRand2EQ3View, \fxTabCompRand3EQ3View, \fxTabCompDefEQ3View, \fxTabCompSel2bView, \fxTabCompSel2bValues,
 			\eQView3, \lagEQ3View, \lagEQ3, /* \lagEQ apparemment non utilisé*/ \lagTimeEQ3, 0, \fxSynthDef2b, \eqUnitLib, s
 		);
@@ -28546,69 +28617,69 @@ u.drawFunc = { d.draw }
 
 	// EQ Channel Effect 1
 	~fxTabEQChaComp1=0!2; ~fxTabCompNameEQCha1View=0!2; ~fxTabCompRand1EQCha1View=0!2; ~fxTabCompRand2EQCha1View=0!2; ~fxTabCompRand3EQCha1View=0!2; ~fxTabCompDefEQCha1View=0!2; ~eQChaView1=0!2; ~lagEQCha1View=0!2; ~lagEQCha1=0!2; ~lagTimeEQCha1=0!2;
-	~makeEQWindow.(currentEnvironment, 0, /*790, 800*/ 5, 740,
+	~makeEQWindow.(currentEnvironment, 0, /*790, 800*/ 5*~xSizeMul, 740*~ySizeMul,
 		\fxTabEQChaComp1, \fxTabCompNameEQCha1View, \fxTabCompRand1EQCha1View, \fxTabCompRand2EQCha1View, \fxTabCompRand3EQCha1View, \fxTabCompDefEQCha1View, nil, nil,
 		\eQChaView1, \lagEQCha1View, \lagEQCha1, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha1, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {0 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 2
 	~fxTabEQChaComp2=0!2; ~fxTabCompNameEQCha2View=0!2; ~fxTabCompRand1EQCha2View=0!2; ~fxTabCompRand2EQCha2View=0!2; ~fxTabCompRand3EQCha2View=0!2; ~fxTabCompDefEQCha2View=0!2; ~eQChaView2=0!2; ~lagEQCha2View=0!2; ~lagEQCha2=0!2; ~lagTimeEQCha2=0!2;
-	~makeEQWindow.(currentEnvironment, 1, 400, 740,
+	~makeEQWindow.(currentEnvironment, 1, 400*~xSizeMul, 740*~ySizeMul,
 		\fxTabEQChaComp2, \fxTabCompNameEQCha2View, \fxTabCompRand1EQCha2View, \fxTabCompRand2EQCha2View, \fxTabCompRand3EQCha2View, \fxTabCompDefEQCha2View, nil, nil,
 		\eQChaView2, \lagEQCha2View, \lagEQCha2, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha2, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {1 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 3
 	~fxTabEQChaComp3=0!2; ~fxTabCompNameEQCha3View=0!2; ~fxTabCompRand1EQCha3View=0!2; ~fxTabCompRand2EQCha3View=0!2; ~fxTabCompRand3EQCha3View=0!2; ~fxTabCompDefEQCha3View=0!2; ~eQChaView3=0!2; ~lagEQCha3View=0!2; ~lagEQCha3=0!2; ~lagTimeEQCha3=0!2;
-	~makeEQWindow.(currentEnvironment, 2, 400+395, 740,
+	~makeEQWindow.(currentEnvironment, 2, (400+395)*~xSizeMul, 740*~ySizeMul,
 		\fxTabEQChaComp3, \fxTabCompNameEQCha3View, \fxTabCompRand1EQCha3View, \fxTabCompRand2EQCha3View, \fxTabCompRand3EQCha3View, \fxTabCompDefEQCha3View, nil, nil,
 		\eQChaView3, \lagEQCha3View, \lagEQCha3, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha3, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {2 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 4
 	~fxTabEQChaComp4=0!2; ~fxTabCompNameEQCha4View=0!2; ~fxTabCompRand1EQCha4View=0!2; ~fxTabCompRand2EQCha4View=0!2; ~fxTabCompRand3EQCha4View=0!2; ~fxTabCompDefEQCha4View=0!2; ~eQChaView4=0!2; ~lagEQCha4View=0!2; ~lagEQCha4=0!2; ~lagTimeEQCha4=0!2;
-	~makeEQWindow.(currentEnvironment, 3, 400+395+395, 740,
+	~makeEQWindow.(currentEnvironment, 3, (400+395+395)*~xSizeMul, 740*~ySizeMul,
 		\fxTabEQChaComp4, \fxTabCompNameEQCha4View, \fxTabCompRand1EQCha4View, \fxTabCompRand2EQCha4View, \fxTabCompRand3EQCha4View, \fxTabCompDefEQCha4View, nil, nil,
 		\eQChaView4, \lagEQCha4View, \lagEQCha4, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha4, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {3 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 5
 	~fxTabEQChaComp5=0!2; ~fxTabCompNameEQCha5View=0!2; ~fxTabCompRand1EQCha5View=0!2; ~fxTabCompRand2EQCha5View=0!2; ~fxTabCompRand3EQCha5View=0!2; ~fxTabCompDefEQCha5View=0!2; ~eQChaView5=0!2; ~lagEQCha5View=0!2; ~lagEQCha5=0!2; ~lagTimeEQCha5=0!2;
-	~makeEQWindow.(currentEnvironment, 4, 5, 1010,
+	~makeEQWindow.(currentEnvironment, 4, 5*~xSizeMul, 1010*~ySizeMul,
 		\fxTabEQChaComp5, \fxTabCompNameEQCha5View, \fxTabCompRand1EQCha5View, \fxTabCompRand2EQCha5View, \fxTabCompRand3EQCha5View, \fxTabCompDefEQCha5View, nil, nil,
 		\eQChaView5, \lagEQCha5View, \lagEQCha5, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha5, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {4 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 6
 	~fxTabEQChaComp6=0!2; ~fxTabCompNameEQCha6View=0!2; ~fxTabCompRand1EQCha6View=0!2; ~fxTabCompRand2EQCha6View=0!2; ~fxTabCompRand3EQCha6View=0!2; ~fxTabCompDefEQCha6View=0!2; ~eQChaView6=0!2; ~lagEQCha6View=0!2; ~lagEQCha6=0!2; ~lagTimeEQCha6=0!2;
-	~makeEQWindow.(currentEnvironment, 5, 5+395, 1010,
+	~makeEQWindow.(currentEnvironment, 5, (5+395)*~xSizeMul, 1010*~ySizeMul,
 		\fxTabEQChaComp6, \fxTabCompNameEQCha6View, \fxTabCompRand1EQCha6View, \fxTabCompRand2EQCha6View, \fxTabCompRand3EQCha6View, \fxTabCompDefEQCha6View, nil, nil,
 		\eQChaView6, \lagEQCha6View, \lagEQCha6, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha6, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {5 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 7
 	~fxTabEQChaComp7=0!2; ~fxTabCompNameEQCha7View=0!2; ~fxTabCompRand1EQCha7View=0!2; ~fxTabCompRand2EQCha7View=0!2; ~fxTabCompRand3EQCha7View=0!2; ~fxTabCompDefEQCha7View=0!2; ~eQChaView7=0!2; ~lagEQCha7View=0!2; ~lagEQCha7=0!2; ~lagTimeEQCha7=0!2;
-	~makeEQWindow.(currentEnvironment, 6, 400+395, 1010,
+	~makeEQWindow.(currentEnvironment, 6, (400+395)*~xSizeMul, 1010*~ySizeMul,
 		\fxTabEQChaComp7, \fxTabCompNameEQCha7View, \fxTabCompRand1EQCha7View, \fxTabCompRand2EQCha7View, \fxTabCompRand3EQCha7View, \fxTabCompDefEQCha7View, nil, nil,
 		\eQChaView7, \lagEQCha7View, \lagEQCha7, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha7, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {6 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect 8
 	~fxTabEQChaComp8=0!2; ~fxTabCompNameEQCha8View=0!2; ~fxTabCompRand1EQCha8View=0!2; ~fxTabCompRand2EQCha8View=0!2; ~fxTabCompRand3EQCha8View=0!2; ~fxTabCompDefEQCha8View=0!2; ~eQChaView8=0!2; ~lagEQCha8View=0!2; ~lagEQCha8=0!2; ~lagTimeEQCha8=0!2;
-	~makeEQWindow.(currentEnvironment, 7, 400+395+395, 1010,
+	~makeEQWindow.(currentEnvironment, 7, (400+395+395)*~xSizeMul, 1010*~ySizeMul,
 		\fxTabEQChaComp8, \fxTabCompNameEQCha8View, \fxTabCompRand1EQCha8View, \fxTabCompRand2EQCha8View, \fxTabCompRand3EQCha8View, \fxTabCompDefEQCha8View, nil, nil,
 		\eQChaView8, \lagEQCha8View, \lagEQCha8, /* \lagEQ apparemment non utilisé*/ \lagTimeEQCha8, 1, \fxSynthDef2Cha, \eqChannelUnitLib, 0, if (~server2.isNil or: {7 < ~serverTrackSwitch}, {0}, {1});
 	);
 
 	// EQ Channel Effect FX
 	~fxTabEQChaCompFX=0!2; ~fxTabCompNameEQChaFXView=0!2; ~fxTabCompRand1EQChaFXView=0!2; ~fxTabCompRand2EQChaFXView=0!2; ~fxTabCompRand3EQChaFXView=0!2; ~fxTabCompDefEQChaFXView=0!2; ~eQChaViewFX=0!2; ~lagEQChaFXView=0!2; ~lagEQChaFX=0!2; ~lagTimeEQChaFX=0!2;
-	~makeEQWindow.(currentEnvironment, 8, 400+395+395, 5,
+	~makeEQWindow.(currentEnvironment, 8, (400+395+395)*~xSizeMul, 5*~ySizeMul,
 		\fxTabEQChaCompFX, \fxTabCompNameEQChaFXView, \fxTabCompRand1EQChaFXView, \fxTabCompRand2EQChaFXView, \fxTabCompRand3EQChaFXView, \fxTabCompDefEQChaFXView, nil, nil,
 		\eQChaViewFX, \lagEQChaFXView, \lagEQChaFX, /* \lagEQ apparemment non utilisé*/ \lagTimeEQChaFX, 2, \fxSynthDef2Cha, \eqChannelUnitLib, 0
 	);
 
 	if (~server2.notNil, {
-		~makeEQWindow.(currentEnvironment, 8, 400+395+395, 5,
+		~makeEQWindow.(currentEnvironment, 8, (400+395+395)*~xSizeMul, 5*~ySizeMul,
 			\fxTabEQChaCompFX, \fxTabCompNameEQChaFXView, \fxTabCompRand1EQChaFXView, \fxTabCompRand2EQChaFXView, \fxTabCompRand3EQChaFXView, \fxTabCompDefEQChaFXView, nil, nil,
 			\eQChaViewFX, \lagEQChaFXView, \lagEQChaFX, /* \lagEQ apparemment non utilisé*/ \lagTimeEQChaFX, 2, \fxSynthDef2Cha, \eqChannelUnitLib, 1
 		);
@@ -28713,10 +28784,10 @@ u.drawFunc = { d.draw }
 				if (i == 0 or:{i == (nbLines-1)}, { Pen.strokeColor = Color.black }, { Pen.strokeColor = Color.blue });
 				if (hGridLabel[i] == 0 or:{i == 0} or:{i == (nbLines-1)}, { Pen.width_(3) }, { Pen.width_(1) }); // for highlighting 0 dB
 				Pen.line( // P1 & P2 (x,y)
-					26 // for left border
-					@(viewBounds.height-8 - ((viewBounds.height-27) * hGridNorm[i])), // for left and right borders
-					(viewBounds.width+3) // for right border
-					@(viewBounds.height-8 - ((viewBounds.height-27) * hGridNorm[i])) // for left and right borders
+					(26*~xSizeMul) // for left border
+					@(viewBounds.height-(8*~ySizeMul) - ((viewBounds.height-(27*~ySizeMul)) * hGridNorm[i])), // for left and right borders
+					(viewBounds.width+(3*~xSizeMul)) // for right border
+					@(viewBounds.height-(8*~ySizeMul) - ((viewBounds.height-(27*~ySizeMul)) * hGridNorm[i])) // for left and right borders
 				);
 				Pen.stroke;
 			};
@@ -28724,17 +28795,17 @@ u.drawFunc = { d.draw }
 				if (i == 0 or:{i == (nbLines2-1)}, { Pen.strokeColor = Color.black }, { Pen.strokeColor = Color./*red*/blue });
 				if (freqGridLabel[i] == 1 or:{freqGridLabel[i] == 4} or:{freqGridLabel[i] == 8} or:{i == 0} or:{i == (nbLines2-1)}, { Pen.width_(3) }, { Pen.width_(1) }); // for highlighting freqs
 				Pen.line(
-					((viewBounds.width-26) * freqGridNorm[i] + 28) // for borders above and below
-					@(viewBounds.height-8), // for border above
-					((viewBounds.width-26) * freqGridNorm[i] + 28) // for borders above and below
-					@20 // for border below
+					((viewBounds.width-(26*~xSizeMul)) * freqGridNorm[i] + (28*~xSizeMul)) // for borders above and below
+					@(viewBounds.height-(8*~ySizeMul)), // for border above
+					((viewBounds.width-(26*~xSizeMul)) * freqGridNorm[i] + (28*~xSizeMul)) // for borders above and below
+					@(20*~ySizeMul) // for border below
 				);
 				Pen.stroke;
 			};
 		});
 		// view.refresh;
-		nbLines.do { |i| StaticText(textView, Rect(-7, (viewBounds.height - ((viewBounds.height-26) * hGridNorm[i])).asInteger -18, 30, 20)).font_(Font("Helvetica", 10)).stringColor_(Color.blue).align_(\right).string_(hGridLabel[i].asString) }; // dB
-		nbLines2.do { |i| StaticText(textView, Rect(((viewBounds.width-26) * freqGridNorm[i]).asInteger+9, 2, 40, 20)).font_(Font("Helvetica", 10)).stringColor_(Color./*red*/blue).align_(\center).string_(freqGridLabel[i].asString) }; // Freq
+		nbLines.do { |i| StaticText(textView, Rect((-7*~xSizeMul), (viewBounds.height - ((viewBounds.height-(26*~ySizeMul)) * hGridNorm[i])).asInteger - (18*~ySizeMul), 30*~xSizeMul, 20*~ySizeMul)).font_(Font("Helvetica", 10*~fontSizeMul)).stringColor_(Color.blue).align_(\right).string_(hGridLabel[i].asString) }; // dB
+		nbLines2.do { |i| StaticText(textView, Rect(((viewBounds.width-(26*~xSizeMul)) * freqGridNorm[i]).asInteger+(9*~xSizeMul), 2*~ySizeMul, 40*~xSizeMul, 20*~ySizeMul)).font_(Font("Helvetica", 10*~fontSizeMul)).stringColor_(Color./*red*/blue).align_(\center).string_(freqGridLabel[i].asString) }; // Freq
 	};
 
 
@@ -28816,19 +28887,19 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~fftEQCompG[s] = CompositeView(~tabEq[s], Rect(5, 285, ~fftEQCompWidth-5, (~fftEQCompHeight*1.5)+30)).background_(Color.grey(0.7)); // for all
-		~fftEQComp[s] = CompositeView(~fftEQCompG[s], Rect(0, 0+20, ~fftEQCompWidth, ~fftEQCompHeight)).background_(Color.grey(0.7)); // for Plotter and Grid
-		2.do { |a| ~fftEQPlotComp[s][a] = CompositeView(~fftEQComp[s], Rect(5, 5+20, ~fftEQComp[s].bounds.width-50, ~fftEQComp[s].bounds.height-35))/*.background_(Color.grey(0.2, 0))*/ };
+		~fftEQCompG[s] = CompositeView(~tabEq[s], Rect(5*~xSizeMul, 285*~ySizeMul, (~fftEQCompWidth-5)*~xSizeMul, ((~fftEQCompHeight*1.5)+30)*~ySizeMul)).background_(Color.grey(0.7)); // for all
+		~fftEQComp[s] = CompositeView(~fftEQCompG[s], Rect(0, 20*~ySizeMul, ~fftEQCompWidth*~xSizeMul, ~fftEQCompHeight*~ySizeMul)).background_(Color.grey(0.7)); // for Plotter and Grid
+		2.do { |a| ~fftEQPlotComp[s][a] = CompositeView(~fftEQComp[s], Rect(5*~xSizeMul, (5+20)*~ySizeMul, ~fftEQComp[s].bounds.width-(50*~xSizeMul), ~fftEQComp[s].bounds.height-(35*~ySizeMul)))/*.background_(Color.grey(0.2, 0))*/ };
 		~fftEQStackComp[s] = StackLayout(~fftEQPlotComp[s][0], ~fftEQPlotComp[s][1]).mode_(\stackAll);
 		~fftEQComp[s].layout_(~fftEQStackComp[s]);
 
-		~fftEQTabCompNameView[s] = StaticText(~fftEQCompG[s], Rect(26, 2, 274, 20)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12, bold: true)).align_(\center);
+		~fftEQTabCompNameView[s] = StaticText(~fftEQCompG[s], Rect(26*~xSizeMul, 2*~ySizeMul, 274*~xSizeMul, 20*~ySizeMul)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12*~fontSizeMul, bold: true)).align_(\center);
 		~fftEQTabCompNameView[s].string = "Spectral Filter" /*~fxSynthDef2c[0].name*/;
 
 		~numEffects.do { |fx|
-			~fftTabCompSelView[s][0][fx] = RoundButton(~fftEQCompG[s], Rect(302 + (fx*20), 2, 20, 18))
+			~fftTabCompSelView[s][0][fx] = RoundButton(~fftEQCompG[s], Rect((302 + (fx*20))*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 			.states_([[(fx+1).asString, Color.white, Color.grey(0.5)],[(fx+1).asString, Color.red, Color.yellow]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a| // fx.postln; nb.postln;
 				~fftTabCompSelValues[s][0][fx] = a.value;
 				if (a.value == 1, {
@@ -28839,12 +28910,12 @@ u.drawFunc = { d.draw }
 			})
 		};
 
-		~fftEQGrid[s] = UserView(~fftEQComp[s], Rect(50, 5, ~fftEQComp[s].bounds.width-50, ~fftEQComp[s].bounds.height-50)).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
-		~makeGrids.(~fftEQGrid[s], Rect(15, 5+20, ~fftEQComp[s].bounds.width-50, ~fftEQComp[s].bounds.height-50) /*~fftEQPlotterView[a]*/, ~fftEQPlotComp[s][0], ~fftdBGrid.size, ~fftdBGridNorm, ~fftdBGridLabel2, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
+		~fftEQGrid[s] = UserView(~fftEQComp[s], Rect(50*~xSizeMul, 5*~ySizeMul, ~fftEQComp[s].bounds.width-(50*~xSizeMul), ~fftEQComp[s].bounds.height-(50*~ySizeMul))).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+		~makeGrids.(~fftEQGrid[s], Rect(15*~xSizeMul, (5+20)*~ySizeMul, ~fftEQComp[s].bounds.width-(50*~xSizeMul), ~fftEQComp[s].bounds.height-(50*~ySizeMul)) /*~fftEQPlotterView[a]*/, ~fftEQPlotComp[s][0], ~fftdBGrid.size, ~fftdBGridNorm, ~fftdBGridLabel2, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
 
 		2.do { |a|
 			// Plotter
-			~fftEQPlotterView[s][a] = Plotter("FFT Filter", Rect(15, 5, ~fftEQComp[s].bounds.width-50, ~fftEQComp[s].bounds.height-50), ~fftEQPlotComp[s][a])
+				~fftEQPlotterView[s][a] = Plotter("FFT Filter", Rect(20*~xSizeMul, 17*~ySizeMul, ~fftEQComp[s].bounds.width-(52*~xSizeMul), ~fftEQComp[s].bounds.height-(60*~ySizeMul)), ~fftEQPlotComp[s][a])
 			.value_(~fftEQMagValues[s][a])
 			.editMode_(true)
 			.resolution_(0.1)
@@ -28863,14 +28934,14 @@ u.drawFunc = { d.draw }
 			};
 		};
 
-		~fftEQCompChooseView[s] = Button(~fftEQCompG[s], Rect(265, ~fftEQPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftEQCompChooseView[s] = Button(~fftEQCompG[s], Rect(265*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["\Act on 1", Color.white, Color.red], ["\Act on 2", Color.black, Color.yellow]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftEQCompChoose[s] = i.value; ~fftEQStackComp[s].index = ~fftEQCompChoose[s] });
 
-		~fftEQBufChooseView[s] = Button(~fftEQCompG[s], Rect(325, ~fftEQPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftEQBufChooseView[s] = Button(~fftEQCompG[s], Rect(325*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["\Syn on 1", Color.white, Color.red], ["\Syn on 2", Color.black, Color.yellow]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftEQBufChoose[s] = i.value;
 			if (~fftTabCompSelValues[s][0].indexOf(1).notNil, {
 				if (~fftEQBufChoose[s] == 0, {~fxSynth[s][~fftTabCompSelValues[s][0].indexOf(1)].set(\fade, -1, \lag, ~fftEQSliderLag[s])}, {~fxSynth[s][~fftTabCompSelValues[s][0].indexOf(1)].set(\fade, 1, \lag, ~fftEQSliderLag[s])} )
@@ -28878,36 +28949,36 @@ u.drawFunc = { d.draw }
 		})
 		.value_(0).doAction;
 
-		~fftEQSliderView[s] = EZSlider.new2(~fftEQCompG[s], Rect(~fftEQPlotterView[s][0].bounds.width+8, 18+20, 30, ~fftEQPlotterView[s][0].bounds.height), nil, ~fftdBSpec,
+		~fftEQSliderView[s] = EZSlider.new2(~fftEQCompG[s], Rect(~fftEQPlotterView[s][0].bounds.width+(11*~xSizeMul), (18+20)*~ySizeMul, 30*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(10*~ySizeMul)), nil, ~fftdBSpec,
 			{ |ez| ~fftEQSlider[s] = ez.value.dbamp;
 				~fftEQMagValues[s][~fftEQCompChoose[s]] = ~fftEQSlider[s] ! ~fftEQNbOfBins;
 				~fftEQBufsGet.(~fftEQCompChoose[s], s);
 				~fftFreqIntervalsSize.do { |b| ~fftEQMiniSliderView[s][b].value_(ez.value) }; },
-			unitWidth:0, initVal:0, numberWidth:80, layout:\vert)
+			unitWidth:0, initVal:0, numberWidth:80*~xSizeMul, layout:\vert)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Verdana", 10));
+		.font_(Font("Verdana", 10*~fontSizeMul));
 
-		~fftEQSliderLagView[s] = EZSlider.new2(~fftEQCompG[s], Rect(145, ~fftEQPlotterView[s][0].bounds.height+25+20, ~fftEQPlotterView[s][0].bounds.width-142, 20), " Xfade Time ", ControlSpec(0, 30, \lin, 0.1, 1),
+		~fftEQSliderLagView[s] = EZSlider.new2(~fftEQCompG[s], Rect(145*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), ~fftEQPlotterView[s][0].bounds.width-(142*~xSizeMul), 20*~ySizeMul), " Xfade Time ", ControlSpec(0, 30, \lin, 0.1, 1),
 			{ |ez| ~fftEQSliderLag[s] = ez.value },
-			labelWidth: 70, unitWidth:0, initVal:0, numberWidth:30, labelWidth:64, layout:\horz)
+			labelWidth: /*70*/64*~xSizeMul, unitWidth:0, initVal:0, numberWidth:30*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.valueAction_(1);
 
 		// Buttons
-		~fftEQ0View[s] = Button(~fftEQCompG[s], Rect(26, ~fftEQPlotterView[s][0].bounds.height+25+20, 55, 20))
+		~fftEQ0View[s] = Button(~fftEQCompG[s], Rect(26*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["0 dB", Color.white, Color.blue/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ ~fftEQSliderView[s].value_(0).doAction });
 
-		~fftEQClearView[s] = Button(~fftEQCompG[s], Rect(85, ~fftEQPlotterView[s][0].bounds.height+25+20, 55, 20))
+		~fftEQClearView[s] = Button(~fftEQCompG[s], Rect(85*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["- inf", Color.white, Color.red]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ ~fftEQSliderView[s].value_(-120).doAction });
 
-		~fftEQRandSlView[s] = Button(~fftEQCompG[s], Rect(26, ~fftEQPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftEQRandSlView[s] = Button(~fftEQCompG[s], Rect(26*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand Sl", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ if (~fftEQFreqIntervalsReduceChoose[s] == 0,
 			{~fftFreqIntervalsSize.do { |b| ~fftEQMiniSliderView[s][b].valueAction_(rrand(-120,6)) } },
 			{~fftFreqIntervalsReduce2a.do { |b| ~fftEQMiniSliderView[s][b].valueAction_(rrand(-120,6)) } })
@@ -28920,33 +28991,33 @@ u.drawFunc = { d.draw }
 		)
 		*/
 
-		~fftEQRandInLView[s] = Button(~fftEQCompG[s], Rect(85, ~fftEQPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftEQRandInLView[s] = Button(~fftEQCompG[s], Rect(85*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand InL", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftEQMagValues[s][~fftEQCompChoose[s]] = ~fftEQFreqIntervalsDif.collect { |b| Array.interpolation(b, linrand(2.0), linrand(2.0)) }.flat;
 			~fftEQBufsGet.(~fftEQCompChoose[s], s);
 		});
 
-		~fftEQRandInView[s] = Button(~fftEQCompG[s], Rect(145, ~fftEQPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftEQRandInView[s] = Button(~fftEQCompG[s], Rect(145*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand In", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftEQMagValues[s][~fftEQCompChoose[s]] = ~fftEQFreqIntervalsDif.collect { |b| Array.interpolation(b, 2.0.rand, 2.0.rand) }.flat;
 			~fftEQBufsGet.(~fftEQCompChoose[s], s);
 		});
 
-		~fftEQRandBinView[s] = Button(~fftEQCompG[s], Rect(205, ~fftEQPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftEQRandBinView[s] = Button(~fftEQCompG[s], Rect(205*~xSizeMul, ~fftEQPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand Bin", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftEQMagValues[s][~fftEQCompChoose[s]] = /*{rrand(0.0, 2)}*/ {0.000001.exprand(2)} ! ~fftEQNbOfBins;
 			~fftEQBufsGet.(~fftEQCompChoose[s], s);
 		});
 
-		~fftEQFreqIntervalsReduceChooseView[s] = Button(~fftEQCompG[s], Rect(~fftEQPlotterView[s][0].bounds.width+5, ~fftEQPlotterView[s][0].bounds.height+52+20, 35, 40))
+		~fftEQFreqIntervalsReduceChooseView[s] = Button(~fftEQCompG[s], Rect(~fftEQPlotterView[s][0].bounds.width+(8*~xSizeMul), ~fftEQPlotterView[s][0].bounds.height+((52+30)*~ySizeMul), 35*~xSizeMul, 40*~ySizeMul))
 		.states_([["\All", Color.white, Color.grey(0.7)], ["\Main", Color.white, Color.grey]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftEQFreqIntervalsReduceChoose[s] = i.value })
 		.value_(0).doAction;
 
@@ -28969,9 +29040,9 @@ u.drawFunc = { d.draw }
 			};
 		};
 
-		~fftEQRoutRandView[s] = Button(~fftEQCompG[s], Rect(~fftEQPlotterView[s][0].bounds.width+5, ~fftEQPlotterView[s][0].bounds.height+52+20+45, 35, 40))
+		~fftEQRoutRandView[s] = Button(~fftEQCompG[s], Rect(~fftEQPlotterView[s][0].bounds.width+(8*~xSizeMul), ~fftEQPlotterView[s][0].bounds.height+((52+30+45)*~ySizeMul), 35*~xSizeMul, 40*~ySizeMul))
 		.states_([["Rand\nRout", Color.black, Color.green], ["Rand\nRout", Color.white, Color.red]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftEQRoutRand[s] = i.value;
 			if (~fftEQRoutRand[s] == 1, {
 				~fftEQTask[s].play(doReset:true); // clock spécifique ???
@@ -28983,7 +29054,7 @@ u.drawFunc = { d.draw }
 
 		~fftFreqIntervalsSize.do { |b|
 
-			~fftEQMiniSliderView[s][b] = EZSlider.new2(~fftEQCompG[s], Rect(((~fftEQComp[s].bounds.width-70) * ~fftEQFreqIntervalsNorm[b])+24, ~fftEQPlotterView[s][0].bounds.height+55+16, ((~fftEQComp[s].bounds.width-70) * ~fftEQFreqIntervalsDifNorm[b+1]).floor, ~fftEQPlotterView[s][0].bounds.height * 0.5), nil /*~fftFreqIntervalsLabel[b].asString++"-"++~fftFreqIntervalsLabel[b+1].asString*/, ~fftdBSpec /*.step_(0.01)*/,
+			~fftEQMiniSliderView[s][b] = EZSlider.new2(~fftEQCompG[s], Rect(((~fftEQComp[s].bounds.width-(62*~xSizeMul)) * ~fftEQFreqIntervalsNorm[b])+(24*~xSizeMul), ~fftEQPlotterView[s][0].bounds.height+((55+26)*~ySizeMul), ((~fftEQComp[s].bounds.width-(70*~xSizeMul)) * ~fftEQFreqIntervalsDifNorm[b+1]).floor, ~fftEQPlotterView[s][0].bounds.height * 0.52), nil /*~fftFreqIntervalsLabel[b].asString++"-"++~fftFreqIntervalsLabel[b+1].asString*/, ~fftdBSpec /*.step_(0.01)*/,
 				{ |ez|
 					~fftEQMiniSlider[s][b] = ez.value.dbamp;
 					~fftEQMagValues[s][~fftEQCompChoose[s]][~fftEQFreqIntervals[b]..(~fftEQFreqIntervals[b+1]-1)] = ~fftEQMiniSlider[s][b];
@@ -28993,12 +29064,12 @@ u.drawFunc = { d.draw }
 						if (~fftFreqIntervalsReduce2a.includes(b), { ~fftFreqIntervalsReduce3[~fftFreqIntervalsReduce2a.indexOf(b)].do{ |a| ~fftEQMiniSliderView[s][a].valueAction_(ez.value) } } );
 					});
 				},
-				unitWidth:0, initVal:0, numberWidth:20, layout:/*\horz*/ \vert)
+				unitWidth:0, initVal:0, numberWidth:20*~xSizeMul, layout:/*\horz*/ \vert)
 			.setColors(/*Color.grey,Color.white*/ sliderBackground: ~fftFreqIntervalsColors[b])
-			.font_(Font("Verdana", 10));
+			.font_(Font("Verdana", 10*~fontSizeMul));
 			//.valueAction_(-120);
 
-			StaticText(~fftEQCompG[s], Rect(((~fftEQComp[s].bounds.width-70) * ~fftEQFreqIntervalsNorm[b])+25, ~fftEQPlotterView[s][0].bounds.height + (~fftEQPlotterView[s][0].bounds.height * 0.5)+55+18, ((~fftEQComp[s].bounds.width-70) * ~fftEQFreqIntervalsDifNorm[b+1]-1).floor, 25)).string_(~fftFreqIntervalsLabel[b].asString++"\n"++~fftFreqIntervalsLabel[b+1].asString).font_(Font("Verdana", 10)).align_(\center).background_(Color.grey).stringColor_(Color.white);
+			StaticText(~fftEQCompG[s], Rect(((~fftEQComp[s].bounds.width-(62*~xSizeMul)) * ~fftEQFreqIntervalsNorm[b])+(25*~xSizeMul), ~fftEQPlotterView[s][0].bounds.height + (~fftEQPlotterView[s][0].bounds.height * 0.52)+((55+28)*~ySizeMul), ((~fftEQComp[s].bounds.width-(70*~xSizeMul)) * ~fftEQFreqIntervalsDifNorm[b+1]-1).floor, 25*~ySizeMul)).string_(~fftFreqIntervalsLabel[b].asString++"\n"++~fftFreqIntervalsLabel[b+1].asString).font_(Font("Verdana", 10*~fontSizeMul)).align_(\center).background_(Color.grey).stringColor_(Color.white);
 
 		};
 
@@ -29089,19 +29160,19 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~fftDelCompG[s] = CompositeView(~tabEq[s], Rect(495, 285, ~fftDelCompWidth-5, (~fftDelCompHeight*1.5)+30)).background_(Color.grey(0.7)); // for all
-		~fftDelComp[s] = CompositeView(~fftDelCompG[s], Rect(0, 0+20, ~fftDelCompWidth, ~fftDelCompHeight)).background_(Color.grey(0.7)); // for Plotter and Grid
-		4.do { |a| ~fftDelPlotComp[s][a] = CompositeView(~fftDelComp[s], Rect(5, 5+20, ~fftDelComp[s].bounds.width-50, ~fftDelComp[s].bounds.height-35))/*.background_(Color.grey(0.2, 0))*/ };
+		~fftDelCompG[s] = CompositeView(~tabEq[s], Rect(495*~xSizeMul, 285*~ySizeMul, (~fftDelCompWidth-5)*~xSizeMul, ((~fftDelCompHeight*1.5)+30)*~ySizeMul)).background_(Color.grey(0.7)); // for all
+		~fftDelComp[s] = CompositeView(~fftDelCompG[s], Rect(0, 20*~ySizeMul, ~fftDelCompWidth*~xSizeMul, ~fftDelCompHeight*~ySizeMul)).background_(Color.grey(0.7)); // for Plotter and Grid
+		4.do { |a| ~fftDelPlotComp[s][a] = CompositeView(~fftDelComp[s], Rect(5*~xSizeMul, (5+20)*~ySizeMul, ~fftDelComp[s].bounds.width-(50*~xSizeMul), ~fftDelComp[s].bounds.height-(35*~ySizeMul)))/*.background_(Color.grey(0.2, 0))*/ };
 		~fftDelStackComp[s] = StackLayout(~fftDelPlotComp[s][0], ~fftDelPlotComp[s][1], ~fftDelPlotComp[s][2], ~fftDelPlotComp[s][3]).mode_(\stackAll);
 		~fftDelComp[s].layout_(~fftDelStackComp[s]);
 
-		~fftDelTabCompNameView[s] = StaticText(~fftDelCompG[s], Rect(26, 2, 274, 20)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12, bold: true)).align_(\center);
+		~fftDelTabCompNameView[s] = StaticText(~fftDelCompG[s], Rect(26*~xSizeMul, 2*~ySizeMul, 274*~xSizeMul, 20*~ySizeMul)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12*~fontSizeMul, bold: true)).align_(\center);
 		~fftDelTabCompNameView[s].string = "Spectral Delay" /*~fxSynthDef2c[1].name*/;
 
 		~numEffects.do { |fx|
-			~fftTabCompSelView[s][1][fx] = RoundButton(~fftDelCompG[s], Rect(302 + (fx*20), 2, 20, 18))
+			~fftTabCompSelView[s][1][fx] = RoundButton(~fftDelCompG[s], Rect((302 + (fx*20))*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 			.states_([[(fx+1).asString, Color.white, Color.grey(0.5)],[(fx+1).asString, Color.red, Color.yellow]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a| // fx.postln; nb.postln;
 				~fftTabCompSelValues[s][1][fx] = a.value;
 				if (a.value == 1, {
@@ -29112,9 +29183,9 @@ u.drawFunc = { d.draw }
 			})
 		};
 
-		~fftDelChooseCompView[s] = Button(~fftDelCompG[s], Rect(405, 2, 66, 20) /*Rect(376, ~fftDelPlotterView[0].bounds.height+20, 55, 20)*/)
+		~fftDelChooseCompView[s] = Button(~fftDelCompG[s], Rect(405*~xSizeMul, 2*~ySizeMul, 66*~xSizeMul, 20*~ySizeMul) /*Rect(376, ~fftDelPlotterView[0].bounds.height+20, 55, 20)*/)
 		.states_([["View All", Color.white, Color.grey], ["1 View", Color.white, Color.grey]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|a| ~fftDelChooseComp[s] = a.value;
 			case
 			{~fftDelChooseComp[s] == 0}
@@ -29125,13 +29196,13 @@ u.drawFunc = { d.draw }
 			{2.do { |i| ~fftDelPlotComp[s][i].visible_(0)}; 2.do { |i| ~fftDelPlotComp[s][i+2].visible_(1)} }
 		});
 
-		~fftDelGrid[s] = UserView(~fftDelComp[s], Rect(50, 5, ~fftDelComp[s].bounds.width-50, ~fftDelComp[s].bounds.height-50)).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
-		~makeGrids.(~fftDelGrid[s], Rect(15, 5+20, ~fftDelComp[s].bounds.width-50, ~fftDelComp[s].bounds.height-50) /*~fftDelPlotterView[a]*/, ~fftDelPlotComp[s][0], ~fftDelGridLabel.size, ~fftDelGridNorm, ~fftDelGridLabel, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
-		~makeGrids.(~fftDelGrid[s], Rect(15, 5+20, ~fftDelComp[s].bounds.width-50, ~fftDelComp[s].bounds.height-50) /*~fftDelPlotterView[a]*/, ~fftDelPlotComp[s][2], ~fftDelGridLabel.size, ~fftDelGridNorm, ~fftDelGridLabel, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
+		~fftDelGrid[s] = UserView(~fftDelComp[s], Rect(50*~xSizeMul, 5*~ySizeMul, ~fftDelComp[s].bounds.width-(50*~xSizeMul), ~fftDelComp[s].bounds.height-(50*~ySizeMul))).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+		~makeGrids.(~fftDelGrid[s], Rect(15*~xSizeMul, (5+20)*~ySizeMul, ~fftDelComp[s].bounds.width-(50*~xSizeMul), ~fftDelComp[s].bounds.height-(50*~ySizeMul)) /*~fftDelPlotterView[a]*/, ~fftDelPlotComp[s][0], ~fftDelGridLabel.size, ~fftDelGridNorm, ~fftDelGridLabel, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
+		~makeGrids.(~fftDelGrid[s], Rect(15*~xSizeMul, (5+20)*~ySizeMul, ~fftDelComp[s].bounds.width-(50*~xSizeMul), ~fftDelComp[s].bounds.height-(50*~ySizeMul)) /*~fftDelPlotterView[a]*/, ~fftDelPlotComp[s][2], ~fftDelGridLabel.size, ~fftDelGridNorm, ~fftDelGridLabel, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
 
 		4.do { |a|
 			// Plotter
-			~fftDelPlotterView[s][a] = Plotter("FFT Delay", Rect(15, 5, ~fftDelComp[s].bounds.width-50, ~fftDelComp[s].bounds.height-50), ~fftDelPlotComp[s][a])
+			~fftDelPlotterView[s][a] = Plotter("FFT Delay", Rect(10*~xSizeMul, 17*~ySizeMul, ~fftDelComp[s].bounds.width-(42*~xSizeMul), ~fftDelComp[s].bounds.height-(60*~ySizeMul)), ~fftDelPlotComp[s][a])
 			.value_(~fftDelfbValues[s][a])
 			.editMode_(true)
 			.resolution_(0.1)
@@ -29148,16 +29219,16 @@ u.drawFunc = { d.draw }
 			};
 		};
 
-		~fftDelCompChooseView[s] = Button(~fftDelCompG[s], Rect(265, ~fftDelPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftDelCompChooseView[s] = Button(~fftDelCompG[s], Rect(265*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["\Delay 1", Color.white, Color.red], ["\FB 1", Color.black, Color.white], ["\Delay 2", Color.black, Color.yellow], ["\FB 2", Color.black, Color.green]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftDelCompChoose[s] = i.value; ~fftDelStackComp[s].index = ~fftDelCompChoose[s];
 			~fftDelChooseCompView[s].valueAction_(~fftDelChooseComp[s]);
 		});
 
-		~fftDelBufChooseView[s] = Button(~fftDelCompG[s], Rect(325, ~fftDelPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftDelBufChooseView[s] = Button(~fftDelCompG[s], Rect(325*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["\Syn on 1", Color.white, Color.red], ["\Syn on 2", Color.black, Color.yellow]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftDelBufChoose[s] = i.value;
 			if (~fftTabCompSelValues[s][1].indexOf(1).notNil, {
 				if (~fftDelBufChoose[s] == 0, {~fxSynth[s][~fftTabCompSelValues[s][1].indexOf(1)].set(\fade, 0, \lag, ~fftDelSliderLag[s])}, {~fxSynth[s][~fftTabCompSelValues[s][1].indexOf(1)].set(\fade, 1, \lag, ~fftDelSliderLag[s])} )
@@ -29165,26 +29236,26 @@ u.drawFunc = { d.draw }
 		})
 		.value_(0).doAction;
 
-		~fftDelSliderView[s] = EZSlider.new2(~fftDelCompG[s], Rect(~fftDelPlotterView[s][0].bounds.width+8, 18+20, 30, ~fftDelPlotterView[s][0].bounds.height), nil, ~fftDelSpec,
+		~fftDelSliderView[s] = EZSlider.new2(~fftDelCompG[s], Rect(~fftDelPlotterView[s][0].bounds.width+(1*~xSizeMul), (18+20)*~ySizeMul, 30*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(10*~ySizeMul)), nil, ~fftDelSpec,
 			{ |ez| ~fftDelSlider[s] = ez.value;
 				~fftDelfbValues[s][~fftDelCompChoose[s]] = ~fftDelSlider[s] ! ~fftDelNbOfBins;
 				~fftDelBufsGet.(~fftDelCompChoose[s], 0);
 				~fftFreqIntervalsSize.do { |b| ~fftDelMiniSliderView[s][b].value_(ez.value) } },
-			unitWidth:0, initVal:0, numberWidth:80, layout:\vert)
+			unitWidth:0, initVal:0, numberWidth:80*~xSizeMul, layout:\vert)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Verdana", 10));
+		.font_(Font("Verdana", 10*~fontSizeMul));
 
-		~fftDelSliderLagView[s] = EZSlider.new2(~fftDelCompG[s], Rect(145, ~fftDelPlotterView[s][0].bounds.height+25+20, ~fftDelPlotterView[s][0].bounds.width-142, 20), " Xfade Time ", ControlSpec(0, 30, \lin, 0.1, 1),
+		~fftDelSliderLagView[s] = EZSlider.new2(~fftDelCompG[s], Rect(145*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), ~fftDelPlotterView[s][0].bounds.width-(142*~xSizeMul), 20*~ySizeMul), " Xfade Time ", ControlSpec(0, 30, \lin, 0.1, 1),
 			{ |ez| ~fftDelSliderLag[s] = ez.value },
-			labelWidth: 70, unitWidth:0, initVal:0, numberWidth:30, labelWidth:64, layout:\horz)
+			labelWidth: /*70*/64*~xSizeMul, unitWidth:0, initVal:0, numberWidth:30*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.valueAction_(1);
 
 		// Buttons
-		~fftDelClearView[s] = Button(~fftDelCompG[s], Rect(26, ~fftDelPlotterView[s][0].bounds.height+25+20, 55, 20))
+		~fftDelClearView[s] = Button(~fftDelCompG[s], Rect(26*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["0s", Color.white, Color.blue]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			// ~fftDelSliderView.valueAction_(0)
 			// ci-dessous pour remettre à 0 non seulement les temps de délai, mais aussi le feedback
@@ -29192,46 +29263,46 @@ u.drawFunc = { d.draw }
 			~fftDelSliderView[s].value_(0).doAction; ~fftDelCompChooseView[s].valueAction_(~fftDelCompChoose[s]+1); ~fftDelSliderView[s].value_(0).doAction; ~fftDelCompChooseView[s].valueAction_(~fftDelCompChoose[s]-1)
 		});
 
-		~fftDel0View[s] = Button(~fftDelCompG[s], Rect(85, ~fftDelPlotterView[s][0].bounds.height+25+20, 55, 20))
+		~fftDel0View[s] = Button(~fftDelCompG[s], Rect(85*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["1s", Color.white, Color.red/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ ~fftDelSliderView[s].value_(1).doAction });
 
-		~fftDelRandSlView[s] = Button(~fftDelCompG[s], Rect(26, ~fftDelPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftDelRandSlView[s] = Button(~fftDelCompG[s], Rect(26*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand Sl", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ if (~fftDelFreqIntervalsReduceChoose[s] == 0,
 			{ ~fftFreqIntervalsSize.do { |b| ~fftDelMiniSliderView[s][b].valueAction_(exprand(0.001,1)) } },
 			{ ~fftFreqIntervalsReduce2a.do { |b| ~fftDelMiniSliderView[s][b].valueAction_(exprand(0.001,1)) } })
 		});
 
-		~fftDelfbRandSlView[s] = Button(~fftDelCompG[s], Rect(85, ~fftDelPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftDelfbRandSlView[s] = Button(~fftDelCompG[s], Rect(85*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand DFb", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			case {~fftDelCompChoose[s] == 1} {~fftDelCompChooseView[s].valueAction_(0)} {~fftDelCompChoose[s] == 3} {~fftDelCompChooseView[s].valueAction_(2)};
 			~fftDelRandSlView[s].valueAction_(1); ~fftDelCompChooseView[s].valueAction_(~fftDelCompChoose[s]+1); ~fftDelRandSlView[s].valueAction_(1); ~fftDelCompChooseView[s].valueAction_(~fftDelCompChoose[s]-1)
 		});
 
-		~fftDelfbRandInView[s] = Button(~fftDelCompG[s], Rect(145, ~fftDelPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftDelfbRandInView[s] = Button(~fftDelCompG[s], Rect(145*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand In", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftDelfbValues[s][~fftDelCompChoose[s]] = ~fftDelFreqIntervalsDif.collect { |b| Array.interpolation(b, 1.0.rand, 1.0.rand) }.flat;
 			~fftDelBufsGet.(~fftDelCompChoose[s], s);
 		});
 
-		~fftDelRandBinView[s] = Button(~fftDelCompG[s], Rect(205, ~fftDelPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftDelRandBinView[s] = Button(~fftDelCompG[s], Rect(205*~xSizeMul, ~fftDelPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand Bin", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftDelfbValues[s][~fftDelCompChoose[s]] = /*{rrand(0.0, 2)}*/ {0.001.exprand(1)} ! ~fftDelNbOfBins;
 			~fftDelBufsGet.(~fftDelCompChoose[s], s);
 		});
 
-		~fftDelFreqIntervalsReduceChooseView[s] = Button(~fftDelCompG[s], Rect(~fftDelPlotterView[s][0].bounds.width+5, ~fftDelPlotterView[s][0].bounds.height+52+20, 35, 40))
+		~fftDelFreqIntervalsReduceChooseView[s] = Button(~fftDelCompG[s], Rect(~fftDelPlotterView[s][0].bounds.width+((-1)*~xSizeMul), ~fftDelPlotterView[s][0].bounds.height+((52+30)*~ySizeMul), 35*~xSizeMul, 40*~ySizeMul))
 		.states_([["\All", Color.white, Color.grey(0.7)], ["\Main", Color.white, Color.grey]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftDelFreqIntervalsReduceChoose[s] = i.value })
 		.value_(0).doAction;
 
@@ -29254,9 +29325,9 @@ u.drawFunc = { d.draw }
 			};
 		};
 
-		~fftDelRoutRandView[s] = Button(~fftDelCompG[s], Rect(~fftDelPlotterView[s][0].bounds.width+5, ~fftDelPlotterView[s][0].bounds.height+52+20+45, 35, 40))
+		~fftDelRoutRandView[s] = Button(~fftDelCompG[s], Rect(~fftDelPlotterView[s][0].bounds.width+((-1)*~xSizeMul), ~fftDelPlotterView[s][0].bounds.height+((52+30+45)*~ySizeMul), 35*~xSizeMul, 40*~ySizeMul))
 		.states_([["Rand\nRout", Color.black, Color.green], ["Rand\nRout", Color.white, Color.red]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftDelRoutRand[s] = i.value;
 			if (~fftDelRoutRand[s] == 1, {
 				~fftDelTask[s].play(doReset:true); // clock spécifique ???
@@ -29268,7 +29339,7 @@ u.drawFunc = { d.draw }
 
 		~fftFreqIntervalsSize.do { |b|
 
-			~fftDelMiniSliderView[s][b] = EZSlider.new2(~fftDelCompG[s], Rect(((~fftDelComp[s].bounds.width-70) * ~fftDelFreqIntervalsNorm[b])+24, ~fftDelPlotterView[s][0].bounds.height+55+16, ((~fftDelComp[s].bounds.width-70) * ~fftDelFreqIntervalsDifNorm[b+1]).floor, ~fftDelPlotterView[s][0].bounds.height * 0.5), nil /*~fftFreqIntervalsLabel[b].asString++"-"++~fftFreqIntervalsLabel[b+1].asString*/, ~fftDelSpec /*.step_(0.01)*/,
+			~fftDelMiniSliderView[s][b] = EZSlider.new2(~fftDelCompG[s], Rect(((~fftDelComp[s].bounds.width-(62*~xSizeMul)) * ~fftDelFreqIntervalsNorm[b])+(24*~xSizeMul), ~fftDelPlotterView[s][0].bounds.height+((55+26)*~ySizeMul), ((~fftDelComp[s].bounds.width-(70*~xSizeMul)) * ~fftDelFreqIntervalsDifNorm[b+1]).floor, ~fftDelPlotterView[s][0].bounds.height * 0.52), nil /*~fftFreqIntervalsLabel[b].asString++"-"++~fftFreqIntervalsLabel[b+1].asString*/, ~fftDelSpec /*.step_(0.01)*/,
 				{ |ez|
 					~fftDelMiniSlider[s][b] = ez.value;
 					~fftDelfbValues[s][~fftDelCompChoose[s]][~fftDelFreqIntervals[b]..(~fftDelFreqIntervals[b+1]-1)] = ~fftDelMiniSlider[s][b];
@@ -29278,12 +29349,12 @@ u.drawFunc = { d.draw }
 						if (~fftFreqIntervalsReduce2a.includes(b), { ~fftFreqIntervalsReduce3[~fftFreqIntervalsReduce2a.indexOf(b)].do{ |a| ~fftDelMiniSliderView[s][a].valueAction_(ez.value) } } );
 					});
 				},
-				unitWidth:0, initVal:0, numberWidth:20, layout:/*\horz*/ \vert)
+				unitWidth:0, initVal:0, numberWidth:20*~xSizeMul, layout:/*\horz*/ \vert)
 			.setColors(/*Color.grey,Color.white*/ sliderBackground: ~fftFreqIntervalsColors[b])
-			.font_(Font("Verdana", 10));
+			.font_(Font("Verdana", 10*~fontSizeMul));
 			//.valueAction_(-120);
 
-			StaticText(~fftDelCompG[s], Rect(((~fftDelComp[s].bounds.width-70) * ~fftDelFreqIntervalsNorm[b])+25, ~fftDelPlotterView[s][0].bounds.height + (~fftDelPlotterView[s][0].bounds.height * 0.5)+55+18, ((~fftDelComp[s].bounds.width-70) * ~fftDelFreqIntervalsDifNorm[b+1]-1).floor, 25)).string_(~fftFreqIntervalsLabel[b].asString++"\n"++~fftFreqIntervalsLabel[b+1].asString).font_(Font("Verdana", 10)).align_(\center).background_(Color.grey).stringColor_(Color.white);
+			StaticText(~fftDelCompG[s], Rect(((~fftDelComp[s].bounds.width-(62*~xSizeMul)) * ~fftDelFreqIntervalsNorm[b])+(25*~xSizeMul), ~fftDelPlotterView[s][0].bounds.height + (~fftDelPlotterView[s][0].bounds.height * 0.52)+((55+28)*~ySizeMul), ((~fftDelComp[s].bounds.width-(70*~xSizeMul)) * ~fftDelFreqIntervalsDifNorm[b+1]-1).floor, 25*~ySizeMul)).string_(~fftFreqIntervalsLabel[b].asString++"\n"++~fftFreqIntervalsLabel[b+1].asString).font_(Font("Verdana", 10*~fontSizeMul)).align_(\center).background_(Color.grey).stringColor_(Color.white);
 
 		};
 
@@ -29604,19 +29675,19 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~fftOutCompG[s] = CompositeView(~tabEq[s], Rect(985, 285, ~fftOutCompWidth-5, (~fftOutCompHeight*1.5)+30)).background_(Color.grey(0.7)); // for all
-		~fftOutComp[s] = CompositeView(~fftOutCompG[s], Rect(0, 0+20, ~fftOutCompWidth, ~fftOutCompHeight)).background_(Color.grey(0.7)); // for Plotter and Grid
-		2.do { |a| ~fftOutPlotComp[s][a] = CompositeView(~fftOutComp[s], Rect(5, 5, ~fftOutComp[s].bounds.width-50, ~fftOutComp[s].bounds.height-35))/*.background_(Color.grey(0.2, 0))*/ };
+		~fftOutCompG[s] = CompositeView(~tabEq[s], Rect(985*~xSizeMul, 285*~ySizeMul, (~fftOutCompWidth-5)*~xSizeMul, ((~fftOutCompHeight*1.5)+30)*~ySizeMul)).background_(Color.grey(0.7)); // for all
+		~fftOutComp[s] = CompositeView(~fftOutCompG[s], Rect(0, 20*~ySizeMul, ~fftOutCompWidth*~xSizeMul, ~fftOutCompHeight*~ySizeMul)).background_(Color.grey(0.7)); // for Plotter and Grid
+		2.do { |a| ~fftOutPlotComp[s][a] = CompositeView(~fftOutComp[s], Rect(5*~xSizeMul, 5*~ySizeMul, ~fftOutComp[s].bounds.width-(50*~xSizeMul), ~fftOutComp[s].bounds.height-(35*~ySizeMul)))/*.background_(Color.grey(0.2, 0))*/ };
 		~fftOutStackComp[s] = StackLayout(~fftOutPlotComp[s][0], ~fftOutPlotComp[s][1]).mode_(\stackAll);
 		~fftOutComp[s].layout_(~fftOutStackComp[s]);
 
-		~fftOutTabCompNameView[s] = StaticText(~fftOutCompG[s], Rect(26, 2, 274, 20)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12, bold: true)).align_(\center);
+		~fftOutTabCompNameView[s] = StaticText(~fftOutCompG[s], Rect(26*~xSizeMul, 2*~ySizeMul, 274*~xSizeMul, 20*~ySizeMul)).stringColor_(Color.yellow).background_(Color.grey(0.5)).font_(Font("Verdana",12*~fontSizeMul, bold: true)).align_(\center);
 		~fftOutTabCompNameView[s].string = "Spectral Diffusion" /*~fxSynthDef2c[2].name*/;
 
 		~numEffects.do { |fx|
-			~fftTabCompSelView[s][2][fx] = RoundButton(~fftOutCompG[s], Rect(302 + (fx*20), 2, 20, 18))
+			~fftTabCompSelView[s][2][fx] = RoundButton(~fftOutCompG[s], Rect((302 + (fx*20))*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 			.states_([[(fx+1).asString, Color.white, Color.grey(0.5)],[(fx+1).asString, Color.red, Color.yellow]])
-			.font_(Font("Verdana",10, bold: true))
+			.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 			.action_({ |a| // fx.postln; nb.postln;
 				~fftTabCompSelValues[s][2][fx] = a.value;
 				if (a.value == 1, {
@@ -29627,9 +29698,9 @@ u.drawFunc = { d.draw }
 			})
 		};
 
-		~fftOutPanChooseView[s] = Button(~fftOutCompG[s], Rect(405, 2, 66, 20) /*Rect(380, ~fftOutPlotterView[0].bounds.height+20, 50, 20)*/)
+		~fftOutPanChooseView[s] = Button(~fftOutCompG[s], Rect(405*~xSizeMul, 2*~ySizeMul, 66*~xSizeMul, 20*~ySizeMul) /*Rect(380, ~fftOutPlotterView[0].bounds.height+20, 50, 20)*/)
 		.states_([["1 Out", Color.white, Color.grey], ["Pan", Color.white, Color.grey]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|a| ~fftOutPanChoose[s] = a.value;
 			if (~fftOutPanChoose[s] == 0, {
 				~fftOutChannelValues[s][~fftOutCompChoose[s]] = ~fftOutChannelValues[s][~fftOutCompChoose[s]].round(1);
@@ -29643,11 +29714,11 @@ u.drawFunc = { d.draw }
 			});
 		});
 
-		~fftOutGrid[s] = UserView(~fftOutComp[s], Rect(50, 5, ~fftOutComp[s].bounds.width-50, ~fftOutComp[s].bounds.height-50)).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
-		~makeGrids.(~fftOutGrid[s], Rect(15, 5+20, ~fftOutComp[s].bounds.width-50, ~fftOutComp[s].bounds.height-50) /*~fftOutPlotterView[a]*/, ~fftOutPlotComp[s][0], ~fftOutGridLabel.size, ~fftOutGridNorm, ~fftOutGridLabel2, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
+		~fftOutGrid[s] = UserView(~fftOutComp[s], Rect(50*~xSizeMul, 5*~ySizeMul, ~fftOutComp[s].bounds.width-(50*~xSizeMul), ~fftOutComp[s].bounds.height-(50*~ySizeMul))).mouseDownAction_(false).mouseUpAction_(false).mouseMoveAction_(false);
+		~makeGrids.(~fftOutGrid[s], Rect(15*~xSizeMul, (5+20)*~ySizeMul, ~fftOutComp[s].bounds.width-(50*~xSizeMul), ~fftOutComp[s].bounds.height-(50*~ySizeMul)) /*~fftOutPlotterView[a]*/, ~fftOutPlotComp[s][0], ~fftOutGridLabel.size, ~fftOutGridNorm, ~fftOutGridLabel2, ~fftFreqGrid.size, ~fftFreqGridNorm, ~fftFreqGridLabel);
 
 		2.do { |a| // Plotter
-			~fftOutPlotterView[s][a] = Plotter("FFT Diffusion", Rect(15, 7, ~fftOutComp[s].bounds.width-50, ~fftOutComp[s].bounds.height-50), ~fftOutPlotComp[s][a])
+			~fftOutPlotterView[s][a] = Plotter("FFT Diffusion", Rect(16*~xSizeMul, 17*~ySizeMul, ~fftOutComp[s].bounds.width-(52*~xSizeMul), ~fftOutComp[s].bounds.height-(60*~ySizeMul)), ~fftOutPlotComp[s][a])
 			.value_(~fftOutChannelValues[s][a])
 			.editMode_(true)
 			.resolution_(0.1)
@@ -29665,16 +29736,16 @@ u.drawFunc = { d.draw }
 			};
 		};
 
-		~fftOutCompChooseView[s] = Button(~fftOutCompG[s], Rect(265, ~fftOutPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftOutCompChooseView[s] = Button(~fftOutCompG[s], Rect(265*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["\Act on 1", Color.white, Color.red], ["\Act on 2", Color.black, Color.yellow]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftOutCompChoose[s] = i.value; ~fftOutStackComp[s].index = ~fftOutCompChoose[s];
 			~fftOutPanChooseView[s].valueAction_(~fftOutPanChoose[s])
 		});
 
-		~fftOutBufChooseView[s] = Button(~fftOutCompG[s], Rect(325, ~fftOutPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftOutBufChooseView[s] = Button(~fftOutCompG[s], Rect(325*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["\Syn on 1", Color.white, Color.red], ["\Syn on 2", Color.black, Color.yellow]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftOutBufChoose[s] = i.value;
 			if (~fftTabCompSelValues[s][2].indexOf(1).notNil, {
 				if (~fftOutBufChoose[s] == 0, {/*~fftOutSyn*/~fxSynth[s][~fftTabCompSelValues[s][2].indexOf(1)].set(\fade, -1, \lag, ~fftOutSliderLag[s])}, {/*~fftOutSyn*/~fxSynth[s][~fftTabCompSelValues[s][2].indexOf(1)].set(\fade, 1, \lag, ~fftOutSliderLag[s])} )
@@ -29682,35 +29753,35 @@ u.drawFunc = { d.draw }
 		})
 		.value_(0).doAction;
 
-		~fftOutSliderView[s] = EZSlider.new2(~fftOutCompG[s], Rect(~fftOutPlotterView[s][0].bounds.width+8, 18+20, 30, ~fftOutPlotterView[s][0].bounds.height), nil, ~fftOut1Spec,
+		~fftOutSliderView[s] = EZSlider.new2(~fftOutCompG[s], Rect(~fftOutPlotterView[s][0].bounds.width+(11*~xSizeMul), (18+20)*~ySizeMul, 30*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(10*~ySizeMul)), nil, ~fftOut1Spec,
 			{ |ez| ~fftOutSlider[s] = ez.value;
 				~fftOutChannelValues[s][~fftOutCompChoose[s]] = ~fftOutSlider[s] ! ~fftOutNbOfBins;
 				~getBinChannelsPan2Outs.(~fftOutChannelValues[s][~fftOutCompChoose[s]], ~fftOutCompChoose[s], s);
 				~fftOutPlotterView[s][~fftOutCompChoose[s]].setValue(~fftOutChannelValues[s][~fftOutCompChoose[s]], false); // why value_ does not work ? -> comulsory to use setValue and put findSpecs to false
 				~fftFreqIntervalsSize.do { |b| ~fftOutMiniSliderView[s][b].value_(ez.value) } },
-			unitWidth:0, initVal:0, numberWidth:80, layout:\vert)
+			unitWidth:0, initVal:0, numberWidth:80*~xSizeMul, layout:\vert)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Verdana", 10));
+		.font_(Font("Verdana", 10*~fontSizeMul));
 
-		~fftOutSliderLagView[s] = EZSlider.new2(~fftOutCompG[s], Rect(145, ~fftOutPlotterView[s][0].bounds.height+25+20, ~fftOutPlotterView[s][0].bounds.width-142, 20), " Xfade Time ", ControlSpec(0, 30, \lin, 0.1, 1),
+		~fftOutSliderLagView[s] = EZSlider.new2(~fftOutCompG[s], Rect(145*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), ~fftOutPlotterView[s][0].bounds.width-(142*~xSizeMul), 20*~ySizeMul), " Xfade Time ", ControlSpec(0, 30, \lin, 0.1, 1),
 			{ |ez| ~fftOutSliderLag[s] = ez.value },
-			labelWidth: 70, unitWidth:0, initVal:1, numberWidth:30, labelWidth:64, layout:\horz)
+			labelWidth: /*70*/64*~xSizeMul, unitWidth:0, initVal:1, numberWidth:30*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.valueAction_(1);
 
 		// Buttons
-		~fftOut0View[s] = Button(~fftOutCompG[s], Rect(26, ~fftOutPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftOut0View[s] = Button(~fftOutCompG[s], Rect(26*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Diffuse", Color.white, Color.blue/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftOutLinePerInterval = Array.interpolation(~fftFreqIntervalsSize-1, 0, ~numChannelsFX16-1) ++ (~numChannelsFX16-1);
 			~fftOutMiniSliderView[s].do { |b, bindex| b.valueAction_(~fftOutLinePerInterval[bindex]) };
 		});
 
-		~fftOut0RView[s] = Button(~fftOutCompG[s], Rect(26, ~fftOutPlotterView[s][0].bounds.height+25+20, 55, 20))
+		~fftOut0RView[s] = Button(~fftOutCompG[s], Rect(26*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["DiffuseIn", Color.white, Color.blue/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftOutLinePerInterval = Array.interpolation(~fftFreqIntervalsSize-1, ~numChannelsFX16-1, 0) ++ 0;
 			~fftOutMiniSliderView[s].do { |b, bindex| b.valueAction_(~fftOutLinePerInterval[bindex]) };
@@ -29730,22 +29801,22 @@ u.drawFunc = { d.draw }
 		~fftOutMiniSliderView.do { |b, bindex| b.valueAction_(~fftOutLinePerInterval[bindex]) };
 		)*/
 
-		~fftOutClearView[s] = Button(~fftOutCompG[s], Rect(85, ~fftOutPlotterView[s][0].bounds.height+25+20, 55, 20))
+		~fftOutClearView[s] = Button(~fftOutCompG[s], Rect(85*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+((25+30)*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Centered", Color.white, Color.blue/*red*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ ~fftOutSliderView[s].value_(1.5).doAction });
 
-		~fftOutRandSlView[s] = Button(~fftOutCompG[s], Rect(85, ~fftOutPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftOutRandSlView[s] = Button(~fftOutCompG[s], Rect(85*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand Sl", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ if (~fftOutFreqIntervalsReduceChoose[s] == 0,
 			{~fftFreqIntervalsSize.do { |b| ~fftOutMiniSliderView[s][b].valueAction_((~numChannelsFX16-1).asFloat.rand) } },
 			{~fftFreqIntervalsReduce2a.do { |b| ~fftOutMiniSliderView[s][b].valueAction_((~numChannelsFX16-1).asFloat.rand) } })
 		});
 
-		~fftOutRandInView[s] = Button(~fftOutCompG[s], Rect(145, ~fftOutPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftOutRandInView[s] = Button(~fftOutCompG[s], Rect(145*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand In", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({ // Interpolation aléatoire sur le nb de canaux entre chaque bande de fréquences
 			~fftOutChannelValues[s][~fftOutCompChoose[s]] = ~fftOutFreqIntervalsDif.collect { |b| Array.interpolation(b,  (~numChannelsFX16-1).asFloat.rand, (~numChannelsFX16-1).asFloat.rand) }.flat;
 			~fftOutPlotterView[s][~fftOutCompChoose[s]].setValue(~fftOutChannelValues[s][~fftOutCompChoose[s]], false);
@@ -29760,18 +29831,18 @@ u.drawFunc = { d.draw }
 		)
 		*/
 
-		~fftOutRandBinView[s] = Button(~fftOutCompG[s], Rect(205, ~fftOutPlotterView[s][0].bounds.height+20, 55, 20))
+		~fftOutRandBinView[s] = Button(~fftOutCompG[s], Rect(205*~xSizeMul, ~fftOutPlotterView[s][0].bounds.height+(30*~ySizeMul), 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Rand Bin", Color.white, Color.magenta/*grey*/]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({
 			~fftOutChannelValues[s][~fftOutCompChoose[s]] = {(~numChannelsFX16-1).asFloat.rand} ! ~fftOutNbOfBins;
 			~getBinChannelsPan2Outs.(~fftOutChannelValues[s][~fftOutCompChoose[s]], ~fftOutCompChoose[s], s);
 			~fftOutPlotterView[s][~fftOutCompChoose[s]].setValue(~fftOutChannelValues[s][~fftOutCompChoose[s]], false);
 		});
 
-		~fftOutFreqIntervalsReduceChooseView[s] = Button(~fftOutCompG[s], Rect(~fftOutPlotterView[s][0].bounds.width+5, ~fftOutPlotterView[s][0].bounds.height+52+20, 35, 40))
+		~fftOutFreqIntervalsReduceChooseView[s] = Button(~fftOutCompG[s], Rect(~fftOutPlotterView[s][0].bounds.width+(8*~xSizeMul), ~fftOutPlotterView[s][0].bounds.height+((52+30)*~ySizeMul), 35*~xSizeMul, 40*~ySizeMul))
 		.states_([["\All", Color.white, Color.grey(0.7)], ["\Main", Color.white, Color.grey]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftOutFreqIntervalsReduceChoose[s] = i.value })
 		.value_(0).doAction;
 
@@ -29794,9 +29865,9 @@ u.drawFunc = { d.draw }
 			};
 		};
 
-		~fftOutRoutRandView[s] = Button(~fftOutCompG[s], Rect(~fftOutPlotterView[s][0].bounds.width+5, ~fftOutPlotterView[s][0].bounds.height+52+20+45, 35, 40))
+		~fftOutRoutRandView[s] = Button(~fftOutCompG[s], Rect(~fftOutPlotterView[s][0].bounds.width+(8*~xSizeMul), ~fftOutPlotterView[s][0].bounds.height+((52+30+45)*~ySizeMul), 35*~xSizeMul, 40*~ySizeMul))
 		.states_([["Rand\nRout", Color.black, Color.green], ["Rand\nRout", Color.white, Color.red]])
-		.font_(Font("Verdana", 10))
+		.font_(Font("Verdana", 10*~fontSizeMul))
 		.action_({|i| ~fftOutRoutRand[s] = i.value;
 			if (~fftOutRoutRand[s] == 1, {
 				~fftOutTask[s].play(doReset:true); // clock spécifique ???
@@ -29808,7 +29879,7 @@ u.drawFunc = { d.draw }
 
 		~fftFreqIntervalsSize.do { |b|
 
-			~fftOutMiniSliderView[s][b] = EZSlider.new2(~fftOutCompG[s], Rect(((~fftOutComp[s].bounds.width-70) * ~fftOutFreqIntervalsNorm[b])+24, ~fftOutPlotterView[s][0].bounds.height+55+16, ((~fftOutComp[s].bounds.width-70) * ~fftOutFreqIntervalsDifNorm[b+1]).floor, ~fftOutPlotterView[s][0].bounds.height * 0.5), nil /*~fftFreqIntervalsLabel[b].asString++"-"++~fftFreqIntervalsLabel[b+1].asString*/, ~fftOut1Spec /*.step_(0.01)*/,
+			~fftOutMiniSliderView[s][b] = EZSlider.new2(~fftOutCompG[s], Rect(((~fftOutComp[s].bounds.width-(70*~xSizeMul)) * ~fftOutFreqIntervalsNorm[b])+(24*~xSizeMul), ~fftOutPlotterView[s][0].bounds.height+((55+26)*~ySizeMul), ((~fftOutComp[s].bounds.width-(70*~xSizeMul)) * ~fftOutFreqIntervalsDifNorm[b+1]).floor, ~fftOutPlotterView[s][0].bounds.height * 0.52), nil /*~fftFreqIntervalsLabel[b].asString++"-"++~fftFreqIntervalsLabel[b+1].asString*/, ~fftOut1Spec /*.step_(0.01)*/,
 				{ |ez|
 					~fftOutMiniSlider[s][b] = ez.value;
 					~fftOutChannelValues[s][~fftOutCompChoose[s]][~fftOutFreqIntervals[b]..(~fftOutFreqIntervals[b+1]-1)] = ~fftOutMiniSlider[s][b];
@@ -29819,12 +29890,12 @@ u.drawFunc = { d.draw }
 						if (~fftFreqIntervalsReduce2a.includes(b), { ~fftFreqIntervalsReduce3[~fftFreqIntervalsReduce2a.indexOf(b)].do{ |a| ~fftOutMiniSliderView[s][a].valueAction_(ez.value) } } );
 					});
 				},
-				unitWidth:0, initVal:0, numberWidth:20, layout:/*\horz*/ \vert)
+				unitWidth:0, initVal:0, numberWidth:20*~xSizeMul, layout:/*\horz*/ \vert)
 			.setColors(/*Color.grey,Color.white*/ sliderBackground: ~fftFreqIntervalsColors[b])
-			.font_(Font("Verdana", 10));
+			.font_(Font("Verdana", 10*~fontSizeMul));
 			//.valueAction_(0);
 
-			StaticText(~fftOutCompG[s], Rect(((~fftOutComp[s].bounds.width-70) * ~fftOutFreqIntervalsNorm[b])+25, ~fftOutPlotterView[s][0].bounds.height + (~fftOutPlotterView[s][0].bounds.height * 0.5)+55+18, ((~fftOutComp[s].bounds.width-70) * ~fftOutFreqIntervalsDifNorm[b+1]-1).floor, 25)).string_(~fftFreqIntervalsLabel[b].asString++"\n"++~fftFreqIntervalsLabel[b+1].asString).font_(Font("Verdana", 10)).align_(\center).background_(Color.grey).stringColor_(Color.white);
+			StaticText(~fftOutCompG[s], Rect(((~fftOutComp[s].bounds.width-(70*~xSizeMul)) * ~fftOutFreqIntervalsNorm[b])+(25*~xSizeMul), ~fftOutPlotterView[s][0].bounds.height + (~fftOutPlotterView[s][0].bounds.height * 0.52)+((55+28)*~ySizeMul), ((~fftOutComp[s].bounds.width-(70*~xSizeMul)) * ~fftOutFreqIntervalsDifNorm[b+1]-1).floor, 25*~ySizeMul)).string_(~fftFreqIntervalsLabel[b].asString++"\n"++~fftFreqIntervalsLabel[b+1].asString).font_(Font("Verdana", 10*~fontSizeMul)).align_(\center).background_(Color.grey).stringColor_(Color.white);
 
 		};
 
@@ -29892,17 +29963,17 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~mixFXTriggerView[s] = RoundButton(~fxViewComp[s], Rect( 632, 1, 30, 18))
+		~mixFXTriggerView[s] = RoundButton(~fxViewComp[s], Rect( 632*~xSizeMul, 1*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["MFX", Color.blue, Color.white], ["MGX", Color.white, Color.red]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({ |i| ~mixFXTrigger[s] = i.value;
 			if (~mixFXTrigger[s] == 1, { "Mix of global mix (GFX) overwrites those of FX".postln }, { "Mix of each FX overwrites GFX".postln } );
 		})
 		.valueAction_(0);
 
-		~fxRandLParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 482, 1, 20, 18))
+		~fxRandLParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 482*~xSizeMul, 1*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 		.states_([["L", Color.black, Color.white]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({
 			~fxTabCompRandLView[s].do { |i| i.valueAction_(1) };
 			"FX Lag randomized".postln;
@@ -29915,9 +29986,9 @@ u.drawFunc = { d.draw }
 			};
 		});
 
-		~fxRandMParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 504, 1, 20, 18))
+		~fxRandMParametersAllView[s] = RoundButton(~fxViewComp[s], Rect( 504*~xSizeMul, 1*~ySizeMul, 20*~xSizeMul, 18*~ySizeMul))
 		.states_([["M", Color.black, Color.white]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({
 			// ~numEffects.do {|a| /*~fxRandMParametersView*/~fxTabCompRandMView[a].valueAction_(1) };
 			~fxTabCompRandMView[s].do { |i| i.valueAction_(1) };
@@ -29930,9 +30001,9 @@ u.drawFunc = { d.draw }
 			};
 		});
 
-		~lagMixSwitchView[s] = RoundButton(~fxViewComp[s], Rect( 526, 1, 28, 18))
+		~lagMixSwitchView[s] = RoundButton(~fxViewComp[s], Rect( 526*~xSizeMul, 1*~ySizeMul, 28*~xSizeMul, 18*~ySizeMul))
 		.states_([["LM1", Color.white, Color.red], ["LMF", Color.blue, Color.white]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({ |i| ~lagMixSwitch[s] = i.value;
 			if (~lagMixSwitch[s] == 1, {
 				~fxSelect[s].do { |item, i| if (~fxSynth[s][i] != 0 and: { item.inclusivelyBetween(1, ~numFxSynthDef) }, { ~fxSynth[s][i].set(\lagM, ~fxSynthDefValues[s][(~fxSynth[s][i].defName++\lag).asSymbol]) }); };
@@ -29949,45 +30020,45 @@ u.drawFunc = { d.draw }
 		.value_(1); ~lagMixSwitch[s] = 1; // Pas de valueAction, juste pour éviter le postln "Lag of Mix global = 1 sec."
 
 		~mixAllFxViewSpec = ControlSpec(-1, 1, 'lin', 0.01, -1);
-		~mixAllFxView2[s] = SmoothSlider(~fxViewComp[s], Rect(/*482*/556, 1, /*148*/74, 18))
+		~mixAllFxView2[s] = SmoothSlider(~fxViewComp[s], Rect(/*482*/ 556*~xSizeMul, 1*~ySizeMul, /*148*/ 74*~xSizeMul, 18*~ySizeMul))
 		.action_({ |view| ~mixAllFx[s] = ~mixAllFxViewSpec.map(view.value);
 			view.string = "MGX : %".format(~mixAllFx[s]);
 			~mixAllFxView[s].valueAction_(~mixAllFx[s]);
 		})
-		.font_(Font("Verdana", 11))
+		.font_(Font("Verdana", 11*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.stringColor_(Color.white)
 		.border_(~border)
 		.borderColor_(~borderColor);
 
 		~lagTimeAllFxSpec = ControlSpec(0, 30, 'lin', 0.01, 1);
-		~lagTimeAllFxView2[s] = SmoothSlider(~fxViewComp[s], Rect(482, 19, 74, 18))
+		~lagTimeAllFxView2[s] = SmoothSlider(~fxViewComp[s], Rect(482*~xSizeMul, 19*~ySizeMul, 74*~xSizeMul, 18*~ySizeMul))
 		.action_({ |view| ~lagTimeAllFx[s] = ~lagTimeAllFxSpec.map(view.value);
 			view.string = "Lag : %".format(~lagTimeAllFx[s]);
 			~lagTimeAllFxView[s].valueAction_(~lagTimeAllFx[s]); ~lagEQ1View[s].valueAction_(~lagTimeAllFx[s]); ~lagEQ2View[s].valueAction_(~lagTimeAllFx[s]); ~lagEQ3View[s].valueAction_(~lagTimeAllFx[s]);
 			~fftEQSliderLagView[s].valueAction_(~lagTimeAllFx[s]); ~fftDelSliderLagView[s].valueAction_(~lagTimeAllFx[s]); ~fftOutSliderLagView[s].valueAction_(~lagTimeAllFx[s]);
 		})
-		.font_(Font("Verdana", 11))
+		.font_(Font("Verdana", 11*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.stringColor_(Color.white)
 		.border_(~border)
 		.borderColor_(~borderColor);
 
 		~fadeTimeSynthFxSpec = ControlSpec(0.01, 30, 'lin', 0.01, 1);
-		~fadeTimeSynthFxView2[s] = SmoothSlider(~fxViewComp[s], Rect(556, 19, 74, 18))
+		~fadeTimeSynthFxView2[s] = SmoothSlider(~fxViewComp[s], Rect(556*~xSizeMul, 19*~ySizeMul, 74*~xSizeMul, 18*~ySizeMul))
 		.action_({ |view| ~fadeTimeSynthFx[s] = ~fadeTimeSynthFxSpec.map(view.value);
 			view.string = "XF : %".format(~fadeTimeSynthFx[s]);
 			~fadeTimeSynthFxView[s].valueAction_(~fadeTimeSynthFx[s]);
 		})
-		.font_(Font("Verdana", 11))
+		.font_(Font("Verdana", 11*~fontSizeMul))
 		.background_(~sliderBackgroundColor)
 		.stringColor_(Color.white)
 		.border_(~border)
 		.borderColor_(~borderColor);
 
-		~fxTimePresetView[s] = RoundButton(~fxViewComp[s], Rect(632, 19, 30, 20))
+		~fxTimePresetView[s] = RoundButton(~fxViewComp[s], Rect(632*~xSizeMul, 19*~ySizeMul, 30*~xSizeMul, 20*~ySizeMul))
 		.states_([["1", Color.black, Color.green], ["2", Color.red, Color.white], ["3", Color.white, Color.red]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ |menu|
 			case
 			{menu.value == 0}
@@ -30005,11 +30076,11 @@ u.drawFunc = { d.draw }
 
 		// Controle Global sur les effets Ambisoniques
 
-		~fxATabAllComp[s] = CompositeView(~tabAmb[s], Rect(1185, 850, 383, 157)).background = ~compFxBackgroundColors[0];
+		~fxATabAllComp[s] = CompositeView(~tabAmb[s], Rect(1185*~xSizeMul, 850*~ySizeMul, 383*~xSizeMul, 157*~ySizeMul)).background = ~compFxBackgroundColors[0];
 
-		~fxATabCompRandAllView[s] = RoundButton(~fxATabAllComp[s], Rect(5, 4, 80, 22))
+		~fxATabCompRandAllView[s] = RoundButton(~fxATabAllComp[s], Rect(5*~xSizeMul, 4*~ySizeMul, 80*~xSizeMul, 22*~ySizeMul))
 		.states_([["Rand", Color.white, Color.red]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 
 			~numFxSynthDef5.do { |i| ~fxSynthDef5SwitchTypView[s][i].valueAction_(4.rand) };
@@ -30026,9 +30097,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompRand8View[s].do { |i| i.valueAction_(1) };
 		});
 
-		~fxATabCompDefAllView[s] = RoundButton(~fxATabAllComp[s], Rect(90, 4, 80, 22))
+		~fxATabCompDefAllView[s] = RoundButton(~fxATabAllComp[s], Rect(90*~xSizeMul, 4*~ySizeMul, 80*~xSizeMul, 22*~ySizeMul))
 		.states_([["Def", Color.white, Color.blue]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			/*~numEffects*/ 6.do { |i|
 				~fxASlider2DView[s][i].setXYActive(0.5, 0.75);
@@ -30048,9 +30119,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompDef8View[s].do { |i| i.valueAction_(1) };
 		});
 
-		~fxAMLXDefView[s] = RoundButton(~fxATabAllComp[s], Rect(318, 4, 60, 22))
+		~fxAMLXDefView[s] = RoundButton(~fxATabAllComp[s], Rect(318*~xSizeMul, 4*~ySizeMul, 60*~xSizeMul, 22*~ySizeMul))
 		.states_([["Def LAEM", Color.white, Color.blue]])
-		.font_(Font("Verdana",11, bold: true))
+		.font_(Font("Verdana",11*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~lagTimeAllFxAView[s].valueAction_(0.7);
 			~angleAllFxAView[s].valueAction_(-pi);
@@ -30070,45 +30141,45 @@ u.drawFunc = { d.draw }
 		~fxSynthDefViews[s].keys.do {|i| if (i.asString.contains("angle"), {~angleAllFxAViewCollection[s].add(i) } ) };
 		~fxSynthDefViews[s].keys.do {|i| if (i.asString.contains("elev"), {~elevAllFxAViewCollection[s].add(i) } ) };
 
-		~lagTimeAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4, 30, 375, 22), "LagTime Amb", ControlSpec(0, 5, 'lin', 0.01, 1),
+		~lagTimeAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4*~xSizeMul, 30*~ySizeMul, 375*~xSizeMul, 22*~ySizeMul), "LagTime Amb", ControlSpec(0, 5, 'lin', 0.01, 1),
 			{ |ez| ~lagTimeAllFxA[s] = ez.value;
 				~lagTimeAllFxAViewCollection[s].do { |i| ~fxSynthDefViews[s][i].valueAction_(~lagTimeAllFxA[s]) };
 			},
-			labelWidth:80, unitWidth:0, initVal:0.7, numberWidth:60, layout:\horz)
+			labelWidth:80*~xSizeMul, unitWidth:0, initVal:0.7, numberWidth:60*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
-		~angleAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4, 55, 375, 22), "Angle Amb", ControlSpec(-pi/2, 0, 'lin', 0.001, -pi),
+		~angleAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4*~xSizeMul, 55*~ySizeMul, 375*~xSizeMul, 22*~ySizeMul), "Angle Amb", ControlSpec(-pi/2, 0, 'lin', 0.001, -pi),
 			{ |ez| ~angleAllFxA[s] = ez.value;
 				~angleAllFxAViewCollection[s].do { |i| ~fxSynthDefViews[s][i].valueAction_(~angleAllFxA[s]) };
 			},
-			labelWidth:80, unitWidth:0, initVal:-pi, numberWidth:60, layout:\horz)
+			labelWidth:80*~xSizeMul, unitWidth:0, initVal:-pi, numberWidth:60*~xSizeMul, layout:\horz)
 		.setColors(Color.red,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
-		~elevAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4, 80, 375, 22), "Elevation Amb", ControlSpec(0, pi/2, 'lin', 0.001, 0),
+		~elevAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4*~xSizeMul, 80*~ySizeMul, 375*~xSizeMul, 22*~ySizeMul), "Elevation Amb", ControlSpec(0, pi/2, 'lin', 0.001, 0),
 			{ |ez| ~elevAllFxA[s] = ez.value;
 				~elevAllFxAViewCollection[s].do { |i| ~fxSynthDefViews[s][i].valueAction_(~elevAllFxA[s]) };
 			},
-			labelWidth:80, unitWidth:0, initVal:0, numberWidth:60, layout:\horz)
+			labelWidth:80*~xSizeMul, unitWidth:0, initVal:0, numberWidth:60*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
-		~mulAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4, 105, 375, 22), "Mul Amb", ControlSpec(0.1, 1, 'lin', 0.01, 0.6),
+		~mulAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4*~xSizeMul, 105*~ySizeMul, 375*~xSizeMul, 22*~ySizeMul), "Mul Amb", ControlSpec(0.1, 1, 'lin', 0.01, 0.6),
 			{ |ez| ~mulAllFxA[s] = ez.value;
 				/*~numEffects*/ 6.do { |i|~fxASliderMulView[s][i].valueAction_(~mulAllFxA[s]) };
 			},
-			labelWidth:80, unitWidth:0, initVal:0.6, numberWidth:60, layout:\horz)
+			labelWidth:80*~xSizeMul, unitWidth:0, initVal:0.6, numberWidth:60*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
-		~distMinAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4, 130, 375, 22), "Dist Min Amb", ControlSpec(0.05, 0.3, 'lin', 0.01, 0.06),
+		~distMinAllFxAView[s] = EZSlider.new2(~fxATabAllComp[s], Rect(4*~xSizeMul, 130*~ySizeMul, 375*~xSizeMul, 22*~ySizeMul), "Dist Min Amb", ControlSpec(0.05, 0.3, 'lin', 0.01, 0.06),
 			{ |ez| ~distMinAllFxA[s] = ez.value;
 				~fxSynthA[s].do { |itemk, k| if (~fxSynthA[s][k] != 0, {itemk.set(\distMin, ~distMinAllFxA[s])} ) };
 			},
-			labelWidth:80, unitWidth:0, initVal:0.08, numberWidth:60, layout:\horz)
+			labelWidth:80*~xSizeMul, unitWidth:0, initVal:0.08, numberWidth:60*~xSizeMul, layout:\horz)
 		.setColors(Color.red,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
 	};
 
@@ -30233,14 +30304,14 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~fxTabSerieComp[s] = CompositeView(~tabFx[s], Rect(790, 4, 382, 158)).background = ~compFxBackgroundColors[0] /*Color.grey*/;
+		~fxTabSerieComp[s] = CompositeView(~tabFx[s], Rect(790*~xSizeMul, 4*~ySizeMul, 382*~xSizeMul, 158*~ySizeMul)).background = ~compFxBackgroundColors[0] /*Color.grey*/;
 
-		~fxInSerieListView[s] = ListView(~fxTabSerieComp[s], Rect(5, 45, 55, 90))
+		~fxInSerieListView[s] = ListView(~fxTabSerieComp[s], Rect(5*~xSizeMul, 45*~ySizeMul, 55*~xSizeMul, 90*~ySizeMul))
 		.background_(Color./*clear*/grey(0.3, alpha: 0.8))
 		.hiliteColor_(Color.yellow(alpha: 1))
 		.selectedStringColor_(Color.black)
 		.stringColor_(Color.white)
-		.font_(Font("Verdana",14, bold: true))
+		.font_(Font("Verdana",(14*~fontSizeMul).asInteger, bold: true))
 		.items_(~fxInSerieListItems /*["FX 1", "FX 2", "FX 3", "FX 4", "FX 5"]*/)
 		.action_({ |menu|
 			// ~fxInSerie = menu.item.split($ )[1].asInteger.postln
@@ -30267,9 +30338,9 @@ u.drawFunc = { d.draw }
 
 		(~numEffects-1).do { |i|
 
-			~fxInSerieChooseButtonView[s][i] = RoundButton(~fxTabSerieComp[s], Rect(60, 45+(18*i), 55, 18))
+			~fxInSerieChooseButtonView[s][i] = RoundButton(~fxTabSerieComp[s], Rect(60*~xSizeMul, (45+(18*i)*~ySizeMul), 55*~xSizeMul, 18*~ySizeMul))
 			.states_([["to Outs", Color.black, Color.green], ["to FX", Color.white, Color.red]])
-			.font_(Font("Verdana",10))
+			.font_(Font("Verdana",10*~fontSizeMul))
 			.action_({ |menu| ~fxInSerieChoose[s][i] = menu.value/*.postln*/;
 
 				if (~fxInSerieChoose[s][i] == 0, {~fxInSerieOuts[s][i] = 0}, { ~fxInSerieOuts[s][i] = ~fxInSerieOutsPrep[s][i] } );
@@ -30314,9 +30385,9 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~fxInSerieChooseAllButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(5, 5, 55, 40))
+		~fxInSerieChooseAllButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(5*~xSizeMul, 5*~ySizeMul, 55*~xSizeMul, 40*~ySizeMul))
 		.states_([["Par\nto Outs", Color.black, Color.green], ["Ser\nto FX", Color.white, Color.red]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |menu|
 
 			// (~numEffects-1).do { |i| ~fxInSerieChooseButtonView[i].valueAction_(menu.value) };
@@ -30367,9 +30438,9 @@ u.drawFunc = { d.draw }
 		});
 
 		// Pour une vision globale en haut
-		~fxInSerieChoose2AllButtonView[s] = RoundButton(~fxViewComp[s], Rect( 445, 21, 30, 18))
+		~fxInSerieChoose2AllButtonView[s] = RoundButton(~fxViewComp[s], Rect( 445*~xSizeMul, 21*~ySizeMul, 30*~xSizeMul, 18*~ySizeMul))
 		.states_([["Par", Color.black, Color.green], ["Ser", Color.white, Color.red]])
-		.font_(Font("Verdana",9, bold: true))
+		.font_(Font("Verdana",9*~fontSizeMul, bold: true))
 		.action_({ |menu|
 
 			// (~numEffects-1).do { |i| ~fxInSerieChooseButtonView[i].valueAction_(menu.value) };
@@ -30415,9 +30486,9 @@ u.drawFunc = { d.draw }
 			// Mais PROBLEME car dès qu'il y en a un, celà l'indique pour tout le monde XXX
 		});
 
-		~fxInSerieRandButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(60, 117, 55, 20))
+		~fxInSerieRandButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(60*~xSizeMul, 117*~ySizeMul, 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Shuf", Color.white, Color.red]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({ var list = ~fxSelect[s].scramble;
 
 			// {~numEffects.do {|a| ~fxSelectView[a].valueAction_(list[a]) ; ~fxSynthWaitTime.wait; } }.fork(AppClock)
@@ -30457,9 +30528,9 @@ u.drawFunc = { d.draw }
 		~fxInSerieListView.items_(list); ~fxInSerieListView.valueAction_(0)
 		});*/
 
-		~fxInSerieUpButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(60, 5, 55, 20))
+		~fxInSerieUpButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(60*~xSizeMul, 5*~ySizeMul, 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Up", Color.white, Color.blue]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({
 			var currentItemIndex, prevItemIndex, prevList;
 			prevList = ~fxSelect[s];
@@ -30473,9 +30544,9 @@ u.drawFunc = { d.draw }
 			});
 		});
 
-		~fxInSerieDownButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(60, 25, 55, 20))
+		~fxInSerieDownButtonView[s] = RoundButton(~fxTabSerieComp[s], Rect(60*~xSizeMul, 25*~ySizeMul, 55*~xSizeMul, 20*~ySizeMul))
 		.states_([["Down", Color.white, Color.blue]])
-		.font_(Font("Verdana",10))
+		.font_(Font("Verdana",10*~fontSizeMul))
 		.action_({
 			var currentItemIndex, prevItemIndex, prevList;
 			prevList = ~fxSelect[s];
@@ -30516,7 +30587,7 @@ u.drawFunc = { d.draw }
 		~mixAllFxViewCollection[s] = List.new;
 		~fxSynthDefViews[s].keys.do {|i| if (i.asString.contains("mix"), {~mixAllFxViewCollection[s].add(i) } ) };
 
-		~mixAllFxView[s] = EZSlider.new2(~fxTabSerieComp[s], Rect(120, 30, 250, 40), "Mix Fx", ControlSpec(-1, 1, 'lin', 0.01, -1),
+		~mixAllFxView[s] = EZSlider.new2(~fxTabSerieComp[s], Rect(120*~xSizeMul, 30*~ySizeMul, 250*~xSizeMul, 40*~ySizeMul), "Mix Fx", ControlSpec(-1, 1, 'lin', 0.01, -1),
 			{ |ez| ~mixAllFx[s] = ez.value;
 				/*(ez.value.asString ++" is the value of " ++ ez).postln*/
 				// Temps de changement Xfade des synthés d'effets
@@ -30524,9 +30595,9 @@ u.drawFunc = { d.draw }
 				~mixAllFxView2[s].value_(~mixAllFxViewSpec.unmap(~mixAllFx[s]));
 				~mixAllFxView2[s].string = "MGX : %".format(~mixAllFx[s]);
 			},
-			labelWidth:80, unitWidth:0, initVal:1, numberWidth:60, layout:\line2)
+			labelWidth:80*~xSizeMul, labelHeight:20*~ySizeMul, unitWidth:0, initVal:1, numberWidth:60*~xSizeMul, layout:\line2)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
 		~lagTimeAllFxViewCollection[s] = List.new; // ALL lag time EZSlider // ~lagTimeAllFxViewCollection.cs
 		~lagTimeAllFxOViewCollection[s] = List.new; // Only FX lag time EZSlider // ~lagTimeAllFxOViewCollection.cs
@@ -30536,7 +30607,7 @@ u.drawFunc = { d.draw }
 		~lagTimeAllFxOViewCollection[s] = ~lagTimeAllFxViewCollection[s].reject({ arg item, i; var string = item.asString; string.beginsWith("SD") or: {string.beginsWith("Pos")} or: {string.beginsWith("Rot")} });
 		~lagTimeAllFxAViewCollection[s] = ~lagTimeAllFxViewCollection[s].select({ arg item, i; var string = item.asString; string.beginsWith("SD") or: {string.beginsWith("Pos")} or: {string.beginsWith("Rot")} });
 
-		~lagTimeAllFxView[s] = EZSlider.new2(~fxTabSerieComp[s], Rect(120, 72, 250, 40), "LagTime Fx", ControlSpec(0, 30, 'lin', 0.01, 1),
+		~lagTimeAllFxView[s] = EZSlider.new2(~fxTabSerieComp[s], Rect(120*~xSizeMul, 72*~ySizeMul, 250*~xSizeMul, 40*~ySizeMul), "LagTime Fx", ControlSpec(0, 30, 'lin', 0.01, 1),
 			{ |ez| ~lagTimeAllFx[s] = ez.value;
 				/*(ez.value.asString ++" is the value of " ++ ez).postln*/
 				// Temps de changement Xfade des synthés d'effets
@@ -30546,11 +30617,11 @@ u.drawFunc = { d.draw }
 				~lagEQ1View[s].valueAction_(~lagTimeAllFx[s]); ~lagEQ2View[s].valueAction_(~lagTimeAllFx[s]); ~lagEQ3View[s].valueAction_(~lagTimeAllFx[s]);
 				~fftEQSliderLagView[s].valueAction_(~lagTimeAllFx[s]); ~fftDelSliderLagView[s].valueAction_(~lagTimeAllFx[s]); ~fftOutSliderLagView[s].valueAction_(~lagTimeAllFx[s]);
 			},
-			labelWidth:80, unitWidth:0, initVal:1, numberWidth:60, layout:\line2)
+			labelWidth:80*~xSizeMul, labelHeight:20*~ySizeMul, unitWidth:0, initVal:1, numberWidth:60*~xSizeMul, layout:\line2)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
-		~fadeTimeSynthFxView[s] = EZSlider.new2(~fxTabSerieComp[s], Rect(120, 114, 250, 40), "XFadeTime Fx", ControlSpec(0.01, 30, 'lin', 0.01, 1),
+		~fadeTimeSynthFxView[s] = EZSlider.new2(~fxTabSerieComp[s], Rect(120*~xSizeMul, 114*~ySizeMul, 250*~xSizeMul, 40*~ySizeMul), "XFadeTime Fx", ControlSpec(0.01, 30, 'lin', 0.01, 1),
 			{ |ez| ~fadeTimeSynthFx[s] = ez.value;
 				/*(ez.value.asString ++" is the value of " ++ ez).postln*/
 				// Temps de changement Xfade des synthés d'effets
@@ -30559,9 +30630,9 @@ u.drawFunc = { d.draw }
 				~fadeTimeSynthFxView2[s].string = "XF : %".format(~fadeTimeSynthFx[s]);
 				~numEffects.do { |i|  if (~fxSynth2[s][i] != 0, { ~fxSynth2[s][~fxInSerieOrder[s][i]].set( \fadeTime, ~fadeTimeSynthFx[s] /*.min(3)*/ /*, \ampFadeTime, ~fadeTimeSynthFx*/ ) }) }; // Pour les synthés inout
 			},
-			labelWidth:80, unitWidth:0, initVal:1, numberWidth:60, layout:\line2)
+			labelWidth:80*~xSizeMul, labelHeight:20*~ySizeMul, unitWidth:0, initVal:1, numberWidth:60*~xSizeMul, layout:\line2)
 		.setColors(Color.grey,Color.white)
-		.font_(Font("Helvetica",11));
+		.font_(Font("Helvetica",11*~fontSizeMul));
 
 
 
@@ -30575,9 +30646,9 @@ u.drawFunc = { d.draw }
 
 		// ~fxTabAllComp = CompositeView(~tabFx, Rect(395, 960, 383, 106)).background = ~compFxBackgroundColors[0]; // à supprimer
 
-		~fxTabCompRandMAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(120, 4, 20, 22))
+		~fxTabCompRandMAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(120*~xSizeMul, 4*~ySizeMul, 20*~xSizeMul, 22*~ySizeMul))
 		.states_([["M", Color.black, Color.white/*grey*/]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~fxTabCompRandMView[s].do { |i| i.valueAction_(1) };
 			/*~fxTabCompRandM2View.do { |i| i.valueAction_(1) };
@@ -30585,9 +30656,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompRandM4View.do { |i| i.valueAction_(1) };*/
 		});
 
-		~fxTabCompRandLAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(145, 4, 20, 22))
+		~fxTabCompRandLAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(145*~xSizeMul, 4*~ySizeMul, 20*~xSizeMul, 22*~ySizeMul))
 		.states_([["L", Color.black, Color.white/*grey*/]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~fxTabCompRandLView[s].do { |i| i.valueAction_(1) };
 			/*~fxTabCompRandL2View.do { |i| i.valueAction_(1) };
@@ -30595,9 +30666,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompRandL4View.do { |i| i.valueAction_(1) };*/
 		});
 
-		~fxTabCompRandPAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(170, 4, 40, 22))
+		~fxTabCompRandPAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(170*~xSizeMul, 4*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul))
 		.states_([["RP", Color.red, Color.white]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~fxTabCompRandView[s].do { |i| i.valueAction_(1) };
 			/*~fxTabCompRand2View.do { |i| i.valueAction_(1) };
@@ -30605,9 +30676,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompRand4View.do { |i| i.valueAction_(1) };*/
 		});
 
-		~fxTabCompRandAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(215, 4, 30, 22))
+		~fxTabCompRandAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(215*~xSizeMul, 4*~ySizeMul, 30*~xSizeMul, 22*~ySizeMul))
 		.states_([["A", Color.white, Color.blue(0.6)]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~fxTabCompRandA1View[s].do { |i, id| if (i != 0, {i.valueAction_(1)}, {~fxTabCompRand1View[s][id].valueAction_(1)}) };
 			~fxTabCompRandA2View[s].do { |i, id| if (i != 0, {i.valueAction_(1)}, {~fxTabCompRand2View[s][id].valueAction_(1)}) };
@@ -30615,9 +30686,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompRandA4View[s].do { |i, id| if (i != 0, {i.valueAction_(1)}, {~fxTabCompRand4View[s][id].valueAction_(1)}) };
 		});
 
-		~fxTabCompRandHAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(250, 4, 40, 22))
+		~fxTabCompRandHAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(250*~xSizeMul, 4*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul))
 		.states_([["RH", Color.white, Color.blue(0.6)]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~fxTabCompRandH1View[s].do { |i| if (i != 0, {i.valueAction_(1)}) };
 			~fxTabCompRandH2View[s].do { |i| if (i != 0, {i.valueAction_(1)}) };
@@ -30625,9 +30696,9 @@ u.drawFunc = { d.draw }
 			~fxTabCompRandH4View[s].do { |i| if (i != 0, {i.valueAction_(1)}) };
 		});
 
-		~fxTabCompDefAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(295, 4, 35, 22))
+		~fxTabCompDefAllView[s] = RoundButton(~fxTabSerieComp[s], Rect(295*~xSizeMul, 4*~ySizeMul, 35*~xSizeMul, 22*~ySizeMul))
 		.states_([["Def", Color.white, Color.blue]])
-		.font_(Font("Verdana",12, bold: true))
+		.font_(Font("Verdana",12*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~fxTabCompDef1View[s].do { |i| i.valueAction_(1) };
 			~fxTabCompDef2View[s].do { |i| i.valueAction_(1) };
@@ -30638,9 +30709,9 @@ u.drawFunc = { d.draw }
 			~fadeTimeSynthFxView2[s].value_(~fadeTimeSynthFxSpec.unmap(1)).doAction;
 		});
 
-		~fxMLXDefView[s] = RoundButton(~fxTabSerieComp[s], Rect(335, 4, 35, 22))
+		~fxMLXDefView[s] = RoundButton(~fxTabSerieComp[s], Rect(335*~xSizeMul, 4*~ySizeMul, 35*~xSizeMul, 22*~ySizeMul))
 		.states_([["Def X", Color.white, Color.blue]])
-		.font_(Font("Verdana",10, bold: true))
+		.font_(Font("Verdana",10*~fontSizeMul, bold: true))
 		.action_({ |a|
 			~mixAllFxView2[s].value_(~mixAllFxViewSpec.unmap(~mixAllFxDefault)).doAction; // .doAction au lieu de .valueAction pour avoir un effet sur les children si le global n'a pas changé
 			~lagTimeAllFxView2[s].value_(~lagTimeAllFxSpec.unmap(~lagTimeAllFxDefault)).doAction;
@@ -30673,9 +30744,9 @@ u.drawFunc = { d.draw }
 
 	~nbOfServers.do { |s|
 
-		~fxEQViewComp[s] = CompositeView(~fxComp[s] /*~globalWindow*/, Rect(2, 0, 80, 40) /*Rect(395, 2, 80, 40)*/).background = Color.black/*~sliderHilightNoColor*/ /*Color.magenta*/;
+		~fxEQViewComp[s] = CompositeView(~fxComp[s] /*~globalWindow*/, Rect(2*~xSizeMul, 0, 80*~xSizeMul, 40*~ySizeMul) /*Rect(395, 2, 80, 40)*/).background = Color.black/*~sliderHilightNoColor*/ /*Color.magenta*/;
 
-		~eqChaLoView[8][s] = Knob(~fxEQViewComp[s], Rect(2, 1, 20, 20)).mode_(\horiz).centered_(true).color_([Color.red, Color.white, Color.grey, Color.white])
+		~eqChaLoView[8][s] = Knob(~fxEQViewComp[s], Rect(2*~xSizeMul, 1*~ySizeMul, 20*~xSizeMul, 20*~ySizeMul)).mode_(\horiz).centered_(true).color_([Color.red, Color.white, Color.grey, Color.white])
 		.action_({ |v| ~eqChaLo[8] = ~eqChaSpec.map(v.value); ~eqChannelUnitLib[s][8].set( \lowShelf, \db, ~eqChaLo[8]);
 			if (~eqChaActivate[8] == 1, {
 				~numEffects.do { |i|
@@ -30685,7 +30756,7 @@ u.drawFunc = { d.draw }
 		})
 		.valueAction_(0.5);
 
-		~eqChaMiView[8][s] = Knob(~fxEQViewComp[s], Rect(26, 1, 20, 20)).mode_(\horiz).centered_(true).color_([Color.red(0.6), Color.white, Color.grey, Color.white])
+		~eqChaMiView[8][s] = Knob(~fxEQViewComp[s], Rect(26*~xSizeMul, 1*~ySizeMul, 20*~xSizeMul, 20*~ySizeMul)).mode_(\horiz).centered_(true).color_([Color.red(0.6), Color.white, Color.grey, Color.white])
 		.action_({ |v| ~eqChaMi[8] = ~eqChaSpec.map(v.value); ~eqChannelUnitLib[s][8].set( \peak, \db, ~eqChaMi[8]);
 			if (~eqChaActivate[8] == 1, {
 				~numEffects.do { |i|
@@ -30695,7 +30766,7 @@ u.drawFunc = { d.draw }
 		})
 		.valueAction_(0.5);
 
-		~eqChaHiView[8][s] = Knob(~fxEQViewComp[s], Rect(2, 21, 20, 20)).mode_(\horiz).centered_(true).color_([Color.blue, Color.white, Color.grey, Color.white])
+		~eqChaHiView[8][s] = Knob(~fxEQViewComp[s], Rect(2*~xSizeMul, 21*~ySizeMul, 20*~xSizeMul, 20*~ySizeMul)).mode_(\horiz).centered_(true).color_([Color.blue, Color.white, Color.grey, Color.white])
 		.action_({ |v| ~eqChaHi[8] = ~eqChaSpec.map(v.value); ~eqChannelUnitLib[s][8].set( \hiShelf, \db, ~eqChaHi[8]);
 			if (~eqChaActivate[8] == 1, {
 				~numEffects.do { |i|
@@ -30706,9 +30777,9 @@ u.drawFunc = { d.draw }
 		.valueAction_(0.5);
 		// envir[readView].palette = envir[readView].palette.button_(Color.yellow);
 
-		~eqChaActivateView[8][s] = RoundButton(~fxEQViewComp[s], Rect(26, 22, 20, 17))
+		~eqChaActivateView[8][s] = RoundButton(~fxEQViewComp[s], Rect(26*~xSizeMul, 22*~ySizeMul, 20*~xSizeMul, 17*~ySizeMul))
 		.states_([["FxQ", Color.white, Color.red], ["FxQ", Color.black, Color.green]])
-		.font_(Font("Verdana", 9))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.action_({ |v| var syn;
 			~eqChaActivate[8] = v.value;
 			if (~eqChaActivate[8] == 1, {
@@ -30734,14 +30805,14 @@ u.drawFunc = { d.draw }
 			(~numEffects.collect{ |i| if (~eqChaFXSynth[s][i] != 0, {1}, {0} ) }.sum + "EQ FX Triggered").postln; // indique le nb de EQ FX déclenchées
 		});
 
-		~eqChaFXDefAllView[s] = RoundButton(~fxEQViewComp[s], Rect(50, 2, 27, 17))
+		~eqChaFXDefAllView[s] = RoundButton(~fxEQViewComp[s], Rect(50*~xSizeMul, 2*~ySizeMul, 27*~xSizeMul, 17*~ySizeMul))
 		.states_([["Eq D", Color.white, Color.blue]])
-		.font_(Font("Verdana", 9))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.action_({|i| ~fxTabCompDefEQChaFXView[s].valueAction_(1) });
 
-		~eqChaFXRandAllView[s] = RoundButton(~fxEQViewComp[s], Rect(50, 21, 27, 17))
+		~eqChaFXRandAllView[s] = RoundButton(~fxEQViewComp[s], Rect(50*~xSizeMul, 21*~ySizeMul, 27*~xSizeMul, 17*~ySizeMul))
 		.states_([["Eq R", Color.white, Color.red]])
-		.font_(Font("Verdana", 9))
+		.font_(Font("Verdana", 9*~fontSizeMul))
 		.action_({|i| ~fxTabCompRand1EQChaFXView[s].valueAction_(1) });
 
 	};
@@ -30850,9 +30921,9 @@ u.drawFunc = { d.draw }
 
 			if (~automation.notNil, {~automationWindow.close});
 
-			~automationWindow = Window(border:false).setTopLeftBounds(Rect(720 + ~windowWidth - 1920, 1125 + ~windowHeight - 1200, 604, 30)).background_(Color.black).alwaysOnTop_(true).front;
-			WindowHandleView(~automationWindow, Rect(0, 0, 602, 5));
-			~automation = Automation(/*30*/).front(~automationWindow, bounds: Rect(2, 5, 600, 22));
+			~automationWindow = Window(border:false, bounds:Rect(/*720 + ~windowWidth - 1920*/ /*~windowWidth - ((604+600)*~xSizeMul)*/ /*350*/ ~windowWidth-(1605*~xSizeMul), /*1125 + ~windowHeight - 1200*/ 0, 604*~xSizeMul, 30*~ySizeMul)).background_(Color.black).alwaysOnTop_(true).front;
+			WindowHandleView(~automationWindow, Rect(0, 0, 602*~xSizeMul, 5*~ySizeMul));
+			~automation = Automation(/*30*/).front(~automationWindow, bounds: Rect(2*~xSizeMul, 5*~ySizeMul, 600*~xSizeMul, 22*~ySizeMul));
 			~automation.onPlay = 0;
 			// ~automation.verbose = false; // ne retire pas Unknown GUI value kind: Array for SmoothRangeSlider de toute façon
 			// ~automationWindow.view.children.do { |i| i.canFocus = false; /*i./*view.*/focus(false);*/ }; // pour retirer le focus de tous

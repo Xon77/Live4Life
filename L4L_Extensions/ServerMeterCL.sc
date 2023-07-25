@@ -1,6 +1,6 @@
 ServerMeterViewCL {
 
-	classvar serverMeterViews, updateFreq = 5, dBLow = -80, <height = 230;
+	classvar serverMeterViews, updateFreq = 5, dBLow = -80, <height = 100;
 	classvar serverCleanupFuncs;
 
 	var <view;
@@ -61,7 +61,7 @@ ServerMeterViewCL {
 			});
 		};
 
-		if((numIns > 0) && (numOuts > 0)) {
+		/*if((numIns > 0) && (numOuts > 0)) {
 			// divider
 			UserView(innerView, Rect(0, 0, meterWidth, 80/*180*/)).drawFunc_( {
 				try {
@@ -72,7 +72,7 @@ ServerMeterViewCL {
 				Pen.line(((meterWidth + gapWidth) * 0.5)@0, ((meterWidth + gapWidth) * 0.5)@80/*180*/);
 				Pen.stroke;
 			});
-		};
+		};*/
 
 		// outs
 		if(numOuts > 0) {
