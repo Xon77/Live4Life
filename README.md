@@ -66,7 +66,7 @@ Please note that:
 ***Live 4 Life* plays on all platforms, but is optimised for macOS.** I have remarked that the loading of sound buffers is very slow on Windows and Linux, requiring more patience.
 
 It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and with macOS 12.6 Monterey on a MacBook Pro M1 16".
-It was originally designed for both Mac 15" specific screen size (1920×1200), but **the GUI now automatically adapts or scales to any screen size**, including Mac 16" specific screen size (2056×1329). **Shortcuts are conceived for an AZERTY keyboard (Français - Numérique), but other keyboard options will be added in the future.**
+It was originally designed for both Mac 15" specific screen size (1920×1200), but **the GUI now automatically adapts or scales to any screen size**. It is recommended to select the biggest screen resolution you can, like e.g. 2056×1329 on Mac 16" screen size. **Shortcuts are currently conceived for an AZERTY keyboard (Français - Numérique), but other keyboard options will be added in the future.**
 
 **On Linux, it plays, although I have noticed some graphic glitches.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
