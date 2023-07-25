@@ -316,7 +316,7 @@
 
 	~windowHeight = Window.screenBounds.height/*.asInteger*/; // ~windowHeight = Window.availableBounds.height/*.asInteger*/;
 	~windowWidth = Window.screenBounds.width/*.asInteger*/;
-	if (~windowHeight == 1200, {~windowTopMargin = 0; ~windowUpperMargin = 6}, {~windowTopMargin = 26; ~windowUpperMargin = 0});
+	if (Platform.architecture == \x86_64, {~windowTopMargin = 0; ~windowUpperMargin = 6}, {~windowTopMargin = 26; ~windowUpperMargin = 0});
 
 
 
