@@ -63,13 +63,10 @@ Please note that:
 
 ## Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) &nbsp;&nbsp; ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-***Live 4 Life* plays on all platforms, but is currently only optimised for macOS.** I have remarked that the loading of sound buffers is very slow on Windows and Linux, requiring more patience.
+***Live 4 Life* plays on all platforms, but is optimised for macOS.** I have remarked that the loading of sound buffers is very slow on Windows and Linux, requiring more patience.
 
-**It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and the GUI has been adapted for macOS 12.6 Monterey on a MacBook Pro M1 16".**
-**It is currently designed for both Mac 15" specific screen size (1920×1200) and Mac 16" specific screen size (2056×1329) and an AZERTY keyboard (Français - Numérique). Scaling of the GUI and other keyboard options will be added in the future.**
-
-:warning: **To be able to easily use the GUI, you need to have a minimum resolution of 1920×1200.
-In the meantime, if you have a smaller screen resolution, increase your screen resolution to the maximum or those suggested above in your computer preferences and set the variable `~mainWindowScroll` at true in the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd#L20) to be able to scroll through the window.**
+:warning: **It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and with macOS 12.6 Monterey on a MacBook Pro M1 16".**
+**It was originally designed for both Mac 15" specific screen size (1920×1200), but the GUI now automatically adapts or scales to any screen sizes, including Mac 16" specific screen size (2056×1329). Shortcuts are conceived for an AZERTY keyboard (Français - Numérique), but other keyboard options will be added in the future.**
 
 **On Linux, it plays, although I have noticed some graphic glitches.** The reason why I do not switch from Mac to Linux is that I often used [Dante](https://www.audinate.com/products) to send multiple channels via ethernet in some concert halls. Since Dante virtual sound cards are not available for linux, you need to buy specific expensive sound cards to use Dante.
 
@@ -123,7 +120,7 @@ Follow the steps below one after another:
 
 ## Setup
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`L4L_Project`](/L4L_Project): [`_1_Init_BuffersSynths_130.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd), [`_2_Init_GUI_222.scd`](/L4L_Project/_2_Init_GUI_222.scd), [`_3_Init_Pattern_182.scd`](/L4L_Project/_3_Init_Pattern_182.scd).
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`L4L_Project`](/L4L_Project): [`_1_Init_BuffersSynths_130.scd`](/L4L_Project/_1_Init_BuffersSynths_130.scd), [`_2_Init_GUI_223.scd`](/L4L_Project/_2_Init_GUI_222.scd), [`_3_Init_Pattern_182.scd`](/L4L_Project/_3_Init_Pattern_182.scd).
 
 In order to launch the tool, open the file [`_0_Init_Live4Life.scd`](/L4L_Project/_0_Init_Live4Life.scd) in the folder [`L4L_Project`](/L4L_Project) and follow the steps below in order to:
 
