@@ -1,25 +1,23 @@
 ( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ~viaJACK = 0; // 0 without Jack // 1 with Jack (only tested on OSX)
-
 ~soundIn = 0; // Sound Card Input Channel
+
 ~nbOfSeqs = 240 /*99*/; // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
 ~defaultFolder = 0; // Buffer folder number by default at initialisation
-
 ~synthDefsBuild = 0; // 1 to rebuild synthDefs // automatic rebuild if no synthDefs in Application Support
 ~synthDefsManagementChoose = 1; // 0 -> add // 1 -> load // useful only if ~synthDefsBuild = 1
 ~buffersLoading = "quick"; // "quick" // "slow" if you have crashes during Buffer loading
 
 ~autoScaleGUI = 1; // 1 to scale GUI according to screen resolution, otherwise 0 for Manual Scaling by multiplying the GUI with ~mulsize below
 ~mulsize = 1; ~xSizeMul = ~mulsize; ~ySizeMul = ~mulsize; ~fontSizeMul = ~mulsize; // determines ~mulsize or specific multiplication of x / y and Font size
+~mainWindowScroll = false; // For smaller screen sizes in height
 ~recordMontage = 0; // 1, if you want to record GUI action
 ~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
 ~mainServer1Window = 0; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see below how to start SuperDirt if you also want to use TidalCycles on main Server s
-~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value;
-// But with a second server running, SpatioScope is less interesting because only on 1 server
+~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value; // But with a second server running, SpatioScope is less interesting because only on 1 server
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals
-~mainWindowScroll = false; // For smaller screen sizes in height
 
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // 1 allows effects with parameter modulation between the loudspeakers, otherwise 0
