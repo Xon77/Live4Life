@@ -6,6 +6,8 @@
 
 if (~updateTime.isNil, {~updateTime = 0.1} ); // Update time de la GUI si non donné
 
+if (~visualizeProcessing == 1, { ~processingAddress = NetAddr("127.0.0.1", 12000); }); // A décommenter pour Processing XXXXXXXX
+
 if (~lemurAdress1.isNil, {~lemurConnected1 = 0});
 if (~lemurAdress2.isNil, {~lemurConnected2 = 0});
 
@@ -4806,8 +4808,6 @@ envir[key][track][seq] = value;
 		// ~processingAddress.sendMsg(\test, ~lastEvent[~tab][\type], ~lastEvent[~tab][\rater]); // transfert de tous les évenèements générés
 		// faire qqch des évènements qui ne génèrent pas de son -> visualisation de potentiels avortés ?????????
 		// Pourquoi pas d'envoi de données quand utilisation d'un dossier test ?????????
-
-		// ~processingAddress = NetAddr("127.0.0.1", 12000); // A décommenter pour Processing  XXXXXXXX
 
 		if (~visualizeProcessing == 1 and: {~lastEvent[track][\type] == 'note'},
 			{
