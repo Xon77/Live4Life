@@ -4822,7 +4822,7 @@ envir[key][track][seq] = value;
 					~lastEvent[track][\bufType].asString,
 					~lastEvent[track][\bufFolderValue],
 					~lastEvent[track][\prepbufU],
-					~lastEvent[track][\prepbuf],
+					~lastEvent[track][\prepbuf], // envoie un entier
 					~lastEvent[track][\offset],
 					~lastEvent[track][\stretcherU],
 					~lastEvent[track][\centerU],
