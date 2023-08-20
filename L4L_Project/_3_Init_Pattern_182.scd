@@ -4813,7 +4813,8 @@ envir[key][track][seq] = value;
 			{
 				~processingAddress.sendMsg(\event,
 					~lastEvent[track][\durenv] /*[\durenv0]*/,
-					track,
+					// track,
+					((track/2).asInteger+1),
 					~lastEvent[track][\prepsyn].asInteger,
 					~lastEvent[track][\amp], // Utilisation de \amp pour données des bus
 					~lastEvent[track][\prepenv].asInteger,
