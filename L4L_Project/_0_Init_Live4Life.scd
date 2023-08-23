@@ -17,7 +17,7 @@
 ~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
 ~mainServer1Window = 0; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see below how to start SuperDirt if you also want to use TidalCycles on main Server s
 ~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value; // But with a second server running, SpatioScope is less interesting because only on 1 server
-~visualizeProcessing = 0; // Transfers data to Processing for visuals
+~visualizeProcessing = 0; // Transfers data to Processing for visuals if 1
 
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // 1 allows effects with parameter modulation between the loudspeakers, otherwise 0

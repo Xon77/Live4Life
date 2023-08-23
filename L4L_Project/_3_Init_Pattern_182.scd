@@ -6,7 +6,7 @@
 
 if (~updateTime.isNil, {~updateTime = 0.1} ); // Update time de la GUI si non donné
 
-if (~visualizeProcessing == 1, { ~processingAddress = NetAddr("127.0.0.1", 12000); }); // A décommenter pour Processing XXXXXXXX
+if (~visualizeProcessing == 1, { ~processingAddress = NetAddr("127.0.0.1", 12000); "L4L2Processing.scd".loadRelative; }); // A décommenter pour Processing XXXXXXXX
 
 if (~lemurAdress1.isNil, {~lemurConnected1 = 0});
 if (~lemurAdress2.isNil, {~lemurConnected2 = 0});
