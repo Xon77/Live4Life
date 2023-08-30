@@ -4812,24 +4812,26 @@ envir[key][track][seq] = value;
 		if (~visualizeProcessing == 1 and: {~lastEvent[track][\type] == 'note'},
 			{
 				~processingAddress.sendMsg(\event,
-					~lastEvent[track][\durenv] /*[\durenv0]*/,
+					~lastEvent[track][\durenv] /*[\durenv0]*/, // durée en secondes // peut envoyer plusieurs chiffres si événements copiés
 					// track,
-					((track/2).asInteger+1),
+					((track/2).asInteger+1), // N° de piste entre 1 et 8
 					~lastEvent[track][\prepsyn].asInteger,
 					~lastEvent[track][\amp], // Utilisation de \amp pour données des bus
 					~lastEvent[track][\prepenv].asInteger,
 					~lastEvent[track][\preprateU],
-					~lastEvent[track][\preprate], // Utilisation de \rate2 pour valeurs négatives selon offset & \rater pour données des bus // [\rate0]
-					~lastEvent[track][\bufType].asString,
+					~lastEvent[track][\preprate].lincurve(0, 1280, 0, 1, -700), // Utilisation de \preprate pour les valeurs absolues, \rate2 pour valeurs négatives selon offset & \rater pour données des bus & \rate0 pour avoir juste les données de la 1ère valeur - \rater donne les valeurs multiples des copies, mais les valeurs sont distubuées les unes après les autres et non en array
+					~lastEvent[track][\bufType].asString, // Donne la première la 1ère valeur de la lettre
 					~lastEvent[track][\bufFolderValue],
 					~lastEvent[track][\prepbufU],
-					~lastEvent[track][\prepbuf], // envoie un entier
+					~lastEvent[track][\prepbuf], // envoie un entier - N° de dossier à partir de 0
 					~lastEvent[track][\offset],
 					~lastEvent[track][\stretcherU],
+					~lastEvent[track][\stretcher].lincurve(0, 1280, 0, 1, -700),
 					~lastEvent[track][\centerU],
+					~lastEvent[track][\center].lincurve(0, 1280, 0, 1, -700),
 					~lastEvent[track][\prepspa].asInteger, // [\prepspa0]
-					~lastEvent[track][\panU],
-					~lastEvent[track][\prepoutL].asInteger,
+					~lastEvent[track][\pan].linlin(-1, 1, 0.99, 0.01), // prenant en compte le Rangeslider // [\panU] prenant en compte seulement le multislider
+					~lastEvent[track][\prepoutL].asInteger, // N° de HP à partir de 1
 					~lastEvent[track][\prepoutR].asInteger,
 					~lastEvent[track][\prepfxL].asInteger,
 					~lastEvent[track][\prepfxR].asInteger,
@@ -5147,7 +5149,7 @@ z.play;
 	dur = ~lastEvent[~tab][\dur].round(0.001);
 	trajBufRatio = if (~lastEvent[~tab][\prepspa0] > 17 and: { ~lastEvent[~tab][\trajBufRatio].notNil }, { " (Traj) x " ++ ~lastEvent[~tab][\trajBufRatio].round(0.1) }, {""} );
 
-	syn = ~lastEvent[~tab][\prepsyn2];
+	syn = ~lastEvent[~tab][\prepsyn]/*[\prepsyn2]*/;
 	spa = ~lastEvent[~tab][\prepspa0];
 	env = ~lastEvent[~tab][\prepenv].asInteger;
 	buf = ~lastEvent[~tab][\bufm];
