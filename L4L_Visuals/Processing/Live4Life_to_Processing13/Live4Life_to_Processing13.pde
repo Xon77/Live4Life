@@ -388,7 +388,9 @@ void draw() {
       if (a < bufList.size()) {bufList.remove(a);}
       if (a < offList.size()) {offList.remove(a);} 
       if (a < strUList.size()) {strUList.remove(a);}
+      if (a < strList.size()) {strList.remove(a);}
       if (a < cenUList.size()) {cenUList.remove(a);}
+      if (a < cenList.size()) {cenList.remove(a);}
       if (a < spaList.size()) {spaList.remove(a);}
       if (a < panUList.size()) {panUList.remove(a);}
       if (a < outLList.size()) {outLList.remove(a);}
