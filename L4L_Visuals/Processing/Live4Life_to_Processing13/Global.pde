@@ -100,8 +100,10 @@ IntList bufList = new IntList(); // N° de fichier son dans un dossier son spéc
 FloatList offList = new FloatList(); // Position dans le fichier son : de 0 à 1
 
 FloatList strUList = new FloatList(); // Paramètre pour certaines synthèses
+FloatList strList = new FloatList();
 // exemple Time Stretching pour synthèse 4 : normalisée de 0 à 1
 FloatList cenUList = new FloatList(); // Paramètre pour certaines synthèses
+FloatList cenList = new FloatList(); 
 //exemple Décalage fréquentiel pour synthèse 4 : normalisée de 0 à 1
 
 IntList spaList = new IntList(); // Type de spatialisation - une trentaine pouvant aller à une centaine : 
@@ -118,11 +120,12 @@ IntList fxRList = new IntList(); // Type d'effet Droit variable : 5 au max en s�
 
 
 // int listSize = 0; // Pas utilisé
+
 int colorFFT = 0; // pour changement de couleur progressif du spectre quand nouvel évènement
 float backgroundColorR = 0;
 float backgroundColorV = 0;
 float backgroundColorB = 0;
-
+// pour le 2ème serveur
 float backgroundColorR2 = 0;
 float backgroundColorV2 = 0;
 float backgroundColorB2 = 0;
