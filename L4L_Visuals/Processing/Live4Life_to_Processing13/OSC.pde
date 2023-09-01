@@ -15,8 +15,10 @@ int bufFolderValue,
 float bufU, 
 int buf, 
 float off, 
-float strU, 
+float strU,
+float str,
 float cenU, 
+float cen,
 int spa, 
 float panU, 
 int outL, 
@@ -40,7 +42,7 @@ int fxR
   envList.append(env);
 
   rateUList.append(rateU);
-  rateList.append(rate);
+  rateList.append(rate); // println(rate);
 
   bufTypeList.append(bufType);
   bufFolderValueList.append(bufFolderValue);
@@ -49,7 +51,9 @@ int fxR
   offList.append(off);
 
   strUList.append(strU);
+  strList.append(str);
   cenUList.append(cenU);
+  cenList.append(cen);
 
   spaList.append(spa);
   panUList.append(panU);
