@@ -166,7 +166,7 @@ Feel free to post an issue, and you can also send me a mail first since it might
 
 For my current postdoctoral internship at [UQÀM](https://eavm.uqam.ca) funded by the [FRQSC](https://frq.gouv.qc.ca/en/society-and-culture/) from September 2022 until August 2024, **I am looking for (audio)visual collaborations for the creation of spatial improvisations** in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
 - **video developers** to create the visual from the sound data generated. Technically, the audiovisual object mapping could be developed through open source tools, such as Processing ([see the code](/L4L_Visuals/Processing) and [how to use it in the wiki](https://github.com/Xon77/Live4Life/wiki/Processing)), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released) and Resolume, **as long as the creation process and the code are published on Github and open to everyone**. 
-- **dancers** for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video / light environment. I am particularly interested in mixing traditional dances like **Gigue from Québec** with contemporary forms.
+- **dancers** for improvising to finally assess the impact between the gesture of the performer, the dancing bodies and the video / light environment. I am particularly interested in all mixing forms of dances from traditional dances like **Gigue from Québec** to contemporary forms.
 
 The themes of these spatial improvisations will be about: **loneliness and love, Bernard Parmegiani and Francis Dhomont, free party, (hardcore) techno music and tradition**. Feel free to contact me if you are interested.
 
