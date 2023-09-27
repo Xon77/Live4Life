@@ -12457,7 +12457,7 @@ readView, readBackgroundColorView, posView
 					~chaoticEnv[2],
 					Env([~durplotamp, 0.001], [~durplotenv], \exp),
 					Env([0.001, ~durplotamp], [~durplotenv], \exp)
-				].plot(bounds:Rect(316*~xSizeMul,300*~ySizeMul,1200*~xSizeMul,1100*~ySizeMul))
+				].plot(bounds:Rect(316*~xSizeMul,/*300*/-100*~ySizeMul,1200*~xSizeMul,1100*~ySizeMul))
 			},{
 				if ( Window.allWindows.notNil, { Window.allWindows[Window.allWindows.size-1].close; });
 		})
