@@ -4072,7 +4072,7 @@ Ndef(\sound).play
 		});
 
 		~playControlView[tr] = RoundButton(~controlWindowTracks, Rect(45*~xSizeMul, (17+(tr*15))*~ySizeMul, 45*~xSizeMul, 15*~ySizeMul))
-		.states_([["Play", Color.black, Color.white], ["Playing", Color.black, Color.green]])
+		.states_([[("Play"+~tracksViewItemsB[tr]).asString, Color.black, Color.white], [("Ying"+~tracksViewItemsB[tr]).asString, Color.black, Color.green]])
 		// .states_([["Play", Color.black, Color.green], ["Playing", Color.white, Color.red]])
 		.font_(Font("Verdana",8*~fontSizeMul, bold: true))
 		.action_({|i| var playMSwitch, tra; if (~playMono[tr] == 0, { playMSwitch =  \play.envirGet }, { playMSwitch =  \playM.envirGet } );
@@ -4143,7 +4143,7 @@ Ndef(\sound).play
 							0.5.wait; // lié au tempo ??? -> NON à chaque demi-seconde
 							// "ok".postln; // juste pour tester
 					}};
-					~playControlView[tr].states_([["Play", Color.black, Color.white], ["Playing", Color.black, Color.green]]);
+					~playControlView[tr].states_([[("Play"+~tracksViewItemsB[tr]).asString, Color.black, Color.white], [("Ying"+~tracksViewItemsB[tr]).asString, Color.black, Color.green]]);
 					{~playControlView[tr].acceptsMouse_(true)}.defer;
 					~playViewG[tr].states_([["Play", Color.black, Color.white], ["ying", Color.black, Color.green]]);
 					{~playViewG[tr].acceptsMouse_(true)}.defer;
@@ -21064,7 +21064,7 @@ u.drawFunc = { d.draw }
 							});
 
 							{
-								~playControlView[tr].states_([["Stopping", Color.red, Color.yellow], ["Playing", Color.black, Color.green]]); {~playControlView[tr].acceptsMouse_(false)}.defer;
+								~playControlView[tr].states_([["Stopping", Color.red, Color.yellow], [("Ying"+~tracksViewItemsB[tr]).asString, Color.black, Color.green]]); {~playControlView[tr].acceptsMouse_(false)}.defer;
 								~playViewG[tr].states_([["ping", Color.red, Color.yellow], ["ying", Color.black, Color.green]]); {~playViewG[tr].acceptsMouse_(false)}.defer
 							},{
 								break.value;
@@ -21072,7 +21072,7 @@ u.drawFunc = { d.draw }
 						0.5.wait; // lié au tempo ??? -> NON à chaque demi-seconde
 						// "ok".postln; // juste pour tester
 				}};
-				~playControlView[tr].states_([["Play", Color.black, Color.white], ["Playing", Color.black, Color.green]]);
+				~playControlView[tr].states_([[("Play"+~tracksViewItemsB[tr]).asString, Color.black, Color.white], [("Ying"+~tracksViewItemsB[tr]).asString, Color.black, Color.green]]);
 				{~playControlView[tr].acceptsMouse_(true)}.defer;
 				~playViewG[tr].states_([["Play", Color.black, Color.white], ["ying", Color.black, Color.green]]);
 				{~playViewG[tr].acceptsMouse_(true)}.defer;
