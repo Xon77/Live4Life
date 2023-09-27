@@ -38,6 +38,7 @@
 // Define the Absolute Path of Sound Folder XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~soundsFolder = "/Users/xon/Desktop/SoundFolder/";
 // ~soundsFolder = "/home/<user>/SoundFolder/"; // For Linux, it may look like this
+// ~soundsFolder = "C:/Users/<user>/Desktop/L4L/SoundFolder"; // For Windows, it may look like this
 
 // Spatial configuration (Nb of outputs and spatial distribution) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ~numChannelsConfig = "2-Performance"; // Stereo Mix and effects // This line chooses spatial configuration setup // Uncomment according your preferred setup
