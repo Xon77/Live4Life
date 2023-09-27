@@ -192,6 +192,7 @@ Platform.case(
 		},{
 			~sortingClassicFunc[2].value(0);
 		});
+		~windowTopMargin = 26; ~windowUpperMargin = 0
 	}
 );
 
