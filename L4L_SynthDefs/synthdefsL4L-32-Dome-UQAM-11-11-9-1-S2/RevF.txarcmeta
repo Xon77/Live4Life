@@ -1,0 +1,117 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(24),  Array.prNew(2),  Event.prNew,  
+	Array.prNew(16),  ControlSpec.prNew,  LinearWarp.prNew,  "",  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(4),  Event.prNew,  
+	Array.prNew(8),  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  Event.prNew,  Array.prNew(8),  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(2)
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  'orderMod',  o[2],  
+		'specs',  o[3],  'order',  o[14],  
+		nil,  nil,  'specsR',  o[15],  
+		'specsM',  o[21],  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'orderM',  o[27],  nil,  nil ],  
+	// Array
+	2, [ 'room_size_Mod',  'damping_Mod' ],  
+	// Event
+	3, [ array: o[4],  size: 4,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	4, [ 'room_size',  o[5],  nil,  nil,  
+		nil,  nil,  'damping',  o[8],  
+		'lag',  o[10],  nil,  nil,  
+		nil,  nil,  'mix',  o[12] ],  
+	// ControlSpec
+	5, [ minval: 0,  maxval: 1,  
+		warp: o[6],  step: 0.01,  
+		default: 0.5,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	6, [ spec: o[5] ],  
+	// ControlSpec
+	8, [ minval: 0,  maxval: 1,  
+		warp: o[9],  step: 0.01,  
+		default: 0.5,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	9, [ spec: o[8] ],  
+	// ControlSpec
+	10, [ minval: 0,  maxval: 30,  
+		warp: o[11],  step: 0.01,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	11, [ spec: o[10] ],  
+	// ControlSpec
+	12, [ minval: -1,  maxval: 1,  
+		warp: o[13],  step: 0,  
+		default: -1,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	13, [ spec: o[12] ],  
+	// Array
+	14, [ 'mix',  'lag',  'room_size',  'damping' ],  
+	// Event
+	15, [ array: o[16],  size: 2,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	16, [ 'damping',  o[17],  nil,  nil,  
+		nil,  nil,  'room_size',  o[19] ],  
+	// ControlSpec
+	17, [ minval: 0,  maxval: 1,  
+		warp: o[18],  step: 0.01,  
+		default: 0.5,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	18, [ spec: o[17] ],  
+	// ControlSpec
+	19, [ minval: 0,  maxval: 1,  
+		warp: o[20],  step: 0.01,  
+		default: 0.5,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	20, [ spec: o[19] ],  
+	// Event
+	21, [ array: o[22],  size: 2,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	22, [ 'damping_HP',  o[23],  'room_size_HP',  o[25],  
+		nil,  nil,  nil,  nil ],  
+	// ControlSpec
+	23, [ minval: -1,  maxval: 1,  
+		warp: o[24],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	24, [ spec: o[23] ],  
+	// ControlSpec
+	25, [ minval: -1,  maxval: 1,  
+		warp: o[26],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	26, [ spec: o[25] ],  
+	// Array
+	27, [ 'room_size_HP',  'damping_HP' ]
+];
+prUnarchive(o,p);

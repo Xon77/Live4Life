@@ -1,0 +1,174 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(12),  Event.prNew,  Array.prNew(36),  
+	ControlSpec.prNew,  ExponentialWarp.prNew,  "",  ControlSpec.prNew,  
+	ExponentialWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  ExponentialWarp.prNew,  "sec",  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  ExponentialWarp.prNew,  
+	ControlSpec.prNew,  ExponentialWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  
+	Array.prNew(9),  Event.prNew,  Array.prNew(28),  ControlSpec.prNew,  
+	ExponentialWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	ExponentialWarp.prNew,  ControlSpec.prNew,  ExponentialWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  ExponentialWarp.prNew
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 3,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  nil,  nil,  
+		'specs',  o[2],  'order',  o[24],  
+		nil,  nil,  'specsR',  o[25] ],  
+	// Event
+	2, [ array: o[3],  size: 9,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	3, [ 'cutoff2_E',  o[4],  'rq2_E',  o[7],  
+		'lag',  o[9],  nil,  nil,  
+		'pitch_dipers',  o[11],  nil,  nil,  
+		'delay_time_E',  o[13],  nil,  nil,  
+		'feedback',  o[16],  nil,  nil,  
+		'cutoff1_E',  o[18],  'rq1_E',  o[20],  
+		nil,  nil,  nil,  nil,  
+		nil,  nil,  'mix',  o[22],  
+		nil,  nil,  nil,  nil ],  
+	// ControlSpec
+	4, [ minval: 20,  maxval: 20000,  
+		warp: o[5],  step: 0,  
+		default: 3000,  units: o[6],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	5, [ spec: o[4] ],  
+	// ControlSpec
+	7, [ minval: 0.01,  maxval: 4,  
+		warp: o[8],  step: 0,  
+		default: 2,  units: o[6],  
+		grid: nil,  clipLo: 0.01,  
+		clipHi: 4.0 ],  
+	// ExponentialWarp
+	8, [ spec: o[7] ],  
+	// ControlSpec
+	9, [ minval: 0,  maxval: 30,  
+		warp: o[10],  step: 0.01,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	10, [ spec: o[9] ],  
+	// ControlSpec
+	11, [ minval: 0,  maxval: 5,  
+		warp: o[12],  step: 0,  
+		default: 1.667,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 5 ],  
+	// LinearWarp
+	12, [ spec: o[11] ],  
+	// ControlSpec
+	13, [ minval: 0.0001,  maxval: 1,  
+		warp: o[14],  step: 0,  
+		default: 0.3,  units: o[15],  
+		grid: nil,  clipLo: 0.0001,  
+		clipHi: 1.0 ],  
+	// ExponentialWarp
+	14, [ spec: o[13] ],  
+	// ControlSpec
+	16, [ minval: 0,  maxval: 2,  
+		warp: o[17],  step: 0,  
+		default: 0.98,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 2 ],  
+	// LinearWarp
+	17, [ spec: o[16] ],  
+	// ControlSpec
+	18, [ minval: 20,  maxval: 20000,  
+		warp: o[19],  step: 0,  
+		default: 9999,  units: o[6],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	19, [ spec: o[18] ],  
+	// ControlSpec
+	20, [ minval: 0.01,  maxval: 4,  
+		warp: o[21],  step: 0,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0.01,  
+		clipHi: 4.0 ],  
+	// ExponentialWarp
+	21, [ spec: o[20] ],  
+	// ControlSpec
+	22, [ minval: -1,  maxval: -0.5,  
+		warp: o[23],  step: 0,  
+		default: -1,  units: o[6],  
+		grid: nil,  clipLo: -1.0,  
+		clipHi: -0.5 ],  
+	// LinearWarp
+	23, [ spec: o[22] ],  
+	// Array
+	24, [ 'mix',  'lag',  'delay_time_E',  'pitch_dipers',  
+		'feedback',  'cutoff1_E',  'rq1_E',  'cutoff2_E',  
+		'rq2_E' ],  
+	// Event
+	25, [ array: o[26],  size: 7,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	26, [ nil,  nil,  'rq2_E',  o[27],  
+		'feedback',  o[29],  'cutoff2_E',  o[31],  
+		nil,  nil,  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'rq1_E',  o[33],  nil,  nil,  
+		'delay_time_E',  o[13],  nil,  nil,  
+		'pitch_dipers',  o[35],  'cutoff1_E',  o[37] ],  
+	// ControlSpec
+	27, [ minval: 0.01,  maxval: 4,  
+		warp: o[28],  step: 0,  
+		default: 2,  units: o[6],  
+		grid: nil,  clipLo: 0.01,  
+		clipHi: 4.0 ],  
+	// ExponentialWarp
+	28, [ spec: o[27] ],  
+	// ControlSpec
+	29, [ minval: 0,  maxval: 2,  
+		warp: o[30],  step: 0,  
+		default: 0.98,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 2 ],  
+	// LinearWarp
+	30, [ spec: o[29] ],  
+	// ControlSpec
+	31, [ minval: 20,  maxval: 20000,  
+		warp: o[32],  step: 0,  
+		default: 3000,  units: o[6],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	32, [ spec: o[31] ],  
+	// ControlSpec
+	33, [ minval: 0.01,  maxval: 4,  
+		warp: o[34],  step: 0,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0.01,  
+		clipHi: 4.0 ],  
+	// ExponentialWarp
+	34, [ spec: o[33] ],  
+	// ControlSpec
+	35, [ minval: 0,  maxval: 5,  
+		warp: o[36],  step: 0,  
+		default: 1.667,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 5 ],  
+	// LinearWarp
+	36, [ spec: o[35] ],  
+	// ControlSpec
+	37, [ minval: 20,  maxval: 20000,  
+		warp: o[38],  step: 0,  
+		default: 9999,  units: o[6],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	38, [ spec: o[37] ]
+];
+prUnarchive(o,p);
