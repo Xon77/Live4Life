@@ -1,0 +1,105 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(12),  Event.prNew,  Array.prNew(20),  
+	ControlSpec.prNew,  LinearWarp.prNew,  "",  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(5),  
+	Event.prNew,  Array.prNew(12),  ControlSpec.prNew,  LinearWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 3,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  nil,  nil,  
+		'specs',  o[2],  'order',  o[15],  
+		nil,  nil,  'specsR',  o[16] ],  
+	// Event
+	2, [ array: o[3],  size: 5,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	3, [ nil,  nil,  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		nil,  nil,  'decay_time',  o[4],  
+		'feedback',  o[7],  'mix',  o[9],  
+		'lag',  o[11],  'damping',  o[13] ],  
+	// ControlSpec
+	4, [ minval: 0,  maxval: 10,  
+		warp: o[5],  step: 0.01,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 10 ],  
+	// LinearWarp
+	5, [ spec: o[4] ],  
+	// ControlSpec
+	7, [ minval: 0,  maxval: 1.5,  
+		warp: o[8],  step: 0,  
+		default: 0.98,  units: o[6],  
+		grid: nil,  clipLo: 0.0,  
+		clipHi: 1.5 ],  
+	// LinearWarp
+	8, [ spec: o[7] ],  
+	// ControlSpec
+	9, [ minval: -1,  maxval: 1,  
+		warp: o[10],  step: 0,  
+		default: -1,  units: o[6],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	10, [ spec: o[9] ],  
+	// ControlSpec
+	11, [ minval: 0,  maxval: 30,  
+		warp: o[12],  step: 0.01,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	12, [ spec: o[11] ],  
+	// ControlSpec
+	13, [ minval: 0,  maxval: 2,  
+		warp: o[14],  step: 0,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 2 ],  
+	// LinearWarp
+	14, [ spec: o[13] ],  
+	// Array
+	15, [ 'mix',  'lag',  'decay_time',  'damping',  
+		'feedback' ],  
+	// Event
+	16, [ array: o[17],  size: 3,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	17, [ nil,  nil,  'damping',  o[18],  
+		'feedback',  o[20],  nil,  nil,  
+		nil,  nil,  'decay_time',  o[22] ],  
+	// ControlSpec
+	18, [ minval: 0,  maxval: 2,  
+		warp: o[19],  step: 0,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 2 ],  
+	// LinearWarp
+	19, [ spec: o[18] ],  
+	// ControlSpec
+	20, [ minval: 0,  maxval: 1.5,  
+		warp: o[21],  step: 0,  
+		default: 0.98,  units: o[6],  
+		grid: nil,  clipLo: 0.0,  
+		clipHi: 1.5 ],  
+	// LinearWarp
+	21, [ spec: o[20] ],  
+	// ControlSpec
+	22, [ minval: 0,  maxval: 10,  
+		warp: o[23],  step: 0.01,  
+		default: 1,  units: o[6],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 10 ],  
+	// LinearWarp
+	23, [ spec: o[22] ]
+];
+prUnarchive(o,p);
