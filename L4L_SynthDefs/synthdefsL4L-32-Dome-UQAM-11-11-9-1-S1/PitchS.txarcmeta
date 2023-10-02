@@ -1,0 +1,175 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(24),  Array.prNew(4),  Event.prNew,  
+	Array.prNew(24),  ControlSpec.prNew,  LinearWarp.prNew,  "",  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(6),  Event.prNew,  
+	Array.prNew(16),  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  Event.prNew,  Array.prNew(16),  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(4)
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  'orderMod',  o[2],  
+		'specs',  o[3],  'order',  o[18],  
+		nil,  nil,  'specsR',  o[19],  
+		'specsM',  o[29],  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'orderM',  o[39],  nil,  nil ],  
+	// Array
+	2, [ 'window_size_Mod',  'pitch_ratio_Mod',  'pitch_dispers_Mod',  'time_dispers_Mod' ],  
+	// Event
+	3, [ array: o[4],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	4, [ 'time_dispers',  o[5],  nil,  nil,  
+		'window_size',  o[8],  'mix',  o[10],  
+		nil,  nil,  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'lag',  o[12],  nil,  nil,  
+		'pitch_ratio',  o[14],  'pitch_dispers',  o[16] ],  
+	// ControlSpec
+	5, [ minval: 0,  maxval: 1,  
+		warp: o[6],  step: 0.01,  
+		default: 0.2,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	6, [ spec: o[5] ],  
+	// ControlSpec
+	8, [ minval: 0,  maxval: 1,  
+		warp: o[9],  step: 0.01,  
+		default: 0.2,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	9, [ spec: o[8] ],  
+	// ControlSpec
+	10, [ minval: -1,  maxval: 1,  
+		warp: o[11],  step: 0,  
+		default: -1,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	11, [ spec: o[10] ],  
+	// ControlSpec
+	12, [ minval: 0,  maxval: 30,  
+		warp: o[13],  step: 0.01,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	13, [ spec: o[12] ],  
+	// ControlSpec
+	14, [ minval: 0.001,  maxval: 4,  
+		warp: o[15],  step: 0.001,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0.001,  
+		clipHi: 4.0 ],  
+	// LinearWarp
+	15, [ spec: o[14] ],  
+	// ControlSpec
+	16, [ minval: 0.001,  maxval: 4,  
+		warp: o[17],  step: 0.001,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0.001,  
+		clipHi: 4.0 ],  
+	// LinearWarp
+	17, [ spec: o[16] ],  
+	// Array
+	18, [ 'mix',  'lag',  'window_size',  'pitch_ratio',  
+		'pitch_dispers',  'time_dispers' ],  
+	// Event
+	19, [ array: o[20],  size: 4,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	20, [ nil,  nil,  nil,  nil,  
+		'window_size',  o[21],  'pitch_dispers',  o[23],  
+		nil,  nil,  nil,  nil,  
+		'pitch_ratio',  o[25],  'time_dispers',  o[27] ],  
+	// ControlSpec
+	21, [ minval: 0,  maxval: 1,  
+		warp: o[22],  step: 0.01,  
+		default: 0.2,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	22, [ spec: o[21] ],  
+	// ControlSpec
+	23, [ minval: 0.001,  maxval: 4,  
+		warp: o[24],  step: 0.001,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0.001,  
+		clipHi: 4.0 ],  
+	// LinearWarp
+	24, [ spec: o[23] ],  
+	// ControlSpec
+	25, [ minval: 0.001,  maxval: 4,  
+		warp: o[26],  step: 0.001,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0.001,  
+		clipHi: 4.0 ],  
+	// LinearWarp
+	26, [ spec: o[25] ],  
+	// ControlSpec
+	27, [ minval: 0,  maxval: 1,  
+		warp: o[28],  step: 0.01,  
+		default: 0.2,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	28, [ spec: o[27] ],  
+	// Event
+	29, [ array: o[30],  size: 4,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	30, [ 'time_dispers_HP',  o[31],  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		nil,  nil,  'window_size_HP',  o[33],  
+		'pitch_dispers_HP',  o[35],  'pitch_ratio_HP',  o[37] ],  
+	// ControlSpec
+	31, [ minval: -1,  maxval: 1,  
+		warp: o[32],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	32, [ spec: o[31] ],  
+	// ControlSpec
+	33, [ minval: -1,  maxval: 1,  
+		warp: o[34],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	34, [ spec: o[33] ],  
+	// ControlSpec
+	35, [ minval: -1,  maxval: 1,  
+		warp: o[36],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	36, [ spec: o[35] ],  
+	// ControlSpec
+	37, [ minval: -1,  maxval: 1,  
+		warp: o[38],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	38, [ spec: o[37] ],  
+	// Array
+	39, [ 'window_size_HP',  'pitch_ratio_HP',  'pitch_dispers_HP',  'time_dispers_HP' ]
+];
+prUnarchive(o,p);

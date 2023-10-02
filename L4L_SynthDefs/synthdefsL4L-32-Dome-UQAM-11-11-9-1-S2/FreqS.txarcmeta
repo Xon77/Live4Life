@@ -1,0 +1,118 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(24),  Array.prNew(2),  Event.prNew,  
+	Array.prNew(16),  ControlSpec.prNew,  LinearWarp.prNew,  "",  
+	ControlSpec.prNew,  LinearWarp.prNew,  FreqSpec.prNew,  ExponentialWarp.prNew,  
+	" Hz",  ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(4),  
+	Event.prNew,  Array.prNew(8),  ControlSpec.prNew,  ExponentialWarp.prNew,  
+	" Hz",  ControlSpec.prNew,  LinearWarp.prNew,  Event.prNew,  
+	Array.prNew(8),  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	LinearWarp.prNew,  Array.prNew(2)
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  'orderMod',  o[2],  
+		'specs',  o[3],  'order',  o[15],  
+		nil,  nil,  'specsR',  o[16],  
+		'specsM',  o[23],  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'orderM',  o[29],  nil,  nil ],  
+	// Array
+	2, [ 'freq_Mod',  'phase_Mod' ],  
+	// Event
+	3, [ array: o[4],  size: 4,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	4, [ nil,  nil,  nil,  nil,  
+		nil,  nil,  'phase',  o[5],  
+		'lag',  o[8],  nil,  nil,  
+		'freq_E',  o[10],  'mix',  o[13] ],  
+	// ControlSpec
+	5, [ minval: 0,  maxval: 6.2831853071796,  
+		warp: o[6],  step: 0.01,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: 0.0,  
+		clipHi: 6.2831853071796 ],  
+	// LinearWarp
+	6, [ spec: o[5] ],  
+	// ControlSpec
+	8, [ minval: 0,  maxval: 30,  
+		warp: o[9],  step: 0.01,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	9, [ spec: o[8] ],  
+	// FreqSpec
+	10, [ minval: 20,  maxval: 20000,  
+		warp: o[11],  step: 0.0,  
+		default: 440,  units: o[12],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	11, [ spec: o[10] ],  
+	// ControlSpec
+	13, [ minval: -1,  maxval: 1,  
+		warp: o[14],  step: 0,  
+		default: -1,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	14, [ spec: o[13] ],  
+	// Array
+	15, [ 'mix',  'lag',  'freq_E',  'phase' ],  
+	// Event
+	16, [ array: o[17],  size: 2,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	17, [ nil,  nil,  nil,  nil,  
+		'freq_E',  o[18],  'phase',  o[21] ],  
+	// ControlSpec
+	18, [ minval: 20,  maxval: 400,  
+		warp: o[19],  step: 0,  
+		default: 100,  units: o[20],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 400 ],  
+	// ExponentialWarp
+	19, [ spec: o[18] ],  
+	// ControlSpec
+	21, [ minval: 0,  maxval: 6.2831853071796,  
+		warp: o[22],  step: 0.01,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: 0.0,  
+		clipHi: 6.2831853071796 ],  
+	// LinearWarp
+	22, [ spec: o[21] ],  
+	// Event
+	23, [ array: o[24],  size: 2,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	24, [ 'phase_HP',  o[25],  nil,  nil,  
+		nil,  nil,  'freq_HP',  o[27] ],  
+	// ControlSpec
+	25, [ minval: -1,  maxval: 1,  
+		warp: o[26],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	26, [ spec: o[25] ],  
+	// ControlSpec
+	27, [ minval: -1,  maxval: 1,  
+		warp: o[28],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	28, [ spec: o[27] ],  
+	// Array
+	29, [ 'freq_HP',  'phase_HP' ]
+];
+prUnarchive(o,p);
