@@ -126,7 +126,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-"_1_Init_BuffersSynths_130.scd".loadRelative; // Load server functions
+"_1_Init_BuffersSynths_131.scd".loadRelative; // Load server functions
 // ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0; // Just for my performance setup to launch a specific server for specific synths and sentences
 
 // 1st Server
@@ -144,7 +144,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_223.scd".loadRelative;
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_224.scd".loadRelative;
 
 // Lemur Connection
 ~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "169.254.160.30", 8000);
@@ -154,7 +154,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_182.scd".loadRelative;
+~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_183.scd".loadRelative;
 
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
