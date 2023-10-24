@@ -5152,7 +5152,7 @@ z.play;
 	dur = ~lastEvent[~tab][\dur].round(0.001);
 	trajBufRatio = if (~lastEvent[~tab][\prepspa0] > 17 and: { ~lastEvent[~tab][\trajBufRatio].notNil }, { " (Traj) x " ++ ~lastEvent[~tab][\trajBufRatio].round(0.1) }, {""} );
 
-	syn = ~lastEvent[~tab][\prepsyn]/*[\prepsyn2]*/;
+	syn = ~lastEvent[~tab][\prepsyn2]/*[\prepsyn]*/;
 	spa = ~lastEvent[~tab][\prepspa0];
 	env = ~lastEvent[~tab][\prepenv].asInteger;
 	buf = ~lastEvent[~tab][\bufm];
