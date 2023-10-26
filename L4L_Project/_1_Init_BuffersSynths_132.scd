@@ -3869,17 +3869,17 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27])[13], src[1]
 			// Changer le \durenv & \prepsyn2 & \prepsynExt dans le pattern si changement des synthés XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 			~allSynthsGUI = [
-				"BufM", "BufMVar", "BufMVar2", "BufMPitch", "BufMPitchVar", "BufMPitchVar2", "BufMR", "BufMRoll", "WarpM", // Mono
-				"BufS", "BufSVar", "BufSVar2", "BufSPitch", "BufSPitchVar", "BufSPitchVar2", "BufSR", "BufSRoll", "WarpS", // Stereo
-				/*"BufGrain",*/ "GrainBuf", "ConcatBufSig", "ConcatBufIn",
-				"ConcatInSig", "GrainIn", "WarpIn",
-				/*"Sine",*/ "SineFB", "Blip", "PMOsc", "GrainSin", "GrainFM",
-				"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/
-				"KikOto", "SnareOto", "ClapOto", "HatOto",
-				"Electribe",
-				"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono
-				"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo
-				"GrainBufGliss", "PMOscGliss" // Glissando Autres
+				"BufM", "BufMVar", "BufMVar2", "BufMPitch", "BufMPitchVar", "BufMPitchVar2", "BufMR", "BufMRoll", "WarpM", // Mono [0 -> 8]
+				"BufS", "BufSVar", "BufSVar2", "BufSPitch", "BufSPitchVar", "BufSPitchVar2", "BufSR", "BufSRoll", "WarpS", // Stereo [9 -> 17]
+				/*"BufGrain",*/ "GrainBuf", "ConcatBufSig", "ConcatBufIn", // [18 -> 20]
+				"ConcatInSig", "GrainIn", "WarpIn", // [21 -> 23]
+				/*"Sine",*/ "SineFB", "Blip", "PMOsc", "GrainSin", "GrainFM", // [24 -> 28]
+				"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/ // [29 -> 31]
+				"KikOto", "SnareOto", "ClapOto", "HatOto", // [32 -> 35]
+				"Electribe", "MiPlaits", // [36 -> 37]
+				"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [38 -> 40]
+				"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [41 -> 43]
+				"GrainBufGliss", "PMOscGliss" // Glissando Autres // [44 -> 45]
 			];
 			// juste pour nommer les synthés de la GUI
 
@@ -6445,6 +6445,49 @@ ControlSpec(0.2, 120.0, 'exp', 0.001, 4.0, 'Mod Speed') // -> center2
 				\modSpeed, ControlSpec(0.2, 120.0, \exp, 0.001, 4.0, "mod speed"), // -> center 2
 				\ampDecay, ControlSpec(0.05, 0.8, \exp, 0.0001, 0.1, "amp DK") // -> dur
 				]*/
+
+
+
+
+
+				if ( ~synthDefsBuild == 1, {
+					( // juste pour recompiler un synthé XXXXXXXXX
+						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+							// Snare (utilisation de l'agument preprate car 1 rate négation rend l'amplitude incontrolable -> spectre saturé)
+
+							~synth =
+							("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1 /*, psPitchDispers= 0, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+var src1, freq, tRate, trigE, timbreLine, harmLine;
+"+~spaSynthVars[indexS]+~allEnvs[1][index]+"
+
+tRate = /*preprate*/ center2.clip(0.1, 200);
+trigE = Impulse.kr(tRate); // Dust.kr
+
+freq = center.min(127); // midi note
+timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
+harmLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
+
+src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: stretcher2.wrap(0,1), trigger: trigE, level: 1, fm_mod: offset, timb_mod: 0, morph_mod: 0, decay: 0.5, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
+src1 = src1[0];
+
+"+~allSpas[1][indexS]+"
+})."++~synthDefsManagement);
+							~synth.asCompileString.postln;
+							~synth.interpret;
+
+				}})});
+
+				~metaDataMiPlaits = [ // à terminer
+					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 1'), // rater Harmonics
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 2'), // rate2 Harmonics
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // stretcher Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // stretcher2 Timbre
+					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq'), // center.min(127).midicps - 4 octaves
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // center2 - > Trigger Grain
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'fm_mod'), // fm_mod
+				];
 
 
 
