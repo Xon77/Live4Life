@@ -1,0 +1,42 @@
+title:: NaiveBayes
+summary:: Naive Bayes Classifier
+categories:: SCMIR, Machine Learning
+related:: Classes/NeuralNet, Classes/GMM
+
+description::
+
+Supervised machine learning class. 
+	
+code::
+n = NaiveBayes(10,4); 	//numfeatures = 10, numclasses = 4
+
+//generate data which overlaps a bit to cause potential confusion in generalisation
+(
+
+//generate random test example 10 dimensional feature vectors as a function of class
+~example = {|class| {class*rrand(0.0,1.0)+(class*0.1)+(0.2.rand2)}!10};
+
+d = Array.fill(1000,{
+	var class = 4.rand; 
+	
+	//array of 10 dimensions for each data point, one class
+	[~example.(class),class]
+	})
+)
+
+//data d is in form of array of [features array,class] 
+
+n.train(d)
+
+n.means		//40 of these = 10*4
+n.stddevs
+
+//2 gets mistaken for 3 or 1 occasionally, generally  pretty well separated (given large first term anyway)
+100.do{ n.test(~example.(2)).postln }
+
+::
+
+
+
+examples::
+

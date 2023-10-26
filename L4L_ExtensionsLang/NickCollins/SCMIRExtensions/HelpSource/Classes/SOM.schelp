@@ -1,0 +1,35 @@
+title:: SOM
+summary:: 1 dimensional self organising map	
+categories:: SCMIR, Machine Learning
+related:: Classes/SARDNET, Classes/NeuralNet
+
+description::
+
+1-dimensional self organising map for feature vectors, using the Manhattan metric for finding closest matches 
+
+examples::
+
+code::
+
+a=SOM([[1,0,1,0],[1,1,1,1],[0,0,0.5,0.3]], 100, 0.5, 0.5); 
+
+a.representatives
+
+a.addsample([0.7,0.2,0.1,0.6]);
+
+a.representatives //representatives are perturbed by what they contain
+
+(
+//random set of vectors from b= Array.fill(10,{Array.rand(4,0.0,1.0)}); Post << b << nl;
+b= [ [ 0.51869738101959, 0.080885529518127, 0.31222653388977, 0.69995737075806 ], [ 0.6439403295517, 0.1963427066803, 0.17634284496307, 0.14897918701172 ], [ 0.45320868492126, 0.23293280601501, 0.54554259777069, 0.070706605911255 ], [ 0.89824318885803, 0.7641407251358, 0.6628520488739, 0.75039482116699 ], [ 0.56789028644562, 0.086152672767639, 0.13435745239258, 0.69306933879852 ], [ 0.084696531295776, 0.9174644947052, 0.91573286056519, 0.28425991535187 ], [ 0.80475306510925, 0.21441471576691, 0.57193303108215, 0.9413183927536 ], [ 0.40608489513397, 0.23033368587494, 0.48240029811859, 0.44695520401001 ], [ 0.066552996635437, 0.17492353916168, 0.97465658187866, 0.77240884304047 ], [ 0.23405659198761, 0.70120179653168, 0.57822358608246, 0.39226639270782 ] ];
+)
+
+b.do({arg val;  a.addsample(val);}); 
+
+a.representatives //representatives are perturbed by what they contain
+
+a.lists //show how those vectors were allocated, uneven assignment
+
+::
+
+

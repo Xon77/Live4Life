@@ -1,0 +1,39 @@
+title:: MarkovModel
+summary:: Markov Model 	
+categories:: SCMIR, Machine Learning
+related:: Classes/PPMC
+
+description::
+
+Machine learning class for discrete state sequences. 
+
+There are further Markov modeling classes in the MathLib Quark. 
+	
+code::
+m = MarkovModel(6,2); 	//num states = 6, order =2 (last 2 states predict next)
+
+m.transitioncounts.size //216 = 6**3
+
+//sequence for training
+a =Array.fill(1000,{ 6.rand })
+
+m.train(a)
+
+//counts over all possible transition situations
+m.transitioncounts.class.postcs
+
+m.transitionprobabilities
+
+log(m.minimalprob)
+
+m.averagelogloss(Array.fill(100,{ 6.rand }))
+
+m.averagelogloss(Array.fill(100,{ 4.rand }))
+
+
+::
+
+
+
+examples::
+

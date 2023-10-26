@@ -1,0 +1,33 @@
+title:: SCMIR
+summary:: SuperCollider Music Information Retrieval library main class
+categories:: SCMIR
+related:: Classes/SCMIRAudioFile, Classes/SCMIRSimilarityMatrix, Classes/SCMIRLive
+
+description::
+
+by Nick Collins. 
+
+This extension library (with additional plugins and language invoked executables) for SuperCollider demonstrates carrying out music information retrival tasks in SuperCollider for audio content analysis. You can extract features for an audio file in NRT mode, plot features, get similarity matrices, plot them, extract novelty curves from the similarity matrices and thus find section boundaries, and more. The library is robust to batch processing over larger databases of hundreds of audio files in overnight runs. 
+
+By default, \tmp is used for storing temporary files required in calculation, which should be robust to network permissions on Mac and Linux. The SCMIR base class allows you to set an alternative base directory for storing SCMIRAudioFile analysis data (.scmirZ format). Note that file permissions can be an issue on network systems; for full access it is suggested that you work with a local copy of SuperCollider where you have write permissions. Do not try to analyze audio files from directories where you have no write access if you want to write out analysis files alongside them. 
+
+
+examples::
+
+code::
+
+SCMIR.setTempDir("/Users/nickcollins/Desktop/SCMIRTest");
+
+SCMIR.tempdir
+
+//don't use a tempdir, saved .scmirZ archives appear in the same directory as any target sound file
+SCMIR.setTempDir(nil);
+
+SCMIR.tempdir
+
+
+SCMIR.setFrameHop(512);  //default is 1024. Only these two numbers allowed for now. Note that changing this affects all open and to be loaded SCMIRAudioFiles; it may invalidate settings. It should only be used on a per complete project basis
+
+SCMIR.setFrameHop(1024); //restore default
+
+::

@@ -1,0 +1,45 @@
+title:: MarkovPool
+summary:: Markov Pool 	
+categories:: SCMIR, Machine Learning
+related:: Classes/PPMC, Classes/MarkovModel
+
+description::
+Efficient committee of Markov Models generated from a given context. 
+
+Introduced at SMPC 2013, see the abstract:
+Nick Collins (2013) Presentation on "Markov Pools for Music Prediction" at Society for Music Perception and Cognition conference, Toronto
+
+code::
+m = MarkovPool();
+
+c = Array.fill(10000,{[0,2,4,5,7,9,11,12,14,16,17,19,21,23].choose}); 
+
+c[0..200].plot
+
+m.train(c)
+
+d = Array.fill(1000,{[0,2,4,5,7,9].choose});
+
+m.generate(Array.fill(10,{([0,2,4,5,7,9]).choose}),100).plot
+
+
+m = MarkovPool(6,12,5);
+
+c = [0,1,2,0,0,1,2,0,2,3,4,2,3,4,4,5,4,3,2,0,0,0,4,5,4,3,2,0,0,0,0,4,0,0,0,4,0,0]
+
+c.plot
+
+m.train(c)
+
+d = m.generate([0,1,2,0],10)
+
+d.plot
+
+Pseq(\degree,d,\dur,0.5).play
+
+::
+
+
+
+examples::
+
