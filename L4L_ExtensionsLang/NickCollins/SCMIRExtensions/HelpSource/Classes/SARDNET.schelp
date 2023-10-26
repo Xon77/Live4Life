@@ -1,0 +1,130 @@
+title:: SARDNET
+summary:: SARDNET temporal sequence self-organising map  	
+categories:: SCMIR, Machine Learning
+related:: Classes/SOM, Classes/NeuralNet
+
+description::
+
+1-D self-organising map for vector sequences (Kohonen map with temporal dynamics)
+	
+James, D. L., & Miikkulainen, R. (1995). SARDNET: A self-organizing feature map for sequences. Advances in neural information processing systems, 7, 577. 
+		
+code::
+
+//100 representatives, 10 dimensions
+a=SARDNET(10, 100, 1000, 0.5, 0.5); 
+
+a.numrepresentatives
+a.representatives
+
+
+a.train(Array.fill(10,{Array.rand(10,0.0,1.0)}));
+
+a.representatives //representatives are perturbed by what they contain
+
+
+
+a.test(Array.fill(10,{Array.rand(10,0.0,1.0)}))
+
+//output is list [[index in map, activation score] ... ] where final element will have activation score 1.0 and all earlier ones drop off by 0.75 multiplier. Not really so useful! Only critical data here is the ordering of the nodes invoked
+
+
+a.test(Array.fill(10,{Array.rand(10,0.0,1.0)})).collect{|val| val[0]}
+
+//Node list gives a discretisation 
+
+
+//test with SCMIR; real feature vector sequences extracted from a piece 
+//may need to keep an eye on learning rate and topological spread 
+
+
+f = SCMIRAudioFile("/data/audio/mirdata/pixiesivebeentired.wav", [[MFCC, 13], [Chromagram, 12]]);
+
+{f.extractFeatures();}.fork; //wait for me to finish
+
+f.featuredata
+
+f.numframes
+
+f.numframes.div(43) //181
+
+f.numfeatures
+
+
+(
+var siz = 43* f.numfeatures; 
+
+~reps = Array.fill(f.numframes.div(43), {|i|
+
+var frameindex = 43*i;  
+var index = f.numfeatures * frameindex; 
+
+Array.fill(43,{|j| var base = index + (j*f.numfeatures);  f.featuredata.copyRange(base, base + f.numfeatures-1);   }); 
+	
+})
+)
+
+
+a=SARDNET(f.numfeatures, 100, 300, 0.5, 0.5); 
+
+a.representatives.size
+
+~reps.do{|array|  a.train(array); };
+
+
+
+~reps[9].postcs
+
+
+a.test(~reps[10]).collect{|val|  val[0]};
+
+
+
+~results = ~reps.collect{|array|  a.test(array).collect{|val|  val[0]}};
+
+
+~results.postcs
+
+
+~results[1].plot
+~results[115].plot
+
+//distance between components (Manhattan)
+(~results[1] - ~results[21]).abs.sum
+(~results[1] - ~results[121]).abs.sum
+
+//can use to construct a similarity matrix 
+
+181* 181 entries = 32761 pixels
+
+~data = Array.fill(181,{|i|  Array.fill(181,{|j|  (~results[i] - ~results[j]).abs.sum  }); }).flat
+
+//~data.flatten
+
+~data = ~data/(~data.maxItem)
+
+b = SCMIRSimilarityMatrix.newFromMatrix(~data,181,181); 
+
+b.plot(2,0.5)
+
+c = b.novelty(10)
+
+c.plot
+
+novelty
+
+	
+g = SCMIR.peakPick(c.normalize); 
+
+g[0]
+g[1]
+
+//a couple correspond to song structural features but not overly impressive 
+List[ 9, 36, 71, 98, 131, 166 ]	//corresponds to seconds through piece, roughly
+
+::
+
+
+
+examples::
+

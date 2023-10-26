@@ -1,0 +1,80 @@
+Installation on Linux:
+
+
+Advice from a more recent attempt to build:
+
+linux building:
+Hello,
+I think I solved the problems. If you want to update the linux install file here is some additional information. in the CMakeList file the part about LIBGSL the correct location may depend on the individual system. For me this library was installed in /lib64
+It seems that a good way to find the correct version is through:
+ld -lgsl --verbose
+
+Then I also needed to change libgsl.a to libgsl.so (and the same for libgslcblas).
+The final problem was that atoi needed to include stdlib.h (I presume on the Mac it is in stdio.h)
+
+Oded Ben-Tal
+
+
+
+Adapted from: http://new-supercollider-mailing-lists-forums-use-these.2681727.n2.nabble.com/SCMIR-SuperCollider-Music-Information-Retrieval-0-9-td7580724.html
+
+Some steps from that post already resolved, omitted from below as FIXED from 0.91 on in core already, no action required.
+
+
+From: Martin Marier <mariermartin@gmail.com>
+Date: 19 July 2012 18:31:25 GMT+01:00
+To: Click Nilson <clicksonnil@gmail.com>, sc-users@lists.bham.ac.uk
+Subject: Re: [sc-users] SCMIR: SuperCollider Music Information Retrieval 0.9
+
+Hello Nick,
+
+Thank you for this great work.  I plan on using SCMIR extensively in the
+future.
+
+For those interested, I managed to get this working under Ubuntu 12.04.
+Here is how to do it:
+
+1. Get the UGens from the sc3-plugins repository.  They compiled as is.
+2. Get the SCMIR zip file. ( http://www.sussex.ac.uk/Users/nc81/code/SCMIR.zip )
+3. Install the debian package libgsl0-dev:
+
+  sudo apt-get install libgsl0-dev
+
+4. Modify the SCMIR0.9/SCMIRExtensions/SCMIR/Source/CMakeLists.txt file:
+  a. These two lines:
+
+     #set to locations of your gsl headers and library folders
+     set(LIBGSL /Users/nickcollins/Desktop/tosort/gsl_universal_1.14/libs)
+     include_directories(/Users/nickcollins/Desktop/tosort/gsl_universal_1.14/gsl)
+
+     Were changed to this:
+
+     #set to locations of your gsl headers and library folders
+     set(LIBGSL /usr/lib)
+     include_directories(/usr/include)
+
+5. Compile the executables:
+
+  cd /path/to/SCMIR0.9/SCMIRExtensions/SCMIR/Source
+  mkdir build
+  cd build
+  cmake ..
+  make
+  make install
+
+6. Install in your Extensions directory:
+
+  cp -r /path/to/SCMIR0.9/SCMIRExtensions/SCMIR ~/.local/share/SuperCollider/Extensions/
+
+7. Recompile the SC class library.
+
+9. Open the examples and try them (you will have modify the sound file
+  paths, of course).
+
+
+I hope this will help people  who want to try SCMIR under Linux.  Thanks again, Nick.
+
+Cheers,
+
+Martin
+

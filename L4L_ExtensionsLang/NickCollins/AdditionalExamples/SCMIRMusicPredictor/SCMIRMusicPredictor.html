@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title></title>
+<meta name="Generator" content="Cocoa HTML Writer">
+<meta name="CocoaVersion" content="1038.36">
+<style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #102ac3}
+p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000; min-height: 12.0px}
+p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #cd1713}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000}
+p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #737373}
+span.s1 {color: #ff7b2c}
+span.s2 {color: #000000}
+span.s3 {color: #737373}
+</style>
+</head>
+<body>
+<p class="p1">SCMIRMusicPredictor</p>
+<p class="p2"><br></p>
+<p class="p3">//As used in the algorithmic jury and early electronic dance music corpus analysis projects</p>
+<p class="p3">//</p>
+<p class="p3">//Trains up a three part model (timbre, rhythms, summed harmonic change) over a corpus. The model can then be tested on a target piece to see how well it predicts it.<span class="Apple-converted-space"> </span></p>
+<p class="p3">//</p>
+<p class="p3">//Note that scores are relative to a given model.<span class="Apple-converted-space"> </span></p>
+<p class="p2"><br></p>
+<p class="p3">//REQUIREMENTS: you need to set some directories in the *initClass class method.<span class="Apple-converted-space"> </span></p>
+<p class="p3">//depends on KMeans from Quarks, and KMeansZArchive extension class for save and load</p>
+<p class="p2"><br></p>
+<p class="p4">(</p>
+<p class="p5"><span class="s1">~corpus</span><span class="s2"> = [ </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/A Rest_Beyond Kaos.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Another Kaos Beyond Kaos.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Beyond The Dance - The Cult Mix.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Daymares, It Is What It Is.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Emanon Begins.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Feel Surrreal Ends The Feel Surreal.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Freestyle.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/R-Theme.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Sinister.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Some More Spaced Out.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Spaced Out.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/Strings Of The Strings Of Life.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/The Dance.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/The End.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/A Relic Long Ago.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Drama.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Dreams Of Dreamers.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Emanon Ends.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Icon (Montage Mix).wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Kaotic Harmony.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Nude Photo.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Phantom Lurks.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Phantom.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Salsa Life.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Strings Of Life.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/The Beginning.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/To Be Or Not To Be.wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Wiggin (Juan's Mix).wav"<span class="s2">, </span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 2/Winter On The Blvd.wav"<span class="s2"> ];</span></p>
+<p class="p4">)</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="s2">m = </span>SCMIRMusicPredictor<span class="s2">(</span><span class="s3">""</span><span class="s2">,</span><span class="s1">~corpus</span><span class="s2">);<span class="Apple-converted-space"> </span></span></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p3">//first train up on corpus; about twice realtime speed, so can take some hours if you have hours of audio!<span class="Apple-converted-space"> </span></p>
+<p class="p4">(</p>
+<p class="p4">{</p>
+<p class="p4">m.prepare();</p>
+<p class="p4">}.fork;</p>
+<p class="p4">)</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p3">//use model to predict a piece, 4 scores result= timbre predictive score, npvi score (unused in actual projects mentioned above), predicted IOI score, predicted harmonic change score</p>
+<p class="p2"><br></p>
+<p class="p4">(</p>
+<p class="p4">{</p>
+<p class="p5"><span class="s1">~results</span><span class="s2"> = m.testPiece(</span>"/data/audio/mirdata/EDM/Derrick May Innovator Disc 1/A Rest_Beyond Kaos.wav"<span class="s2">);</span></p>
+<p class="p4">}.fork;</p>
+<p class="p4">)</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+</body>
+</html>

@@ -1,0 +1,61 @@
+TITLE:: KNearestNeighbour
+summary:: Given a new input vector, find a best fit from the closest k examples in a training dataset
+categories:: SCMIR, Machine Learning
+related:: Classes/NeuralNet, Classes/NaiveBayes
+
+DESCRIPTION::
+This algorithm assumes that
+
+CLASSMETHODS::
+
+METHOD:: new
+
+ARGUMENT:: k
+Number of closest examples to take into account
+
+ARGUMENT:: data
+Must be of the form [[[f1,f2,...],classindex],[[f1,f2,...],classindex]...]
+
+ARGUMENT:: range
+class indices in the data must use numbers from 0 to range-1
+
+
+EXAMPLES::
+
+code::
+
+//kNearestNeighbour
+
+a = Array.fill(1000,{[Array.rand(3,0.0,1.0),rrand(0,7)]})
+
+n = KNearestNeighbour(3,a,8)
+
+n.k
+n.data
+n.range
+
+b = n.findClosestK([0.5,0.5,0.5])
+
+a[591]
+
+b = n.findClosest([0.5,0.5,0.5]) //single closest winner
+
+//if each of the k said a different option, would return lowest number option rather than closest overall
+b = n.test([0.5,0.5,0.5]);
+
+//weighted version biased to closest according to 1/(n+1) from n = 0..(k-1)
+b = n.testWeighted([0.5,0.5,0.5]);
+
+
+//another test
+a = Array.fill(1000,{[Array.rand(3,0.0,1.0),rrand(0,10)]})
+
+n = KNearestNeighbour(8,a,11)
+
+b = n.findClosestK([0.5,0.5,0.5])
+b.size
+b = n.test([0.5,0.5,0.5]);
+b = n.testWeighted([0.5,0.5,0.5]);
+b = n.findClosest([0.5,0.5,0.5]);
+
+::
