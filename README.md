@@ -82,11 +82,11 @@ Follow the steps below one after another:
 
 (For beginners in SuperCollider, FYI to evaluate a code in parentheses, particularly in the setup process, you have to be inside the parentheses and press Control (on Windows) / Command (on Mac) + Return (for more details go to the menu `Language`). To evaluate a line of code, you have to be on the specific line and press either also Control (on Windows) / Command (on Mac) or easier shift + Return.)
 
-2. **Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it). 
+2. **To get this project folder and begin the setup of the tool for the following steps, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
 
-**From the [release v0.0.14](https://github.com/Xon77/Live4Life/releases), you will also need to put in your SuperCollider Extensions folder** a compiled version of some plugins, in this case [Mi UGens](https://github.com/v7b1/mi-UGens), available in [their releases](https://github.com/v7b1/mi-UGens/releases). For new Mac architecture with arm64, you will have to compile yourself with the help of [this repository from Mads Kjeldgaard](https://github.com/madskjeldgaard/sc-plugins-build-scripts). To go quicker, you can download **a compiled version for your OS available within the folder [`L4L_OtherUGens`](L4L_OtherUGens/).
+3. **Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it). 
 
-3. **To get this project folder and begin the setup of the tool for the following steps, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
+  **From the [release v0.0.14](https://github.com/Xon77/Live4Life/releases), you will also need to put in your SuperCollider Extensions folder** a compiled version of some plugins, in this case [Mi UGens](https://github.com/v7b1/mi-UGens), available in [their releases](https://github.com/v7b1/mi-UGens/releases). For new Mac architecture with arm64, you will have to compile yourself with the help of [this repository from Mads Kjeldgaard](https://github.com/madskjeldgaard/sc-plugins-build-scripts). To go quicker, you can download **a compiled version for your OS available within the folder [`L4L_OtherUGens`](L4L_OtherUGens/)**.
 
 4. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below**, which are extensions of the SuperCollider language, **with one of both methods below**, and recompile, by going into the menu `Language -> Recompile Class Library` (If you are a new user of SuperCollider, I recommend the second method to go quicker):
 
