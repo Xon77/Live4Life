@@ -92,7 +92,7 @@ Follow the steps below one after another:
 
 	1. **Slow clean install**: You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select each of the quarks below by clicking on the box with the cross.
 
-	2. **Quick raw install: If you** do not succeed to [install git](http://git-scm.com/) and the Quarks mentioned below with the normal way above, especially on Windows, or **want to quickly install all the necessary Quarks files, unzip the file `L4L_QuarksExtensions.zip` within this project folder you have just downloaded, and then put the folder unzipped `L4L_QuarksExtensions` into your `Extensions` folder. You will also have to install [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles) as mentioned below.**
+	2. **Quick raw install: If you** do not succeed to [install git](http://git-scm.com/) and the Quarks mentioned below with the normal way above, especially on Windows, or **want to quickly install all the necessary Quarks files, unzip the file `L4L_ExtensionsQuarks.zip` within this project folder you have just downloaded, and then put the folder unzipped `L4L_ExtensionsQuarks` into your `Extensions` folder. You will also have to install [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles) as mentioned below.**
 
 	- [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
 	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. :warning: **<a style="Color:blue">*Install also*</a> [ATK dependencies, either automatically with code](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles)**, or manually by downloading especially [Kernels](https://www.ambisonictoolkit.net/download/kernels/) and [Matrices](https://www.ambisonictoolkit.net/download/matrices/) and put them in ATK folder, which you can find by evaluating this code: `Atk.openUserSupportDir;`, if you have issues to do it automatically. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
@@ -117,7 +117,7 @@ Follow the steps below one after another:
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-5. **Put the folder [`L4L_Extensions`](/L4L_Extensions)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) and recompile again.
+5. **Put the folder [`L4L_ExtensionsLang`](/L4L_ExtensionsLang)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) and recompile again.
 
 
 ## Setup
