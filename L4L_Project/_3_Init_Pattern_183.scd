@@ -3692,7 +3692,7 @@ envir[key][track][seq] = value;
 			\prepsynExt, (Pfunc({ |ev|
 				case
 				// [ BufMRoll, BufSRoll, GrainBuf, GrainFM, Electribe, BufMGliss, BufSGliss, GrainBufGliss, PMOscGliss ]
-				{ #[7, 16, 18, 28, 36, 37, 40, 43, 44].includes(ev.prepsyn2) } // avec RAT2 sans ps
+				{ #[7, 16, 18, 28, 36, 37, 40, 43, 44, 33].includes(ev.prepsyn2) } // avec RAT2 sans ps // 33 pour SnareOto modifié
 				{\a}
 				// [ BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
 				{ #[38, 39, 41, 42].includes(ev.prepsyn2) } // avec RAT2 & ps
