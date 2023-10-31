@@ -3636,15 +3636,15 @@ envir[key][track][seq] = value;
 				// {~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {[0, 4].includes(ev.prepsyn)}} // Mono / Gliss / certains synth
 
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 0}} // Mono / Gliss / certains synth -> BufMGliss
-				{37}
+				{40}
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 3}} // Mono / Gliss / certains synth -> BufMPitchGliss
-				{38}
+				{41}
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 8}} // Mono / Gliss / certains synth -> WarpMGliss
-				{39}
+				{42}
 				{~ratSynth[track][seq] == 1 and: {ev.prepsyn == 9}} // Mono ou stéréo / Gliss / GrainBufGliss
-				{43}
+				{46}
 				{~ratSynth[track][seq] == 1 and: {ev.prepsyn == 17}} // Mono ou stéréo / Gliss / PMOscGliss
-				{44}
+				{47}
 
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn <= ~nbSynthBuf}} // Mono / Gliss / Autres - version sans Gliss inchangée
 				{ev.prepsyn}
@@ -3654,11 +3654,11 @@ envir[key][track][seq] = value;
 				// {~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {[0, 4].includes(ev.prepsyn)}} // Stéréo / Gliss / certains synth
 
 				{~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 0}} // Stéréo / Gliss / certains synth -> BufSGliss
-				{40}
+				{43}
 				{~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 3}} // Stéréo / Gliss / certains synth  -> BufSPitchGliss
-				{41}
+				{44}
 				{~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 8}} // Stéréo / Gliss / certains synth  -> WarpSGliss
-				{42}
+				{45}
 
 				{~synType[track][seq] == 1 /*and: {~ratSynth[track][seq] == 0}*/} // Stéréo / Autres
 				{ev.prepsyn + ~nbSynthBuf + 1}
@@ -3692,10 +3692,10 @@ envir[key][track][seq] = value;
 			\prepsynExt, (Pfunc({ |ev|
 				case
 				// [ BufMRoll, BufSRoll, GrainBuf, GrainFM, Electribe, BufMGliss, BufSGliss, GrainBufGliss, PMOscGliss ]
-				{ #[7, 16, 18, 28, 36, 37, 40, 43, 44, 33].includes(ev.prepsyn2) } // avec RAT2 sans ps // 33 pour SnareOto modifié
+				{ #[7, 16, 18, 28, 36, 40, 43, 46, 47].includes(ev.prepsyn2) } // avec RAT2 sans ps
 				{\a}
-				// [ BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
-				{ #[38, 39, 41, 42].includes(ev.prepsyn2) } // avec RAT2 & ps
+				// [ MiPlaits, MiBraids, BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
+				{ #[37, 38, 39, 41, 42, 44, 45].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
 				{\b}
 				// [ BufMVar, BufMVar2, BufSVar, BufSVar2 ]
 				{ #[1, 2, 10, 11].includes(ev.prepsyn2) } // avec var sans ps
@@ -4356,7 +4356,7 @@ envir[key][track][seq] = value;
 				~allSynthsGUI[16]
 				*/
 
-				{ev.prepsyn2 == 8 /*or: { ev.prepsyn2 == 17 }*/ or: { ev.prepsyn2 == 39 } /*or: { ev.prepsyn2 == 42 }*/ and: { ev.loop2 == 0 } } // Pour WarpM / WarpS / WarpMGliss / WarpSGliss
+				{ev.prepsyn2 == 8 /*or: { ev.prepsyn2 == 17 }*/ or: { ev.prepsyn2 == 42 } /*or: { ev.prepsyn2 == 42 }*/ and: { ev.loop2 == 0 } } // Pour WarpM / WarpS / WarpMGliss / WarpSGliss
 				// WarpS & WarpSGliss sont des Ugen Warp0 et non un granulateur fait maison comme dans la version mono
 
 				/*
@@ -4423,7 +4423,11 @@ envir[key][track][seq] = value;
 					// Synth Oto : Kik_Oto, Snare_Oto, Clap_Oto, Hat_Oto, Electribe -> max 5s
 					min(5, (ev.sustain)) }
 
-				{ev.prepsyn2.inclusivelyBetween(37, 42)} {
+				{ev.prepsyn2.inclusivelyBetween(37, 39)} {
+					// MiPlaits, MiBraids -> max 15s
+					min(15, (ev.sustain)) }
+
+				{ev.prepsyn2.inclusivelyBetween(40, 45)} {
 					// Glissando : BufMGliss, BufMPitchGliss, (WarpMGliss), BufSGliss, BufSPitchGliss, (WarpSGliss)
 					min(~maxSynthTime, min((ev.sustain),
 						(if (ev.rate0 /*preprate2[0]*/ < 0, // avant l'externalisation de RAT2 -> rate2 était utilisé -> à vérifier ??????????????????????????????????????????????????????
@@ -4433,7 +4437,7 @@ envir[key][track][seq] = value;
 							{if ( (ev.buflength * (1 - ev.offset) / ev.rate0.abs /*preprateH[0]*/).isNaN or: {ev.rate0.abs /*preprateH[0]*/ == 0}, {0}, {(ev.buflength * (1 - ev.offset) / ev.preprateH)}) })
 				) )) }
 
-				{ev.prepsyn2 > 42} {
+				{ev.prepsyn2 > 45} {
 					// les 2 derniers Glissando : GrainBufGliss & PMOscGliss
 					min(10, (ev.sustain)) }
 
