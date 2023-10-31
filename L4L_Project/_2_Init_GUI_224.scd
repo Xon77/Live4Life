@@ -13244,7 +13244,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 
 	~transComp = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
 
-	~psWindowSizeSpec = ControlSpec(0.05, 1, \lin, 0.05, 0.2);
+	~psWindowSizeSpec = ControlSpec(0.05, 1, \lin, 0.01, 0.2);
 
 	~makeModuleWindow.(currentEnvironment,
 		// roundViewFunc, minDefault, maxDefault, dataDefault, roundValueDefault, roundDefault,

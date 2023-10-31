@@ -163,22 +163,22 @@
 		case
 
 		{~numChannelsConfig == "16-Dome-8-6-2-Clock"}
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16} // 16 HP, mais aussi 2 Subs
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16} // 16 HP, mais aussi 2 Subs
 
 		{~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"}
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 20; ~numChannelsFX = 16} // 16 HP, mais aussi 4 Subs
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 20; ~numChannelsFX = 16} // 16 HP, mais aussi 4 Subs
 
 		{~numChannelsConfig == "22-8+Dome-8-4-2-Pair"}
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 36; ~numChannelsFX = 14} // 22 HP, mais aussi Susbs en 33 / 34 / 35 / 36
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 36; ~numChannelsFX = 14} // 22 HP, mais aussi Susbs en 33 / 34 / 35 / 36
 
 		{~numChannelsConfig == "16-UsineC-2Octo"}
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16}
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16}
 
 		{~numChannelsConfig == "24-UsineC-3Octo"}
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 27; ~numChannelsFX = 24}
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 27; ~numChannelsFX = 24}
 
 		{~numChannelsConfig ==  "32-Dome-12-10-8-2-Motu" or: { ~numChannelsConfig == "32-Dome-12-10-8-2" } } // 32 HP, mais aussi 2 Subs
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 34; ~numChannelsFX = 32; // 32 HP, mais aussi Subs en 33 / 34
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 34; ~numChannelsFX = 32; // 32 HP, mais aussi Subs en 33 / 34
 
 			// Adaptation des FX quand nb de canaux supérieurs à 16 faute de CPU
 			~numChannelsFX2 = 16;
@@ -187,7 +187,7 @@
 		}
 
 		{~numChannelsConfig ==  "32-Dome-UQAM-11-11-9-1" } // 32 HP pas de sub
-		{~serverOptions.numInputBusChannels = 0; ~serverOptions.numOutputBusChannels = 32; ~numChannelsFX = 32; // 32 HP pas de sub
+		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 32; ~numChannelsFX = 32; // 32 HP pas de sub
 
 			// Adaptation des FX quand nb de canaux supérieurs à 16 faute de CPU
 			~numChannelsFX2 = 16;
@@ -3876,10 +3876,10 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27])[13], src[1]
 				/*"Sine",*/ "SineFB", "Blip", "PMOsc", "GrainSin", "GrainFM", // [24 -> 28]
 				"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/ // [29 -> 31]
 				"KikOto", "SnareOto", "ClapOto", "HatOto", // [32 -> 35]
-				"Electribe", "MiPlaits", // [36 -> 37]
-				"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [38 -> 40]
-				"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [41 -> 43]
-				"GrainBufGliss", "PMOscGliss" // Glissando Autres // [44 -> 45]
+				"Electribe", "MiPlaits", "MiBraids", "MiInClouds", // [36 -> 39]
+				"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [40 -> 42]
+				"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [43 -> 45]
+				"GrainBufGliss", "PMOscGliss" // Glissando Autres // [46 -> 47]
 			];
 			// juste pour nommer les synthés de la GUI
 
@@ -6454,10 +6454,10 @@ ControlSpec(0.2, 120.0, 'exp', 0.001, 4.0, 'Mod Speed') // -> center2
 					( // juste pour recompiler un synthé XXXXXXXXX
 						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
 
-							// Snare (utilisation de l'agument preprate car 1 rate négation rend l'amplitude incontrolable -> spectre saturé)
+							// MiPlaits (utilisation de l'agument preprate car 1 rate négation)
 
 							~synth =
-							("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1 /*, psPitchDispers= 0, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+							("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, timbreLine, harmLine;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6468,7 +6468,7 @@ freq = center.min(127); // midi note
 timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
 harmLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: stretcher2.wrap(0,1), trigger: trigE, level: 1, fm_mod: offset, timb_mod: 0, morph_mod: 0, decay: 0.5, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
+src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: psWindowSize, trigger: trigE, level: 1, fm_mod: offset, timb_mod: 0, morph_mod: 0, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
 src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
@@ -6485,8 +6485,98 @@ src1 = src1[0];
 					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // stretcher Timbre
 					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // stretcher2 Timbre
 					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq'), // center.min(127).midicps - 4 octaves
-					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // center2 - > Trigger Grain
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'fm_mod'), // fm_mod
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200) - Others -> psWindowSize = morph / psPitchDispers = decay'), // center2 - > Trigger Grain
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'fm_mod - Other things -> synthesis engine (0 -- 15): 0:virtual_analog_engine, 1:waveshaping_engine, 2:fm_engine, 3:grain_engine, 4:additive_engine, 5:wavetable_engine, 6:chord_engine, 7:speech_engine, 8:swarm_engine, 9:noise_engine, 10:particle_engine, 11:string_engine, 12:modal_engine, 13:bass_drum_engine, 14:snare_drum_engine, 15:hi_hat_engine'), // offset -> fm_mod
+				];
+
+
+
+
+
+				if ( ~synthDefsBuild == 1, {
+					( // juste pour recompiler un synthé XXXXXXXXX
+						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+							// MiBraids (utilisation de l'agument preprate car 1 rate négation)
+
+							~synth =
+							("SynthDef(\\MiBraids_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+var src1, freq, tRate, trigE, timbreLine, colorLine;
+"+~spaSynthVars[indexS]+~allEnvs[1][index]+"
+
+tRate = /*preprate*/ center2.clip(0.1, 200);
+trigE = Impulse.kr(tRate); // Dust.kr
+
+freq = center.min(127); // midi note
+timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
+colorLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
+
+src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: (psPitchDispers*32)+1, bits: psWindowSize*6, ws: offset, mul: 1.0) * inBusVol * amp;
+
+"+~allSpas[1][indexS]+"
+})."++~synthDefsManagement);
+							~synth.asCompileString.postln;
+							~synth.interpret;
+
+				}})});
+
+				~metaDataMiBraids = [ // à terminer
+					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // rater Harmonics
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // rate2 Harmonics
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Color 1'), // stretcher Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Color 2'), // stretcher2 Timbre
+					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq'), // center.min(127).midicps - 4 octaves
+					nil,
+					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200) - Others -> psWindowSize = morph / psPitchDispers = decay'), // center2 - > Trigger Grain
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'waveshaping - Other things -> Synthesis model (0 -- 47): 0:CSAW, 1:MORPH, 2:SAW_SQUARE, 3:SINE_TRIANGLE, 4:BUZZ, 5:SQUARE_SUB, 6:SAW_SUB, 7:SQUARE_SYNC, 8:SAW_SYNC, 9:TRIPLE_SAW, 10:TRIPLE_SQUARE, 11:TRIPLE_TRIANGLE, 12:TRIPLE_SINE, 13:TRIPLE_RING_MOD, 14:SAW_SWARM, 15:SAW_COMB, 16:TOY, 17:DIGITAL_FILTER_LP, 18:DIGITAL_FILTER_PK, 19:DIGITAL_FILTER_BP, 20:DIGITAL_FILTER_HP, 21:VOSIM, 22:VOWEL, 23:VOWEL_FOF, 24:HARMONICS, 25:FM, 26:FEEDBACK_FM, 27:CHAOTIC_FEEDBACK_FM, 28:PLUCKED, 29:BOWED, 30:BLOWN, 31:FLUTED, 32:STRUCK_BELL, 33:STRUCK_DRUM, 34:KICK, 35:CYMBAL, 36:SNARE, 37:WAVETABLES, 38:WAVE_MAP, 39:WAVE_LINE, 40:WAVE_PARAPHONIC, 41:FILTERED_NOISE, 42:TWIN_PEAKS_NOISE, 43:CLOCKED_NOISE, 44:GRANULAR_CLOUD, 45:PARTICLE_NOISE, 46:DIGITAL_MODULATION, 47:QUESTION_MARK'), // offset -> waveshaping
+				];
+
+
+
+
+
+				if ( ~synthDefsBuild == 1, {
+					( // juste pour recompiler un synthé XXXXXXXXX
+						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+							// MiBraids (utilisation de l'agument preprate car 1 rate négation)
+
+							~synth =
+							("SynthDef(\\MiInClouds_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2, inBusVolume= 99 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+var src1, freq, tRate, trigE, gDensityLine, textureLine, inRBusVol;
+"+~spaSynthVars[indexS]+~allEnvs[1][index]+"
+
+tRate = /*preprate*/ center2.clip(0.1, 200);
+trigE = Impulse.kr(tRate); // Dust.kr
+
+freq = center.wrap(0, 96)-48; // midi note
+gDensityLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
+textureLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
+
+inRBusVol = In.kr(inBusVolume);
+src1 = SoundIn.ar(~soundIn) * inRBusVol;
+
+src1 = MiClouds.ar(src1, pit: freq, pos: 0, size: psWindowSize, dens: gDensityLine, tex: textureLine, drywet: 1, in_gain: 1, spread: 0, rvb: psPitchDispers, fb: offset.wrap(0,1), freeze: 0, mode: prepbuf.wrap(0,4) /*bufm*/, trig: trigE) * inBusVol * amp;
+src1 = src1[0];
+
+"+~allSpas[1][indexS]+"
+})."++~synthDefsManagement);
+							~synth.asCompileString.postln;
+							~synth.interpret;
+
+				}})});
+
+				~metaDataMiInClouds = [ // à terminer
+					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Density 1'), // rater Density 1
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Density 2'), // rate2 Density 2
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Texture 1'), // stretcher Texture 1
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Texture 2'), // stretcher2 Texture 2
+					ControlSpec(0, 96, 'lin', 0.01, 48, 'Midi Freq'), // center.wrap(0, 96)-48 - +-4 octaves
+					// nil,
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200) - Others -> psWindowSize = morph / psPitchDispers = decay'), // center2 - > Trigger Grain
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'Feedback - Other things -> 4 playback modes (0 -- 3): 0:PLAYBACK_MODE_GRANULAR, 1:PLAYBACK_MODE_STRETCH, 2:PLAYBACK_MODE_LOOPING_DELAY, 3:PLAYBACK_MODE_SPECTRAL'), // offset -> waveshaping
 				];
 
 
