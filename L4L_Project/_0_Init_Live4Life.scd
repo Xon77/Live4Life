@@ -1,7 +1,7 @@
 ( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 ~viaJACK = 0; // 0 without Jack // 1 with Jack (only tested on OSX)
-~soundIn = 0; // Sound Card Input Channel
+~inputBusChannelsNb = 2; ~soundIn = 0; // Sound Card Input Channel
 
 ~nbOfSeqs = 240 /*99*/; // Nb of sequences in a track
 ~foldersStructure = 1; // 1, if sound folders are formatted (e.g. IP Gong), otherwise 0
@@ -58,7 +58,7 @@
 // ~numChannelsConfig = "16-UsineC-2Octo"; // 2 circles of 8 speakers + Subs
 // ~numChannelsConfig = "24-UsineC-3Octo"; // 3 circles of 8 speakers + Subs
 // ~numChannelsConfig = "32-Dome-12-10-8-2"; // Clockwise from Links (+ 2 Subs) XXXXXXXXX
-// ~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
+~numChannelsConfig = "32-Dome-UQAM-11-11-9-1"; // Clockwise from Links XXXXXXXXX
 // ~numChannelsConfig = "32-Dome-12-10-8-2-Motu"; // Clockwise from right - Old Config Motu deprecated
 // ~numChannelsConfig = "64-CentreClock"; // Test - Clockwise from Centre - not tested in real context
 // ~numChannelsConfig = "96-CentreClock"; // Test - Clockwise from Centre - not tested in real context
@@ -144,7 +144,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_224.scd".loadRelative;
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; /*"_2_Init_GUI_224.scd".loadRelative;*/ "_2_Init_GUI_225.scd".loadRelative;
 
 // Lemur Connection
 ~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "169.254.160.30", 8000);
@@ -154,7 +154,7 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 
 
 // INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_183.scd".loadRelative;
+~updateTime = 0.2 /*0.1*/; /*"_3_Init_Pattern_183.scd".loadRelative;*/ "_3_Init_Pattern_184.scd".loadRelative;
 
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
