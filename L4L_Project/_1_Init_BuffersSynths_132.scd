@@ -162,23 +162,26 @@
 
 		case
 
+		{~numChannelsConfig == "4"}
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = ~numChannels; ~numChannelsFX = ~numChannels}
+
 		{~numChannelsConfig == "16-Dome-8-6-2-Clock"}
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16} // 16 HP, mais aussi 2 Subs
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16} // 16 HP, mais aussi 2 Subs
 
 		{~numChannelsConfig == "16-Dome-8-6-2-Clock-CC"}
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 20; ~numChannelsFX = 16} // 16 HP, mais aussi 4 Subs
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 20; ~numChannelsFX = 16} // 16 HP, mais aussi 4 Subs
 
 		{~numChannelsConfig == "22-8+Dome-8-4-2-Pair"}
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 36; ~numChannelsFX = 14} // 22 HP, mais aussi Susbs en 33 / 34 / 35 / 36
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 36; ~numChannelsFX = 14} // 22 HP, mais aussi Susbs en 33 / 34 / 35 / 36
 
 		{~numChannelsConfig == "16-UsineC-2Octo"}
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16}
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 18; ~numChannelsFX = 16}
 
 		{~numChannelsConfig == "24-UsineC-3Octo"}
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 27; ~numChannelsFX = 24}
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 27; ~numChannelsFX = 24}
 
 		{~numChannelsConfig ==  "32-Dome-12-10-8-2-Motu" or: { ~numChannelsConfig == "32-Dome-12-10-8-2" } } // 32 HP, mais aussi 2 Subs
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 34; ~numChannelsFX = 32; // 32 HP, mais aussi Subs en 33 / 34
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 34; ~numChannelsFX = 32; // 32 HP, mais aussi Subs en 33 / 34
 
 			// Adaptation des FX quand nb de canaux supérieurs à 16 faute de CPU
 			~numChannelsFX2 = 16;
@@ -187,7 +190,7 @@
 		}
 
 		{~numChannelsConfig ==  "32-Dome-UQAM-11-11-9-1" } // 32 HP pas de sub
-		{~serverOptions.numInputBusChannels = 2; ~serverOptions.numOutputBusChannels = 32; ~numChannelsFX = 32; // 32 HP pas de sub
+		{~serverOptions.numInputBusChannels = ~inputBusChannelsNb; ~serverOptions.numOutputBusChannels = 32; ~numChannelsFX = 32; // 32 HP pas de sub
 
 			// Adaptation des FX quand nb de canaux supérieurs à 16 faute de CPU
 			~numChannelsFX2 = 16;
@@ -6543,7 +6546,7 @@ src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wr
 							// MiBraids (utilisation de l'agument preprate car 1 rate négation)
 
 							~synth =
-							("SynthDef(\\MiInClouds_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2, inBusVolume= 99 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+							("SynthDef(\\MiInClouds_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1, offset= 0, offset2= 0, offset3= 0, offset4= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2, inBusVolume= 99 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, gDensityLine, textureLine, inRBusVol;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6557,7 +6560,7 @@ textureLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 inRBusVol = In.kr(inBusVolume);
 src1 = SoundIn.ar(~soundIn) * inRBusVol;
 
-src1 = MiClouds.ar(src1, pit: freq, pos: 0, size: psWindowSize, dens: gDensityLine, tex: textureLine, drywet: 1, in_gain: 1, spread: 0, rvb: psPitchDispers, fb: offset.wrap(0,1), freeze: 0, mode: prepbuf.wrap(0,4) /*bufm*/, trig: trigE) * inBusVol * amp;
+src1 = MiClouds.ar(src1, pit: freq, pos: center2.wrap(0, 1), size: offset, dens: gDensityLine, tex: textureLine, drywet: 1, in_gain: 1, spread: 0, rvb: offset2, fb: offset3, freeze: 0 /*psWindowSize*/, mode: prepbuf.wrap(0,4) /*bufm*/, trig: trigE) * inBusVol * amp;
 src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
