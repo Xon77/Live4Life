@@ -153,7 +153,7 @@ All the papers and articles are referenced on [ORCID](https://orcid.org/my-orcid
 Several performances are available either on [YouTube](https://www.youtube.com/channel/UCOv5kb3IQBmgyOQPu5DOZ4g) or [Vimeo](https://vimeo.com/christophexon).
 
 Several training workshops in immersive sound and spatial improvisation with this open source project were organized in 2023:
-- at [CIRMMT](https://www.cirmmt.org/en/welcome-to-cirmmt?set_language=en) in Montréal [in March and April](https://www.cirmmt.org/en/events/workshops/research/spatial-sound-live4life?set_language=en) in quadriphony,
+- at [CIRMMT](https://www.cirmmt.org/en/welcome-to-cirmmt?set_language=en) in Montréal [in March, April](https://www.cirmmt.org/en/events/workshops/research/spatial-sound-live4life?set_language=en) and [November](https://www.cirmmt.org/en/events/workshops/research/live4life_workshop-nov23?set_language=en) in quadriphony,
 - at [Hexagram](https://hexagram.ca/en/demo33-christophe-lengele-live-4-life-or-die/) in Montréal on May 13 on a 32-loudspeaker dome, as well as the first performative participative installations on [May 12](https://bit.ly/3VHaIx2) and [14](https://bit.ly/3HMo0ST),
 - at [ISEA (International Symposium on Electronic Arts)](https://hexagram.ca/fr/hexagram-isea-2023/) in Paris in May in quadriphony, as well as the presentation of an article (to be published) on the motivations and future of the tool.
 
