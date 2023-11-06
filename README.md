@@ -121,7 +121,7 @@ Follow the steps below one after another:
 
 7. **Install [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), by evaluating the code in SuperCollider editor.** First, you have to evaluate the following code to open ATK folder: `Atk.openUserSupportDir;` and if the ATK folder is not present, you can create it by evaluating the following code: `Atk.createUserSupportDir;`. If the automatic method by evaluating the code of [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles) does not work, put simply the ATK [Kernels](https://www.ambisonictoolkit.net/download/kernels/) and [Matrices](https://www.ambisonictoolkit.net/download/matrices/) in the ATK folder.
 
-8. For some spatial configurations (quad and UQAM-32 loudspeaker setup), if you want to skip the step for creating synthDefs in one of the setup steps (2i) below, to go quicker, I have already prepared the folder [`L4L_SynthDefs`](/L4L_SynthDefs/) you can copy into your user support directory, which is accessible via the menu `File -> Open user support directory`.
+8. For some spatial configurations (quad, 8, and UQAM-32 loudspeaker setup), if you want to skip the step for creating synthDefs in one of the setup steps (2i) below, to go quicker, I have already prepared the folder [`L4L_SynthDefs`](/L4L_SynthDefs/) you can copy into your user support directory, which is accessible via the menu `File -> Open user support directory`.
 
 
 ## Setup
