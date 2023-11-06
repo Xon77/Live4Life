@@ -78,13 +78,13 @@ It was originally designed for both Mac 15" specific screen size (1920×1200), b
 
 Follow the steps below one after another:
 
-1. **Install [SuperCollider 3.13](https://supercollider.github.io/downloads)** or above. 
+1. **Download and install [SuperCollider 3.13](https://supercollider.github.io/downloads)** or above. 
 
 (For beginners in SuperCollider, FYI to evaluate a code in parentheses, particularly in the setup process, you have to be inside the parentheses and press Control (on Windows) / Command (on Mac) + Return (for more details go to the menu `Language`). To evaluate a line of code, you have to be on the specific line and press either also Control (on Windows) / Command (on Mac) or easier shift + Return.)
 
-2. **Download [the latest release](https://github.com/Xon77/Live4Life/releases), To get this project folder and begin the setup of the tool for the following steps**. Use the release v0.0.13, if you cannot boot the audio server correctly without errors in the following step.
+2. **Download and put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it). 
 
-3. **Download and put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it). 
+3. **Download [the latest release](https://github.com/Xon77/Live4Life/releases), to get this project folder and begin the setup of the tool for the following steps**. Use the release v0.0.13, if you cannot boot the audio server correctly without errors in the following step.
 
 **From the [release v0.0.14](https://github.com/Xon77/Live4Life/releases), you will also need to put in your SuperCollider Extensions folder** a compiled version of some plugins, in this case [Mi UGens](https://github.com/v7b1/mi-UGens), available in [their releases](https://github.com/v7b1/mi-UGens/releases) (For Mac Intel architectures, you have to choose v.0.0.3). To go quicker, you can download **a compiled version for your OS available within the folder [`L4L_ExtensionsUGens`](L4L_ExtensionsUGens/) of this project**. For new Mac architectures with arm64, you will have to compile yourself with the help of [this repository from Mads Kjeldgaard](https://github.com/madskjeldgaard/sc-plugins-build-scripts).
 
