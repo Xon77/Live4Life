@@ -82,7 +82,7 @@ Follow the steps below one after another:
 
 (For beginners in SuperCollider, FYI to evaluate a code in parentheses, particularly in the setup process, you have to be inside the parentheses and press Control (on Windows) / Command (on Mac) + Return (for more details go to the menu `Language`). To evaluate a line of code, you have to be on the specific line and press either also Control (on Windows) / Command (on Mac) or easier shift + Return.)
 
-2. **To get this project folder and begin the setup of the tool for the following steps, download [the latest release](https://github.com/Xon77/Live4Life/releases).**
+2. **To get this project folder and begin the setup of the tool for the following steps, download [the latest release](https://github.com/Xon77/Live4Life/releases).** Use the release v0.0.13, if you cannot boot the audio server correctly without errors in the following step.
 
 3. **Put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it). 
 
