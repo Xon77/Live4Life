@@ -63,7 +63,7 @@ Please note that:
 
 ## Platform support &nbsp;&nbsp; ![OSX](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white) &nbsp;&nbsp; ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) &nbsp;&nbsp; ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-***Live 4 Life* plays on all platforms, but is optimised for macOS.** I have remarked that the loading of sound buffers is very slow on Windows and Linux, requiring more patience. (For this reason, I have prepared a light-weight folder of sound files you can download at the end of this section.)
+***Live 4 Life* can play on all platforms, but is optimised for macOS.** However, it can require a powerful and quick computer to boot correctly, since this tool tests the limits of the machine with SuperCollider. I have remarked that the loading of sound buffers is very slow on Windows and Linux, requiring more patience. (For this reason, I have prepared a light-weight folder of sound files you can download at the end of this section.)
 
 It has been mainly tested with macOS 10.14.6 Mojave on a MacBook Pro 15" and with macOS 12.6 Monterey on a MacBook Pro M1 16".
 It was originally designed for both Mac 15" specific screen size (1920×1200), but **the GUI automatically adapts or scales to any screen size**. It is recommended to select the biggest screen resolution you can, like e.g. 2056×1329 on Mac 16" screen size. **Shortcuts are currently conceived for an AZERTY keyboard (Français - Numérique), but other keyboard options will be added in the future.**
