@@ -88,7 +88,7 @@ Follow the steps below one after another:
 
 4. **From the release v0.0.14, you will also need to put in your SuperCollider Extensions folder** a compiled version of some plugins, in this case [Mi UGens](https://github.com/v7b1/mi-UGens), available in [their releases](https://github.com/v7b1/mi-UGens/releases) (For Mac Intel architectures, you have to choose v.0.0.3). To go quicker, you can download **a compiled version for your OS available within the folder [`L4L_ExtensionsUGens`](L4L_ExtensionsUGens/) of this project**. For new Mac architectures with arm64, you will have to compile yourself with the help of [this repository from Mads Kjeldgaard](https://github.com/madskjeldgaard/sc-plugins-build-scripts).
 
-5. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below**, which are extensions of the SuperCollider language, **with one of both methods below**, and recompile, by going into the menu `Language -> Recompile Class Library` (If you are a new user of SuperCollider, I recommend the second method to go quicker):
+5. **Install [the Quarks](https://github.com/supercollider-quarks/quarks#installing) mentioned below**, which are extensions of the SuperCollider language, **with one of both methods below** (If you are a new user of SuperCollider, I recommend the second method to go quicker):
 
 	1. **Slow clean install**: You can either  download all the quarks and put them in `user support directory` or [install git](http://git-scm.com/), which seems not to work well on Windows according to this [post on SuperCollider forum](https://scsynth.org/t/quarks-gui-empty-on-windows/4170). Please check the procedure on the [SuperCollider Quarks webpage](https://github.com/supercollider-quarks/quarks#installing). Then, go to the menu `Language -> Quarks`, click on the button `Check for updates` and select each of the quarks below by clicking on the box with the cross.
 
@@ -117,11 +117,11 @@ Follow the steps below one after another:
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-6. **Put the folder [`L4L_ExtensionsLang`](/L4L_ExtensionsLang)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) and recompile again.
+6. **Put the folder [`L4L_ExtensionsLang`](/L4L_ExtensionsLang)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) and recompile, by going into the menu `Language -> Recompile Class Library`.
 
 7. **Install [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), by evaluating the code in SuperCollider editor.** First, you have to evaluate the following code to open ATK folder: `Atk.openUserSupportDir;` and if the ATK folder is not present, you can create it by evaluating the following code: `Atk.createUserSupportDir;`. If the automatic method by evaluating the code of [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles) does not work, put simply the ATK [Kernels](https://www.ambisonictoolkit.net/download/kernels/) and [Matrices](https://www.ambisonictoolkit.net/download/matrices/) in the ATK folder.
 
-8. For some spatial configurations (quad, 8, and UQAM-32 loudspeaker setup), if you want to skip the step for creating synthDefs in one of the setup steps (2i) below, to go quicker, I have already prepared the folder [`L4L_SynthDefs`](/L4L_SynthDefs/) you can copy into your user support directory, which is accessible via the menu `File -> Open user support directory`.
+8. For some spatial configurations (quad, 8, and UQAM-32 loudspeaker setup), if you want to skip the step for creating synthDefs in one of the setup steps (2i) below, to go quicker, I have already prepared the folder [`L4L_SynthDefs`](/L4L_SynthDefs/) you can copy into your user support directory, which is accessible via the menu `File -> Open user support directory`. Recompile again.
 
 
 ## Setup
