@@ -117,7 +117,7 @@ Follow the steps below one after another:
 	- [WindowHandleView](https://github.com/scztt/WindowHandleView.quark) (for GUI),
 	- [ZArchive](https://github.com/crucialfelix/ZArchive) (for saving and recalling presets).
 
-6. **Put the folder [`L4L_ExtensionsLang`](/L4L_ExtensionsLang)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) and recompile, by going into the menu `Language -> Recompile Class Library`.
+6. **Put the folder [`L4L_ExtensionsLang`](/L4L_ExtensionsLang)**, which is within this project folder, **into your `Extensions` folder** (if you do not already have these classes) **and recompile, by going into the menu `Language -> Recompile Class Library`**.
 
 7. **Install [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles), by evaluating the code in SuperCollider editor.** First, you have to evaluate the following code to open ATK folder: `Atk.openUserSupportDir;` and if the ATK folder is not present, you can create it by evaluating the following code: `Atk.createUserSupportDir;`. If the automatic method by evaluating the code of [ATK dependencies](https://github.com/ambisonictoolkit/atk-sc3/blob/master/README.md#kernels-matrices--soundfiles) does not work, put simply the ATK [Kernels](https://www.ambisonictoolkit.net/download/kernels/) and [Matrices](https://www.ambisonictoolkit.net/download/matrices/) in the ATK folder.
 
