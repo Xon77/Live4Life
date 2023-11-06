@@ -95,7 +95,7 @@ Follow the steps below one after another:
 	2. **Quick raw install: If you** do not succeed to [install git](http://git-scm.com/) and the Quarks mentioned below with the normal way above, especially on Windows, or **want to quickly install all the necessary Quarks files, unzip the file `L4L_ExtensionsQuarks.zip` within this project folder you have just downloaded, and then put the folder unzipped `L4L_ExtensionsQuarks` into your `Extensions` folder.**
 
 	- [adclib](https://github.com/supercollider-quarks/adclib) (for adcVerb),
-	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, HOA-ATK will be updated in the future. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
+	- [atk-sc3](https://github.com/ambisonictoolkit/atk-sc3) (for ambisonic spatialisation: currently only FOA is used, but HOA-ATK is planned be updated in this project in the future. This Quark will also install automatically other Quarks, like e.g. [wslib](https://github.com/supercollider-quarks/wslib) for GUI, [Mathlib](https://github.com/supercollider-quarks/MathLib) or [XML](https://github.com/supercollider-quarks/XML).),
 	- [Automation](https://github.com/neeels/Automation) (for saving and recalling actions on main GUIs),
 	- [Bjorklund](https://github.com/redFrik/Bjorklund) (for Euclidean algorithm),
 	- [Connection](https://github.com/scztt/Connection.quark) (for [MVC](https://en.wikipedia.org/wiki/Model–view–controller) and NumericControlValue),
