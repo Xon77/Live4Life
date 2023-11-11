@@ -3497,7 +3497,7 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 		~presetSeqTextView[i].string = ~presetSelection[~tracksValue][i];
 	};
 	// ~seqComp5.visibleOrigin = ~seqCompG1[~tracksValue].visibleOrigin; // Pour conserver la visualisation des presets de séquences
-	~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin); // Préférable de le lier à la séquence car visibleOrigin est différent pour ~seqComp5 & ~seqCompG1 vu leur taille
+	~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin); // Préférable de le lier à la séquence car visibleOrigin est différent pour ~seqComp5 & ~seqCompG1 vu leur taille
 	~changeSeqMetaControls.(~tracksValue, ~seqsValue);
 };
 
@@ -3507,7 +3507,7 @@ m = PdefAllGui(8, bounds: Rect(30, 900, 60, 60));*/
 	~nbOfTracksX2.do { |tr|
 		if (~playViewValue[tr] == 1, {~seqReadViewG[tr].value_(~seqSeqSpec3.unmap(~posSeq2[tr])); });
 		// ~seqCompG1[~tracksValue].visibleOrigin = ~seqComp5.visibleOrigin; // Pour conserver la visualisation des presets de séquences
-		~seqCompG1[tr/*~tracksValue*/].visibleOrigin = 0@( (~presetSeqStart[tr/*~tracksValue*/]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin); // Préférable de le lier à la séquence car visibleOrigin est différent pour ~seqComp5 & ~seqCompG1 vu leur taille
+		~seqCompG1[tr/*~tracksValue*/].visibleOrigin = 0@( (~presetSeqStart[tr/*~tracksValue*/]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin); // Préférable de le lier à la séquence car visibleOrigin est différent pour ~seqComp5 & ~seqCompG1 vu leur taille
 	};
 };
 
@@ -3991,7 +3991,7 @@ Ndef(\sound).play
 			(0..~nbOfTracksX2-1).takeThese({ |i| i == prevTrack }).do { |i| ~seqCompG1VisibleOrigin[i] = ~seqCompG1[i].visibleOrigin };
 			~seqComp5.visibleOrigin = ~seqCompG1VisibleOrigin[~tracksValue];*/
 			// ~nbOfTracksX2.do { |i| ~seqCompG1VisibleOrigin[i] = ~seqCompG1[i].visibleOrigin }; // -> apparemment OK avec modif ci-dessous et en supprimant cette ligne
-			~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin);
+			~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin);
 
 			// Pour l'affichage du Tab du FX pour les 2 servers
 			if (~nbOfServers == 2, { if (tra >= ~serverTrackSwitch, { ~fxTabbedView.focus(1) }, { ~fxTabbedView.focus(0) } ) });
@@ -6827,10 +6827,10 @@ Ndef(\sound).play
 							rand = rand.choose;
 							if (~currentTab == 0, {
 								~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([ rand, rand ]));
-								~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+								~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 							},{
 								~presetSeqRangeViewG[~tracksValue].valueAction_(~presetSeqRangeSpec.unmap([ rand, rand ]));
-								~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+								~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 							});
 						},{
 							"No Preset in this Track".postln;
@@ -7112,19 +7112,19 @@ Ndef(\sound).play
 				42, { // *$  -> Preset Selection + 1 (-1 dans key2 car pas d'unicode)
 					if (~currentTab == 0, {
 						~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([ (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs), (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs)  ]));
-						~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+						~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 					},{
 						~presetSeqRangeViewG[~tracksValue].valueAction_(~presetSeqRangeSpec.unmap([ (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs), (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs)  ]));
-						~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+						~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 					});
 				},
 				36, { // *$ + shift  -> même comportement qu'au dessus
 					if (~currentTab == 0, {
 						~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([ (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs), (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs)  ]));
-						~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+						~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 					},{
 						~presetSeqRangeViewG[~tracksValue].valueAction_(~presetSeqRangeSpec.unmap([ (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs), (~presetSeqStart[~tracksValue]+2).clip(0, ~nbOfSeqs)  ]));
-						~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+						~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 					});
 				},
 				8364, { // *$ + alt-> PresetSelection suivante de la piste
@@ -7167,10 +7167,10 @@ Ndef(\sound).play
 								if (~currentTab == 0, {
 									~presetSeqRangeView.value_(~presetSeqRangeSpec.unmap([ curPreset, curPreset+1 ]));
 									~presetSeqRangeViewG[~tracksValue].value_(~presetSeqRangeSpec.unmap([ curPreset, curPreset+1 ]));
-									~seqComp5.visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+									~seqComp5.visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 								},{
 									~presetSeqRangeViewG[~tracksValue].value_(~presetSeqRangeSpec.unmap([ curPreset, curPreset+1 ]));
-									~seqCompG1[~tracksValue].visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+									~seqCompG1[~tracksValue].visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 								});
 								/*if (~presetSelection[~tracksValue][curPreset] != 0, {
 								~presetGetFunction.value(~presetSelection[~tracksValue][curPreset].asSymbol);
@@ -7209,10 +7209,10 @@ Ndef(\sound).play
 					{
 						if (~currentTab == 0, {
 							~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([ (~presetSeqStart[~tracksValue]).clip(0, ~nbOfSeqs), (~presetSeqStart[~tracksValue]-1).clip(0, ~nbOfSeqs)  ]));
-							~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+							~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 						},{
 							~presetSeqRangeViewG[~tracksValue].valueAction_(~presetSeqRangeSpec.unmap([ (~presetSeqStart[~tracksValue]).clip(0, ~nbOfSeqs), (~presetSeqStart[~tracksValue]-1).clip(0, ~nbOfSeqs)  ]));
-							~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+							~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 						});
 					}
 					{mod == 524288}  // ^¨ + alt-> Preset Selection précédente de la piste
@@ -7254,10 +7254,10 @@ Ndef(\sound).play
 								if (~currentTab == 0, {
 									~presetSeqRangeView.value_(~presetSeqRangeSpec.unmap([ curPreset, curPreset+1 ]));
 									~presetSeqRangeViewG[~tracksValue].value_(~presetSeqRangeSpec.unmap([ curPreset, curPreset+1 ]));
-									~seqComp5.visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+									~seqComp5.visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 								},{
 									~presetSeqRangeViewG[~tracksValue].value_(~presetSeqRangeSpec.unmap([ curPreset, curPreset+1 ]));
-									~seqCompG1[~tracksValue].visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+									~seqCompG1[~tracksValue].visibleOrigin = 0@( (curPreset /*~presetSeqStart[~tracksValue]*/-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 								});
 								/*if (~presetSelection[~tracksValue][curPreset] != 0, {
 								~presetGetFunction.value(~presetSelection[~tracksValue][curPreset].asSymbol);
@@ -9718,9 +9718,9 @@ pair for phase modulation, which sounds similar to FM
 	.action_({ |i| var prev, prevFX; prev = ~followPreset; prevFX = ~presetsDontTriggerFX; ~followPreset = 0; ~presetsDontTriggerFX = 1;
 		~seqsView.valueAction_(~seqsValue+1); ~presetSeqRangeView.valueAction_(~presetSeqRangeSpec.unmap([~seqsValue, ~seqsValue+1]));
 		if (~currentTab == 0, {
-			~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20).max(0).min(~seqComp5MaxVisibleOrigin)
+			~seqComp5.visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-4)*20*~ySizeMul).max(0).min(~seqComp5MaxVisibleOrigin)
 		},{
-			~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin)
+			~seqCompG1[~tracksValue].visibleOrigin = 0@( (~presetSeqStart[~tracksValue]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin)
 		});
 		~presetSelection2View.valueAction_(~presetSelection2View.value-1);
 		~presetSelection2View.valueAction_(~presetSelection2View.value+1); // car pas possible de resélectionner le current item d'une ListView
@@ -15466,9 +15466,9 @@ data.postln;*/
 			try { if (~presetSeqNb2Value[i][data[id+1][1]-1] != data[id+1][3], { ~presetSeqNb2ViewG[i][data[id+1][1]-1].valueAction_(data[id+1][3]) }/*, {"Order identical".postln}*/) };
 
 			if (newTracks.isNil, {
-				~seqCompG1[i].visibleOrigin = 0@( (~presetSeqStart[i]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin); // pour inclure le mouvement des Views des Tracks
+				~seqCompG1[i].visibleOrigin = 0@( (~presetSeqStart[i]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin); // pour inclure le mouvement des Views des Tracks
 			},{
-				~seqCompG1[newTracks[id]].visibleOrigin = 0@( (~presetSeqStart[newTracks[id]]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin);
+				~seqCompG1[newTracks[id]].visibleOrigin = 0@( (~presetSeqStart[newTracks[id]]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin);
 			});
 		}
 		{ data[id+1][0] == 2 }
@@ -15489,9 +15489,9 @@ data.postln;*/
 			};
 
 			if (newTracks.isNil, {
-				~seqCompG1[i].visibleOrigin = 0@( (~presetSeqStart[i]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin); // pour inclure le mouvement des Views des Tracks
+				~seqCompG1[i].visibleOrigin = 0@( (~presetSeqStart[i]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin); // pour inclure le mouvement des Views des Tracks
 			},{
-				~seqCompG1[newTracks[id]].visibleOrigin = 0@( (~presetSeqStart[newTracks[id]]-10)*20).max(0).min(~seqCompG1MaxVisibleOrigin);
+				~seqCompG1[newTracks[id]].visibleOrigin = 0@( (~presetSeqStart[newTracks[id]]-10)*20*~ySizeMul).max(0).min(~seqCompG1MaxVisibleOrigin);
 			});
 		}
 		{ data[id+1][0] == 3 }
@@ -21954,12 +21954,12 @@ u.drawFunc = { d.draw }
 	~position2SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 60*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([["-", Color.black, ~popUpMenuBackgroundColor]])
 	.font_(Font("Verdana", 12*~fontSizeMul))
-	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y - 400)*~ySizeMul });
+	.action_({|i| ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y - (400*~ySizeMul)) });
 
 	~position3SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 74*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([["+", Color.black, ~popUpMenuBackgroundColor]])
 	.font_(Font("Verdana", 12*~fontSizeMul))
-	.action_({|i| if (~seqCompG1[tr].visibleOrigin.y == 0, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + 380).min(~seqCompG1MaxVisibleOrigin)*~ySizeMul }, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + 400).min(~seqCompG1MaxVisibleOrigin)*~ySizeMul }) }); // (4380) = (400 * 11) - 20 ou (20 ° 20 * 11) - 20
+	.action_({|i| if (~seqCompG1[tr].visibleOrigin.y == 0, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + (380*~ySizeMul)).min(~seqCompG1MaxVisibleOrigin) }, { ~seqCompG1[tr].visibleOrigin = 0@(~seqCompG1[tr].visibleOrigin.y + (400*~ySizeMul)).min(~seqCompG1MaxVisibleOrigin) }) }); // (4380) = (400 * 11) - 20 ou (20 ° 20 * 11) - 20
 
 	~position4SeqViewG[tr] = RoundButton(~seqCompG[tr], Rect(2*~xSizeMul, 88*~ySizeMul, 30*~xSizeMul, 12*~ySizeMul))
 	.states_([[">", Color.black, ~popUpMenuBackgroundColor]])
