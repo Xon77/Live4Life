@@ -84,7 +84,7 @@ Follow the steps below one after another:
 
 2. **Download and put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it). 
 
-3. **Download [the latest release](https://github.com/Xon77/Live4Life/releases) of this project to begin the setup of the tool for the following steps.** Use the release v0.0.13, if you cannot boot the audio server correctly without errors with [Mi UGens](https://github.com/v7b1/mi-UGens) in the following step.
+3. **Download [the latest release](https://github.com/Xon77/Live4Life/releases) of this project to begin the setup of the tool for the following steps.** :warning: **Use the release v0.0.13, if you cannot boot the audio server correctly without errors with [Mi UGens](https://github.com/v7b1/mi-UGens) installed within extensions in the following step.**
 
 4. **From the release v0.0.14, you will also need to put in your SuperCollider Extensions folder** a compiled version of some plugins, in this case [Mi UGens](https://github.com/v7b1/mi-UGens), available in [their releases](https://github.com/v7b1/mi-UGens/releases) (For Mac Intel architectures, you have to choose v.0.0.3). To go quicker, you can download **a compiled version for your OS available within the folder [`L4L_ExtensionsUGens`](L4L_ExtensionsUGens/) of this project**. For new Mac architectures with arm64, you will have to compile yourself with the help of [this repository from Mads Kjeldgaard](https://github.com/madskjeldgaard/sc-plugins-build-scripts) in order to be allowed to load unsigned plugins on macOS.
 
