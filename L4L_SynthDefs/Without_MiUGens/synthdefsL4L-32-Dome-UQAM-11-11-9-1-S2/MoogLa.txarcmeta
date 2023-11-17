@@ -1,0 +1,109 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(24),  Array.prNew(2),  Event.prNew,  
+	Array.prNew(16),  ControlSpec.prNew,  LinearWarp.prNew,  "",  
+	ControlSpec.prNew,  LinearWarp.prNew,  FreqSpec.prNew,  ExponentialWarp.prNew,  
+	" Hz",  ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(4),  
+	Event.prNew,  Array.prNew(8),  ControlSpec.prNew,  LinearWarp.prNew,  
+	Event.prNew,  Array.prNew(8),  ControlSpec.prNew,  LinearWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(2)
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  'orderMod',  o[2],  
+		'specs',  o[3],  'order',  o[15],  
+		nil,  nil,  'specsR',  o[16],  
+		'specsM',  o[20],  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'orderM',  o[26],  nil,  nil ],  
+	// Array
+	2, [ 'cutoff_Mod',  'resonance_Mod' ],  
+	// Event
+	3, [ array: o[4],  size: 4,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	4, [ nil,  nil,  nil,  nil,  
+		nil,  nil,  'resonance',  o[5],  
+		'lag',  o[8],  'cutoff_E',  o[10],  
+		nil,  nil,  'mix',  o[13] ],  
+	// ControlSpec
+	5, [ minval: 0,  maxval: 1,  
+		warp: o[6],  step: 0.01,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	6, [ spec: o[5] ],  
+	// ControlSpec
+	8, [ minval: 0,  maxval: 30,  
+		warp: o[9],  step: 0.01,  
+		default: 1,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	9, [ spec: o[8] ],  
+	// FreqSpec
+	10, [ minval: 20,  maxval: 20000,  
+		warp: o[11],  step: 0.0,  
+		default: 440,  units: o[12],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	11, [ spec: o[10] ],  
+	// ControlSpec
+	13, [ minval: -1,  maxval: 1,  
+		warp: o[14],  step: 0,  
+		default: -1,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	14, [ spec: o[13] ],  
+	// Array
+	15, [ 'mix',  'lag',  'cutoff_E',  'resonance' ],  
+	// Event
+	16, [ array: o[17],  size: 2,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	17, [ nil,  nil,  'cutoff_E',  o[10],  
+		nil,  nil,  'resonance',  o[18] ],  
+	// ControlSpec
+	18, [ minval: 0,  maxval: 1,  
+		warp: o[19],  step: 0.01,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	19, [ spec: o[18] ],  
+	// Event
+	20, [ array: o[21],  size: 2,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	21, [ nil,  nil,  'cutoff_HP',  o[22],  
+		'resonance_HP',  o[24],  nil,  nil ],  
+	// ControlSpec
+	22, [ minval: -1,  maxval: 1,  
+		warp: o[23],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	23, [ spec: o[22] ],  
+	// ControlSpec
+	24, [ minval: -1,  maxval: 1,  
+		warp: o[25],  step: 0.001,  
+		default: 0,  units: o[7],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	25, [ spec: o[24] ],  
+	// Array
+	26, [ 'cutoff_HP',  'resonance_HP' ]
+];
+prUnarchive(o,p);
