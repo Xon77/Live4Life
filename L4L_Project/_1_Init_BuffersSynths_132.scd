@@ -50,7 +50,7 @@
 
 
 
-		// Martin Marier Server Options
+		// Linux Server Options
 		/*
 		s.options.sampleRate_(48000);
 		s.options.numAudioBusChannels_(2.pow(11));
@@ -3869,21 +3869,71 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27])[13], src[1]
 
 			// Liste de tous les synthés avec les enveloppes et les spatialisations
 
+			~checkUGens = Class.allClasses.cs;
+
 			// Changer le \durenv & \prepsyn2 & \prepsynExt dans le pattern si changement des synthés XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-			~allSynthsGUI = [
-				"BufM", "BufMVar", "BufMVar2", "BufMPitch", "BufMPitchVar", "BufMPitchVar2", "BufMR", "BufMRoll", "WarpM", // Mono [0 -> 8]
-				"BufS", "BufSVar", "BufSVar2", "BufSPitch", "BufSPitchVar", "BufSPitchVar2", "BufSR", "BufSRoll", "WarpS", // Stereo [9 -> 17]
-				/*"BufGrain",*/ "GrainBuf", "ConcatBufSig", "ConcatBufIn", // [18 -> 20]
-				"ConcatInSig", "GrainIn", "WarpIn", // [21 -> 23]
-				/*"Sine",*/ "SineFB", "Blip", "PMOsc", "GrainSin", "GrainFM", // [24 -> 28]
-				"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/ // [29 -> 31]
-				"KikOto", "SnareOto", "ClapOto", "HatOto", // [32 -> 35]
-				"Electribe", "MiPlaits", "MiBraids", "MiInClouds", // [36 -> 39]
-				"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [40 -> 42]
-				"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [43 -> 45]
-				"GrainBufGliss", "PMOscGliss" // Glissando Autres // [46 -> 47]
-			];
+			if (~checkUGens.contains("MiPlaits"), {
+
+				~allSynthsGUI = [
+					"BufM", "BufMVar", "BufMVar2", "BufMPitch", "BufMPitchVar", "BufMPitchVar2", "BufMR", "BufMRoll", "WarpM", // Mono [0 -> 8]
+					"BufS", "BufSVar", "BufSVar2", "BufSPitch", "BufSPitchVar", "BufSPitchVar2", "BufSR", "BufSRoll", "WarpS", // Stereo [9 -> 17]
+					/*"BufGrain",*/ "GrainBuf", "ConcatBufSig", "ConcatBufIn", // [18 -> 20]
+					"ConcatInSig", "GrainIn", "WarpIn", // [21 -> 23]
+					/*"Sine",*/ "SineFB", "Blip", "PMOsc", "GrainSin", "GrainFM", // [24 -> 28]
+					"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/ // [29 -> 31]
+					"KikOto", "SnareOto", "ClapOto", "HatOto", // [32 -> 35]
+					"Electribe", // 36
+					"MiPlaits", "MiBraids", "MiInClouds", // [37 -> 39]
+					"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [40 -> 42]
+					"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [43 -> 45]
+					"GrainBufGliss", "PMOscGliss" // Glissando Autres // [46 -> 47]
+				];
+
+				~nbBufM = 0; ~nbBufMVar = 1; ~nbBufMVar2 = 2; ~nbBufMPitch = 3; ~nbBufMPitchVar = 4; ~nbBufMPitchVar2 = 5; ~nbBufMR = 6; ~nbBufMRoll = 7; ~nbWarpM = 8; // Mono [0 -> 8]
+				~nbBufS = 9; ~nbBufSVar = 10; ~nbBufSVar2 = 11; ~nbBufSPitch = 12; ~nbBufSPitchVar = 13; ~nbBufSPitchVar2 = 14; ~nbBufSR = 15; ~nbBufSRoll = 16; ~nbWarpS = 17; // Stereo [9 -> 17]
+				~nbGrainBuf = 18; ~nbConcatBufSig = 19; ~nbConcatBufIn = 20; // [18 -> 20]
+				~nbConcatInSig = 21; ~nbGrainIn = 22; ~nbWarpIn = 23; // [21 -> 23]
+				~nbSineFB = 24; ~nbBlip = 25; ~nbPMOsc = 26; ~nbGrainSin = 27; ~nbGrainFM = 28; // [24 -> 28]
+				~nbUpPiano = 29; ~nbAcidOto = 30; ~nbStringOto = 31; // [29 -> 31]
+				~nbKikOto = 32; ~nbSnareOto = 33; ~nbClapOto = 34; ~nbHatOto = 35; // [32 -> 35]
+				~nbElectribe = 36; // 36
+				~nbMiPlaits = 37; ~nbMiBraids = 38; ~nbMiInClouds = 39; // [37 -> 39]
+				~nbBufMGliss = 40; ~nbBufMPitchGliss = 41; ~nbWarpMGliss = 42; // Glissando Mono // [40 -> 42]
+				~nbBufSGliss = 43; ~nbBufSPitchGliss = 44; ~nbWarpSGliss = 45; // Glissando Stereo // [43 -> 45]
+				~nbGrainBufGliss = 46; ~nbPMOscGliss = 47; // Glissando Autres // [46 -> 47]
+
+			},{
+
+				~allSynthsGUI = [
+					"BufM", "BufMVar", "BufMVar2", "BufMPitch", "BufMPitchVar", "BufMPitchVar2", "BufMR", "BufMRoll", "WarpM", // Mono [0 -> 8]
+					"BufS", "BufSVar", "BufSVar2", "BufSPitch", "BufSPitchVar", "BufSPitchVar2", "BufSR", "BufSRoll", "WarpS", // Stereo [9 -> 17]
+					/*"BufGrain",*/ "GrainBuf", "ConcatBufSig", "ConcatBufIn", // [18 -> 20]
+					"ConcatInSig", "GrainIn", "WarpIn", // [21 -> 23]
+					/*"Sine",*/ "SineFB", "Blip", "PMOsc", "GrainSin", "GrainFM", // [24 -> 28]
+					"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/ // [29 -> 31]
+					"KikOto", "SnareOto", "ClapOto", "HatOto", // [32 -> 35]
+					"Electribe", // 36
+					// "MiPlaits", "MiBraids", "MiInClouds", // [37 -> 39]
+					"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [37 -> 39]
+					"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [40 -> 42]
+					"GrainBufGliss", "PMOscGliss" // Glissando Autres // [43 -> 44]
+				];
+
+				~nbBufM = 0; ~nbBufMVar = 1; ~nbBufMVar2 = 2; ~nbBufMPitch = 3; ~nbBufMPitchVar = 4; ~nbBufMPitchVar2 = 5; ~nbBufMR = 6; ~nbBufMRoll = 7; ~nbWarpM = 8; // Mono [0 -> 8]
+				~nbBufS = 9; ~nbBufSVar = 10; ~nbBufSVar2 = 11; ~nbBufSPitch = 12; ~nbBufSPitchVar = 13; ~nbBufSPitchVar2 = 14; ~nbBufSR = 15; ~nbBufSRoll = 16; ~nbWarpS = 17; // Stereo [9 -> 17]
+				~nbGrainBuf = 18; ~nbConcatBufSig = 19; ~nbConcatBufIn = 20; // [18 -> 20]
+				~nbConcatInSig = 21; ~nbGrainIn = 22; ~nbWarpIn = 23; // [21 -> 23]
+				~nbSineFB = 24; ~nbBlip = 25; ~nbPMOsc = 26; ~nbGrainSin = 27; ~nbGrainFM = 28; // [24 -> 28]
+				~nbUpPiano = 29; ~nbAcidOto = 30; ~nbStringOto = 31; // [29 -> 31]
+				~nbKikOto = 32; ~nbSnareOto = 33; ~nbClapOto = 34; ~nbHatOto = 35; // [32 -> 35]
+				~nbElectribe = 36; // 36
+				~nbMiPlaits = 1000; ~nbMiBraids = 1001; ~nbMiInClouds = 1002; // [37 -> 39]
+				~nbBufMGliss = 37; ~nbBufMPitchGliss = 38; ~nbWarpMGliss = 39; // Glissando Mono // [37 -> 39]
+				~nbBufSGliss = 40; ~nbBufSPitchGliss = 41; ~nbWarpSGliss = 42; // Glissando Stereo // [40 -> 42]
+				~nbGrainBufGliss = 43; ~nbPMOscGliss = 44; // Glissando Autres // [43 -> 44]
+
+			});
 			// juste pour nommer les synthés de la GUI
 
 			// ~allSynthsGUI.size
@@ -6455,12 +6505,16 @@ ControlSpec(0.2, 120.0, 'exp', 0.001, 4.0, 'Mod Speed') // -> center2
 
 				if ( ~synthDefsBuild == 1, {
 					( // juste pour recompiler un synthé XXXXXXXXX
-						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
 
-							// MiPlaits (utilisation de l'agument preprate car 1 rate négation)
+						if (~checkUGens.contains("MiPlaits"), {
+							// Essai avec MiPlaits.asClass ou MiPlaits.name, mais génération d'une erreur dans le Post window
 
-							~synth =
-							("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+							~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+								// MiPlaits (utilisation de l'agument preprate car 1 rate négation)
+
+								~synth =
+								("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, timbreLine, harmLine;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6476,10 +6530,10 @@ src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
 })."++~synthDefsManagement);
-							~synth.asCompileString.postln;
-							~synth.interpret;
+								~synth.asCompileString.postln;
+								~synth.interpret;
 
-				}})});
+				}}}))});
 
 				~metaDataMiPlaits = [ // à terminer
 					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
@@ -6498,12 +6552,15 @@ src1 = src1[0];
 
 				if ( ~synthDefsBuild == 1, {
 					( // juste pour recompiler un synthé XXXXXXXXX
-						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
 
-							// MiBraids (utilisation de l'agument preprate car 1 rate négation)
+						if (~checkUGens.contains("MiBraids"), {
 
-							~synth =
-							("SynthDef(\\MiBraids_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+							~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+								// MiBraids (utilisation de l'agument preprate car 1 rate négation)
+
+								~synth =
+								("SynthDef(\\MiBraids_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, timbreLine, colorLine;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6518,10 +6575,10 @@ src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wr
 
 "+~allSpas[1][indexS]+"
 })."++~synthDefsManagement);
-							~synth.asCompileString.postln;
-							~synth.interpret;
+								~synth.asCompileString.postln;
+								~synth.interpret;
 
-				}})});
+				}}}))});
 
 				~metaDataMiBraids = [ // à terminer
 					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
@@ -6541,12 +6598,15 @@ src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wr
 
 				if ( ~synthDefsBuild == 1, {
 					( // juste pour recompiler un synthé XXXXXXXXX
-						~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
 
-							// MiBraids (utilisation de l'agument preprate car 1 rate négation)
+						if (~checkUGens.contains("MiClouds"), {
 
-							~synth =
-							("SynthDef(\\MiInClouds_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1, offset= 0, offset2= 0, offset3= 0, offset4= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2, inBusVolume= 99 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+							~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+								// MiBraids (utilisation de l'agument preprate car 1 rate négation)
+
+								~synth =
+								("SynthDef(\\MiInClouds_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1, offset= 0, offset2= 0, offset3= 0, offset4= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2, inBusVolume= 99 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, gDensityLine, textureLine, inRBusVol;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6565,10 +6625,10 @@ src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
 })."++~synthDefsManagement);
-							~synth.asCompileString.postln;
-							~synth.interpret;
+								~synth.asCompileString.postln;
+								~synth.interpret;
 
-				}})});
+				}}}))});
 
 				~metaDataMiInClouds = [ // à terminer
 					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration

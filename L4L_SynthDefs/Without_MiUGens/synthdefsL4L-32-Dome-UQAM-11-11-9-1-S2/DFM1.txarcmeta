@@ -1,0 +1,158 @@
+var o, p;
+o = [
+	Event.prNew,  Array.prNew(24),  Array.prNew(4),  Event.prNew,  
+	Array.prNew(24),  FreqSpec.prNew,  ExponentialWarp.prNew,  " Hz",  
+	ControlSpec.prNew,  ExponentialWarp.prNew,  "",  ControlSpec.prNew,  
+	LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  
+	ExponentialWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  Array.prNew(6),  
+	Event.prNew,  Array.prNew(12),  ControlSpec.prNew,  ExponentialWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  Event.prNew,  Array.prNew(16),  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  
+	ControlSpec.prNew,  LinearWarp.prNew,  ControlSpec.prNew,  LinearWarp.prNew,  
+	Array.prNew(4)
+];
+p = [
+	// Event
+	0, [ array: o[1],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	1, [ nil,  nil,  'orderMod',  o[2],  
+		'specs',  o[3],  'order',  o[19],  
+		nil,  nil,  'specsR',  o[20],  
+		'specsM',  o[26],  nil,  nil,  
+		nil,  nil,  nil,  nil,  
+		'orderM',  o[36],  nil,  nil ],  
+	// Array
+	2, [ 'cutoff_Mod',  'resonance_Mod',  'typeLH_Mod',  'noise_level_Mod' ],  
+	// Event
+	3, [ array: o[4],  size: 6,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	4, [ nil,  nil,  'cutoff_E',  o[5],  
+		'resonance_E',  o[8],  'mix',  o[11],  
+		'typeLH',  o[13],  'noise_level_E',  o[15],  
+		nil,  nil,  nil,  nil,  
+		'lag',  o[17],  nil,  nil,  
+		nil,  nil,  nil,  nil ],  
+	// FreqSpec
+	5, [ minval: 20,  maxval: 20000,  
+		warp: o[6],  step: 0.0,  
+		default: 440,  units: o[7],  
+		grid: nil,  clipLo: 20,  
+		clipHi: 20000 ],  
+	// ExponentialWarp
+	6, [ spec: o[5] ],  
+	// ControlSpec
+	8, [ minval: 0.001,  maxval: 1.1,  
+		warp: o[9],  step: 0.001,  
+		default: 0.1,  units: o[10],  
+		grid: nil,  clipLo: 0.001,  
+		clipHi: 1.1 ],  
+	// ExponentialWarp
+	9, [ spec: o[8] ],  
+	// ControlSpec
+	11, [ minval: -1,  maxval: 1,  
+		warp: o[12],  step: 0,  
+		default: -1,  units: o[10],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	12, [ spec: o[11] ],  
+	// ControlSpec
+	13, [ minval: 0,  maxval: 1,  
+		warp: o[14],  step: 1,  
+		default: 0,  units: o[10],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	14, [ spec: o[13] ],  
+	// ControlSpec
+	15, [ minval: 0.0001,  maxval: 0.5,  
+		warp: o[16],  step: 0.0001,  
+		default: 0.0003,  units: o[10],  
+		grid: nil,  clipLo: 0.0001,  
+		clipHi: 0.5 ],  
+	// ExponentialWarp
+	16, [ spec: o[15] ],  
+	// ControlSpec
+	17, [ minval: 0,  maxval: 30,  
+		warp: o[18],  step: 0.01,  
+		default: 1,  units: o[10],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 30 ],  
+	// LinearWarp
+	18, [ spec: o[17] ],  
+	// Array
+	19, [ 'mix',  'lag',  'cutoff_E',  'resonance_E',  
+		'typeLH',  'noise_level_E' ],  
+	// Event
+	20, [ array: o[21],  size: 3,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	21, [ nil,  nil,  'cutoff_E',  o[5],  
+		'resonance_E',  o[22],  'typeLH',  o[24],  
+		nil,  nil,  nil,  nil ],  
+	// ControlSpec
+	22, [ minval: 0.001,  maxval: 1.1,  
+		warp: o[23],  step: 0.001,  
+		default: 0.1,  units: o[10],  
+		grid: nil,  clipLo: 0.001,  
+		clipHi: 1.1 ],  
+	// ExponentialWarp
+	23, [ spec: o[22] ],  
+	// ControlSpec
+	24, [ minval: 0,  maxval: 1,  
+		warp: o[25],  step: 1,  
+		default: 0,  units: o[10],  
+		grid: nil,  clipLo: 0,  
+		clipHi: 1 ],  
+	// LinearWarp
+	25, [ spec: o[24] ],  
+	// Event
+	26, [ array: o[27],  size: 4,  
+		proto: nil,  parent: nil,  
+		know: true ],  
+	// Array
+	27, [ 'typeLH_HP',  o[28],  'resonance_HP',  o[30],  
+		nil,  nil,  nil,  nil,  
+		nil,  nil,  'cutoff_HP',  o[32],  
+		'noise_level_HP',  o[34],  nil,  nil ],  
+	// ControlSpec
+	28, [ minval: -1,  maxval: 1,  
+		warp: o[29],  step: 0.001,  
+		default: 0,  units: o[10],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	29, [ spec: o[28] ],  
+	// ControlSpec
+	30, [ minval: -1,  maxval: 1,  
+		warp: o[31],  step: 0.001,  
+		default: 0,  units: o[10],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	31, [ spec: o[30] ],  
+	// ControlSpec
+	32, [ minval: -1,  maxval: 1,  
+		warp: o[33],  step: 0.001,  
+		default: 0,  units: o[10],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	33, [ spec: o[32] ],  
+	// ControlSpec
+	34, [ minval: -1,  maxval: 1,  
+		warp: o[35],  step: 0.001,  
+		default: 0,  units: o[10],  
+		grid: nil,  clipLo: -1,  
+		clipHi: 1 ],  
+	// LinearWarp
+	35, [ spec: o[34] ],  
+	// Array
+	36, [ 'cutoff_HP',  'resonance_HP',  'typeLH_HP',  'noise_level_HP' ]
+];
+prUnarchive(o,p);
