@@ -3670,15 +3670,15 @@ envir[key][track][seq] = value;
 				// {~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {[0, 4].includes(ev.prepsyn)}} // Mono / Gliss / certains synth
 
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 0}} // Mono / Gliss / certains synth -> BufMGliss
-				{40}
+				{~nbBufMGliss}
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 3}} // Mono / Gliss / certains synth -> BufMPitchGliss
-				{41}
+				{~nbBufMPitchGliss}
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 8}} // Mono / Gliss / certains synth -> WarpMGliss
-				{42}
+				{~nbWarpMGliss}
 				{~ratSynth[track][seq] == 1 and: {ev.prepsyn == 9}} // Mono ou stéréo / Gliss / GrainBufGliss
-				{46}
+				{~nbGrainBufGliss}
 				{~ratSynth[track][seq] == 1 and: {ev.prepsyn == 17}} // Mono ou stéréo / Gliss / PMOscGliss
-				{47}
+				{~nbPMOscGliss}
 
 				{~synType[track][seq] == 0 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn <= ~nbSynthBuf}} // Mono / Gliss / Autres - version sans Gliss inchangée
 				{ev.prepsyn}
@@ -3688,11 +3688,11 @@ envir[key][track][seq] = value;
 				// {~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {[0, 4].includes(ev.prepsyn)}} // Stéréo / Gliss / certains synth
 
 				{~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 0}} // Stéréo / Gliss / certains synth -> BufSGliss
-				{43}
+				{~nbBufSGliss}
 				{~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 3}} // Stéréo / Gliss / certains synth  -> BufSPitchGliss
-				{44}
+				{~nbBufSPitchGliss}
 				{~synType[track][seq] == 1 and: {~ratSynth[track][seq] == 1} and: {ev.prepsyn == 8}} // Stéréo / Gliss / certains synth  -> WarpSGliss
-				{45}
+				{~nbWarpSGliss}
 
 				{~synType[track][seq] == 1 /*and: {~ratSynth[track][seq] == 0}*/} // Stéréo / Autres
 				{ev.prepsyn + ~nbSynthBuf + 1}
@@ -3726,19 +3726,19 @@ envir[key][track][seq] = value;
 			\prepsynExt, (Pfunc({ |ev|
 				case
 				// [ BufMRoll, BufSRoll, GrainBuf, GrainFM, Electribe, BufMGliss, BufSGliss, GrainBufGliss, PMOscGliss ]
-				{ #[7, 16, 18, 28, 36, 40, 43, 46, 47].includes(ev.prepsyn2) } // avec RAT2 sans ps
+				{ /*#*/[~nbBufMRoll, ~nbBufSRoll, ~nbGrainBuf, ~nbGrainFM, ~nbElectribe, ~nbBufMGliss, ~nbBufSGliss, ~nbGrainBufGliss, ~nbPMOscGliss].includes(ev.prepsyn2) } // avec RAT2 sans ps
 				{\a}
-				// [ MiPlaits, MiBraids, BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
-				{ #[37, 38, 39, 41, 42, 44, 45].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
+				// [ MiPlaits, MiBraids, MiInClouds, BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
+				{ /*#*/[~nbMiPlaits, ~nbMiBraids, ~nbMiInClouds, ~nbBufMPitchGliss, ~nbWarpMGliss, ~nbBufSPitchGliss, ~nbWarpSGliss].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
 				{\b}
 				// [ BufMVar, BufMVar2, BufSVar, BufSVar2 ]
-				{ #[1, 2, 10, 11].includes(ev.prepsyn2) } // avec var sans ps
+				{ /*#*/[~nbBufMVar, ~nbBufMVar2, ~nbBufSVar, ~nbBufSVar2].includes(ev.prepsyn2) } // avec var sans ps
 				{\c}
 				// [ BufMPitch, WarpM, BufSPitch, WarpS, WarpIn ]
-				{ #[3, 8, 12, 17, 23].includes(ev.prepsyn2) } // avec ps sans var
+				{ /*#*/[~nbBufMPitch, ~nbWarpM, ~nbBufSPitch, ~nbWarpS, ~nbWarpIn].includes(ev.prepsyn2) } // avec ps sans var
 				{\d}
 				// [ BufMPitchVar, BufMPitchVar2, BufSPitchVar, BufSPitchVar2 ]
-				{ #[4, 5, 13, 14].includes(ev.prepsyn2) } // avec var & ps
+				{ /*#*/[~nbBufMPitchVar, ~nbBufMPitchVar2, ~nbBufSPitchVar, ~nbBufSPitchVar2].includes(ev.prepsyn2) } // avec var & ps
 				{\e}
 				{ ev.prepsyn2 >= 0 } // tout autre synthé
 				{\f}
@@ -4384,13 +4384,13 @@ envir[key][track][seq] = value;
 			\durenv, Pfunc({ |ev| case
 
 				// or: {ev.rater.isFloat == false} // protection si bus de controle sur rate
-				{ev.prepsyn2 == 6 or: { ev.prepsyn2 == 15 } or: {ev.rater.isArray == false}} { min(~maxSynthTime, ev.sustain) } // pour BufMR & SR
+				{ev.prepsyn2 == ~nbBufMR or: { ev.prepsyn2 == ~nbBufSR } or: {ev.rater.isArray == false}} { min(~maxSynthTime, ev.sustain) } // pour BufMR & SR
 
 				/*
 				~allSynthsGUI[16]
 				*/
 
-				{ev.prepsyn2 == 8 /*or: { ev.prepsyn2 == 17 }*/ or: { ev.prepsyn2 == 42 } /*or: { ev.prepsyn2 == 42 }*/ and: { ev.loop2 == 0 } } // Pour WarpM / WarpS / WarpMGliss / WarpSGliss
+				{ev.prepsyn2 == ~nbWarpM /*or: { ev.prepsyn2 == ~nbWarpS }*/ or: { ev.prepsyn2 == ~nbWarpMGliss } /*or: { ev.prepsyn2 == ~nbWarpSGliss }*/ and: { ev.loop2 == 0 } } // Pour WarpM / WarpS / WarpMGliss / WarpSGliss
 				// WarpS & WarpSGliss sont des Ugen Warp0 et non un granulateur fait maison comme dans la version mono
 
 				/*
@@ -4407,7 +4407,7 @@ envir[key][track][seq] = value;
 							{if ( (ev.buflength * (1 - ev.offset) / ev.rate0.abs /*preprateH[0]*/).isNaN or: {ev.rate0.abs /*preprateH[0]*/ == 0}, {0}, {(ev.buflength * (1 - ev.offset) / ev.preprateH * ev.stretcher)}) })
 				) )) }
 
-				{ev.prepsyn2.inclusivelyBetween(0, 17) and: { ev.loop2 == 0 } }
+				{ev.prepsyn2.inclusivelyBetween(~nbBufM, ~nbWarpS) and: { ev.loop2 == 0 } }
 				// BufM, BufMVar, BufMVar2, BufMPitch, BufMPitchVar, BufMPitchVar2, BufMR, BufMRoll, (WarpM) -> de 0 à 7 & stéréo de 9 à 16
 				// Buffer -> max 30s / 15 secondes ????????? sinon durée du buffer à l'endroit ou à l'envers
 
@@ -4436,32 +4436,32 @@ envir[key][track][seq] = value;
 							{if ( (ev.buflength * (1 - ev.offset) / ev.rate0.abs /*preprateH[0]*/).isNaN or: {ev.rate0.abs /*preprateH[0]*/ == 0}, {0}, {(ev.buflength * (1 - ev.offset) / ev.preprateH)}) })
 				) )) }
 
-				{ev.prepsyn2.inclusivelyBetween(0, 17) and: { ev.loop2 == 1 } } {
+				{ev.prepsyn2.inclusivelyBetween(~nbBufM, ~nbWarpS) and: { ev.loop2 == 1 } } {
 					// BufM, BufMVar, BufMVar2, BufMPitch, BufMPitchVar, BufMPitchVar2, BufMR, BufMRoll, (WarpM) -> de 0 à 7 & stéréo de 9 à 16
 					// Buffer -> max 30s / 15 secondes ?????????
 					min(~maxSynthTime, ev.sustain) }
 
-				{ev.prepsyn2.inclusivelyBetween(18, 23)} {
+				{ev.prepsyn2.inclusivelyBetween(~nbGrainBuf, ~nbWarpIn)} {
 					// Gran & In : GrainBuf, ConcatBufSig, ConcatBufIn, ConcatInSig, GrainIn, WarpIn -> max 10s
 					min(10, (ev.sustain)) }
 
-				{ev.prepsyn2.inclusivelyBetween(24, 28)} {
+				{ev.prepsyn2.inclusivelyBetween(~nbSineFB, ~nbGrainFM)} {
 					// Synth : SineFB, Blip, PMOsc, GrainSin, GrainFM -> max 10s
 					min(10, (ev.sustain)) }
 
-				{ev.prepsyn2.inclusivelyBetween(29, 31)} {
+				{ev.prepsyn2.inclusivelyBetween(~nbUpPiano, ~nbStringOto)} {
 					// Synth (note) : UpPiano, Acid_Oto, String_Oto, (Guit_Oto) -> max 10s
 					min(10, (ev.sustain)) }
 
-				{ev.prepsyn2.inclusivelyBetween(32, 36)} {
+				{ev.prepsyn2.inclusivelyBetween(~nbKikOto, ~nbElectribe)} {
 					// Synth Oto : Kik_Oto, Snare_Oto, Clap_Oto, Hat_Oto, Electribe -> max 5s
 					min(5, (ev.sustain)) }
 
-				{ev.prepsyn2.inclusivelyBetween(37, 39)} {
-					// MiPlaits, MiBraids -> max 15s
+				{ev.prepsyn2.inclusivelyBetween(~nbMiPlaits, ~nbMiInClouds)} {
+					// MiPlaits, MiBraids, MiInClouds -> max 15s
 					min(15, (ev.sustain)) }
 
-				{ev.prepsyn2.inclusivelyBetween(40, 45)} {
+				{ev.prepsyn2.inclusivelyBetween(~nbBufMGliss, ~nbWarpSGliss)} {
 					// Glissando : BufMGliss, BufMPitchGliss, (WarpMGliss), BufSGliss, BufSPitchGliss, (WarpSGliss)
 					min(~maxSynthTime, min((ev.sustain),
 						(if (ev.rate0 /*preprate2[0]*/ < 0, // avant l'externalisation de RAT2 -> rate2 était utilisé -> à vérifier ??????????????????????????????????????????????????????
@@ -4471,7 +4471,7 @@ envir[key][track][seq] = value;
 							{if ( (ev.buflength * (1 - ev.offset) / ev.rate0.abs /*preprateH[0]*/).isNaN or: {ev.rate0.abs /*preprateH[0]*/ == 0}, {0}, {(ev.buflength * (1 - ev.offset) / ev.preprateH)}) })
 				) )) }
 
-				{ev.prepsyn2 > 45} {
+				{ev.prepsyn2 > ~nbWarpSGliss} {
 					// les 2 derniers Glissando : GrainBufGliss & PMOscGliss
 					min(10, (ev.sustain)) }
 
