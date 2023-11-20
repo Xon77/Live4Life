@@ -3884,7 +3884,7 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27])[13], src[1]
 					"UpPiano", "AcidOto", "StringOto", /*"Guit_Oto",*/ // [29 -> 31]
 					"KikOto", "SnareOto", "ClapOto", "HatOto", // [32 -> 35]
 					"Electribe", // 36
-					"MiPlaits", "MiBraids", "MiInClouds", // [37 -> 39]
+					"MiPlaits", "MiPlaits2", "MiBraids", "MiInClouds", // [37 -> 39]
 					"BufMGliss", "BufMPitchGliss", "WarpMGliss", // Glissando Mono // [40 -> 42]
 					"BufSGliss", "BufSPitchGliss", "WarpSGliss", // Glissando Stereo // [43 -> 45]
 					"GrainBufGliss", "PMOscGliss" // Glissando Autres // [46 -> 47]
@@ -3898,10 +3898,10 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27])[13], src[1]
 				~nbUpPiano = 29; ~nbAcidOto = 30; ~nbStringOto = 31; // [29 -> 31]
 				~nbKikOto = 32; ~nbSnareOto = 33; ~nbClapOto = 34; ~nbHatOto = 35; // [32 -> 35]
 				~nbElectribe = 36; // 36
-				~nbMiPlaits = 37; ~nbMiBraids = 38; ~nbMiInClouds = 39; // [37 -> 39]
-				~nbBufMGliss = 40; ~nbBufMPitchGliss = 41; ~nbWarpMGliss = 42; // Glissando Mono // [40 -> 42]
-				~nbBufSGliss = 43; ~nbBufSPitchGliss = 44; ~nbWarpSGliss = 45; // Glissando Stereo // [43 -> 45]
-				~nbGrainBufGliss = 46; ~nbPMOscGliss = 47; // Glissando Autres // [46 -> 47]
+				~nbMiPlaits = 37; ~nbMiPlaits2 = 38; ~nbMiBraids = 39; ~nbMiInClouds = 40; // [37 -> 40]
+				~nbBufMGliss = 41; ~nbBufMPitchGliss = 42; ~nbWarpMGliss = 43; // Glissando Mono // [41 -> 43]
+				~nbBufSGliss = 44; ~nbBufSPitchGliss = 45; ~nbWarpSGliss = 46; // Glissando Stereo // [44 -> 46]
+				~nbGrainBufGliss = 47; ~nbPMOscGliss = 48; // Glissando Autres // [47 -> 48]
 
 			},{
 
@@ -3928,7 +3928,7 @@ OffsetOut.ar(\\outsR.ar([14,15,16,17,18,19,20,21,22,23,24,25,26,27])[13], src[1]
 				~nbUpPiano = 29; ~nbAcidOto = 30; ~nbStringOto = 31; // [29 -> 31]
 				~nbKikOto = 32; ~nbSnareOto = 33; ~nbClapOto = 34; ~nbHatOto = 35; // [32 -> 35]
 				~nbElectribe = 36; // 36
-				~nbMiPlaits = 1000; ~nbMiBraids = 1001; ~nbMiInClouds = 1002; // [37 -> 39]
+				~nbMiPlaits = 1000; ~nbMiPlaits2 = 1001; ~nbMiBraids = 1002; ~nbMiInClouds = 1003; // [37 -> 39]
 				~nbBufMGliss = 37; ~nbBufMPitchGliss = 38; ~nbWarpMGliss = 39; // Glissando Mono // [37 -> 39]
 				~nbBufSGliss = 40; ~nbBufSPitchGliss = 41; ~nbWarpSGliss = 42; // Glissando Stereo // [40 -> 42]
 				~nbGrainBufGliss = 43; ~nbPMOscGliss = 44; // Glissando Autres // [43 -> 44]
@@ -6514,7 +6514,7 @@ ControlSpec(0.2, 120.0, 'exp', 0.001, 4.0, 'Mod Speed') // -> center2
 								// MiPlaits (utilisation de l'agument preprate car 1 rate négation)
 
 								~synth =
-								("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+								("SynthDef(\\MiPlaits_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, offset2= 0, offset3= 0, offset4= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2= 1, psPitchDispers= 0 /* ,psWindowSize= 0.2, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, timbreLine, harmLine;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6525,7 +6525,7 @@ freq = center.min(127); // midi note
 timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
 harmLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: psWindowSize, trigger: trigE, level: 1, fm_mod: offset, timb_mod: 0, morph_mod: 0, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
+src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: offset, trigger: trigE, level: 1, fm_mod: offset2, timb_mod: offset3, morph_mod: offset4, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
 src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
@@ -6536,14 +6536,65 @@ src1 = src1[0];
 				}}}))});
 
 				~metaDataMiPlaits = [ // à terminer
-					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 1'), // rater Harmonics
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 2'), // rate2 Harmonics
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // stretcher Timbre
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // stretcher2 Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // preprate Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // rate2 Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 1'), // stretcher Harmonics
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 2'), // stretcher2 Harmonics
 					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq'), // center.min(127).midicps - 4 octaves
-					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200) - Others -> psWindowSize = morph / psPitchDispers = decay'), // center2 - > Trigger Grain
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'fm_mod - Other things -> synthesis engine (0 -- 15): 0:virtual_analog_engine, 1:waveshaping_engine, 2:fm_engine, 3:grain_engine, 4:additive_engine, 5:wavetable_engine, 6:chord_engine, 7:speech_engine, 8:swarm_engine, 9:noise_engine, 10:particle_engine, 11:string_engine, 12:modal_engine, 13:bass_drum_engine, 14:snare_drum_engine, 15:hi_hat_engine'), // offset -> fm_mod
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // center2 - > Trigger Grain
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'morph'), // offset -> morph
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'fm_mod'), // offset2 -> fm_mod
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timb_mod - Others -> psPitchDispers = decay'), // offset3 -> timb_mod
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'morph_mod - Others -> Synthesis engine (0 -- 15): 0:virtual_analog_engine, 1:waveshaping_engine, 2:fm_engine, 3:grain_engine, 4:additive_engine, 5:wavetable_engine, 6:chord_engine, 7:speech_engine, 8:swarm_engine, 9:noise_engine, 10:particle_engine, 11:string_engine, 12:modal_engine, 13:bass_drum_engine, 14:snare_drum_engine, 15:hi_hat_engine'), // offset4 -> fm_mod
+				];
+
+
+
+
+
+				if ( ~synthDefsBuild == 1, {
+					( // juste pour recompiler un synthé XXXXXXXXX
+
+						if (~checkUGens.contains("MiPlaits"), {
+							// Essai avec MiPlaits.asClass ou MiPlaits.name, mais génération d'une erreur dans le Post window
+
+							~allSpas[0].do {|itemS, indexS| ~allEnvs[0].do {|item, index|
+
+								// MiPlaits2 (utilisation de l'agument preprate car 1 rate négation)
+
+								~synth =
+								("SynthDef(\\MiPlaits2_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, offset2= 0, offset3= 0, offset4= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2= 1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+var src1, freq, tRate, trigE, timbreLine, harmLine;
+"+~spaSynthVars[indexS]+~allEnvs[1][index]+"
+
+tRate = Line.kr(preprate.clip(0.1, 200), rate2.clip(0.1, 200), durenv);
+trigE = Impulse.kr(tRate); // Dust.kr
+
+freq = Line.kr(center.min(127), center2.min(127), durenv); // midi note
+timbreLine = Line.kr(offset, offset2, durenv);
+harmLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
+
+src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: offset3, trigger: trigE, level: 1, fm_mod: offset4, timb_mod: psWindowSize, morph_mod: 0, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
+src1 = src1[0];
+
+"+~allSpas[1][indexS]+"
+})."++~synthDefsManagement);
+								~synth.asCompileString.postln;
+								~synth.interpret;
+
+				}}}))});
+
+				~metaDataMiPlaits2 = [ // à terminer
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain 1 (de 0.1 à 200)'), // preprate - that also determine Grain Duration
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain 2 (de 0.1 à 200)'), // preprate - that also determine Grain Duration
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 1'), // stretcher -> Harmonics
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'harm 2'), // stretcher2 -> Harmonics
+					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq 1'), // center.min(127).midicps - 4 octaves
+					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq 2'), // center.min(127).midicps - 4 octaves
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // offset -> Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // offset2 -> Timbre
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'morph - Others -> psWindowSize = timb_mod / psPitchDispers = decay'), // offset3 -> morph
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'fm_mod - Others -> Synthesis engine (0 -- 15): 0:virtual_analog_engine, 1:waveshaping_engine, 2:fm_engine, 3:grain_engine, 4:additive_engine, 5:wavetable_engine, 6:chord_engine, 7:speech_engine, 8:swarm_engine, 9:noise_engine, 10:particle_engine, 11:string_engine, 12:modal_engine, 13:bass_drum_engine, 14:snare_drum_engine, 15:hi_hat_engine'), // offset4 -> fm_mod
 				];
 
 
@@ -6560,7 +6611,7 @@ src1 = src1[0];
 								// MiBraids (utilisation de l'agument preprate car 1 rate négation)
 
 								~synth =
-								("SynthDef(\\MiBraids_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, psPitchDispers= 0, psWindowSize= 0.2 /*, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
+								("SynthDef(\\MiBraids_"++~allEnvs[0][index]++~allSpas[0][indexS]+", {| "++~commonSynthArgs+~envSynthArgs[index]+~spaSynthArgs[indexS]++", preprate= 1, rate2= 1 offset= 0, offset2= 0, offset3= 0, prepbuf, trig, loop= 0, stretcher= 1, stretcher2= 1, center= 440, center2=1, /* , psPitchDispers= 0, psWindowSize= 0.2, psTimeDispers= 0.05, freqrate= 1, famp= 0, amprate= 1, aamp= 0, panrate= 1, pamp= 0*/ |
 var src1, freq, tRate, trigE, timbreLine, colorLine;
 "+~spaSynthVars[indexS]+~allEnvs[1][index]+"
 
@@ -6571,7 +6622,7 @@ freq = center.min(127); // midi note
 timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
 colorLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: (psPitchDispers*32)+1, bits: psWindowSize*6, ws: offset, mul: 1.0) * inBusVol * amp;
+src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: offset*32, bits: offset2*6, ws: offset3, mul: 1.0) * inBusVol * amp;
 
 "+~allSpas[1][indexS]+"
 })."++~synthDefsManagement);
@@ -6581,15 +6632,15 @@ src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wr
 				}}}))});
 
 				~metaDataMiBraids = [ // à terminer
-					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // preprate - that also determine Grain Duration
 					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 1'), // rater Harmonics
 					ControlSpec(0, 1, 'lin', 0.01, 0, 'timbre 2'), // rate2 Harmonics
 					ControlSpec(0, 1, 'lin', 0.01, 0, 'Color 1'), // stretcher Timbre
 					ControlSpec(0, 1, 'lin', 0.01, 0, 'Color 2'), // stretcher2 Timbre
 					ControlSpec(36, 84, 'lin', 0.01, 60, 'Midi Freq'), // center.min(127).midicps - 4 octaves
-					nil,
-					// ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200) - Others -> psWindowSize = morph / psPitchDispers = decay'), // center2 - > Trigger Grain
-					ControlSpec(0, 1, 'lin', 0.01, 0, 'waveshaping - Other things -> Synthesis model (0 -- 47): 0:CSAW, 1:MORPH, 2:SAW_SQUARE, 3:SINE_TRIANGLE, 4:BUZZ, 5:SQUARE_SUB, 6:SAW_SUB, 7:SQUARE_SYNC, 8:SAW_SYNC, 9:TRIPLE_SAW, 10:TRIPLE_SQUARE, 11:TRIPLE_TRIANGLE, 12:TRIPLE_SINE, 13:TRIPLE_RING_MOD, 14:SAW_SWARM, 15:SAW_COMB, 16:TOY, 17:DIGITAL_FILTER_LP, 18:DIGITAL_FILTER_PK, 19:DIGITAL_FILTER_BP, 20:DIGITAL_FILTER_HP, 21:VOSIM, 22:VOWEL, 23:VOWEL_FOF, 24:HARMONICS, 25:FM, 26:FEEDBACK_FM, 27:CHAOTIC_FEEDBACK_FM, 28:PLUCKED, 29:BOWED, 30:BLOWN, 31:FLUTED, 32:STRUCK_BELL, 33:STRUCK_DRUM, 34:KICK, 35:CYMBAL, 36:SNARE, 37:WAVETABLES, 38:WAVE_MAP, 39:WAVE_LINE, 40:WAVE_PARAPHONIC, 41:FILTERED_NOISE, 42:TWIN_PEAKS_NOISE, 43:CLOCKED_NOISE, 44:GRANULAR_CLOUD, 45:PARTICLE_NOISE, 46:DIGITAL_MODULATION, 47:QUESTION_MARK'), // offset -> waveshaping
+					ControlSpec(0, 127, 'lin', 0.01, 1, 'Trigger Grain (de 0.1 à 200)'), // center2 - > Trigger Grain
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'waveshaping'), // offset -> waveshaping
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'decim'), // offset2 -> Samplerate decimation (1 -- 32)
+					ControlSpec(0, 1, 'lin', 0.01, 0, 'bits - Others -> Synthesis model (0 -- 47): 0:CSAW, 1:MORPH, 2:SAW_SQUARE, 3:SINE_TRIANGLE, 4:BUZZ, 5:SQUARE_SUB, 6:SAW_SUB, 7:SQUARE_SYNC, 8:SAW_SYNC, 9:TRIPLE_SAW, 10:TRIPLE_SQUARE, 11:TRIPLE_TRIANGLE, 12:TRIPLE_SINE, 13:TRIPLE_RING_MOD, 14:SAW_SWARM, 15:SAW_COMB, 16:TOY, 17:DIGITAL_FILTER_LP, 18:DIGITAL_FILTER_PK, 19:DIGITAL_FILTER_BP, 20:DIGITAL_FILTER_HP, 21:VOSIM, 22:VOWEL, 23:VOWEL_FOF, 24:HARMONICS, 25:FM, 26:FEEDBACK_FM, 27:CHAOTIC_FEEDBACK_FM, 28:PLUCKED, 29:BOWED, 30:BLOWN, 31:FLUTED, 32:STRUCK_BELL, 33:STRUCK_DRUM, 34:KICK, 35:CYMBAL, 36:SNARE, 37:WAVETABLES, 38:WAVE_MAP, 39:WAVE_LINE, 40:WAVE_PARAPHONIC, 41:FILTERED_NOISE, 42:TWIN_PEAKS_NOISE, 43:CLOCKED_NOISE, 44:GRANULAR_CLOUD, 45:PARTICLE_NOISE, 46:DIGITAL_MODULATION, 47:QUESTION_MARK'), // offset3 -> Bit reduction argument (0 -- 6) -> 0:16bit, 1:12bit, 2:8bit, 3:5bit, 4:4bit, 5:3bit, 6:2bit
 				];
 
 
