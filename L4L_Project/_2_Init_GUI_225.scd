@@ -13914,13 +13914,13 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 
 
 // Pour les ranges par défaut des multisliders utilisés dans le module syn
-~synthDescLibRangeViews = [~ratRangeView, ~rat2RangeView, ~strRangeView, ~str2RangeView, ~cenRangeView, ~cen2RangeView, ~offRangeView];
-~synthDescLibRangeSpecs = [~ratRangeSpec, ~rat2RangeSpec, ~strRangeSpec, ~str2RangeSpec, ~cenRangeSpec, ~cen2RangeSpec, ~offRangeSpec];
-~synthDescLibMulViews = [~ratMulView, ~rat2MulView, ~strMulView, ~str2MulView, ~cenMulView, ~cen2MulView, ~offMulView];
-~synthDescLibMulSpecs = [~ratMulSpec, ~rat2MulSpec, ~strMulSpec, ~str2MulSpec, ~cenMulSpec, ~cen2MulSpec, ~offMulSpec];
-~synthDescLibSpecs = [~ratSpec, ~rat2Spec, ~strSpec, ~str2Spec, ~cenSpec, ~cen2Spec, ~offSpec];
-~synthDescLibIndexViews = [~ratIndexView, ~rat2IndexView, ~strIndexView, ~str2IndexView, ~cenIndexView, ~cen2IndexView, ~offIndexView];
-~synthDescLibNames = ["RAT ", "RAT2", "STR ", "STR2", "CEN ", "CEN2", "OFF "];
+~synthDescLibRangeViews = [~ratRangeView, ~rat2RangeView, ~strRangeView, ~str2RangeView, ~cenRangeView, ~cen2RangeView, ~offRangeView, ~off2RangeView, ~off3RangeView, ~off4RangeView];
+~synthDescLibRangeSpecs = [~ratRangeSpec, ~rat2RangeSpec, ~strRangeSpec, ~str2RangeSpec, ~cenRangeSpec, ~cen2RangeSpec, ~offRangeSpec, ~off2RangeSpec, ~off3RangeSpec, ~off4RangeSpec];
+~synthDescLibMulViews = [~ratMulView, ~rat2MulView, ~strMulView, ~str2MulView, ~cenMulView, ~cen2MulView, ~offMulView, ~off2MulView, ~off3MulView, ~off4MulView];
+~synthDescLibMulSpecs = [~ratMulSpec, ~rat2MulSpec, ~strMulSpec, ~str2MulSpec, ~cenMulSpec, ~cen2MulSpec, ~offMulSpec, ~off2MulSpec, ~off3MulSpec, ~off4MulSpec];
+~synthDescLibSpecs = [~ratSpec, ~rat2Spec, ~strSpec, ~str2Spec, ~cenSpec, ~cen2Spec, ~offSpec, ~off2Spec, ~off3Spec, ~off4Spec];
+~synthDescLibIndexViews = [~ratIndexView, ~rat2IndexView, ~strIndexView, ~str2IndexView, ~cenIndexView, ~cen2IndexView, ~offIndexView, ~off2IndexView, ~off3IndexView, ~off4IndexView];
+~synthDescLibNames = ["RAT ", "RAT2", "STR ", "STR2", "CEN ", "CEN2", "OFF ", "OFF2", "OFF3", "OFF4"];
 
 
 
