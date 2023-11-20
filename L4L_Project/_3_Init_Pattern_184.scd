@@ -3729,7 +3729,7 @@ envir[key][track][seq] = value;
 				{ /*#*/[~nbBufMRoll, ~nbBufSRoll, ~nbGrainBuf, ~nbGrainFM, ~nbElectribe, ~nbBufMGliss, ~nbBufSGliss, ~nbGrainBufGliss, ~nbPMOscGliss].includes(ev.prepsyn2) } // avec RAT2 sans ps
 				{\a}
 				// [ MiPlaits, MiBraids, MiInClouds, BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
-				{ /*#*/[~nbMiPlaits, ~nbMiPlaits2, ~nbMiBraids, ~nbMiInClouds, ~nbBufMPitchGliss, ~nbWarpMGliss, ~nbBufSPitchGliss, ~nbWarpSGliss].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
+				{ /*#*/[~nbMiPlaits, ~nbMiPlaits2, ~nbMiBraids, ~nbMiBraids2, ~nbMiInClouds, ~nbBufMPitchGliss, ~nbWarpMGliss, ~nbBufSPitchGliss, ~nbWarpSGliss].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
 				{\b}
 				// [ BufMVar, BufMVar2, BufSVar, BufSVar2 ]
 				{ /*#*/[~nbBufMVar, ~nbBufMVar2, ~nbBufSVar, ~nbBufSVar2].includes(ev.prepsyn2) } // avec var sans ps
@@ -4458,7 +4458,7 @@ envir[key][track][seq] = value;
 					min(5, (ev.sustain)) }
 
 				{ev.prepsyn2.inclusivelyBetween(~nbMiPlaits, ~nbMiInClouds)} {
-					// MiPlaits, MiBraids, MiInClouds -> max 15s
+					// MiPlaits, MiPlaits2, MiBraids, MiBraids2, MiInClouds -> max 15s
 					min(15, (ev.sustain)) }
 
 				{ev.prepsyn2.inclusivelyBetween(~nbBufMGliss, ~nbWarpSGliss)} {
