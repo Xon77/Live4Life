@@ -3729,7 +3729,7 @@ envir[key][track][seq] = value;
 				{ /*#*/[~nbBufMRoll, ~nbBufSRoll, ~nbGrainBuf, ~nbGrainFM, ~nbElectribe, ~nbBufMGliss, ~nbBufSGliss, ~nbGrainBufGliss, ~nbPMOscGliss].includes(ev.prepsyn2) } // avec RAT2 sans ps
 				{\a}
 				// [ MiPlaits, MiBraids, MiInClouds, BufMPitchGliss, WarpMGliss, BufSPitchGliss, WarpSGliss ]
-				{ /*#*/[~nbMiPlaits, ~nbMiBraids, ~nbMiInClouds, ~nbBufMPitchGliss, ~nbWarpMGliss, ~nbBufSPitchGliss, ~nbWarpSGliss].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
+				{ /*#*/[~nbMiPlaits, ~nbMiPlaits2, ~nbMiBraids, ~nbMiInClouds, ~nbBufMPitchGliss, ~nbWarpMGliss, ~nbBufSPitchGliss, ~nbWarpSGliss].includes(ev.prepsyn2) } // avec RAT2 & ps // 37 pour MiPlaits & 38 pour MiBraids & 39 pour MiInClouds
 				{\b}
 				// [ BufMVar, BufMVar2, BufSVar, BufSVar2 ]
 				{ /*#*/[~nbBufMVar, ~nbBufMVar2, ~nbBufSVar, ~nbBufSVar2].includes(ev.prepsyn2) } // avec var sans ps
