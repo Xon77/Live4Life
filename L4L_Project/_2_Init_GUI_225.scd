@@ -3600,7 +3600,7 @@ if (~server2.notNil, {
 .value_(1).doAction;
 
 ~offCompChooseView = RoundButton(~tabGUI, Rect(1137*~xSizeMul, 649*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-.states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
+.states_([["\One", Color.blue, Color.white], ["\Two", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~offCompChoose = i.value; ~offStackComp.index = ~offCompChoose })
 .value_(0).doAction;
@@ -3615,7 +3615,7 @@ if (~server2.notNil, {
 ~ratStackCompL = CompositeView(~tabGUI, Rect(401*~xSizeMul, 648*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(~compColor1).layout_(~ratStackComp);
 
 ~ratCompChooseView = RoundButton(~tabGUI, Rect(738*~xSizeMul, 649*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-.states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
+.states_([["\One", Color.blue, Color.white], ["\Two", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~ratCompChoose = i.value; ~ratStackComp.index = ~ratCompChoose })
 .value_(0).doAction; // Pourquoi .valueAction_(0); ne marche pas alors que .valueAction_(1); & nécessité de rajouter .doAction; car n'est activé que lorque l'état change par rapport au pécédent XXXXXXXXX
@@ -3643,7 +3643,7 @@ if (~server2.notNil, {
 ~strStackCompL = CompositeView(~tabGUI, Rect(401*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(~strCompColor).layout_(~strStackComp);
 
 ~strCompChooseView = RoundButton(~tabGUI, Rect(738*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-.states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
+.states_([["\One", Color.blue, Color.white], ["\Two", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~strCompChoose = i.value; ~strStackComp.index = ~strCompChoose })
 .value_(0).doAction;
@@ -3655,7 +3655,7 @@ if (~server2.notNil, {
 ~cenStackCompL = CompositeView(~tabGUI, Rect(800*~xSizeMul, 864*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(~strCompColor).layout_(~cenStackComp);
 
 ~cenCompChooseView = RoundButton(~tabGUI, Rect(1137*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-.states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
+.states_([["\One", Color.blue, Color.white], ["\Two", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~cenCompChoose = i.value; ~cenStackComp.index = ~cenCompChoose })
 .value_(0).doAction;
@@ -3674,7 +3674,7 @@ if (~server2.notNil, {
 .valueAction_(0);
 
 ~ratCompAllChooseView = RoundButton(~tabGUI, Rect(768*~xSizeMul, 865*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-.states_([["\One", Color.white, Color.blue], ["\Two", Color.white, Color.red]])
+.states_([["\One", Color.blue, Color.white], ["\Two", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i|
 	~ratCompAllChoose = i.value; ~ratCompChooseView.valueAction_(~ratCompAllChoose);
@@ -3700,7 +3700,7 @@ Color(0.32549019607843, 0.32549019607843, 0.32549019607843, 0.3)
 
 ~outRevCompChoose = 0 ! ~nbOfSeqs ! ~nbOfTracksX2;
 ~outRevCompChooseView = RoundButton(~tabGUI, Rect(1536*~xSizeMul, 649*~ySizeMul, 60*~xSizeMul, 16*~ySizeMul))
-.states_([["\LR Norm", Color.white, Color.blue], ["\LR Rev", Color.white, Color.red]])
+.states_([["\LR Norm", Color.blue, Color.white], ["\LR Rev", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~outRevCompChoose[~tracksValue][~seqsValue] = i.value; });
 
@@ -3712,7 +3712,7 @@ Color(0.32549019607843, 0.32549019607843, 0.32549019607843, 0.3)
 ~fxStackCompL = CompositeView(~tabGUI, Rect(1199*~xSizeMul, (648+216)*~ySizeMul, 399*~xSizeMul, 216*~ySizeMul)).background_(/*~fxCompColor*/ ~panCompColor).layout_(~fxStackComp);
 
 ~outCompChooseView = RoundButton(~tabGUI, Rect(1536*~xSizeMul, (650+215)*~ySizeMul, 60*~xSizeMul, 16*~ySizeMul))
-.states_([["\Links", Color.white, Color.blue], ["\Right", Color.white, Color.red]])
+.states_([["\Links", Color.blue, Color.white], ["\Right", Color.red, Color.white]])
 .font_(Font("Verdana",8*~fontSizeMul))
 .action_({|i| ~outCompChoose = i.value; ~outStackComp.index = ~outCompChoose; ~fxStackComp.index = ~outCompChoose })
 .value_(0).doAction;
@@ -11389,7 +11389,7 @@ readView, readBackgroundColorView, posView
 	};
 
 	~rtmTypeView = RoundButton(~rtmComp2, ~miniSlider1Pos5 /*Rect(338, 138+18, 60, 16)*/)
-	.states_([["\Relative", Color.white, Color.blue], ["\Absolute", Color.white, Color.red]])
+	.states_([["\Relative", Color.blue, Color.white], ["\Absolute", Color.red, Color.white]])
 	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~rtmType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
@@ -11402,7 +11402,7 @@ readView, readBackgroundColorView, posView
 	// A intégrer dans les presets XXXXXXXXX ?????????
 
 	~rtmTypeView2 = RoundButton(~rtmComp2, ~miniSlider2Pos5 /*Rect(338, 138+18, 60, 16)*/)
-	.states_([["\Sequence", Color.white, Color.blue], ["\Looping", Color.white, Color.red]])
+	.states_([["\Sequence", Color.blue, Color.white], ["\Looping", Color.red, Color.white]])
 	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({ |i|
 		// ~x.fire(~sequenceType[~tracksValue][~seqsValue]);
@@ -11625,7 +11625,7 @@ readView, readBackgroundColorView, posView
 
 	// Action mis plus bas car necessité de le déclarer après ~proSelectViewG car action sur le Global
 	~proSelectView = RoundButton(~proComp, Rect(337*~xSizeMul, 2*~ySizeMul, 60*~xSizeMul /*30*/, 16*~ySizeMul))
-	.states_([["\PROS", Color.white, Color.blue], ["\PRO1", Color.white, Color.red]])
+	.states_([["\PROS", Color.blue, Color.white], ["\PRO1", Color.red, Color.white]])
 	.font_(Font("Verdana",8*~fontSizeMul));
 	/*.action_({|i| ~proSelect[~tracksValue][~seqsValue] = i.value;
 	[\rtmBlock, \proBlock, \synBlock, \spaBlock, \legBlock, \envBlock, \bufBlock, \ampBlock, \ratBlock, \rat2Block, \offBlock, \strBlock, \str2Block, \cenBlock, \cen2Block, \panBlock, \delBlock, \outLBlock, \outRBlock, \fxLBlock, \fxRBlock].do {|i| currentEnvironment[i][~tracksValue] = 1};
@@ -11666,7 +11666,7 @@ readView, readBackgroundColorView, posView
 	);
 
 	~synTypeView = RoundButton(~synComp, /*~miniSlider1Pos5*/ Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 18*~ySizeMul))
-	.states_([["\BufM", Color.white, Color.blue], ["\BufS", Color.white, Color.red]])
+	.states_([["\BufM", Color.blue, Color.white], ["\BufS", Color.red, Color.white]])
 	.font_(Font("Verdana",9*~fontSizeMul))
 	.action_({|i| ~synType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
@@ -11699,8 +11699,8 @@ readView, readBackgroundColorView, posView
 	("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet
 	*/
 
-	~synRangeDefView = RoundButton(~synComp, Rect(337*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-	.states_([["\RAN", Color.white, Color.red]])
+	~synInfoView = RoundButton(~synComp, Rect(337*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 16*~ySizeMul))
+	.states_([["\Inf", Color.blue, Color.white]])
 	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i|
 		// if (("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.notNil, {
@@ -11709,28 +11709,46 @@ readView, readBackgroundColorView, posView
 			(SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0] + "Arguments :").postln;
 			("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.do { |item, index|
 				if (item.notNil, {
-					~synthDescLibRangeViews[index].valueAction_(~synthDescLibRangeSpecs[index][~tracksValue][~seqsValue].unmap([item.minval, item.maxval])); // affiche les rangeViews par défaut
-					~synthDescLibMulViews[index].valueAction_(~synthDescLibMulSpecs[index].unmap(1)); // affiche les mulViews par défaut
+					// ~synthDescLibRangeViews[index].valueAction_(~synthDescLibRangeSpecs[index][~tracksValue][~seqsValue].unmap([item.minval, item.maxval])); // affiche les rangeViews par défaut
+					// ~synthDescLibMulViews[index].valueAction_(~synthDescLibMulSpecs[index].unmap(1)); // affiche les mulViews par défaut
 					(~synthDescLibNames[index] + "->" + item.units).postln; // // affiche les correspondances
 			}) };
 			"".postln;
 		});
 	});
 
-	~synMSDefView = RoundButton(~synComp, Rect(367*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-	.states_([["\DEF", Color.white, Color.red]])
+	~synRangeDefView = RoundButton(~synComp, Rect(357*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 16*~ySizeMul))
+	.states_([["\Rg", Color.blue, Color.white]])
+	.font_(Font("Verdana",8*~fontSizeMul))
+	.action_({|i|
+		// if (("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.notNil, {
+		// Rappuyer une deuxième fois sur RAN dans le module de synthèse provoque une erreur ??? même chose pour DEF ???
+		if (SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].notNil, {
+			// (SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0] + "Arguments :").postln;
+			("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.do { |item, index|
+				if (item.notNil, {
+					~synthDescLibRangeViews[index].valueAction_(~synthDescLibRangeSpecs[index][~tracksValue][~seqsValue].unmap([item.minval, item.maxval])); // affiche les rangeViews par défaut
+					~synthDescLibMulViews[index].valueAction_(~synthDescLibMulSpecs[index].unmap(1)); // affiche les mulViews par défaut
+					// (~synthDescLibNames[index] + "->" + item.units).postln; // // affiche les correspondances
+			}) };
+			// "".postln;
+		});
+	});
+
+	~synMSDefView = RoundButton(~synComp, Rect(377*~xSizeMul, 2*~ySizeMul, 20*~xSizeMul, 16*~ySizeMul))
+	.states_([["\Def", Color.blue, Color.white]])
 	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i|
 		// if (("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.notNil, {
 		// Rappuyer une deuxième fois sur RAN dans le module de synthèse provoque une erreur ??? même chose pour DEF ??? -> ligne 8760
 		if (SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].notNil, {
-			(SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0] + "Arguments :").postln;
+			// (SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0] + "Arguments :").postln;
 			("metaData"++SynthDescLib.global[~lastEvent[~tracksValue][\instrument]].name.split($_)[0]).asSymbol.envirGet.do { |item, index|
 				if (item.notNil, {
 					~synthDescLibIndexViews[index].value_(~synthDescLibSpecs[index][~tracksValue][~seqsValue].unmap(item.default)).doAction; // affiche les multiSliderViews par défaut
-					(~synthDescLibNames[index] + "->" + item.units).postln; // // affiche les correspondances
+					// (~synthDescLibNames[index] + "->" + item.units).postln; // // affiche les correspondances
 			}) };
-			"".postln;
+			// "".postln;
 		});
 	});
 
@@ -12539,7 +12557,7 @@ readView, readBackgroundColorView, posView
 	);
 
 	~legTypeView = RoundButton(~legComp, Rect(337*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-	.states_([["\LEG", Color.white, Color.blue], ["\SUS", Color.white, Color.red]])
+	.states_([["\LEG", Color.blue, Color.white], ["\SUS", Color.red, Color.white]])
 	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~legType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
@@ -12659,7 +12677,7 @@ readView, readBackgroundColorView, posView
 	*/
 
 	~envTypeView = RoundButton(~envComp, Rect(338*~xSizeMul, 2*~ySizeMul, 30*~xSizeMul, 16*~ySizeMul))
-	.states_([["\MIN", Color.white, Color.blue], ["\N M", Color.white, Color.red]])
+	.states_([["\MIN", Color.black, Color.green], ["\N M", Color.white, Color.red]])
 	.font_(Font("Verdana",8*~fontSizeMul))
 	.action_({|i| ~envType[~tracksValue][~seqsValue] = i.value })
 	.valueAction_(0);
