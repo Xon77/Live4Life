@@ -5195,7 +5195,7 @@ z.play;
 	{~offCompChoose == 1}
 	{~off2View.index_(~posOff2[~tab][~currentSeq])}
 	{~offCompChoose == 2}
-	{~off3View.index_(~posOff2[~tab][~currentSeq])}
+	{~off3View.index_(~posOff3[~tab][~currentSeq])}
 	{~offCompChoose == 3}
 	{~off4View.index_(~posOff4[~tab][~currentSeq])};
 
