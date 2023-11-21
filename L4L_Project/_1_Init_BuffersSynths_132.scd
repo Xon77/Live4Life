@@ -6525,7 +6525,7 @@ freq = center.min(127); // midi note
 timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
 harmLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: offset, trigger: trigE, level: 1, fm_mod: offset2, timb_mod: offset3, morph_mod: offset4, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
+src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: offset, trigger: trigE, level: 1, fm_mod: offset2, timb_mod: offset3, morph_mod: offset4, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 0.7) * inBusVol * amp;
 src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
@@ -6574,7 +6574,7 @@ freq = Line.kr(center.min(127), center2.min(127), durenv); // midi note
 timbreLine = Line.kr(offset, offset2, durenv);
 harmLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: offset3, trigger: trigE, level: 1, fm_mod: offset4, timb_mod: psWindowSize, morph_mod: 0, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 1.0) * inBusVol * amp;
+src1 = MiPlaits.ar(freq, engine: prepbuf.wrap(0,15) /*bufm*/, harm: harmLine, timbre: timbreLine, morph: offset3, trigger: trigE, level: 1, fm_mod: offset4, timb_mod: psWindowSize, morph_mod: 0, decay: psPitchDispers * 2, lpg_colour: 0.5, mul: 0.7) * inBusVol * amp;
 src1 = src1[0];
 
 "+~allSpas[1][indexS]+"
@@ -6622,7 +6622,7 @@ freq = center.min(127); // midi note
 timbreLine = Line.kr(preprate.wrap(0,1), rate2.wrap(0,1), durenv);
 colorLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: offset2*32, bits: offset3*6, ws: offset, mul: 1.0) * inBusVol * amp;
+src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: offset2*32, bits: offset3*6, ws: offset, mul: 0.3) * inBusVol * amp;
 
 "+~allSpas[1][indexS]+"
 })."++~synthDefsManagement);
@@ -6668,7 +6668,7 @@ freq = Line.kr(center.min(127), center2.min(127), durenv); // midi note // midi 
 timbreLine = Line.kr(offset, offset2, durenv);
 colorLine = Line.kr(stretcher.wrap(0,1), stretcher2.wrap(0,1), durenv);
 
-src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: offset4*32, bits: psPitchDispers*12, ws: offset3, mul: 1.0) * inBusVol * amp;
+src1 = MiBraids.ar(freq, timbre: timbreLine, color: colorLine, model: prepbuf.wrap(0,47) /*bufm*/, trig: trigE, resamp: 2, decim: offset4*32, bits: psPitchDispers*12, ws: offset3, mul: 0.3) * inBusVol * amp;
 
 "+~allSpas[1][indexS]+"
 })."++~synthDefsManagement);
