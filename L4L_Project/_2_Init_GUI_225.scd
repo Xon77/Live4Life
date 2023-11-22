@@ -13526,7 +13526,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\strReadView, Color.grey(0.6), \strPosView
 	);
 
-	~psPitchDispersView = SmoothSlider(~strComp, ~miniSlider1Pos5)
+	~psPitchDispersView = SmoothSlider(/*~strComp, ~miniSlider1Pos5*/ ~tabGUI, Rect(738*~xSizeMul, 1019*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul) )
 	.action_({ |view| ~psPitchDispers[~tracksValue][~seqsValue] = ~psPitchDispersSpec.map(view.value);
 		view.string = "PDis : %".format(~psPitchDispers[~tracksValue][~seqsValue]);
 	})
@@ -13539,7 +13539,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 	.valueAction_(~psPitchDispersSpec.unmap(~psPitchDispersSpec.default))
 	.doAction;
 
-	~psTimeDispersView = SmoothSlider(~strComp, ~miniSlider2Pos5)
+	~psTimeDispersView = SmoothSlider(/*~strComp, ~miniSlider2Pos5*/ ~tabGUI, Rect(738*~xSizeMul, 1037*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul))
 	.action_({ |view| ~psTimeDispers[~tracksValue][~seqsValue] = ~psTimeDispersSpec.map(view.value);
 		view.string = "TDis : %".format(~psTimeDispers[~tracksValue][~seqsValue]);
 	})
@@ -13604,7 +13604,7 @@ case // Affichage de tous les sous-dossiers + assemblage de sous dossiers
 		\cenReadView, Color.grey(0.6), \cenPosView
 	);
 
-	~psWindowSizeView = SmoothSlider(~cenComp, ~miniSlider1Pos5)
+	~psWindowSizeView = SmoothSlider(/*~cenComp, ~miniSlider1Pos5*/ ~tabGUI, Rect(1137*~xSizeMul, 1019*~ySizeMul, 60*~xSizeMul, 18*~ySizeMul) )
 	.action_({ |view| ~psWindowSize[~tracksValue][~seqsValue] = ~psWindowSizeSpec.map(view.value);
 		if (~psWindowSize[~tracksValue][~seqsValue] > 0.2,
 			{ ~psTimeDispersSpec = ControlSpec(0, ~psWindowSize[~tracksValue][~seqsValue], \lin, 0.01, 0.05);
