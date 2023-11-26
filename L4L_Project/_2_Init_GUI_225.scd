@@ -3005,7 +3005,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 		~outLRangeMode.valueAction_(0);
 		~outLDirView.valueAction_(0);
 		~outLPatView.valueAction_(0);
-		~outLPatSelView.valueAction_(49);
+		~outLPatSelView.valueAction_(55);
 	};
 
 
@@ -3078,7 +3078,7 @@ if (~multiTemp.isNil, {"You need to copy data !!!".postln}, {
 		~outRRangeMode.valueAction_(0);
 		~outRDirView.valueAction_(0);
 		~outRPatView.valueAction_(0);
-		~outRPatSelView.valueAction_(49);
+		~outRPatSelView.valueAction_(55);
 	};
 
 
