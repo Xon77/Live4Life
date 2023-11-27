@@ -10065,11 +10065,11 @@ pair for phase modulation, which sounds similar to FM
 			}
 			{ \outL == data }
 			{
-				~outLPatSel[tr][seq] = 49; // ~controlBus0 -> mais déclaré dans le pattern
+				~outLPatSel[tr][seq] = 55; // ~controlBus0 -> mais déclaré dans le pattern
 			}
 			{ \outR == data }
 			{
-				~outRPatSel[tr][seq] = 49; // ~controlBus0 -> mais déclaré dans le pattern
+				~outRPatSel[tr][seq] = 55; // ~controlBus0 -> mais déclaré dans le pattern
 			};
 		};
 	};
