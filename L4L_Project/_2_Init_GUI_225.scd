@@ -22490,7 +22490,7 @@ u.drawFunc = { d.draw }
 	if (~acousItems.isNil, {
 		~spaPatSelViewG[tr].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "R +1", "R  -1"]) // .valueAction_(4); // Initialisation à Pwhite
 	},{
-		~spaPatSelViewG[tr].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "R +1", "R  -1", "Mi  1", "R +2",  "R  -2", "Mi  2", "R +2b", "R  -2b", "Mi  2b"])
+		~spaPatSelViewG[tr].items_(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh1I", "Leh_2", "Leh2I", "R +1", "R  -1", "R +2",  "R  -2", "R +2b", "R  -2b", "Mi  1", "Mi  2", "Mi  2b"])
 		/*(["Rand", "Xrand", "Shuff", "Walk", "White", "Expra", "Lpran", "Meanr", "Hpran", "Gauss", "Brown", "Gbrow", "Cauch", "Leh_1", "Leh_2", "Rg +1", "Rg -1", "Rg +2", "Rg -2", "RMir1", "RMir2"])*/
 		// .valueAction_(4); // Initialisation à Pwhite
 	})
