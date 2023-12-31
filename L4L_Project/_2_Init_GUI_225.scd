@@ -6278,7 +6278,7 @@ Ndef(\sound).play
 				case
 				{~trigAll == 0} // Track
 				{
-					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 
 					// lié au serverMeter qui affiche les Inputs
 					col = ~serverCollection[serv]['children'][ch]['children'][~nbOfTracks-1-((~tracksValue/2).asInteger)];
@@ -6294,7 +6294,7 @@ Ndef(\sound).play
 				}
 				{~trigAll == 2}  // ALL
 				{
-					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 					col = ~serverCollection[serv]['children'][ch]['children'];
 					// ~synthsIDCollection = ~nbOfTracks.collect { |t| ~serverCollection['children'][0]['children'][t]['children'].size.collect { |i| ~serverCollection['children'][0]['children'][t]['children'][i]['id'] } }.flatten;
 					// ~synthsIDCollection = ~nbOfTracks.collect { |t| col[t]['children'].size.collect { |i| col[t]['children'][i]['id'] } }.flatten;
@@ -6304,7 +6304,7 @@ Ndef(\sound).play
 				}
 				{~trigAll == 3} // Piste 1, 2 et 3
 				{
-					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <=8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ >= 32 or: {~numChannels <=8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 					col = ~serverCollection[serv]['children'][ch]['children'];
 					// [5,6,7] -> à l'envers, cela correspond aux pistes 1,2 & 3
 					// ~synthsIDCollection = [5,6,7].collect { |t| col[t]['children'].size.collect { |i| col[t]['children'][i]['id'] } }.flatten;
@@ -6314,7 +6314,7 @@ Ndef(\sound).play
 				{~trigAll == 1} // Other
 				{
 					var tracks, track;
-					var ch = 0; if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+					var ch = 0; if (~numChannels /*>=*/ >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 					track = ~nbOfTracks-1-((~tracksValue/2).asInteger); tracks = (0..~nbOfTracks-1); tracks.remove(track);
 					col = ~serverCollection[serv]['children'][ch]['children'];
 					// ~synthsIDCollection = ~nbOfTracks.collect { |t| ~serverCollection['children'][0]['children'][t]['children'].size.collect { |i| ~serverCollection['children'][0]['children'][t]['children'][i]['id'] } }.flatten;
@@ -6378,7 +6378,7 @@ Ndef(\sound).play
 
 			server.getQueryTree2({ |data| ~serverCollection[serv] = data;
 
-				if (~numChannels /*>=*/ > 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
+				if (~numChannels /*>=*/ >= 32 or: {~numChannels <= 8} /*or: {~numChannels == 4}*/ /*and: {~serverFX == 0}*/, { ch = 1 }, { ch = 0 } ); // à cause de 1052 Local1InputLevels qui est la seulement avec le 32 hP ???
 
 				col = ~serverCollection[serv]['children'][ch]['children'];
 
@@ -15025,12 +15025,6 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 }, {
 	~seqs.do {|i| ~spatialisationHar.value(~tracksValue, i) };
 });
-});
-
-~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul) /*Rect(305, 191, 35, 22)*/)
-.states_([["Mul X", Color.white, Color.red],["Mul X", Color.black, Color.green]])
-.font_(Font("Verdana",10*~fontSizeMul, bold: true))
-.action_({ |i| ~harTrig[~tracksValue][~seqsValue] = i.value;
 });
 
 ~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul) /*Rect(305, 191, 35, 22)*/)
