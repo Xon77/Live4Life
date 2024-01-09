@@ -131,7 +131,7 @@ The code does not take the form of a SuperCollider quark (i.e. external library)
 
 In order to launch the tool, open the file [`_0A_Init_Live4Life.scd`](/L4L_Project/_0A_Init_Live4Life.scd) in the folder [`L4L_Project`](/L4L_Project) and follow the steps below:
 
-1. evaluate this line(L4L_Project/_0A_Init_Live4Life.scd#L2), which defines default configuration parameters, included in the file [_0B_Init_Config.scd](L4L_Project/_0B_Init_Config.scd#L1-L105):
+1. evaluate [this line](L4L_Project/_0A_Init_Live4Life.scd#L2), which defines default configuration parameters, included in the file [_0B_Init_Config.scd](L4L_Project/_0B_Init_Config.scd#L1-L105):
 
 	1. First, you mainly have to :warning: **choose the [absolute path of your sound folder](L4L_Project/_0B_Init_Config.scd#L39).** To speed up setup and creation process, I have already prepared [a structured sound folder to download](https://github.com/Xon77/L4LSoundsDataBase/archive/refs/heads/main.zip) — to expand and improve — including drum machine sounds specifically sorted for this tool. If you want to quickly test or for Windows and Linux users, you can [download this light-weight prepared folder](https://github.com/Xon77/L4LSoundsDataBaseLight/archive/refs/heads/main.zip). **To know exactly the path you have to change, you can drag the folder named `SoundFolder` in a blank line into your SuperCollider IDE.** 
 
