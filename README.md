@@ -127,7 +127,7 @@ Follow the steps below one after another:
 
 ## Setup
 
-The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`L4L_Project`](/L4L_Project): [`_1_Init_BuffersSynths_131.scd`](/L4L_Project/_1_Init_BuffersSynths_131.scd), [`_2_Init_GUI_224.scd`](/L4L_Project/_2_Init_GUI_224.scd), [`_3_Init_Pattern_183.scd`](/L4L_Project/_3_Init_Pattern_183.scd).
+The code does not take the form of a SuperCollider quark (i.e. external library) or classes, since I would have been unable to build this tool if I had to recompile the programme each time I had to change the code. Due to this experimental nature based on trial and error, it consists of environment variables collecting arrays, dictionaries and functions mainly spread in three big files within the folder [`L4L_Project`](/L4L_Project): [`_1_Init_BuffersSynths_132.scd`](/L4L_Project/_1_Init_BuffersSynths_132.scd), [`_2_Init_GUI_225.scd`](/L4L_Project/_2_Init_GUI_225.scd), [`_3_Init_Pattern_184.scd`](/L4L_Project/_3_Init_Pattern_184.scd).
 
 In order to launch the tool, open the file [`_0A_Init_Live4Life.scd`](/L4L_Project/_0A_Init_Live4Life.scd) in the folder [`L4L_Project`](/L4L_Project) and follow the steps below:
 
