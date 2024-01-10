@@ -698,6 +698,7 @@
 			{
 				if (~limiterNotification[serverNb] == 0, {
 					~limiter[serverNb] = Synth(\Limiter, target: RootNode(currentEnvironment[serverFX]), addAction: \addToTail);
+					~limiter[serverNb].set(\ampLimit, ~ampLimiter);
 					("Limiter "++serverNb++" triggered").postln; ~limiterNotification[serverNb] = 1
 				}, {
 					("Limiter "++serverNb++" already playing").postln; /*~limiterNotification = 1*/} )

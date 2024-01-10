@@ -76,6 +76,9 @@ Server.default = currentEnvironment[\server1]; currentEnvironment[\server1].reco
 // Stop the recordings
 currentEnvironment[\server1].stopRecording; currentEnvironment[\server2].stopRecording; Server.default = currentEnvironment[\server1];
 
+// If you want to change the maximum amplitude of the limiter
+~ampLimiter = -7.dbamp; ~nbOfServers.do { |s| ~limiter[s].set(\ampLimit, ~ampLimiter); }
+
 
 
 
