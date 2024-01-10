@@ -19,6 +19,7 @@
 ~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value; // But with a second server running, SpatioScope is less interesting because only on 1 server
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals if 1
 
+~ampLimiter = -7.dbamp; // Amplitude Limiter in dB for each server
 ~trackXFadeDefault = 20; // Default value for Xfade for tracks (in beats, divide by 2 in seconds: if 120 BPM, then 20 = 10 sec.)
 ~hpModulation = 1; // 1 allows effects with parameter modulation between the loudspeakers, otherwise 0
 ~mixAllFxDefault = 0; // Default value for mix of effects
