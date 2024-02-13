@@ -29,7 +29,7 @@
 
 
 // INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~updateTime = 0.2 /*0.1*/; /*"_3_Init_Pattern_183.scd".loadRelative;*/ "_3_Init_Pattern_184.scd".loadRelative;
+~updateTime = 0.2 /*0.1*/; /*"_3_Init_Pattern_184.scd".loadRelative;*/ "_3_Init_Pattern_185.scd".loadRelative;
 
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
