@@ -215,7 +215,7 @@ https://github.com/endel/shieldsio-patreon/blob/master/README.md
 
 The list might be long. Sorry for those I forgot to mention. I cannot quote all of them.
 
-By giving soon this tool, it is my way to contribute to SuperCollider.
+By giving this tool, it is my way to contribute to SuperCollider for a _free_ world.
 And I encourage anyone (DSP developers or any user) to support and use this beautiful environment.
 
 
