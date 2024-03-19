@@ -3,7 +3,6 @@
 
 
 // INIT BUFFERS & SYNTHS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-"_1_Init_BuffersSynths_132.scd".loadRelative; // Load server functions
 // ~loadPhrases.(\serverP, \LocalP, 57114); ~fx16Split = 0; // Just for my performance setup to launch a specific server for specific synths and sentences
 
 // 1st Server
