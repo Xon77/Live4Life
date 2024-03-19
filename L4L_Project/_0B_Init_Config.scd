@@ -122,4 +122,8 @@ fork { Server.killAll; /*0.1.wait;*/ s.waitForBoot({ /*0.1.wait;*/ 2.do { 0.1.wa
 	"_Init Midi Morph.scd".loadRelative; // Sensel Morph // Midi Channel 6
 	"Controllers connected if available !".postln;
 }.fork;
-)
+);
+
+
+
+"_1_Init_BuffersSynths_132.scd".loadRelative; // Load server functions
