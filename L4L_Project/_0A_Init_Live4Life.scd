@@ -18,18 +18,17 @@
 // ~loadServer.(\server2, \Local2, 1, 57112, \serverFX2, \LocalFX2, 57113); // Server names -> [~server2, ~serverFX2]
 
 
-// INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; /*"_2_Init_GUI_224.scd".loadRelative;*/ "_2_Init_GUI_225.scd".loadRelative;
-
-// Lemur Connection
-~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "169.254.160.30", 8000);
+// Lemur OSC Connection - if you have the Lemur App, set the Lemur IP provided in the settings of the Lemur App - you can use up to 2 tactile tablets
+~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "192.168.2.2", 8000);
 ~lemurConnected2 = 1; ~lemurAdress2 = NetAddr( "192.168.1.11", 8000);
 ~lemurConnected1 = 0; ~lemurAdress1 = nil; ~lemurConnected2 = 0; ~lemurAdress2 = nil;
 
 
-// INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~updateTime = 0.2 /*0.1*/; /*"_3_Init_Pattern_184.scd".loadRelative;*/ "_3_Init_Pattern_185.scd".loadRelative;
+// INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; /*"_2_Init_GUI_224.scd".loadRelative;*/ "_2_Init_GUI_225.scd".loadRelative;
 
+
+// Initialisation check of FX synths - not compulsory
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
 

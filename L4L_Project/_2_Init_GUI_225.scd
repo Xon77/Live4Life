@@ -31955,6 +31955,7 @@ PopUpMenu.defaultKeyDownAction
 	~configBeatsView.valueAction_(0);
 
 
+
 	{
 
 		if (~twister.notNil, {
@@ -31995,11 +31996,18 @@ PopUpMenu.defaultKeyDownAction
 		0.01.wait;
 		~tracks.do { |tr| ~presetSeqTextViewG[tr][0].background_(Color.grey(0.3))/*.stringColor_(Color.white)*/ };
 
+
+
+		~lemurConnected1 = ~prevLemurConnected1; ~lemurConnected2 = ~prevLemurConnected2; //  ~twister = ~prevTwister;
+
+
+
+		// INIT PATTERN XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		~updateTime = 0.2 /*0.1*/; /*"_3_Init_Pattern_184.scd".loadRelative;*/ "_3_Init_Pattern_185.scd".loadRelative;
+
+
+
 	}.fork(AppClock);
-
-
-
-	~lemurConnected1 = ~prevLemurConnected1; ~lemurConnected2 = ~prevLemurConnected2; //  ~twister = ~prevTwister;
 
 	"Be patient !!! GUI will show in a few seconds !!!";
 
