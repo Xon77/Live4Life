@@ -29,11 +29,28 @@ if (~lemurConnected2 == 1, {
 // ~gblTempo ? ~gblTempo = TempoClock(1);
 // permet d'éviter d'utiliser ~gblTempo.permanent_(1); car provoque une erreur avec arrêt brutal P+shift+.
 
-~gblTempo = TempoClock(2, queueSize: 8192).permanent_(true); // semble avoir une incidence de quelques points sur le cpu ??? Checker valeur idéale ??????????????????????
+// ~gblTempo = TempoClock(2, queueSize: 8192).permanent_(true); // semble avoir une incidence de quelques points sur le cpu ??? Checker valeur idéale ??????????????????????
 // permanent sets whether the clock will survive cmd-period // false by default
 
 // TempoClock.default_(TempoClock.new(queueSize: 8192).permanent_(true))
 // Put Into your startup.rtf file. // check Post on setting queue size
+
+// Mise en place d'AbletonLink
+if (~gblTempo.isNil, {~gblTempo = LinkClock(2, queueSize: 8192).latency_(~server1.latency).permanent_(true)});
+// ~gblTempo.tempo = 240/60; // Test for setting tempo
+// ~gblTempo.tempo * 60; // Test for getting tempo
+
+~linkClockController = SimpleController(~gblTempo) // to receive an update of Tempo in SC from Ableton
+.put(\tempo, {
+	defer {
+		~toTempoView.string = "% BPS -> % BPM".format(~gblTempo.tempo.round(0.01), (~gblTempo.tempo * 60).round(0.01));
+		~toTempoView.value_(~toTempoSpec.unmap(~gblTempo.tempo));
+		~pFadeView.string = ("XFade : % Beats - % sec").format(~pFade[~tracksValue], (~pFade[~tracksValue] / ~gblTempo.tempo).round(0.01));
+		~quantView.string = ("Quant : % Beats - % sec").format(~quant[~tracksValue], (~quant[~tracksValue] / ~gblTempo.tempo).round(0.01));
+		~nbTotalBeatsView.doAction;
+	};
+});
+
 
 
 
