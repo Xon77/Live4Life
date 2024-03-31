@@ -3902,6 +3902,8 @@ Ndef(\sound).play
 
 		if (~twister.notNil, { ~connectionsRate.free; ~connectionsBuf.free; ~connectionsRtm.free; ~connectionsLeg.free; ~connectionsStr.free });
 
+		~linkClockController.remove;
+
 	};
 
 
@@ -24032,7 +24034,6 @@ u.drawFunc = { d.draw }
 	~toTempoView = SmoothSlider(~controlWindowTrig, Rect(5*~xSizeMul, 77*~ySizeMul, 250*~xSizeMul, 22*~ySizeMul))
 	.action_({ |view| ~toTempo = ~toTempoSpec.map(view.value);
 		view.string = "% BPS -> % BPM".format(~toTempo, ~toTempo * 60);
-		view.hilightColor_(Color.red);
 		// Actualisation du BPM pour chaque séquence de chaque Track
 		~pFadeView.string = ("XFade : % Beats - % sec").format(~pFade[~tracksValue], (~pFade[~tracksValue] / ~toTempo).round(0.01));
 		~quantView.string = ("Quant : % Beats - % sec").format(~quant[~tracksValue], (~quant[~tracksValue] / ~toTempo).round(0.01));
@@ -24042,6 +24043,12 @@ u.drawFunc = { d.draw }
 		/*(8.collect({|i| ~nbBeat[~tracksValue][~seqsValue][i]})).sum;*/ // Correction du code pour faire le sum du collect seulement si ~pBeat > 0
 		(8.collect({|i| (~pBeat[~tracksValue][~seqsValue][i] > 0).if ({~nbBeat[~tracksValue][~seqsValue][i]}, {0}) })).sum, (~nbTotalBeats[~tracksValue][~seqsValue] / ~toTempo).round(0.01), ((8.collect({|i| (~pBeat[~tracksValue][~seqsValue][i] > 0).if ({~nbBeat[~tracksValue][~seqsValue][i]}, {0}) })).sum / ~nbTotalBeats[~tracksValue][~seqsValue] * ~toTempo * 60).round(0.01));
 		}*/
+		if (~toSec == 0, {
+			~gblTempo.tempo = ~toTempo;
+			view.hilightColor_(~sliderHilightColor);
+		},{
+			view.hilightColor_(Color.red);
+		});
 	})
 	.font_(Font("Verdana", 12*~fontSizeMul))
 	.background_(~sliderBackgroundColor)
@@ -24071,17 +24078,22 @@ u.drawFunc = { d.draw }
 	~tempoPlay = Routine({
 		~doNextTempo.states_([["Changing", Color.white, Color.red]]);
 		~gblTempo.sync(~toTempo, ~toSec, ~resolution);
+		{~toTempoView.acceptsMouse_(false)}.defer;
 		~toSec.wait;
 		// "Changed Tempo done".postln;
 		~doNextTempo.states_([["Do Tempo", Color.white, Color.blue]]);
+		{~toTempoView.acceptsMouse_(true)}.defer;
 		"Done".yield;
 	});
 
 	~doNextTempo = RoundButton(~controlWindowTrig, Rect(218*~xSizeMul, 52*~ySizeMul, 50*~xSizeMul, 20*~ySizeMul))
 	.states_([["Do Tempo", Color.white, Color.blue]])
 	.font_(Font("Verdana",8*~fontSizeMul))
-	.action_({~toTempoView.hilightColor_(~sliderHilightColor);
+	.action_({
+		if (~toSec != 0, {
+		~toTempoView.hilightColor_(~sliderHilightColor);
 		~tempoPlay.reset; ~tempoPlay.play(AppClock);
+		});
 	});
 
 	~automationActive = 0;
