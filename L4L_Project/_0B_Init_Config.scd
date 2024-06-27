@@ -1,6 +1,6 @@
 ( // Configuration Initialisation Live4Life XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-~viaJACK = 1; // 0 without Jack // 1 with Jack (only tested on OSX)
+~viaJACK = 0; // 0 without Jack // 1 with Jack (only tested on OSX)
 ~inputBusChannelsNb = 2; ~soundIn = 0; // Sound Card Input Channel
 
 ~nbOfSeqs = 240 /*99*/; // Nb of sequences in a track
