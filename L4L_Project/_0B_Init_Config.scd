@@ -15,7 +15,7 @@
 ~mainWindowScroll = false; // For smaller screen sizes in height
 ~recordMontage = 0; // 1, if you want to record GUI action
 ~initSeqOrPerfMode = 0; // Initialisation Mode Séquence = 0 // Performance = 1
-~mainServer1Window = 0; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see below how to start SuperDirt if you also want to use TidalCycles on main Server s
+~mainServer1Window = 0; // 1 allows to get a server window for the main server in order to be able to boot some programmes like TidalCycles (see bug https://github.com/musikinformatik/SuperDirt/issues/265) // see in the file "_0A_Init_Config" how to start SuperDirt if you also want to use TidalCycles on main Server s
 ~visualizeLevels = "ServerMeter" /*SpatioScope ServerMeter*/; // -> ServerMeter requires a little bit more CPU - but more precise on levels // ~visualizeSpatioScope.value; // But with a second server running, SpatioScope is less interesting because only on 1 server
 ~visualizeProcessing = 0; // Transfers data to Processing for visuals if 1
 
