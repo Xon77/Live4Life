@@ -6531,7 +6531,7 @@ Ndef(\sound).play
 	~memoryNbOfTracks = 3;
 	~presetsSelListMemoryNb = 30;
 	~eventSourceSelFomula = (~presetsSelListMemoryNb-1).collect{|i| "state[" ++ (i+1) ++ "]"};
-	~eventSourceSelFomula = "{ |state,v|" + ~eventSourceSelFomula.asString[0..~eventSourceSelFomula.asString.size-3] + ",v] }";
+	~eventSourceSelFomula = "{ |state,v|" + ~eventSourceSelFomula.asString[0..~eventSourceSelFomula.asString.size-2] + ",v] }";
 
 	~presetsSelEventSource = EventSource() ! ~memoryNbOfTracks;
 	~presetsSelEventInjection = 0 ! ~memoryNbOfTracks;
@@ -19944,7 +19944,7 @@ case
 	*/
 	// Keep the last x values
 	~eventSourceFomula = (~presetsListMemoryNb-1).collect{|i| "state[" ++ (i+1) ++ "]"}; // .cs -> nécessaire lorsque la String est trop longue (au delà de 40) -> mais la transformation en string génère une erreur ????????????????????????????????????????????????????????????????????????????????????????????????????????????
-	~eventSourceFomula = "{ |state,v|" + ~eventSourceFomula.asString[0..~eventSourceFomula.asString.size-3] + ",v] }";
+	~eventSourceFomula = "{ |state,v|" + ~eventSourceFomula.asString[0..~eventSourceFomula.asString.size-2] + ",v] }";
 	~presetsEventInjection = ~presetsEventSource.inject(0!~presetsListMemoryNb, ~eventSourceFomula.interpret );
 	~positionInPreset = ~presetsListMemoryNb-1;
 	// You can assign a key to the function:
