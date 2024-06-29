@@ -17142,6 +17142,13 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 		~off2SeqSpec[~tracksValue][~seqsValue] = rtmSeqSpec; ~off3SeqSpec[~tracksValue][~seqsValue] = rtmSeqSpec; ~off4SeqSpec[~tracksValue][~seqsValue] = rtmSeqSpec;
 		~off2SeqVSpec[~tracksValue][~seqsValue] = rtmSeqVSpec; ~off3SeqVSpec[~tracksValue][~seqsValue] = rtmSeqVSpec; ~off4SeqVSpec[~tracksValue][~seqsValue] = rtmSeqVSpec;
 		[~off2ReadView, ~off3ReadView, ~off4ReadView].do{ |i| i.thumbSize_(rtmThumbSize) };
+	},{
+		~off2[~tracksValue][~seqsValue] = (Array.fill(rtmSeqSize, {0})); ~off2View.valueAction_(~off2[~tracksValue][~seqsValue]);
+		~off3[~tracksValue][~seqsValue] = (Array.fill(rtmSeqSize, {0})); ~off3View.valueAction_(~off3[~tracksValue][~seqsValue]);
+		~off4[~tracksValue][~seqsValue] = (Array.fill(rtmSeqSize, {0})); ~off4View.valueAction_(~off4[~tracksValue][~seqsValue]);
+		~off2SeqSpec[~tracksValue][~seqsValue] = rtmSeqSpec; ~off3SeqSpec[~tracksValue][~seqsValue] = rtmSeqSpec; ~off4SeqSpec[~tracksValue][~seqsValue] = rtmSeqSpec;
+		~off2SeqVSpec[~tracksValue][~seqsValue] = rtmSeqVSpec; ~off3SeqVSpec[~tracksValue][~seqsValue] = rtmSeqVSpec; ~off4SeqVSpec[~tracksValue][~seqsValue] = rtmSeqVSpec;
+		[~off2ReadView, ~off3ReadView, ~off4ReadView].do{ |i| i.thumbSize_(rtmThumbSize) };
 	});
 
 	~rat[~tracksValue][~seqsValue] = Array.newClear(rtmSeqSize); ~ratView.valueAction_(~presets[index][\ratView]); // ~presets[index][\ratView].postln;
@@ -18759,6 +18766,13 @@ case
 		~off2[track][seq] = ~presets[index][\off2View].copy;
 		~off3[track][seq] = ~presets[index][\off3View].copy;
 		~off4[track][seq] = ~presets[index][\off4View].copy;
+	},{
+		~off2Spec[track][seq] = ControlSpec(~off2Min[track][seq], ~off2Max[track][seq], \lin, ~off2Round[track][seq]);
+		~off3Spec[track][seq] = ControlSpec(~off3Min[track][seq], ~off3Max[track][seq], \lin, ~off3Round[track][seq]);
+		~off4Spec[track][seq] = ControlSpec(~off4Min[track][seq], ~off4Max[track][seq], \lin, ~off4Round[track][seq]);
+		~off2[track][seq] = (Array.fill(rtmSeqSize, {0}));
+		~off3[track][seq] = (Array.fill(rtmSeqSize, {0}));
+		~off4[track][seq] = (Array.fill(rtmSeqSize, {0}));
 	});
 
 	~rat[track][seq] = ~presets[index][\ratView].copy;
@@ -18876,6 +18890,15 @@ case
 		~off2SeqStart[track][seq] = ~presets[index][\off2SeqStart]; ~off2SeqStop[track][seq] = ~presets[index][\off2SeqStop];
 		~off3SeqStart[track][seq] = ~presets[index][\off3SeqStart]; ~off3SeqStop[track][seq] = ~presets[index][\off3SeqStop];
 		~off4SeqStart[track][seq] = ~presets[index][\off4SeqStart]; ~off4SeqStop[track][seq] = ~presets[index][\off4SeqStop];
+		~seqDurOff2[track][seq] = ~off2SeqStop[track][seq] - ~off2SeqStart[track][seq] + 1;
+		~seqDurOff3[track][seq] = ~off3SeqStop[track][seq] - ~off3SeqStart[track][seq] + 1;
+		~seqDurOff4[track][seq] = ~off4SeqStop[track][seq] - ~off4SeqStart[track][seq] + 1;
+	},{
+		~off2SeqSpec[track][seq] = rtmSeqSpec; ~off3SeqSpec[track][seq] = rtmSeqSpec; ~off4SeqSpec[track][seq] = rtmSeqSpec;
+		~off2SeqVSpec[track][seq] = rtmSeqVSpec; ~off3SeqVSpec[track][seq] = rtmSeqVSpec; ~off4SeqVSpec[track][seq] = rtmSeqVSpec;
+		~off2SeqStart[track][seq] = 0; ~off2SeqStop[track][seq] = rtmSeqSize;
+		~off3SeqStart[track][seq] = 0; ~off3SeqStop[track][seq] = rtmSeqSize;
+		~off4SeqStart[track][seq] = 0; ~off4SeqStop[track][seq] = rtmSeqSize;
 		~seqDurOff2[track][seq] = ~off2SeqStop[track][seq] - ~off2SeqStart[track][seq] + 1;
 		~seqDurOff3[track][seq] = ~off3SeqStop[track][seq] - ~off3SeqStart[track][seq] + 1;
 		~seqDurOff4[track][seq] = ~off4SeqStop[track][seq] - ~off4SeqStart[track][seq] + 1;
