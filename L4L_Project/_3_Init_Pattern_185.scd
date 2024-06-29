@@ -4901,7 +4901,7 @@ envir[key][track][seq] = value;
 		// ~lastEvent[~tab][\offset].postln;
 		// Pour envoi vers Processing
 		// ~processingAddress.sendMsg(\test, ~lastEvent[0]); // transfert de données illisible dans Processing ?????????
-		// ~processingAddress.sendMsg(\test, ~lastEvent[~tab][\type], ~lastEvent[~tab][\rater]); // transfert de tous les évenèements générés
+		// ~processingAddress.sendMsg(\test, ~lastEvent[~tab][\type], ~lastEvent[~tab][\rater]); // transfert de tous les événements générés
 		// faire qqch des évènements qui ne génèrent pas de son -> visualisation de potentiels avortés ?????????
 		// Pourquoi pas d'envoi de données quand utilisation d'un dossier test ?????????
 
