@@ -82,7 +82,9 @@ Follow the steps below one after another:
 
 	(For beginners in SuperCollider, FYI to evaluate a code in parentheses, particularly in the setup process, you have to be inside the parentheses and press Control (on Windows) / Command (on Mac) + Enter (for more details go to the menu `Language`). To evaluate a line of code, you have to be on the specific line and press either also Control (on Windows) / Command (on Mac) or easier shift + Enter.)
 	
-2. **Download and put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder** (go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it. Rename the folder `sc3-plugins` by `plugins`.). 
+2. **Download and put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.** 
+
+	(Go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it. Rename the folder `sc3-plugins` by `plugins`.). 
 
 3. **Download [the latest release](https://github.com/Xon77/Live4Life/releases) of this project to begin the setup of the tool for the following steps.**
 
