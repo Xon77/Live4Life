@@ -69,10 +69,10 @@ if (~server2.notNil, {
 )
 
 // Start the recordings
-Server.default = currentEnvironment[\server1]; currentEnvironment[\server1].record; Server.default = currentEnvironment[\server2]; currentEnvironment[\server2].record;
+Server.default = currentEnvironment[\server1]; currentEnvironment[\server1].record; if (~server2.notNil, {Server.default = currentEnvironment[\server2]; currentEnvironment[\server2].record});
 
 // Stop the recordings
-currentEnvironment[\server1].stopRecording; currentEnvironment[\server2].stopRecording; Server.default = currentEnvironment[\server1];
+currentEnvironment[\server1].stopRecording; if (~server2.notNil, {currentEnvironment[\server2].stopRecording; Server.default = currentEnvironment[\server1]});
 
 // If you want to change the maximum amplitude of the limiter
 ~ampLimiter = -7.dbamp; ~nbOfServers.do { |s| ~limiter[s].set(\ampLimit, ~ampLimiter); }
