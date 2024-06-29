@@ -84,7 +84,7 @@ Follow the steps below one after another:
 	
 2. **Download and put [sc3-plugins](https://supercollider.github.io/sc3-plugins#insrallation) in your SuperCollider Extensions folder.** 
 
-	(Go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it. Rename the folder `sc3-plugins` by `plugins`.). 
+	(Go to the menu `File -> Open user support directory`. Create a folder named `Extensions`, if it is not already there, and put your plugins folder into it. Rename the folder `sc3-plugins` by `plugins`.)
 
 3. **Download [the latest release](https://github.com/Xon77/Live4Life/releases) of this project to begin the setup of the tool for the following steps.**
 
