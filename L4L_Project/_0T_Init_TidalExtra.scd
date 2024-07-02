@@ -71,7 +71,7 @@
 		// ~drumMachinesDir = Quarks.all.detect({ |x| x.name == "tidal-drum-machines" }).localPath; // Quarks.install("https://github.com/geikha/tidal-drum-machines.git");
 		// ~dirt.loadSoundFiles(~drumMachinesDir +/+ "machines" +/+ "*" +/+ "*", namingFunction: { |x| x.basename.replace("-","")});
 
-		load("/Users/xon/Desktop/Livecoding/Tidal/TSamplesOfMachines/mi-ugens.scd");
+		load("/Users/xon/Desktop/Livecoding/Tidal/TSamplesOfMachines/mi-ugens.scd"); // exception in GraphDef_Recv: UGen 'MiRipples' not installed?
 		s.sync; // wait for samples to be read
 
 		~mainbus = Bus.audio(s,2);
