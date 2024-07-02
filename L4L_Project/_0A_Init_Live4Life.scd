@@ -25,12 +25,15 @@
 
 
 // INIT GUI (Server 1 until track 2 and Server 2 from track 3) XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-~nbOfControlBus = 6; ~serverTrackSwitch = 2; /*"_2_Init_GUI_224.scd".loadRelative;*/ "_2_Init_GUI_225.scd".loadRelative;
+~nbOfControlBus = 6; ~serverTrackSwitch = 2; "_2_Init_GUI_225.scd".loadRelative;
 
 
 // Initialisation check of FX synths - not compulsory
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server1, 0) }, { ~initFXSynthDefs.(\serverFX1, 0) } );
 if ( ~serverFX == 0, { ~initFXSynthDefs.(\server2, 1) }, { ~initFXSynthDefs.(\serverFX2, 1) } );
+
+// INIT PATTERN -> inserted in GUI - useful if you have stopped the language with Comd+.
+// ~updateTime = 0.2 /*0.1*/; "_3_Init_Pattern_185.scd".loadRelative;
 
 
 
