@@ -14976,14 +14976,14 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	~cenHarDefault.value(~tracksValue, ~seqsValue);
 	~delHarDefault.value(~tracksValue, ~seqsValue);
 	~ampHarDefault.value(~tracksValue, ~seqsValue);
-	// ~spaHarDefault.value(~tracksValue, ~seqsValue);
+	~spaHarDefault.value(~tracksValue, ~seqsValue);
 }, {
 	~seqs.do {|i|
 		~ratHarDefault.value(~tracksValue, i);
 		~cenHarDefault.value(~tracksValue, i);
 		~delHarDefault.value(~tracksValue, i);
 		~ampHarDefault.value(~tracksValue, i);
-		// ~spaHarDefault.value(~tracksValue, i)
+		~spaHarDefault.value(~tracksValue, i)
 }});
 });
 
@@ -14995,21 +14995,21 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 	~centerHar.value(~tracksValue, ~seqsValue);
 	~delayHar.value(~tracksValue, ~seqsValue);
 	~amplitudeHar.value(~tracksValue, ~seqsValue);
-	// ~spatialisationHar.value(~tracksValue, ~seqsValue);
+	~spatialisationHar.value(~tracksValue, ~seqsValue);
 }, {
 	~seqs.do {|i|
 		~rateHar.value(~tracksValue, i);
 		~centerHar.value(~tracksValue, i);
 		~delayHar.value(~tracksValue, i);
 		~amplitudeHar.value(~tracksValue, i);
-		// ~spatialisationHar.value(~tracksValue, i);
+		~spatialisationHar.value(~tracksValue, i);
 		/*~ratHar[~tracksValue][i] = {rrand(0.0,1.0)} ! ~harIndex[~tracksValue][i];
 		~ampHar[~tracksValue][i] = {rrand(0.0,1.0)} ! ~harIndex[~tracksValue][i];*/
 	};
 });
 });
 
-~harSpaDefView = RoundButton(~tabHarComp, Rect(342*~xSizeMul, 173*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
+/*~harSpaDefView = RoundButton(~tabHarComp, Rect(342*~xSizeMul, 173*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
 .states_([["De Spa", Color.white, Color.blue]])
 .font_(Font("Verdana",9*~fontSizeMul))
 .action_({if (~patFlag == 0, {
@@ -15017,9 +15017,9 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 }, {
 	~seqs.do {|i| ~spaHarDefault.value(~tracksValue, i) };
 });
-});
+});*/
 
-~harSpaRandView = RoundButton(~tabHarComp, Rect(342*~xSizeMul, 193*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
+/*~harSpaRandView = RoundButton(~tabHarComp, Rect(342*~xSizeMul, 193*~ySizeMul, 38*~xSizeMul, 20*~ySizeMul))
 .states_([["Ra Spa", Color.white, Color.red]])
 .font_(Font("Verdana",9*~fontSizeMul))
 .action_({if (~patFlag == 0, {
@@ -15027,7 +15027,7 @@ if (~patFlag == 1, {~seqs.do {|sequence| ~ratPatSel[~tracksValue][sequence] = me
 }, {
 	~seqs.do {|i| ~spatialisationHar.value(~tracksValue, i) };
 });
-});
+});*/
 
 ~harTrigView = RoundButton(~spaComp /*~tabHarComp*/, Rect(338*~xSizeMul, 154*~ySizeMul, 40*~xSizeMul, 22*~ySizeMul) /*Rect(305, 191, 35, 22)*/)
 .states_([["Mul X", Color.white, Color.red],["Mul X", Color.black, Color.green]])
