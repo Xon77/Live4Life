@@ -17135,7 +17135,8 @@ voire si la suppression des spec permet de réduire de manière conséquente le 
 	~buf[~tracksValue][~seqsValue] = Array.newClear(rtmSeqSize); ~bufView.valueAction_(~presets[index][\bufView]);
 	~off[~tracksValue][~seqsValue] = Array.newClear(rtmSeqSize); ~offView.valueAction_(~presets[index][\offView]);
 
-	if (~presets[index][\off2View].notNil, {
+	if (~presets[index][\off2View].notNil and: {~presets[index][\off2View].size == rtmSeqSize}, {
+		// obligé de rajouter "and: {~presets[index][\off2View].size == rtmSeqSize}", car pour certains presets, la taille des arrays est différente entre ~off2, ~off3 & rtmSeqSize - necessqire qu'aux presets de Paramegiani - pourrait être supprimé
 		~off2[~tracksValue][~seqsValue] = Array.newClear(rtmSeqSize); ~off2View.valueAction_(~presets[index][\off2View]);
 		~off3[~tracksValue][~seqsValue] = Array.newClear(rtmSeqSize); ~off3View.valueAction_(~presets[index][\off3View]);
 		~off4[~tracksValue][~seqsValue] = Array.newClear(rtmSeqSize); ~off4View.valueAction_(~presets[index][\off4View]);
