@@ -3286,16 +3286,16 @@ envir[key][track][seq] = value;
 					// ([~ampSpec[track][seq].map(ev.ampX) * ~ampMul[track][seq]] + /*x*/ ~ampHarSeq[track][seq]).normalizeSum.sqrt
 					// Problème de l'amplitude multipliée, c'est qu'elle reste tout le temps fixe, mais le range de variation est plus grand
 					// Lorsque l'amplitude est additionée, elle est variable, mais le range de variation est plus petit
-					(([~ampSpec[track][seq].map(ev.ampX)] + /*x*/ (~ampHarSeq[track][seq])).normalizeSum/*.sqrt*/)  * ~ampMul[track][seq]
+					(([~ampSpec[track][seq].map(ev.ampX)] /*+*/ /*x*/ * (~ampHarSeq[track][seq])).normalizeSum.sqrt)  * ~ampMul[track][seq]
 				}, {
-					([~ampSpec[track][seq].map(ev.ampX) * ~ampMul[track][seq]] /** ~ampHarSeq[track][seq][0]*/) }) }))/*.trace(prefix: "ampH -> ")*/,
+					([~ampSpec[track][seq].map(ev.ampX) * ~ampMul[track][seq]] /** ~ampHarSeq[track][seq][0]*/) }) })).trace(prefix: "ampH -> "),
 			/*
 			([ 0.5, 0.1, 0.41428568959236, 0.81999999284744 ] + 1).normalizeSum.sqrt
-			~ampHarSeq[0][0].normalizeSum.sqrt
+			([~ampSpec[0][0].map(1)] + ~ampHarSeq[0][0]).normalizeSum.sqrt
 			[0, 0, 1, 1].normalizeSum.sqrt
-			(0.9 * [0.5, 0.8, 0.86, 0.9]).normalizeSum.sqrt
-			[ 0.05, 0.08, 0.086, 0.09 ].normalizeSum
-			[ 0.45, 0.72, 0.774, 0.81 ].normalizeSum
+			[0.5, 0.8, 0.86, 1].normalizeSum
+			([1] * [0.5, 1.0, 0.0, 0.5]).normalizeSum
+			([1] * [0.5, 1.0, 0.0, 0.5]).normalizeSum.sqrt
 			*/
 
 			\amp, (Pfunc({ |ev| var seq = ~seqSeq[track];
