@@ -3288,7 +3288,7 @@ envir[key][track][seq] = value;
 					// Lorsque l'amplitude est additionée, elle est variable, mais le range de variation est plus petit
 					(([~ampSpec[track][seq].map(ev.ampX)] /*+*/ /*x*/ * (~ampHarSeq[track][seq])).normalizeSum.sqrt)  * ~ampMul[track][seq]
 				}, {
-					([~ampSpec[track][seq].map(ev.ampX) * ~ampMul[track][seq]] /** ~ampHarSeq[track][seq][0]*/) }) })).trace(prefix: "ampH -> "),
+					([~ampSpec[track][seq].map(ev.ampX) * ~ampMul[track][seq]] /** ~ampHarSeq[track][seq][0]*/) }) })) /*.trace(prefix: "ampH -> ")*/,
 			/*
 			([ 0.5, 0.1, 0.41428568959236, 0.81999999284744 ] + 1).normalizeSum.sqrt
 			([~ampSpec[0][0].map(1)] + ~ampHarSeq[0][0]).normalizeSum.sqrt
