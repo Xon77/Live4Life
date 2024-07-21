@@ -19,7 +19,7 @@
 
 
 // Lemur OSC Connection - if you have the Lemur App, set the Lemur IP provided in the settings of the Lemur App - you can use up to 2 tactile tablets
-~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "192.168.2.2", 8000);
+~lemurConnected1 = 1; ~lemurAdress1 = NetAddr( "192.168.2.3", 8000);
 ~lemurConnected2 = 1; ~lemurAdress2 = NetAddr( "192.168.1.11", 8000);
 ~lemurConnected1 = 0; ~lemurAdress1 = nil; ~lemurConnected2 = 0; ~lemurAdress2 = nil;
 
