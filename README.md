@@ -174,11 +174,11 @@ Several training workshops in immersive sound and spatial improvisation with thi
 
 I have a lot of features I would like to improve or develop, such as the collection of synthDefs (with e.g. [plugins from Mads Kjeldgaard](https://github.com/madskjeldgaard/portedplugins)), as well as HOA (currently only FOA).
 
-If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance.
+If you would like to contribute, please get in touch with me in order to organise further development. The code management or installation process can be greatly improved, but for now I prefer to focus on rhythmic music features and performance, particularly by controlling lines of code with Tidal Cycles (code to be released soon hopefully with and separately of this project).
 
 Feel free to post an issue, and you can also send me a mail first since it might be a functionality not explained (a more complete wiki will come), or try to send a pull request, since depending on my priorities I may not have not the time or the ability to solve it.
 
-**I am looking for (audio)visual collaborations for the creation of spatial improvisations** in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
+**I am still looking for audiovisual collaborations for the creation of spatial improvisations** in a multi-sensory context, combining and alternating music, video / light and dance in space, mainly with:
 - **audiovisual developers** to create the visual from the sound data generated. Technically, the audiovisual object mapping could be developed through open source tools, such as Processing ([see the code](/L4L_Visuals/Processing) and [how to use it in the wiki](https://github.com/Xon77/Live4Life/wiki/Processing)), Open Frameworks, Hydra, or even through commercial tools like Touch Designer (basic patch soon to be released - time is flexible!) and Resolume, **as long as the creation process and the code are published on Github and open to everyone**. 
 - **dancers / movement artists** (e.g. circus) for improvising to finally mix the impact between the gesture of the performer, the dancing bodies and the video / light environment. I am particularly interested in all mixing forms of dances from traditional dances to contemporary forms.
 
