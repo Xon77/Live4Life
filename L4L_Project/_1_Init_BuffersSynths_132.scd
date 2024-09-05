@@ -219,7 +219,7 @@
 			~serverOptionsFX.pingsBeforeConsideredDead = ~serverOptions.pingsBeforeConsideredDead;
 			~serverOptionsFX.numWireBufs_(~serverOptions.numWireBufs);
 			~serverOptionsFX.maxNodes_(~serverOptions.maxNodes);
-			~servFerOptionsFX.memSize_(~serverOptions.memSize);
+			~serverOptionsFX.memSize_(~serverOptions.memSize);
 			~serverOptionsFX.numBuffers_(~serverOptions.numBuffers);
 			~serverOptionsFX.maxSynthDefs_(~serverOptions.maxSynthDefs);
 			~serverOptionsFX.hardwareBufferSize = ~serverOptions.hardwareBufferSize;
