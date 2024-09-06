@@ -149,7 +149,7 @@ In order to launch the tool, open the file [`_0A_Init_Live4Life.scd`](/L4L_Proje
 
 	1. opens a GUI with different widows including tabs in the main window like the [Sequence view](https://github.com/Xon77/Live4Life/wiki/Sequence-View) for the composition or the [Global view](https://github.com/Xon77/Live4Life/wiki/Global-View) for the performance (see figures above), as well as tab views for [global multichannel and ambisonic effects](https://github.com/Xon77/Live4Life/wiki/FX-Views), and
 
-	2. evaluate a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI (the core of the programme that links the control of synths with the GUI).
+	2. evaluates a pattern function, that triggers sound events with sequences of parameters for each track, and a routine updating the GUI (the core of the programme that links the control of synths with the GUI).
 
 You can now play the first track by clicking on the green button in the control panel at the left of the window, and experiment by changing parameter modules (see [ICMC 2021 paper](https://www.researchgate.net/publication/354526907_The_story_and_the_insides_of_a_spatial_performance_tool_Live_4_Life)). To configure the keyboard or other MIDI or OSC controllers, check the corresponding files in the folder [L4L_Controllers](/L4L_Controllers) for full performance control.
 
