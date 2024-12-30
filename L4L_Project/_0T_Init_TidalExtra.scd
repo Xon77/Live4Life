@@ -6,7 +6,7 @@
 (if (~mainServer1Window == 1 or: {~server1.isNil}, {
 
 	~tidalsoundsFolder = "/Users/xon/Documents/Projets/SC_LFL/Live4LifeProjects/TechnoMachineS/_Sounds2024A/";
-	~tidalNumchannels = 32;
+	~tidalNumchannels = 2;
 
 	SynthDef.synthDefDir = Platform.userAppSupportDir ++ "/synthdefs"; "SC_SYNTHDEF_PATH".setenv(SynthDef.synthDefDir.standardizePath);
 	// configure the sound server: here you could add hardware specific options
@@ -220,50 +220,173 @@
 
 ~dirt.orbits[0].globalEffects[0].synth
 
+~dirt.modules.cs
+~dirt.orderModules(\shape, \vowel)
 
+~tidalNetAddr.sendMsg("/ctrl", ["1Fol", "2Fol", "3Fol", "4Fol"][1], ~arrayOfFolderNames4Tidal[18]);
 
 ~dirt.orbits[0].group
 Group
 Node
 queryTree
+PV_MagDiv
+
+
+
+( // TIDAL Xon
+
+// Server Options
+~tidalOutputChannels = 4;
+s.options.numOutputBusChannels = ~tidalOutputChannels;
+s.options.memSize = /*8192 * 256*/ (2.pow(20));
+s.options.numBuffers = 1024 * 16;
+s.options.maxNodes = /*1024 * 256*/ (8192*500);
+
+// Base de données sonores XXX
+~tidalsoundsFolder = "/Users/xon/Documents/Projets/SC_LFL/Live4LifeProjects/TechnoMachineS/_Sounds2024A/";
+
+// Noms des dossiers sonores
+~arrayOfFolderNames4Tidal = ("ls -m" + ~tidalsoundsFolder).unixCmdGetStdOut;
+~arrayOfFolderNames4Tidal = ~arrayOfFolderNames4Tidal.split($, ).collect { |i| i.stripWhiteSpace };
+~arrayOfFolderNames4Tidal = ~arrayOfFolderNames4Tidal.collect { |i| i.replace(" ","_")};
+
+// Distinction des dossiers sonores
+~arrayOfFolderNames4TidalSizeS0 = 18; ~arrayOfFolderNames4TidalSizeS1 = 29; ~arrayOfFolderNames4TidalSizeS2 = 67; ~arrayOfFolderNames4TidalSizeS3 = 76; ~arrayOfFolderNames4TidalSizeS4 = 98;
+
+~arrayOfFolderNames4TidalSize = (~arrayOfFolderNames4Tidal.size-1) ! 8;
+~tidalFolderSizeSwitch = 0 ! 8;
+
+~patternSpeedSwitch = 0 ! 8;
+~patternSpeeds = (0..64) ! 8;
+~patternSpeedsSize = (~patternSpeeds[0].size-1) ! 8;
+
+~tidalEvalPos = 0 ! 8;
+~tidalEvalLine = (1..26) ! 8; // Put the number of lines XXXXXXXXXXXX
+// ~tidalEvalLine[0] = (1..26); ~tidalEvalLine[1] = (1..26); ~tidalEvalLine[2] = (1..26); ~tidalEvalLine[3] = (1..26);
+
+~tidalnumEffects = 41; // Put the value of fxR in Tidal Cycles
+~tidalnumFunctions = 254; // Put the value of fuR in Tidal Cycles
+~tidalnumSwitchX = 20; // // Put the length of the list sfux
+~tidalnumWhenS = 40;
+
+~tidalCurrentOrbit = 0;
+~tidalFx10ARandSwitch = 0; ~tidalFx20ARandSwitch = 0; ~tidalFx0ARandSwitch = 0;
+~tidalFu10ARandSwitch = 0; ~tidalFu20ARandSwitch = 0; ~tidalFu0ARandSwitch = 0; ~tidalBuf0ARandSwitch = 0;
+~superDirtOSC = NetAddr.new("127.0.0.1", 57120);
+
+s.waitForBoot {
+	~dirt = SuperDirt(~tidalOutputChannels, s);
+	~dirt.loadSoundFiles(~tidalsoundsFolder++"*"); // ~dirt.loadSoundFiles;
+	 s.sync; // Wait for samples to be read
+	~dirt.start(57120, 0 ! 8); // Start listening on port 57120, create 8 orbits
+
+	// Taille des Fichiers de Tidal // ~dirt.soundLibrary.buffers.size
+	~tidalFolderSizes = ~dirt.soundLibrary.buffers.size.collect { |i| ~dirt.soundLibrary.buffers[~arrayOfFolderNames4Tidal[i].asSymbol].size-1 };
+
+	// Initialize the SuperDirtMixer
+	~tidalX = SuperDirtMixerX(~dirt/*, 6010*/);
+	// You can adjust parameters before you use the ui
+	~tidalX.setOrbitLabels(["1 Fuk", "2 Pee", "3 Pou", "4 Nah", "5 Lead", "6 Bass", "7 Key", "8 Pad"]);
+	~tidalX.setMasterBus(0);
+	"_Init Midi X2.scd".loadRelative;
+	~tidalX.gui;
+	// ~tidalNetAddr = NetAddr.new("127.0.0.1", 6010); /*~tidalMixer.tidalNetAddr*/ // plus besoin initialisé dans MixerUI.sc, mais aussi besoin dans MasterUI, donc variable d'environnement préférable -> non ...
+};
+)
+
+
+~dirt.soundLibrary
+DirtSoundLibrary
 
 
 (
-s.options.memSize = /*8192 * 256*/ (2.pow(20));
-s.waitForBoot {
-	~dirt = SuperDirt(2, s);
-	~dirt.start(57120, 0 ! 14);
-	// More SuperDirt ...
-	~dirt.loadSoundFiles;
-	// Initialize the SuperDirtMixer
-	~mixer = SuperDirtMixer(~dirt, 6010);
+// Run this to start sending the RMS OSC messages to SC.
+~dirt.startSendRMS;
 
-	// You can adjust parameters before you use the ui
-	// ~mixer.orbitLabels = ["d1 - Lead", "d2 - Bass", "d3 - Key", "d4 - Pad"];
-	~mixer.enableMasterPeakRMS(0)
-}
+// The bridge will be listening to OSC messages on port UDP 9130.
+b = NetAddr.new("127.0.0.1", 4444);
+
+// This is the RMS OSC handler, here we'll forward these messages to our bridge
+OSCFunc({ |msg|
+	// msg.postln;
+	// Forward OSC message
+	b.sendMsg("/rms", *msg);
+}, "/rms");
 )
-~mixer.gui
 
+~dirt.startSendRMS(20, 3);
+~dirt.startSendRMS(20, 1);
+~dirt.startSendRMS(30, 0.4);
+~dirt.startSendRMS(30, 0.01);
+~dirt.startSendRMS(60, 0.1);
+~dirt.startSendRMS(60, 0.01);
+~dirt.stopSendRMS;
+
+// https://club.tidalcycles.org/t/trouble-with-variable-in-atom-hydra/4930
+(var hydraAddr = NetAddr.new("127.0.0.1", 4444);
+var tidalAddr = NetAddr.new("127.0.0.1", 6010);
+OSCFunc.newMatching({ |msg, time, addr, port|
+	var latency = time - Main.elapsedTime;
+	msg = msg ++ ["time", time, "latency", latency];
+	msg.postln;
+	hydraAddr.sendBundle(latency, msg)
+}, '/dirt/play', tidalAddr);
+)
+
+//Taken from Eli Fieldsteel example
+
+~n1 = NetAddr.new("127.0.0.1", 4444);
 
 (
-s.options.memSize = /*8192 * 256*/ (2.pow(20));
-s.waitForBoot {
-	~dirt = SuperDirt(2, s);
-	~dirt.start(57120, 0 ! 8);
-	// More SuperDirt ...
+{
+var sig;
+	sig = SinOsc.ar(exprand(300,3000)!2);
+	sig = sig * XLine.kr(0.5,0.001,1,doneAction:2)
+}.play;
 
-	// Initialize the SuperDirtMixer
-	~tidalMixer = SuperDirtMixer(~dirt, 6010);
+~colors = {rrand(0,2)}!3;
+~n1.sendMsg('/test', ~colors[0],~colors[1],~colors[2]);
 
-	// You can adjust parameters before you use the ui
-	~tidalMixer.orbitLabels = ["d1 - Lead", "d2 - Bass", "d3 - Key", "d4 - Pad", "d5 - Arp", "d6 - Drums", "d7 - Rhytm Git", "d8 - Lead Git", "d9 - Strings", "d10 - FX", "d11 - Kick", "d12 - Cymbals", "d13 - Snare", "d14 - Toms"];
-	~tidalMixer.enableMasterPeakRMS(0)
-}
-)
+~colors;
 
-~tidalMixer.gui;
-~tidalWindow
+);
+
+
+
+
+
+
+//Taken from Eli Fieldsteel example
+
+~n1 = NetAddr.new("127.0.0.1",4444);
+
+(
+{
+var sig;
+	sig = SinOsc.ar(exprand(300,3000)!2);
+	sig = sig * XLine.kr(0.5,0.001,1,doneAction:2)
+}.play;
+
+~colors = {rrand(0,2)}!3;
+
+~n1.sendMsg('/test', ~colors[0],~colors[1],~colors[2]);
+
+~colors;
+
+);
+
+
+
+
+
+~guiElements[0][\ryt][\value]
+~tidalGuiElements[2][\eq][\element].valueAction_(1)
+~tidalGuiElements[0][\mute][\value].value_(0);
+~arrayOfFolderNames4Tidal.cs
+
+
+
+
 Server.killAll
 
 ~superDirtOSC.sendMsg("/SuperDirtMixer/masterGain", 0, 1); // Orbit + 0 // Track 1
@@ -280,6 +403,9 @@ Server.killAll
 ~superDirtOSC.sendMsg("/SuperDirtMixer/trackI", 0);
 ~superDirtOSC.sendMsg("/SuperDirtMixer/trackS", "2");
 ~superDirtOSC.sendMsg("/SuperDirtMixer/trackI", 1);
+
+~superDirtOSC.sendMsg("/SuperDirtMixer/fxs", 0, 2);
+~superDirtOSC.sendMsg("/SuperDirtMixer/fxp", 0, 1.0.rand);
 
 ~tidalMixer.setEQuiValues(\loShelfGain, 10);
 ~tidalMixer.presetPath
@@ -298,7 +424,13 @@ Server.killAll
 ~tidalMixer.setReverbVariableName(\reverb); // Custom VST XXX
 ~tidalMixer.setReverbVariableName(\room); // Native Reverb
 
+~superDirtOSC.sendMsg("/SuperDirtMixer/LegS", 0, 2);
 
+~tidalNetAddr = NetAddr.new("127.0.0.1", 6010);
+~tidalNetAddr.sendMsg("/ctrl", ["LegS"] /*["1Leg", "2Leg", "3Leg", "4Leg", "5Leg", "6Leg", "7Leg", "8Leg"][orbitIndex]*/, True);
+~tidalNetAddr.sendMsg("/ctrl", ["LegS"] /*["1Leg", "2Leg", "3Leg", "4Leg", "5Leg", "6Leg", "7Leg", "8Leg"][orbitIndex]*/, False);
+~tidalNetAddr.sendMsg("/ctrl", "LegS1" /*["1Leg", "2Leg", "3Leg", "4Leg", "5Leg", "6Leg", "7Leg", "8Leg"][orbitIndex]*/, 0.asInteger);
+~tidalNetAddr.sendMsg("/ctrl", "LegS1" /*["1Leg", "2Leg", "3Leg", "4Leg", "5Leg", "6Leg", "7Leg", "8Leg"][orbitIndex]*/, 1.asInteger);
 
 /*
 ~valhalla.numPrograms; // 0 ?

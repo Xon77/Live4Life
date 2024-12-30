@@ -73,32 +73,33 @@
 
 // Pattern Speed Multiplier for each Track
 // ~patternSpeeds = [4, 8, 16, 24, 32];
-~patternSpeeds = [0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64];
-~patternSpeeds = (0..64);
-~patternSpeedsSize = ~patternSpeeds.size-1;
+// ~patternSpeeds = [0, 1, 2, 4, 8, 16, 32, 64];
+// ~patternSpeeds = [0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64];
+// ~patternSpeeds = (0..64) ! 8;
+// ~patternSpeedsSize = (~patternSpeeds.size-1) ! 8;
 
 ~xHi1 = ~xController.elementAt(\Hi1); ~xHi1.action_({ |v|
 	// ("Track 1 pat speed -> "+~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]).postln;
 	// ~tidalNetAddr.sendMsg("/ctrl", "pattern1Speed", ~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]);
-	if (~patternSpeedSwitch == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 0, (~patternSpeeds[v.value*(~patternSpeeds.size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 0, v.value*64)});
+	if (~patternSpeedSwitch[0] == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 0, (~patternSpeeds[0][v.value*(~patternSpeeds[0].size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 0, v.value*64)});
 });
 
 ~xHi2 = ~xController.elementAt(\Hi2); ~xHi2.action_({ |v|
 	// ("Track 2 pat speed -> "+~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]).postln;
 	// ~tidalNetAddr.sendMsg("/ctrl", "pattern2Speed", ~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]);
-		if (~patternSpeedSwitch == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 1, (~patternSpeeds[v.value*(~patternSpeeds.size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 1, v.value*64)});
+		if (~patternSpeedSwitch[1] == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 1, (~patternSpeeds[1][v.value*(~patternSpeeds[1].size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 1, v.value*64)});
 });
 
 ~xHi3 = ~xController.elementAt(\Hi3); ~xHi3.action_({ |v|
 	// ("Track 3 pat speed -> "+~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]).postln;
 	// ~tidalNetAddr.sendMsg("/ctrl", "pattern3Speed", ~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]);
-		if (~patternSpeedSwitch == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 2, (~patternSpeeds[v.value*(~patternSpeeds.size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 2, v.value*64)});
+		if (~patternSpeedSwitch[2] == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 2, (~patternSpeeds[2][v.value*(~patternSpeeds[2].size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 2, v.value*64)});
 });
 
 ~xHi4 = ~xController.elementAt(\Hi4); ~xHi4.action_({ |v|
 	// ("Track 4 pat speed -> "+~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]).postln;
 	// ~tidalNetAddr.sendMsg("/ctrl", "pattern4Speed", ~patternSpeeds[(v.value*~patternSpeedsSize).asInteger]);
-		if (~patternSpeedSwitch == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 3, (~patternSpeeds[v.value*(~patternSpeeds.size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 3, v.value*64)});
+		if (~patternSpeedSwitch[3] == 1, {~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 3, (~patternSpeeds[3][v.value*(~patternSpeeds[3].size-1)]))},{~superDirtOSC.sendMsg("/SuperDirtMixer/ryt", 3, v.value*64)});
 });
 
 
@@ -113,10 +114,10 @@
 
 ~xHi4On.action_({ |v| if (~tidalMute4 == 0, {~tidalNetAddr.sendMsg("/mute", 4); ~xHi4On.value_(1); ~tidalMute4 = 1; /*"Mute Track 4".postln*/ ~superDirtOSC.sendMsg("/SuperDirtMixer/mute", 3, 1);}, {~tidalNetAddr.sendMsg("/unmute", 4); ~xHi4On.value_(0); ~tidalMute4 = 0; ~superDirtOSC.sendMsg("/SuperDirtMixer/mute", 3, 0); /*"Unmute Track 4".postln*/}); });
 
-~xAOn = ~xController.elementAt(\AOn); ~xAOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "pattern1BFol", "DB_A0KikCE"); ~tidalNetAddr.sendMsg("/ctrl", "pattern2BFol", "DB_MoOKick"); "DB_A0KikCE".postln });
-~xBOn = ~xController.elementAt(\BOn); ~xBOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "pattern1BFol", "DB_MoOKick"); ~tidalNetAddr.sendMsg("/ctrl", "pattern2BFol", "DB_PulsarB"); "DB_MoOKick".postln });
-~xCOn = ~xController.elementAt(\COn); ~xCOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "pattern1BFol", "DB_PulsarB"); ~tidalNetAddr.sendMsg("/ctrl", "pattern2BFol", "DB_TechGab"); "DB_PulsarB".postln });
-~xDOn  = ~xController.elementAt(\DOn); ~xDOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "pattern1BFol", "DB_TechGab"); ~tidalNetAddr.sendMsg("/ctrl", "patternéBFol", "DB_A0KikCE"); "DB_TechGab".postln });
+~xAOn = ~xController.elementAt(\AOn); ~xAOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "1Fol", "DB_A0KikCE"); ~tidalNetAddr.sendMsg("/ctrl", "2Fol", "DB_MoOKick"); "DB_A0KikCE".postln });
+~xBOn = ~xController.elementAt(\BOn); ~xBOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "1Fol", "DB_MoOKick"); ~tidalNetAddr.sendMsg("/ctrl", "2Fol", "DB_PulsarB"); "DB_MoOKick".postln });
+~xCOn = ~xController.elementAt(\COn); ~xCOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "1Fol", "DB_PulsarB"); ~tidalNetAddr.sendMsg("/ctrl", "2Fol", "DB_TechGab"); "DB_PulsarB".postln });
+~xDOn = ~xController.elementAt(\DOn); ~xDOn.action_({ |v| ~tidalNetAddr.sendMsg("/ctrl", "1Fol", "DB_TechGab"); ~tidalNetAddr.sendMsg("/ctrl", "2Fol", "DB_A0KikCE"); "DB_TechGab".postln });
 
 ~xEOn = ~xController.elementAt(\EOn); ~xEOn.action_({ |v| ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (4), \row, 73, \column, 1); ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (5), \row, 73, \column, 1); ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (6), \row, 73, \column, 1); ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (7), \row, 73, \column, 1); [73, 73, 73, 73].postln });
 ~xFOn = ~xController.elementAt(\FOn); ~xFOn.action_({ |v| ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (4), \row, 92, \column, 1); ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (5), \row, 117, \column, 1); ~tidalEvalAddr.sendMsg("/pulsar/eval", \type, 'line', 'tab', (6), \row, 81, \column, 1); [92, 117, 81].postln });
@@ -135,8 +136,7 @@
 ~xOOn = ~xController.elementAt(\OOn); ~xOOn.action_({ |v| "o".postln});
 
 // Quantize
-~patternSpeedSwitch = 0;
-~xPOn = ~xController.elementAt(\POn); ~xPOn.action_({ |v| if (~patternSpeedSwitch == 0, {~patternSpeeds = [0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64]; ~xPOn.value_(1); "Pattern Speed Quantize ON".postln; ~patternSpeedSwitch = 1 }, {~patternSpeeds = (0..64); ~xPOn.value_(0); "Pattern Speed Quantize OFF".postln;  ~patternSpeedSwitch = 0 }); ~patternSpeedsSize = ~patternSpeeds.size-1;});
+~xPOn = ~xController.elementAt(\POn); ~xPOn.action_({ |v| if (~patternSpeedSwitch[0] == 0, {~patternSpeeds[0] = [0, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 64]; ~xPOn.value_(1); "Pattern Speed Quantize ON".postln; ~patternSpeedSwitch[0] = 1 }, {~patternSpeeds[0] = (0..64); ~xPOn.value_(0); "Pattern Speed Quantize OFF".postln;  ~patternSpeedSwitch[0] = 0 }); ~patternSpeedsSize[0] = ~patternSpeeds[0].size-1;});
 
 // Volume for each Track
 ~xSli1 = ~xController.elementAt(\Sli1); ~xSli1.action_({ |v| ~superDirtOSC.sendMsg("/SuperDirtMixer/masterGain", 0, v.value*2); /*v.value.postln;*/ });
@@ -155,34 +155,24 @@
 ~xLo3 = ~xController.elementAt(\Lo3); ~xLo3.action_({ |v| ~superDirtOSC.sendMsg("/SuperDirtMixer/reverb", 2, v.value); if (v.value > 0, {~xLo3Off.value_(1)}, {~xLo3On.value_(1)}) });
 ~xLo4 = ~xController.elementAt(\Lo4); ~xLo4.action_({ |v| ~superDirtOSC.sendMsg("/SuperDirtMixer/reverb", 3, v.value); if (v.value > 0, {~xLo4Off.value_(1)}, {~xLo4On.value_(1)})});
 
-// Noms des Fichiers de Tidal
-~arrayOfFolderNames4Tidal = ("ls -m" + ~tidalsoundsFolder).unixCmdGetStdOut;
-~arrayOfFolderNames4Tidal = ~arrayOfFolderNames4Tidal.split($, ).collect { |i| i.stripWhiteSpace };
-~arrayOfFolderNames4Tidal = ~arrayOfFolderNames4Tidal.collect { |i| i.replace(" ","_")};
-~arrayOfFolderNames4TidalSize = (~arrayOfFolderNames4Tidal.size-1) ! 8;
-
-// ~dirt.soundLibrary.buffers.size
-// Taille des Fichiers de Tidal
-~tidalFolderSizes = ~dirt.soundLibrary.buffers.size.collect { |i| ~dirt.soundLibrary.buffers[~arrayOfFolderNames4Tidal[i].asSymbol].size-1 };
-
 ~xMi1 = ~xController.elementAt(\Mi1); ~xMi1.action_({ |v|
 	// ("Track 1 Buf Folder -> " ++ (v.value*~arrayOfFolderNames4TidalSize[0]).asInteger + ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[0]).asInteger]).postln;
-	// ~tidalNetAddr.sendMsg("/ctrl", "pattern1BFol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[0]).asInteger]);
+	// ~tidalNetAddr.sendMsg("/ctrl", "1Fol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[0]).asInteger]);
 	~superDirtOSC.sendMsg("/SuperDirtMixer/buf", 0, (v.value*~arrayOfFolderNames4TidalSize[0]).asInteger) });
 
 ~xMi2 = ~xController.elementAt(\Mi2); ~xMi2.action_({ |v|
 	// ("Track 2 Buf Folder -> "++ (v.value*~arrayOfFolderNames4TidalSize[1]).asInteger + ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[1]).asInteger]).postln;
-	// ~tidalNetAddr.sendMsg("/ctrl", "pattern2BFol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[1]).asInteger]);
+	// ~tidalNetAddr.sendMsg("/ctrl", "2Fol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[1]).asInteger]);
 	~superDirtOSC.sendMsg("/SuperDirtMixer/buf", 1, (v.value*~arrayOfFolderNames4TidalSize[1]).asInteger) });
 
 ~xMi3 = ~xController.elementAt(\Mi3); ~xMi3.action_({ |v|
 	// ("Track 3 Buf Folder -> "++ (v.value*~arrayOfFolderNames4TidalSize[2]).asInteger + ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[2]).asInteger]).postln;
-	// ~tidalNetAddr.sendMsg("/ctrl", "pattern3BFol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[2]).asInteger]);
+	// ~tidalNetAddr.sendMsg("/ctrl", "3Fol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[2]).asInteger]);
 	~superDirtOSC.sendMsg("/SuperDirtMixer/buf", 2, (v.value*~arrayOfFolderNames4TidalSize[2]).asInteger) });
 
 ~xMi4 = ~xController.elementAt(\Mi4); ~xMi4.action_({ |v|
 	// ("Track 4 Buf Folder -> "++ (v.value*~arrayOfFolderNames4TidalSize[3]).asInteger + ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[3]).asInteger]).postln;
-	// ~tidalNetAddr.sendMsg("/ctrl", "pattern4BFol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[3]).asInteger]);
+	// ~tidalNetAddr.sendMsg("/ctrl", "4Fol", ~arrayOfFolderNames4Tidal[(v.value*~arrayOfFolderNames4TidalSize[3]).asInteger]);
 	~superDirtOSC.sendMsg("/SuperDirtMixer/buf", 3, (v.value*~arrayOfFolderNames4TidalSize[3]).asInteger)
 });
 
