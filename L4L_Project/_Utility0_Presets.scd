@@ -79,8 +79,8 @@ Post << ~presets.keys; // Liste de tous les noms de presets pour les séquences 
 		// Modif de la configuration spatiale
 		item[\outLMin] = 1; // 1 est le minimum
 		item[\outRMin] = 1;
-		item[\outLMax] = 4 /*16*/;
-		item[\outRMax] = 4 /*16*/;
+		item[\outLMax] = 8 /*16*/;
+		item[\outRMax] = 8 /*16*/;
 		item[\outLView] = item[\outLView].size.collect {1.0.rand}; // équivalent au ~outLRandView -> à chaque changement de config spatiale, il y a une légère différence dans le preset spatial (pointilliste / circulaire / ... )
 		item[\outRView] = item[\outRView].size.collect {1.0.rand};
 		// ~presets[~presets.keys.asArray[0]][\outLView]
