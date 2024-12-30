@@ -285,7 +285,7 @@ s.waitForBoot {
 
 	// Initialize the SuperDirtMixer
 	~tidalX = SuperDirtMixerX(~dirt/*, 6010*/);
-	// You can adjust parameters before you use the ui
+	// You can adjust parame ters before you use the ui
 	~tidalX.setOrbitLabels(["1 Fuk", "2 Pee", "3 Pou", "4 Nah", "5 Lead", "6 Bass", "7 Key", "8 Pad"]);
 	~tidalX.setMasterBus(0);
 	"_Init Midi X2.scd".loadRelative;
