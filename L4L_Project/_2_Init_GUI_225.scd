@@ -359,9 +359,10 @@ if (f == 'ins', {
 ~visualizeServerMeter = { |server, left, width|
 	// ServerMeter - Appremment affichage jusqu'à +6 et non 0 -> l'avant dernière marque infique le 0 ?
 	// depuis SC 3.13 -> en GUI server.meter.serverMeter.window -> serverMeter rajouté
-	if (server == ~server1, { ~levelsWindow = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220); // Affichage des niveaux
+	// depuis SC 3.14 -> -15 pour la position top à la place de 0
+	if (server == ~server1, { ~levelsWindow = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, -15, width, 220); // Affichage des niveaux
 	},{
-		~levelsWindow2 = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, 0, width, 220);
+		~levelsWindow2 = server.meter.serverMeter.window.alwaysOnTop_(true).bounds = Rect(left, -15, width, 220);
 	});
 	// s.meter; // ServerMeterView
 };
@@ -9292,11 +9293,21 @@ pair for phase modulation, which sounds similar to FM
 			val.asString.split($ )[9].postln;
 			val.asString.split($ )[10].postln;*/
 			~pBeatView[nb].valueAction_(1);
-			~nbBeatView[nb].valueAction_(if (val.asString.split($ )[4].asInteger > 0 , {val.asString.split($ )[4].asInteger}, {val.asString.split($ )[3].asInteger}));
-			~sumBeatView[nb].valueAction_(case {val.asString.split($ )[7].asInteger > 0} {val.asString.split($ )[7].asInteger}
+			~nbBeatView[nb].valueAction_(
+				// if (val.asString.split($ )[4].asInteger > 0 , {val.asString.split($ )[4].asInteger}, {val.asString.split($ )[3].asInteger}) // Error since 3.14 dev.
+				case
+				{val.asString.split($ )[2].asInteger > 0} {val.asString.split($ )[2].asInteger}
+				{val.asString.split($ )[3].asInteger > 0} {val.asString.split($ )[3].asInteger}
+				{val.asString.split($ )[4].asInteger > 0} {val.asString.split($ )[4].asInteger}
+			);
+			~sumBeatView[nb].valueAction_(
+				case
+				{val.asString.split($ )[6].asInteger > 0} {val.asString.split($ )[6].asInteger} // Add since Error since 3.14 dev.
+				{val.asString.split($ )[7].asInteger > 0} {val.asString.split($ )[7].asInteger}
 				{val.asString.split($ )[8].asInteger > 0} {val.asString.split($ )[8].asInteger}
 				{val.asString.split($ )[9].asInteger > 0} {val.asString.split($ )[9].asInteger}
-				{val.asString.split($ )[10].asInteger > 0} {val.asString.split($ )[10].asInteger});
+				{val.asString.split($ )[10].asInteger > 0} {val.asString.split($ )[10].asInteger}
+			);
 			~minSumBeatView[nb].valueAction_(1);
 		};
 
@@ -25118,7 +25129,8 @@ u.drawFunc = { d.draw }
 		// Qu'elle soit toujours présente et juste la cachée ???
 		~presetVarsWindow.view./*global*/keyDownAction_(~keyActions);
 
-		WindowHandleView(~presetVarsWindow, Rect(1*~xSizeMul, 0, 398*~xSizeMul, 4*~ySizeMul))/*.minHeight_(4)*/;
+		// WindowHandleView(~presetVarsWindow, Rect(1*~xSizeMul, 0, 398*~xSizeMul, 4*~ySizeMul))/*.minHeight_(4)*/;
+		if (Main.version.split($.)[1].asInteger >= 14, {View(~presetVarsWindow, Rect(1*~xSizeMul, 0, 398*~xSizeMul, 4*~ySizeMul))/*.minHeight_(4)*/},{WindowHandleView(~presetVarsWindow, Rect(1*~xSizeMul, 0, 398*~xSizeMul, 4*~ySizeMul))/*.minHeight_(4)*/});
 
 		/*~presetVarsSliderView = EZSlider.new2(~presetVarsWindow, Rect(0,50,400,20) /*400@20*/, nil, ControlSpec(1, 60, \lin, 1, 1),
 		{ |ez| ~presetVarsSlider = (ez.value-1)/*.postln*/;
@@ -29160,11 +29172,11 @@ u.drawFunc = { d.draw }
 		};
 
 		envir[lagEQNbView][serverNb] =
-		EZSlider.new2(envir[fxTabEQCompNb][serverNb], Rect(2*~xSizeMul, 25*~ySizeMul, 375*~xSizeMul, 20*~ySizeMul), envir[lagEQNb][serverNb], ControlSpec(0, 30, 'lin', 0.1, 1),
+		EZSlider.new2(envir[fxTabEQCompNb][serverNb], Rect(2*~xSizeMul, 25*~ySizeMul, 375*~xSizeMul, 20*~ySizeMul), "mix" /*envir[lagEQNb][serverNb]*/, ControlSpec(0, 30, 'lin', 0.1, 1),
 			{ |ez| envir[lagTimeEQNb][serverNb] = ez.value;
 				/*(ez.value.asString ++" is the value of " ++ ez).postln*/
 			},
-			unitWidth:0, initVal:1, numberWidth:60*~xSizeMul, label: "mix", layout:\horz)
+			unitWidth:0, initVal:1, numberWidth:60*~xSizeMul, layout:\horz)
 		.setColors(Color.grey,Color.white)
 		.font_(Font("Helvetica",11*~fontSizeMul))
 		.valueAction_(1);
@@ -31572,7 +31584,8 @@ u.drawFunc = { d.draw }
 			if (~automation.notNil, {~automationWindow.close});
 
 			~automationWindow = Window(border:false, bounds:Rect(/*720 + ~windowWidth - 1920*/ /*~windowWidth - ((604+600)*~xSizeMul)*/ /*350*/ ~windowWidth-(1605*~xSizeMul), /*1125 + ~windowHeight - 1200*/ 0, 604*~xSizeMul, 30*~ySizeMul)).background_(Color.black).alwaysOnTop_(true).front;
-			WindowHandleView(~automationWindow, Rect(0, 0, 602*~xSizeMul, 5*~ySizeMul));
+			// WindowHandleView(~automationWindow, Rect(0, 0, 602*~xSizeMul, 5*~ySizeMul));
+			if (Main.version.split($.)[1].asInteger >= 14, {View(~automationWindow, Rect(0, 0, 602*~xSizeMul, 5*~ySizeMul))},{WindowHandleView(~automationWindow, Rect(0, 0, 602*~xSizeMul, 5*~ySizeMul))});
 			~automation = Automation(/*30*/).front(~automationWindow, bounds: Rect(2*~xSizeMul, 5*~ySizeMul, 600*~xSizeMul, 22*~ySizeMul));
 			~automation.onPlay = 0;
 			// ~automation.verbose = false; // ne retire pas Unknown GUI value kind: Array for SmoothRangeSlider de toute façon
