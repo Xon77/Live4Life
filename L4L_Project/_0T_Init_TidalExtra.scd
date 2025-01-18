@@ -236,7 +236,7 @@ PV_MagDiv
 ( // TIDAL Xon
 
 // Server Options
-~tidalOutputChannels = 4;
+~tidalOutputChannels = 2;
 s.options.numOutputBusChannels = ~tidalOutputChannels;
 s.options.memSize = /*8192 * 256*/ (2.pow(20));
 s.options.numBuffers = 1024 * 16;
@@ -333,7 +333,7 @@ OSCFunc.newMatching({ |msg, time, addr, port|
 }, '/dirt/play', tidalAddr);
 )
 
-//Taken from Eli Fieldsteel example
+// Taken from Eli Fieldsteel example
 
 ~n1 = NetAddr.new("127.0.0.1", 4444);
 
@@ -350,8 +350,6 @@ var sig;
 ~colors;
 
 );
-
-
 
 
 
