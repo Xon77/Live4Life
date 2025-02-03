@@ -236,7 +236,8 @@ PV_MagDiv
 ( // TIDAL Xon
 
 // Server Options
-~tidalOutputChannels = 2;
+~tidalOutputChannels = 4;
+~tidalNbOfOrbits = 8;
 s.options.numOutputBusChannels = ~tidalOutputChannels;
 s.options.memSize = /*8192 * 256*/ (2.pow(20));
 s.options.numBuffers = 1024 * 16;
@@ -253,15 +254,15 @@ s.options.maxNodes = /*1024 * 256*/ (8192*500);
 // Distinction des dossiers sonores
 ~arrayOfFolderNames4TidalSizeS0 = 18; ~arrayOfFolderNames4TidalSizeS1 = 29; ~arrayOfFolderNames4TidalSizeS2 = 67; ~arrayOfFolderNames4TidalSizeS3 = 76; ~arrayOfFolderNames4TidalSizeS4 = 98;
 
-~arrayOfFolderNames4TidalSize = (~arrayOfFolderNames4Tidal.size-1) ! 8;
-~tidalFolderSizeSwitch = 0 ! 8;
+~arrayOfFolderNames4TidalSize = (~arrayOfFolderNames4Tidal.size-1) ! ~tidalNbOfOrbits;
+~tidalFolderSizeSwitch = 0 ! ~tidalNbOfOrbits;
 
-~patternSpeedSwitch = 0 ! 8;
-~patternSpeeds = (0..64) ! 8;
-~patternSpeedsSize = (~patternSpeeds[0].size-1) ! 8;
+~patternSpeedSwitch = 0 ! ~tidalNbOfOrbits;
+~patternSpeeds = (0..64) ! ~tidalNbOfOrbits;
+~patternSpeedsSize = (~patternSpeeds[0].size-1) ! ~tidalNbOfOrbits;
 
-~tidalEvalPos = 0 ! 8;
-~tidalEvalLine = (1..26) ! 8; // Put the number of lines XXXXXXXXXXXX
+~tidalEvalPos = 0 ! ~tidalNbOfOrbits;
+~tidalEvalLine = (1..26) ! ~tidalNbOfOrbits; // Put the number of lines XXXXXXXXXXXX
 // ~tidalEvalLine[0] = (1..26); ~tidalEvalLine[1] = (1..26); ~tidalEvalLine[2] = (1..26); ~tidalEvalLine[3] = (1..26);
 
 ~tidalnumEffects = 41; // Put the value of fxR in Tidal Cycles
@@ -277,8 +278,8 @@ s.options.maxNodes = /*1024 * 256*/ (8192*500);
 s.waitForBoot {
 	~dirt = SuperDirt(~tidalOutputChannels, s);
 	~dirt.loadSoundFiles(~tidalsoundsFolder++"*"); // ~dirt.loadSoundFiles;
-	 s.sync; // Wait for samples to be read
-	~dirt.start(57120, 0 ! 8); // Start listening on port 57120, create 8 orbits
+	s.sync; // Wait for samples to be read
+	~dirt.start(57120, 0 ! ~tidalNbOfOrbits); // Start listening on port 57120, create 8 orbits
 
 	// Taille des Fichiers de Tidal // ~dirt.soundLibrary.buffers.size
 	~tidalFolderSizes = ~dirt.soundLibrary.buffers.size.collect { |i| ~dirt.soundLibrary.buffers[~arrayOfFolderNames4Tidal[i].asSymbol].size-1 };
@@ -339,34 +340,12 @@ OSCFunc.newMatching({ |msg, time, addr, port|
 
 (
 {
-var sig;
+	var sig;
 	sig = SinOsc.ar(exprand(300,3000)!2);
 	sig = sig * XLine.kr(0.5,0.001,1,doneAction:2)
 }.play;
 
 ~colors = {rrand(0,2)}!3;
-~n1.sendMsg('/test', ~colors[0],~colors[1],~colors[2]);
-
-~colors;
-
-);
-
-
-
-
-//Taken from Eli Fieldsteel example
-
-~n1 = NetAddr.new("127.0.0.1",4444);
-
-(
-{
-var sig;
-	sig = SinOsc.ar(exprand(300,3000)!2);
-	sig = sig * XLine.kr(0.5,0.001,1,doneAction:2)
-}.play;
-
-~colors = {rrand(0,2)}!3;
-
 ~n1.sendMsg('/test', ~colors[0],~colors[1],~colors[2]);
 
 ~colors;
@@ -580,5 +559,28 @@ w.view.layout = HLayout(*~dirt.orbits.collect { |x|
 )
 
 
+
+
+
+(
+// WARNING: keyword arg 'uiCallback' not found in call to Meta_EQui:new
+s.options.memSize = /*8192 * 256*/ (2.pow(20));
+s.options.numBuffers = 1024 * 16;
+s.options.maxNodes = /*1024 * 256*/ (8192*500);
+s.waitForBoot {
+	~dirt = SuperDirt(2, s);
+	~dirt.start(57120, 0 ! 14);
+	// More SuperDirt ...
+
+	// Initialize the SuperDirtMixer
+	~mixer = SuperDirtMixer(~dirt);
+
+	// You can adjust parameters before you use the ui
+	~mixer.setMasterBus(0);
+
+	// When you added your settings in you startup file, then you should be able to use the ui at any time in any differtent SuperCollider file.
+	~mixer.gui;
+}
+)
 
 
