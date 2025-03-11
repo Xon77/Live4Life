@@ -2,7 +2,7 @@
 
 ( // To copy sequences of a track to another track
 ~trackFromCopy = ~tracksValue;
-~trackToCopy = 6;
+~trackToCopy = 4;
 
 ~presetsDontTriggerFX = 1; // Protection pour ne pas déclencher les effets des presets lors du chargement de tous les presets dans les pistes
 // ~tracksView.valueAction_(~trackToCopy);

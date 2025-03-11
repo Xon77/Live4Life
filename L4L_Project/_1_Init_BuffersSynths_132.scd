@@ -111,7 +111,7 @@
 		// it's reserverd in the sense that it would immediately be made accessible by the operating system in case of being needed.
 		// It refers to a block of memory that the server reserves in advance while booting -- the "real-time memory pool." It needs this because some UGens need to grab extra memory, and it is not safe to ask the OS for memory in a context (such as real-time DSP) where low latency is critical. The server has its own, faster allocator that uses this pre-reserved block.
 
-		~serverOptions.numBuffers_(8000); // default 1024
+		~serverOptions.numBuffers_(12000); // default 1024
 
 		~serverOptions.maxSynthDefs_(10000); // to adapt according to the nb of synthdefs created
 
